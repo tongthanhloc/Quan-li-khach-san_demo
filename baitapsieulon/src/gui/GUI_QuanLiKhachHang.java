@@ -145,8 +145,7 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		
 		btnTrangChu = new JButton("Trang chủ");
 		btnTrangChu.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnTrangChu.setForeground(new Color(244, 244, 244));
-		btnTrangChu.setBackground(new Color(41, 139, 106));
+		btnTrangChu.setBackground(new Color(255, 255, 255));
 		btnTrangChu.setBounds(0, 0, 250, 70);
 		panel_menu.add(btnTrangChu);
 		
@@ -166,7 +165,7 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		
 		
 		btnQLKH = new JButton("Quản lí Khách hàng");
-		btnQLKH.setBackground(new Color(255, 255, 255));
+		btnQLKH.setBackground(new Color(41, 139, 106));
 		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		btnQLKH.setBounds(0, 198, 250, 68);
 		panel_menu.add(btnQLKH);
@@ -229,11 +228,6 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		lblNewLabel_6.setBounds(0, 754, 250, 30);
 		panel_menu.add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBackground(new Color(255, 255, 255));
-		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/hinhnentrangchu.png")).getImage().getScaledInstance(1654, 815, java.awt.Image.SCALE_SMOOTH)));
-		lblNewLabel_1.setBounds(250, 150, 1654, 815);
-		Frame.add(lblNewLabel_1);
 		
 		
 		
