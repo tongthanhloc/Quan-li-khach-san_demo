@@ -53,6 +53,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
     private JTable table;
 	private DefaultTableModel modelHD;
 	private JTable tableHD;
+	private JButton btnTKDT;
 	/**
 	 * Launch the application.
 	 */
@@ -156,14 +157,14 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
-		JButton btnTim_1 = new JButton("Thống Kê doanh thu");
-		btnTim_1.addActionListener(new ActionListener() {
+		btnTKDT = new JButton("Thống Kê doanh thu");
+		btnTKDT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnTim_1.setBounds(307, 27, 334, 99);
-		panel_top.add(btnTim_1);
-		btnTim_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnTKDT.setBounds(307, 27, 334, 99);
+		panel_top.add(btnTKDT);
+		btnTKDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		
 
@@ -454,6 +455,13 @@ public class GUI_QuanLiHoaDon extends JFrame{
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
+                }
+                else if (clickedButton == btnTKDT) {
+                	                    // Xử lý khi nhấn vào nút btnHT
+                	btnTKDMK.setVisible(false);
+                    btnTKDX.setVisible(false);
+                    setVisible(false); // Đóng frame hiện tại
+                    new GUI_ThongKeDoanhThu().setVisible(true);
                 }}};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
@@ -466,6 +474,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
                     btnQLKM.addActionListener(actionListener);
                     btnQLDV.addActionListener(actionListener);
                     btnHT.addActionListener(actionListener);
+                    btnTKDT.addActionListener(actionListener);
 	}
 
 	
