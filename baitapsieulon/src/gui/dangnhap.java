@@ -28,7 +28,7 @@ public class dangnhap extends JFrame {
 	private JPanel contentPane;
 	private JTextField txttendangnhap;
 	private JPasswordField txtmatkhau;
-	private String tk="NV1";
+	private String tk="NV12";
 	private String mk="0123";
 
 	/**
