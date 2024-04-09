@@ -143,9 +143,8 @@ public class GUI_TrangChu extends JFrame{
 		
 		
 		btnTrangChu = new JButton("Trang chủ");
+		btnTrangChu.setBackground(new Color(255, 255, 255));
 		btnTrangChu.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnTrangChu.setForeground(new Color(244, 244, 244));
-		btnTrangChu.setBackground(new Color(41, 139, 106));
 		btnTrangChu.setBounds(0, 0, 250, 70);
 		panel_menu.add(btnTrangChu);
 		
@@ -166,7 +165,7 @@ public class GUI_TrangChu extends JFrame{
 		
 		btnQLKH = new JButton("Quản lí Khách hàng");
 		btnQLKH.setBackground(new Color(255, 255, 255));
-		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLKH.setBounds(0, 198, 250, 68);
 		panel_menu.add(btnQLKH);
 		
@@ -284,49 +283,34 @@ public class GUI_TrangChu extends JFrame{
                         // Xử lý khi nhấn vào nút btnTrangChu
 	                	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_TrangChu().setVisible(true);
                     } else if (clickedButton == btnQLP) {
                         // Xử lý khi nhấn vào nút btnQLP
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiDatPhong().setVisible(true);
                     } else if (clickedButton == btnQLHD) {
                         // Xử lý khi nhấn vào nút btnQLHD
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_quanLiHoaDon().setVisible(true);
                     } else if (clickedButton == btnQLKH) {
                         // Xử lý khi nhấn vào nút btnQLKH
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiKhachHang().setVisible(true);
                     } else if (clickedButton == btnQLNV) {
                         // Xử lý khi nhấn vào nút btnQLNV
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiNhanVien().setVisible(true);
                     } else if (clickedButton == btnQLKM) {
                         // Xử lý khi nhấn vào nút btnQLKM
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiKhuyenMai().setVisible(true);
                     } else if (clickedButton == btnQLDV) {
                         // Xử lý khi nhấn vào nút btnQLDV
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiDichVu().setVisible(true);
                     } else if (clickedButton == btnHT) {
                         // Xử lý khi nhấn vào nút btnHT
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
                     }}};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);

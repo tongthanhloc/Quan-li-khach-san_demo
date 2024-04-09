@@ -5,9 +5,13 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 
-public class GUI_quanLiHoaDon extends JFrame{
+
+public class GUI_ThongKeDoanhThu extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel Frame;
@@ -32,6 +36,10 @@ public class GUI_quanLiHoaDon extends JFrame{
     private JLabel btnTKTNV;
     private JLabel btnTKca;
     private JLabel btnmaNV;
+    private JTable table;
+	private DefaultTableModel modelHD;
+	private DefaultTableModel modelDT;
+	private JTable tableDT;
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +47,7 @@ public class GUI_quanLiHoaDon extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GUI_quanLiHoaDon frame = new GUI_quanLiHoaDon();
+                	GUI_ThongKeDoanhThu frame = new GUI_ThongKeDoanhThu();
                     frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Phóng to cửa sổ JFrame
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -53,13 +61,14 @@ public class GUI_quanLiHoaDon extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public GUI_quanLiHoaDon() {
+	public GUI_ThongKeDoanhThu() {
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1920,1000);
 		setLocationRelativeTo(null);
 		Frame = new JPanel();
+		Frame.setBackground(new Color(255, 255, 255));
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Frame);
 		Frame.setLayout(null);
@@ -134,13 +143,23 @@ public class GUI_quanLiHoaDon extends JFrame{
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
+		JButton btnTim_1 = new JButton("Thống Kê doanh thu");
+		btnTim_1.setBackground(new Color(164, 194, 163));
+		btnTim_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnTim_1.setBounds(307, 27, 334, 99);
+		panel_top.add(btnTim_1);
+		btnTim_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
 		
 
 		
 		Panel panel_menu = new Panel();
 		panel_menu.setLayout(null);
 		panel_menu.setBackground(Color.LIGHT_GRAY);
-		panel_menu.setBounds(0, 150, 250, 815);
+		panel_menu.setBounds(0, 150, 250, 821);
 		Frame.add(panel_menu);
 		
 		
@@ -159,7 +178,7 @@ public class GUI_quanLiHoaDon extends JFrame{
 		
 		
 		btnQLHD = new JButton("Quản lí hóa đơn");
-		btnQLHD.setBackground(new Color(255, 255, 255));
+		btnQLHD.setBackground(new Color(55, 149, 128));
 		btnQLHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLHD.setBounds(0, 133, 250, 68);
 		panel_menu.add(btnQLHD);
@@ -229,29 +248,50 @@ public class GUI_quanLiHoaDon extends JFrame{
 		lblNewLabel_6.setBounds(0, 754, 250, 30);
 		panel_menu.add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBackground(new Color(255, 255, 255));
-		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/hinhnentrangchu.png")).getImage().getScaledInstance(1654, 815, java.awt.Image.SCALE_SMOOTH)));
-		lblNewLabel_1.setBounds(250, 150, 1654, 815);
-		Frame.add(lblNewLabel_1);
+		JPanel panel_Center_Left = new JPanel();
+		panel_Center_Left.setBounds(257, 156, 726, 794);
+		panel_Center_Left.setLayout(null);
 		
+		JPanel panel_Center_Right = new JPanel();
+		panel_Center_Right.setBounds(993, 156, 901, 794);
+		panel_Center_Right.setLayout(null);
 		
+		String[] cols = new String[] {"Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Mã Khuyến mãi ", "Ngày lập hóa đơn", "Tổng tiền thanh toán" ,"Tiền khách đưa" , "Tiền thối", "Trang thái"};
+		modelHD = new DefaultTableModel(new Object[]{"Thông tin", "Giá trị"}, 0);
+		panel_Center_Left.setLayout(null);
+
+		for (String col : cols) {
+		    modelHD.addRow(new Object[]{col, ""});
+		}
+
+		// Thêm giá trị vào cột thứ hai (cột "Giá trị")
+		for (int i = 0; i < modelHD.getRowCount(); i++) {
+		    modelHD.setValueAt("Giá trị " + i, i, 1);
+		}
+
+		tableDT = new JTable(modelHD);
+		tableDT.setBackground(new Color(128, 255, 0));
+
+		// Đặt font cho tiêu đề cột
+		JTableHeader headers = tableDT.getTableHeader();
+		Font headerFont = new Font("Tahoma", Font.PLAIN, 25);
+		headers.setFont(headerFont);
+
+		// Đặt font cho nội dung của bảng và kích thước lớn hơn
+		Font rowFont = new Font("Tahoma", Font.PLAIN, 25); // Kích thước chữ cỡ 25
+		tableDT.setFont(rowFont);
+
+		// Đặt kích thước của hàng
+		tableDT.setRowHeight(25); // Đặt kích thước hàng là 25 pixel
+
+		JScrollPane paneNV = new JScrollPane(tableDT);
+		paneNV.setBounds(10, 28, 716, 538);
+		paneNV.setPreferredSize(new Dimension(1000,1000));
+		panel_Center_Left.add(paneNV);
+
 		
-		
-		
-		//Sự kiện coi menu tài khoản
-//		btnTK.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                // Hiển thị btnXTT và btnDX
-//                btnXTT.setVisible(true);
-//                btnDX.setVisible(true);
-//            }
-//        });
-		
-		// Thêm sự kiện cho tất cả các nút
-        
-		
-		
+		Frame.add(panel_Center_Left);
+		Frame.add(panel_Center_Right);
 		Frame.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
