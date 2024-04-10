@@ -55,28 +55,10 @@ public class GUI_QuanLiDatPhong extends JFrame{
 	private Panel panel_Center_baotri;
 	private JLabel lblBoTr;
 	private JLabel lblbaotri;
-//	private JButton btnA0101;
-//	private JButton btnA0102;
-//	private JButton btnA0103;
-//	private JButton btnA0104;
-//	private JButton btnA0105;
-//	private String setTenKH;
-//	private JButton btnA0106;
-//	private JButton btnA0107;
-//	private JButton btnA0108;
-//	private JButton btnA0109;
-//	private JButton btnA0110;
-//	private JButton btnB0101;
-//	private JButton btnC0101;
-//	private JButton btnB0102;
-//	private JButton btnC0102;
-//	private JButton btnB0103;
-//	private JButton btnB0104;
-//	private JButton btnB0105;
-//	private JScrollPane scrollPane;
 	private JButton[] button;
     String soPhong[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
     String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
+    int trangThai[] = {1,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4};
 	/**
 	 * Launch the application.
 	 */
@@ -447,12 +429,7 @@ public class GUI_QuanLiDatPhong extends JFrame{
         // Thêm JScrollPane vào panel bên ngoài
         outerPanel.add(scrollPane);
 		
-//        for (int i = 1; i <= 100; i++) {
-//            button = new JButton("Button " + i);
-//            button.setBounds(70 +((i-1)%5)*290, 50+((i-1)/5)*190 , 250, 150);
-//            panel.setPreferredSize(new Dimension(1500, 100+((i-1)/5)*190+150));
-//            panel.add(button);
-//        }
+        // Hàm tạo buton
         
         button = new JButton[soPhong.length];
         for (int i = 0; i < soPhong.length; i++) {
@@ -465,197 +442,18 @@ public class GUI_QuanLiDatPhong extends JFrame{
             button[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
             panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
             button[i].setText(button[i].getText().replaceAll("na", tenKhachHang[i]));
-            button[i].setBackground(new Color(5, 207, 251));
-			if (tenKhachHang[i].equals("")) {
+			if(trangThai[i]==1) {
+				button[i].setBackground(new Color(34, 242, 93));
+			}else if (trangThai[i] == 2) {
+				button[i].setBackground(new Color(242, 128, 116));
+			}else if (trangThai[i] == 3) {
 				button[i].setBackground(new Color(5, 207, 251));
-			}
-			else {
-				button[i].setBackground(new Color(34,242,93));
+			}else if (trangThai[i] == 4) {
+				button[i].setBackground(new Color(251, 193, 146));
 			}
             panel.add(button[i]);
         }
 		
-		
-		
-//		 // Tạo một JScrollPane và thêm panel vào đó
-//        JScrollPane scrollPane = new JScrollPane(panel);
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        // Thêm JScrollPane vào frame
-//        Frame.getRootPane().add(scrollPane);
-
-		
-//		btnA0101 = new JButton();
-//		btnA0101.setBackground(new Color(5, 207, 251));
-//		btnA0101.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0101</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//		btnA0101.setBounds(71, 37, 250, 150);
-//		panel.add(btnA0101);
-//		
-//       
-//		setTenKH = "";
-//        String textA0101 = btnA0101.getText();
-//        String newText = textA0101.replaceAll("ta", setTenKH);
-//        btnA0101.setText(newText);
-//        
-//        
-//        btnA0102 = new JButton();
-//        btnA0102.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0102</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0102.setBackground(new Color(5, 207, 251));
-//        btnA0102.setBounds(362, 37, 250, 150);
-//        panel.add(btnA0102);
-//        
-//        String textA0102 = btnA0102.getText();
-//        btnA0102.setText(textA0102.replaceAll("ta", ""));
-//        
-//        btnA0103 = new JButton();
-//        btnA0103.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0103</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0103.setBackground(new Color(5, 207, 251));
-//        btnA0103.setBounds(651, 37, 250, 150);
-//        panel.add(btnA0103);
-//        
-//        String textA0103 = btnA0103.getText();
-//        btnA0103.setText(textA0103.replaceAll("ta", ""));
-//        
-//        btnA0104 = new JButton();
-//        btnA0104.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0104</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0104.setBackground(new Color(5, 207, 251));
-//        btnA0104.setBounds(948, 37, 250, 150);
-//        panel.add(btnA0104);
-//        
-//        String textA0104 = btnA0104.getText();
-//        btnA0104.setText(textA0104.replaceAll("ta", ""));
-//        
-//        btnA0105 = new JButton();
-//        btnA0105.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0105</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0105.setBackground(new Color(5, 207, 251));
-//        btnA0105.setBounds(1253, 37, 250, 150);
-//        panel.add(btnA0105);
-//        
-//        String textA0105 = btnA0105.getText();
-//        btnA0105.setText(textA0105.replaceAll("ta", ""));
-//        
-//        btnA0106 = new JButton();
-//        btnA0106.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0106</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0106.setBackground(new Color(5, 207, 251));
-//        btnA0106.setBounds(71, 222, 250, 150);
-//        panel.add(btnA0106);
-//        
-//        String textA0106 = btnA0106.getText();
-//        btnA0106.setText(textA0106.replaceAll("ta", ""));
-//        
-//        btnA0107 = new JButton();
-//        btnA0107.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0107</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0107.setBackground(new Color(5, 207, 251));
-//        btnA0107.setBounds(362, 222, 250, 150);
-//        panel.add(btnA0107);
-//        
-//        String textA0107 = btnA0107.getText();
-//        btnA0107.setText(textA0107.replaceAll("ta", ""));
-//        
-//        btnA0108 = new JButton();
-//        btnA0108.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0108</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0108.setBackground(new Color(5, 207, 251));
-//        btnA0108.setBounds(651, 222, 250, 150);
-//        panel.add(btnA0108);
-//        
-//        String textA0108 = btnA0108.getText();
-//        btnA0108.setText(textA0108.replaceAll("ta", ""));
-//        
-//        btnA0109 = new JButton();
-//        btnA0109.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0109</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0109.setBackground(new Color(5, 207, 251));
-//        btnA0109.setBounds(948, 222, 250, 150);
-//        panel.add(btnA0109);
-//        
-//        String textA0109 = btnA0109.getText();
-//        btnA0109.setText(textA0109.replaceAll("ta", ""));
-//        
-//        btnA0110 = new JButton();
-//        btnA0110.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>A0110</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnA0110.setBackground(new Color(5, 207, 251));
-//        btnA0110.setBounds(1253, 222, 250, 150);
-//        panel.add(btnA0110);
-//        
-//        String textA0110 = btnA0110.getText();
-//        btnA0110.setText(textA0110.replaceAll("ta", ""));
-//        
-//        btnB0101 = new JButton();
-//        btnB0101.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>B0101</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnB0101.setBackground(new Color(5, 207, 251));
-//        btnB0101.setBounds(71, 410, 250, 150);
-//        panel.add(btnB0101);
-//        
-//        String textB0101 = btnB0101.getText();
-//        btnB0101.setText(textB0101.replaceAll("ta", ""));
-//        
-//        btnB0102 = new JButton();
-//        btnB0102.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>B0102</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnB0102.setBackground(new Color(5, 207, 251));
-//        btnB0102.setBounds(362, 410, 250, 150);
-//        panel.add(btnB0102);
-//        
-//        String textB0102 = btnB0102.getText();
-//        btnB0102.setText(textB0102.replaceAll("ta", ""));
-//        
-//        btnB0103 = new JButton();
-//        btnB0103.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>B0103</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnB0103.setBackground(new Color(5, 207, 251));
-//        btnB0103.setBounds(651, 410, 250, 150);
-//        panel.add(btnB0103);
-//        
-//        String textB0103 = btnB0103.getText();
-//        btnB0103.setText(textB0103.replaceAll("ta", ""));
-//        
-//        btnB0104 = new JButton();
-//        btnB0104.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>B0104</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnB0104.setBackground(new Color(5, 207, 251));
-//        btnB0104.setBounds(948, 410, 250, 150);
-//        panel.add(btnB0104);
-//        
-//        String textB0104 = btnB0104.getText();
-//        btnB0104.setText(textB0104.replaceAll("ta", ""));
-//        
-//        btnB0105 = new JButton();
-//        btnB0105.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>B0105</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnB0105.setBackground(new Color(5, 207, 251));
-//        btnB0105.setBounds(1253, 410, 250, 150);
-//        panel.add(btnB0105);
-//        
-//        String textB0105 = btnB0105.getText();
-//        btnB0105.setText(textB0105.replaceAll("ta", ""));
-//		
-//        btnC0101 = new JButton();
-//        btnC0101.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>C0101</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnC0101.setBackground(new Color(5, 207, 251));
-//        btnC0101.setBounds(71, 598, 250, 150);
-//        panel.add(btnC0101);
-//        
-//        String textC0101 = btnC0101.getText();
-//        btnC0101.setText(textC0101.replaceAll("ta", ""));
-//        
-//        btnC0102 = new JButton();
-//        btnC0102.setText("<html><center><span style='font-family:Tahoma; font-size:60pt;'>C0102</span><br/><span style='font-family:Tahoma; font-size:25pt;'>ta</span></center></html>");
-//        btnC0102.setBackground(new Color(5, 207, 251));
-//        btnC0102.setBounds(362, 598, 250, 150);
-//        panel.add(btnC0102);
-//        
-//        String textC0102 = btnC0102.getText();
-//        btnC0102.setText(textC0102.replaceAll("ta", ""));
-        
-        
-        
-        
-		
-		//Sự kiện coi menu tài khoản
-//		btnTK.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                // Hiển thị btnXTT và btnDX
-//                btnXTT.setVisible(true);
-//                btnDX.setVisible(true);
-//            }
-//        });
-		
-		// Thêm sự kiện cho tất cả các nút
         
 		
 		
