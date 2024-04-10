@@ -11,7 +11,6 @@ import javax.swing.border.LineBorder;
 public class GUI_QuanLiDatPhong extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private static final Component TableBia = null;
 	private JPanel Frame;
 	private JButton btnTK;
     private JButton btnTKDMK;
@@ -76,8 +75,8 @@ public class GUI_QuanLiDatPhong extends JFrame{
 //	private JButton btnB0105;
 //	private JScrollPane scrollPane;
 	private JButton[] button;
-    String text[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
-    String text2[] = {"Chau Tieu Long","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
+    String sophong[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
+    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
 	/**
 	 * Launch the application.
 	 */
@@ -455,19 +454,19 @@ public class GUI_QuanLiDatPhong extends JFrame{
 //            panel.add(button);
 //        }
         
-        button = new JButton[text.length];
-        for (int i = 0; i < text.length; i++) {
+        button = new JButton[sophong.length];
+        for (int i = 0; i < sophong.length; i++) {
             button[i] = new JButton();
             StringBuilder htmlText = new StringBuilder("<html><center>");
-            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(text[i]).append("</span><br/>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(sophong[i]).append("</span><br/>");
             htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
             htmlText.append("</center></html>");
             button[i].setText(htmlText.toString());
             button[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
             panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
-            button[i].setText(button[i].getText().replaceAll("na", text2[i]));
+            button[i].setText(button[i].getText().replaceAll("na", tenKhachHang[i]));
             button[i].setBackground(new Color(5, 207, 251));
-			if (text2[i].equals("")) {
+			if (tenKhachHang[i].equals("")) {
 				button[i].setBackground(new Color(5, 207, 251));
 			}
 			else {
