@@ -75,7 +75,7 @@ public class GUI_QuanLiDatPhong extends JFrame{
 //	private JButton btnB0105;
 //	private JScrollPane scrollPane;
 	private JButton[] button;
-    String sophong[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
+    String soPhong[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
     String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
 	/**
 	 * Launch the application.
@@ -454,11 +454,11 @@ public class GUI_QuanLiDatPhong extends JFrame{
 //            panel.add(button);
 //        }
         
-        button = new JButton[sophong.length];
-        for (int i = 0; i < sophong.length; i++) {
+        button = new JButton[soPhong.length];
+        for (int i = 0; i < soPhong.length; i++) {
             button[i] = new JButton();
             StringBuilder htmlText = new StringBuilder("<html><center>");
-            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(sophong[i]).append("</span><br/>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(soPhong[i]).append("</span><br/>");
             htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
             htmlText.append("</center></html>");
             button[i].setText(htmlText.toString());
