@@ -59,6 +59,8 @@ public class GUI_QuanLiDatPhong extends JFrame{
     String soPhong[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
     String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
     int trangThai[] = {1,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4};
+	private ButtonGroup group1;
+	private ButtonGroup group2;
 	/**
 	 * Launch the application.
 	 */
@@ -303,36 +305,235 @@ public class GUI_QuanLiDatPhong extends JFrame{
 		chckbxdadat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxdadat.setBounds(287, 170, 97, 43);
 		Frame.add(chckbxdadat);
+		chckbxdadat.setSelected(true);
+		
+		chckbxdadat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+                if (chckbxdadat.isSelected()) {
+                    // Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 1) {
+							button[i].setVisible(true);
+						}
+					}
+                } else {
+                    // Thực hiện hành động khi checkbox không được chọn
+                	for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 1) {
+							button[i].setVisible(false);
+						}
+					}
+                }
+            }
+        });
+		
+		
+		
 		
 		chckbxThue = new JCheckBox("Đã thuê");
 		chckbxThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxThue.setBounds(386, 170, 112, 43);
 		Frame.add(chckbxThue);
+		chckbxThue.setSelected(true);
+		
+		chckbxThue.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+				if (chckbxThue.isSelected()) {
+					// Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 2) {
+							button[i].setVisible(true);
+						}
+					}
+				} else {
+					// Thực hiện hành động khi checkbox không được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 2) {
+							button[i].setVisible(false);
+						}
+					}
+				}
+			}
+		});
 		
 		chckbxTrong = new JCheckBox("Trống");
 		chckbxTrong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxTrong.setBounds(500, 170, 91, 43);
 		Frame.add(chckbxTrong);
+		chckbxTrong.setSelected(true);
+		
+		chckbxTrong.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+				if (chckbxTrong.isSelected()) {
+					// Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 3) {
+							button[i].setVisible(true);
+						}
+					}
+				} else {
+					// Thực hiện hành động khi checkbox không được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 3) {
+							button[i].setVisible(false);
+						}
+					}
+				}
+			}
+		});
 		
 		chckbxBaotri = new JCheckBox("Bảo trì");
 		chckbxBaotri.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxBaotri.setBounds(593, 170, 112, 43);
 		Frame.add(chckbxBaotri);
+		chckbxBaotri.setSelected(true);
+		
+		chckbxBaotri.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+				if (chckbxBaotri.isSelected()) {
+					// Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 4) {
+							button[i].setVisible(true);
+						}
+					}
+				} else {
+					// Thực hiện hành động khi checkbox không được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (trangThai[i] == 4) {
+							button[i].setVisible(false);
+						}
+					}
+				}
+			}
+		});
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxPdon.setBounds(287, 228, 178, 43);
 		Frame.add(chckbxPdon);
+		chckbxPdon.setSelected(true);
+		
+		chckbxPdon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+				if (chckbxPdon.isSelected()) {
+					// Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("A")) {
+							button[i].setVisible(true);
+						}
+					}
+				} else {
+					// Thực hiện hành động khi checkbox không được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("A")) {
+							button[i].setVisible(false);
+						}
+					}
+				}
+			}
+		});
 		
 		chckbxPdoi = new JCheckBox("Phòng đôi (B)");
 		chckbxPdoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxPdoi.setBounds(489, 228, 178, 43);
 		Frame.add(chckbxPdoi);
+		chckbxPdoi.setSelected(true);
+		
+		chckbxPdoi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+				if (chckbxPdoi.isSelected()) {
+					// Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("B")) {
+							button[i].setVisible(true);
+						}
+					}
+				} else {
+					// Thực hiện hành động khi checkbox không được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("B")) {
+							button[i].setVisible(false);
+						}
+					}
+				}
+			}
+		});
 		
 		chckbxPVip = new JCheckBox("Phòng VIP (C)");
 		chckbxPVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chckbxPVip.setBounds(699, 228, 178, 43);
 		Frame.add(chckbxPVip);
+		chckbxPVip.setSelected(true);
+		
+		chckbxPVip.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
+				if (chckbxPVip.isSelected()) {
+					// Thực hiện hành động khi checkbox được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("C")) {
+							button[i].setVisible(true);
+						}
+					}
+				} else {
+					// Thực hiện hành động khi checkbox không được chọn
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("C")) {
+							button[i].setVisible(false);
+						}
+					}
+				}
+			}
+		});
+		
+	
+		
+//		ItemListener itemListener1 = new ItemListener() {
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    chckbxPdon.setSelected(true);
+//                    chckbxPdoi.setSelected(true);
+//                    chckbxPVip.setSelected(true);
+//                } 
+//            }
+//        };
+//
+//        // Create item listener for group 2
+//        ItemListener itemListener2 = new ItemListener() {
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    chckbxdadat.setSelected(true);
+//                    chckbxThue.setSelected(true);
+//                    chckbxTrong.setSelected(true);
+//                    chckbxBaotri.setSelected(true);
+//                } 
+//            }
+//        };
+//        
+//     // Add item listener to checkboxes in group 1
+//        chckbxdadat.addItemListener(itemListener1);
+//        chckbxThue.addItemListener(itemListener1);
+//        chckbxTrong.addItemListener(itemListener1);
+//        chckbxBaotri.addItemListener(itemListener1);
+//
+//        // Add item listener to checkboxes in group 2
+//        chckbxPdon.addItemListener(itemListener2);
+//        chckbxPdoi.addItemListener(itemListener2);
+//        chckbxPVip.addItemListener(itemListener2);
 		
 		Panel panel_Center_dadat = new Panel();
 		panel_Center_dadat.setBackground(new Color(34, 242, 93));
@@ -444,11 +645,12 @@ public class GUI_QuanLiDatPhong extends JFrame{
             button[i].setText(button[i].getText().replaceAll("na", tenKhachHang[i]));
 			if(trangThai[i]==1) {
 				button[i].setBackground(new Color(34, 242, 93));
-			}else if (trangThai[i] == 2) {
+			}
+			else if (trangThai[i] == 2) {
 				button[i].setBackground(new Color(242, 128, 116));
 			}else if (trangThai[i] == 3) {
 				button[i].setBackground(new Color(5, 207, 251));
-			}else if (trangThai[i] == 4) {
+			} else if (trangThai[i] == 4) {
 				button[i].setBackground(new Color(251, 193, 146));
 			}
             panel.add(button[i]);
@@ -469,6 +671,8 @@ public class GUI_QuanLiDatPhong extends JFrame{
 	        ActionListener actionListener = new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                JButton clickedButton = (JButton) e.getSource();
+	                JCheckBox checkBox = (JCheckBox) e.getSource();
+	                
 	                // Xử lý sự kiện cho mỗi nút ở đây
 	                boolean isVisible = panelTK.isVisible();
 	                if (clickedButton == btnTK && isVisible == false) {
@@ -533,7 +737,8 @@ public class GUI_QuanLiDatPhong extends JFrame{
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
 	                    setVisible(false); // Đóng frame hiện tại
-                    }}};
+					} 
+	                }};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
                     btnTKDX.addActionListener(actionListener);
@@ -545,6 +750,9 @@ public class GUI_QuanLiDatPhong extends JFrame{
                     btnQLKM.addActionListener(actionListener);
                     btnQLDV.addActionListener(actionListener);
                     btnHT.addActionListener(actionListener);
+                    
+                 
+                    
 	}
 
 	
