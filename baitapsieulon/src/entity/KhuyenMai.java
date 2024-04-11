@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class KhuyenMai {
 	private String maKhuyenMai;
@@ -9,17 +10,8 @@ public class KhuyenMai {
 	private LocalDateTime thoiGianKetThuc;
 	private LocalDateTime thoiGIanBatDau;
 	private double phanTramKhuyenMai;
-	private HoaDon HoaDon;
-	
-	public KhuyenMai() {
-		super();
-
-	}
-	public KhuyenMai(String maKhuyenMai) {
-		this.maKhuyenMai = maKhuyenMai;
-	}
 	public KhuyenMai(String maKhuyenMai, String tenKhuyenMai, LocalDateTime thoiGianTao, LocalDateTime thoiGianKetThuc,
-			LocalDateTime thoiGIanBatDau, double phanTramKhuyenMai, entity.HoaDon hoaDon) {
+			LocalDateTime thoiGIanBatDau, double phanTramKhuyenMai) {
 		super();
 		this.maKhuyenMai = maKhuyenMai;
 		this.tenKhuyenMai = tenKhuyenMai;
@@ -27,7 +19,13 @@ public class KhuyenMai {
 		this.thoiGianKetThuc = thoiGianKetThuc;
 		this.thoiGIanBatDau = thoiGIanBatDau;
 		this.phanTramKhuyenMai = phanTramKhuyenMai;
-		HoaDon = hoaDon;
+	}
+	public KhuyenMai() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public KhuyenMai(String maKhuyenMai) {
+		this.maKhuyenMai = maKhuyenMai;
 	}
 	public String getMaKhuyenMai() {
 		return maKhuyenMai;
@@ -65,11 +63,20 @@ public class KhuyenMai {
 	public void setPhanTramKhuyenMai(double phanTramKhuyenMai) {
 		this.phanTramKhuyenMai = phanTramKhuyenMai;
 	}
-	public HoaDon getHoaDon() {
-		return HoaDon;
+	@Override
+	public int hashCode() {
+		return Objects.hash(maKhuyenMai);
 	}
-	public void setHoaDon(HoaDon hoaDon) {
-		HoaDon = hoaDon;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		KhuyenMai other = (KhuyenMai) obj;
+		return Objects.equals(maKhuyenMai, other.maKhuyenMai);
 	}
 	
 }

@@ -16,42 +16,12 @@ public class NhanVien {
 	private String trangThai;
 	private String trinhDoHocVan;
 	private String anhDaiDien;
-	private double luong;
-	private TaiKhoan TaiKhoan;
-	private HoaDon HoaDon;
-	private PhieuDatPhong PhieuDatPhong;
-	
-	public PhieuDatPhong getPhieuDatPhong() {
-		return PhieuDatPhong;
-	}
-	public void setPhieuDatPhong(PhieuDatPhong phieuDatPhong) {
-		PhieuDatPhong = phieuDatPhong;
-	}
-	public HoaDon getHoaDon() {
-		return HoaDon;
-	}
-	public void setHoaDon(HoaDon hoaDon) {
-		HoaDon = hoaDon;
-	}
-	public NhanVien() {
-		
-	}
-	public TaiKhoan getTaiKhoan() {
-		return TaiKhoan;
-	}
-
-	public void setTaiKhoan(TaiKhoan taiKhoan) {
-		TaiKhoan = taiKhoan;
-	}
-
-	public NhanVien(String maNV) {
-		super();
-		this.maNV = maNV;
-	}
-
+	private double heSoLuong;
+	private double luongCoBan;
+	private double tongLuong;
 	public NhanVien(String maNV, String hoTenNV, boolean gioiTinh, String viTri, String soDT, String diaChi,
 			LocalDate ngaySinh, LocalDate ngayVaoLam, LocalDate ngayNghiLam, String trangThai, String trinhDoHocVan,
-			String anhDaiDien, double luong) {
+			String anhDaiDien, double heSoLuong, double luongCoBan) {
 		super();
 		this.maNV = maNV;
 		this.hoTenNV = hoTenNV;
@@ -65,130 +35,103 @@ public class NhanVien {
 		this.trangThai = trangThai;
 		this.trinhDoHocVan = trinhDoHocVan;
 		this.anhDaiDien = anhDaiDien;
-		this.luong = luong;
+		this.heSoLuong = heSoLuong;
+		this.luongCoBan = luongCoBan;
 	}
-
+	public NhanVien() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public NhanVien(String maNV) {
+		this.maNV = maNV;
+	}
 	public String getMaNV() {
 		return maNV;
 	}
-
 	public void setMaNV(String maNV) {
 		this.maNV = maNV;
 	}
-
 	public String getHoTenNV() {
 		return hoTenNV;
 	}
-
 	public void setHoTenNV(String hoTenNV) {
 		this.hoTenNV = hoTenNV;
 	}
-
-	public boolean getGioiTinh() {
+	public boolean isGioiTinh() {
 		return gioiTinh;
 	}
-
 	public void setGioiTinh(boolean gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
-
 	public String getViTri() {
 		return viTri;
 	}
-
 	public void setViTri(String viTri) {
 		this.viTri = viTri;
 	}
-
 	public String getSoDT() {
 		return soDT;
 	}
-
 	public void setSoDT(String soDT) {
 		this.soDT = soDT;
 	}
-
 	public String getDiaChi() {
 		return diaChi;
 	}
-
 	public void setDiaChi(String diaChi) {
 		this.diaChi = diaChi;
 	}
-
 	public LocalDate getNgaySinh() {
 		return ngaySinh;
 	}
-
 	public void setNgaySinh(LocalDate ngaySinh) {
 		this.ngaySinh = ngaySinh;
 	}
-
 	public LocalDate getNgayVaoLam() {
 		return ngayVaoLam;
 	}
-
 	public void setNgayVaoLam(LocalDate ngayVaoLam) {
 		this.ngayVaoLam = ngayVaoLam;
 	}
-
 	public LocalDate getNgayNghiLam() {
 		return ngayNghiLam;
 	}
-
 	public void setNgayNghiLam(LocalDate ngayNghiLam) {
 		this.ngayNghiLam = ngayNghiLam;
 	}
-
 	public String getTrangThai() {
 		return trangThai;
 	}
-
 	public void setTrangThai(String trangThai) {
 		this.trangThai = trangThai;
 	}
-
 	public String getTrinhDoHocVan() {
 		return trinhDoHocVan;
 	}
-
 	public void setTrinhDoHocVan(String trinhDoHocVan) {
 		this.trinhDoHocVan = trinhDoHocVan;
 	}
-
 	public String getAnhDaiDien() {
 		return anhDaiDien;
 	}
-
 	public void setAnhDaiDien(String anhDaiDien) {
 		this.anhDaiDien = anhDaiDien;
 	}
-
-	public double getLuong() {
-		return luong;
+	public double getHeSoLuong() {
+		return heSoLuong;
+	}
+	public void setHeSoLuong(double heSoLuong) {
+		this.heSoLuong = heSoLuong;
+	}
+	public double getLuongCoBan() {
+		return luongCoBan;
+	}
+	public void setLuongCoBan(double luongCoBan) {
+		this.luongCoBan = luongCoBan;
 	}
 
-	public void setLuong(double luong) {
-		this.luong = luong;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(maNV);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NhanVien other = (NhanVien) obj;
-		return Objects.equals(maNV, other.maNV);
-	}
-
+	
+	
 	
 
 }

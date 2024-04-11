@@ -12,6 +12,7 @@ public class KhachHang {
 	private String diaChi;
 	private String email;
 	private String anhCanCuoc;
+
 	public KhachHang(String maKH, String hoTen, Boolean gioiTinh, LocalDate ngaySinh, String soDT, String diaChi,
 			String email, String anhCanCuoc) {
 		super();

@@ -6,14 +6,9 @@ import java.util.Objects;
 
 public class HoaDon {
 	private String MaHD;
-	private KhachHang MaKH;
-	private NhanVien MaNV;
-	private KhuyenMai maKM;
-	private LocalDateTime NgayLap;
+	private LocalDateTime ngayLap;
 	private String trangThai;
 	private double tienThanhToan;
-	private ArrayList<ChiTietHoaDonPhong> dsChiTietHoaDonPhong;
-	private ArrayList<ChiTietDichVu> dsDichVu;
 	private double thanhTien;
 	private double tienThoi;
 	public HoaDon() {
@@ -25,17 +20,14 @@ public class HoaDon {
 	public double getTienThoi() {
 		return tienThoi;
 	}
-	public void setTienThoi(double tienThoi) {
+	public void tinhTienThoi(double tienThoi) {
 		this.tienThoi = tienThoi;
 	}
-	public HoaDon(String maHD, KhachHang maKH, NhanVien maNV, KhuyenMai maKM,
+	public HoaDon(String maHD,
 			LocalDateTime ngayLap, String trangThai, double tienThanhToan) {
 		super();
 		MaHD = maHD;
-		MaKH = maKH;
-		MaNV = maNV;
-		this.maKM = maKM;
-		NgayLap = ngayLap;
+		this.ngayLap = ngayLap;
 		this.trangThai = trangThai;
 		this.tienThanhToan = tienThanhToan;
 	}
@@ -45,29 +37,11 @@ public class HoaDon {
 	public void setMaHD(String maHD) {
 		MaHD = maHD;
 	}
-	public KhachHang getMaKH() {
-		return MaKH;
-	}
-	public void setMaKH(KhachHang maKH) {
-		MaKH = maKH;
-	}
-	public NhanVien getMaNV() {
-		return MaNV;
-	}
-	public void setMaNV(NhanVien maNV) {
-		MaNV = maNV;
-	}
-	public KhuyenMai getMaKM() {
-		return maKM;
-	}
-	public void setMaKM(KhuyenMai maKM) {
-		this.maKM = maKM;
-	}
 	public LocalDateTime getNgayLap() {
-		return NgayLap;
+		return ngayLap;
 	}
 	public void setNgayLap(LocalDateTime ngayLap) {
-		NgayLap = ngayLap;
+		ngayLap = ngayLap;
 	}
 	public String getTrangThai() {
 		return trangThai;

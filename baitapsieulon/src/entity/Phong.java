@@ -13,14 +13,7 @@ public class Phong {
 	private String trangThai;
 	private String moTa;
 	private String hinhAnh;
-	private PhieuDatPhong phieuDatPhong;
 	
-	public PhieuDatPhong getPhieuDatPhong() {
-		return phieuDatPhong;
-	}
-	public void setPhieuDatPhong(PhieuDatPhong phieuDatPhong) {
-		this.phieuDatPhong = phieuDatPhong;
-	}
 	public Phong(String maPhong, String loaiPhong, double donGiaTheoNgay, int soGiuong, String soTang,
 			String phongCach, String trangThai, String moTa, String hinhAnh) {
 		super();

@@ -9,6 +9,7 @@ public class DichVuTienIch {
 	private double phanTramKhuyenMai;
 	private double giaDichVu;
 	private double phanTramThueDichVu;
+	private KhuyenMai khuyenMai;
 	public DichVuTienIch(String maDichVu, String tenDichVu, int soLuong, double phanTramKhuyenMai, double giaDichVu,
 			double phanTramThueDichVu) {
 		super();
@@ -25,27 +26,6 @@ public class DichVuTienIch {
 	public DichVuTienIch() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(maDichVu);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DichVuTienIch other = (DichVuTienIch) obj;
-		return Objects.equals(maDichVu, other.maDichVu);
-	}
-	@Override
-	public String toString() {
-		return "DichVuTienIch [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", soLuong=" + soLuong
-				+ ", phanTramKhuyenMai=" + phanTramKhuyenMai + ", giaDichVu=" + giaDichVu + ", phanTramThueDichVu="
-				+ phanTramThueDichVu + "]";
 	}
 	public String getMaDichVu() {
 		return maDichVu;
@@ -83,5 +63,27 @@ public class DichVuTienIch {
 	public void setPhanTramThueDichVu(double phanTramThueDichVu) {
 		this.phanTramThueDichVu = phanTramThueDichVu;
 	}
+	public KhuyenMai getKhuyenMai() {
+		return khuyenMai;
+	}
+	public void setKhuyenMai(KhuyenMai khuyenMai) {
+		this.khuyenMai = khuyenMai;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(maDichVu);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DichVuTienIch other = (DichVuTienIch) obj;
+		return Objects.equals(maDichVu, other.maDichVu);
+	}
+	
 	
 }

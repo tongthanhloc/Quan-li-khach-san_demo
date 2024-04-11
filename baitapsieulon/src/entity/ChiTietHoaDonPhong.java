@@ -7,43 +7,65 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ChiTietHoaDonPhong {
-	private HoaDon HoaDon;
-	private PhieuDatPhong PhieuDatPhong;
+	private HoaDon hoaDon;
+	private PhieuDatPhong phieuDatPhong;
 	private int soluongNguoiO;
 	private LocalDateTime thoiGianDat;
 	private LocalDateTime thoiGianTra;
 	private LocalDateTime thoiGianNhan;
 	private int soNgayO;
 	private double donGiaPhong;
+	public double thanhTien;
 
-	public double tinhThanhTien;
-	
-	public ChiTietHoaDonPhong(entity.HoaDon hoaDon, entity.PhieuDatPhong phieuDatPhong, int soluongNguoiO, double donGiaPhong) {
+	public ChiTietHoaDonPhong(HoaDon hoaDon, PhieuDatPhong phieuDatPhong, int soluongNguoiO, LocalDateTime thoiGianDat,
+			LocalDateTime thoiGianTra, LocalDateTime thoiGianNhan, double donGiaPhong) {
 		super();
-		HoaDon = hoaDon;
-		PhieuDatPhong = phieuDatPhong;
+		this.hoaDon = hoaDon;
+		this.phieuDatPhong = phieuDatPhong;
 		this.soluongNguoiO = soluongNguoiO;
-		this.thoiGianDat = PhieuDatPhong.getThoiGianDat();
-		this.thoiGianTra = PhieuDatPhong.getThoiGianTra();
-		this.thoiGianNhan = PhieuDatPhong.getThoiGianNhan();
-		this.soNgayO = getSoNgayO();
-		this.donGiaPhong = getDonGiaPhong();
+		this.thoiGianDat = thoiGianDat;
+		this.thoiGianTra = thoiGianTra;
+		this.thoiGianNhan = thoiGianNhan;
+		tinhSoNgayO();
+		this.donGiaPhong = donGiaPhong;
+		tinhThanhTien();
+	}
+	public LocalDateTime getThoiGianDat() {
+		return thoiGianDat;
+	}
+	public void setThoiGianDat(LocalDateTime thoiGianDat) {
+		this.thoiGianDat = thoiGianDat;
+	}
+	public LocalDateTime getThoiGianTra() {
+		return thoiGianTra;
+	}
+	public void setThoiGianTra(LocalDateTime thoiGianTra) {
+		this.thoiGianTra = thoiGianTra;
+	}
+	public LocalDateTime getThoiGianNhan() {
+		return thoiGianNhan;
+	}
+	public void setThoiGianNhan(LocalDateTime thoiGianNhan) {
+		this.thoiGianNhan = thoiGianNhan;
+	}
+	public void setDonGiaPhong(double donGiaPhong) {
+		this.donGiaPhong = donGiaPhong;
 	}
 	public ChiTietHoaDonPhong() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public HoaDon getHoaDon() {
-		return HoaDon;
+		return hoaDon;
 	}
 	public void setHoaDon(HoaDon hoaDon) {
-		HoaDon = hoaDon;
+		this.hoaDon = hoaDon;
 	}
 	public PhieuDatPhong getPhieuDatPhong() {
-		return PhieuDatPhong;
+		return phieuDatPhong;
 	}
 	public void setPhieuDatPhong(PhieuDatPhong phieuDatPhong) {
-		PhieuDatPhong = phieuDatPhong;
+		this.phieuDatPhong = phieuDatPhong;
 	}
 	public int getSoluongNguoiO() {
 		return soluongNguoiO;
@@ -51,13 +73,22 @@ public class ChiTietHoaDonPhong {
 	public void setSoluongNguoiO(int soluongNguoiO) {
 		this.soluongNguoiO = soluongNguoiO;
 	}
-	public int getSoNgayO() {
-		return soNgayO = (int) ChronoUnit.DAYS.between(PhieuDatPhong.getThoiGianNhan(), PhieuDatPhong.getThoiGianTra());
+	public void tinhSoNgayO() {
+		this.soNgayO = (int) ChronoUnit.DAYS.between(phieuDatPhong.getThoiGianNhan(), phieuDatPhong.getThoiGianTra());
     }
-//	public void setSoNgayO(int soNgayO) {
-//		this.soNgayO = soNgayO;
-//	}
+	public int getSoNgayO() {
+		return soNgayO;
+	}
 	public double getDonGiaPhong() {
-		return donGiaPhong = PhieuDatPhong.getDonGiaPhieu() * soNgayO;
+		return phieuDatPhong.getDonGiaPhieu();
+	}
+	public void setDonGiaPhong(float donGiaPhong) {
+		this.donGiaPhong = donGiaPhong;
+	}
+	public double getThanhTien() {
+		return thanhTien;
+	}
+	public void tinhThanhTien() {
+		this.thanhTien = phieuDatPhong.getDonGiaPhieu() * soNgayO;
 	}
 }
