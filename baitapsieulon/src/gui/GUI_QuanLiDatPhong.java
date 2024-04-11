@@ -5,6 +5,13 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Arrays;
+
+
 import javax.swing.border.LineBorder;
 
 
@@ -56,9 +63,14 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	private JLabel lblBoTr;
 	private JLabel lblbaotri;
 	private JButton[] button;
-    String soPhong[] = {"A0101","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102","C0103"};
-    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","",""};
-    int trangThai[] = {1,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,3};
+    String soPhong[] = {"A0101","C0103","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
+    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
+    int trangThai[] = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4};
+	private String[][] mangHaiChieu;
+	private JPanel panel;
+	private String maphongs[]=null;
+	private int trangTs[]=null;
+	private String tens[]=null;
 	/**
 	 * Launch the application.
 	 */
@@ -631,7 +643,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         Frame.add(outerPanel);
 
         // Tạo một panel bên trong với layout null và kích thước cố định
-        JPanel panel = new JPanel(null);
+        panel = new JPanel(null);
         panel.setPreferredSize(new Dimension(1500, 1000)); // Đặt kích thước của panel bên trong
 //        panel.setBackground(Color.WHITE); // Đặt màu nền cho panel bên trong
 
@@ -639,7 +651,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         
 
         // Tạo một JScrollPane và thêm panel bên trong vào đó
-        JScrollPane scrollPane = new JScrollPane(panel);
+        JScrollPane scrollPane = new JScrollPane(panel);                      
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Đặt vị trí và kích thước của JScrollPane để trùng với panel bên ngoài
@@ -650,32 +662,60 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		
         // Hàm tạo buton
         
+        
+        
         button = new JButton[soPhong.length];
-        for (int i = 0; i < soPhong.length; i++) {
-            button[i] = new JButton();
-            StringBuilder htmlText = new StringBuilder("<html><center>");
-            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(soPhong[i]).append("</span><br/>");
-            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
-            htmlText.append("</center></html>");
-            button[i].setText(htmlText.toString());
-            button[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
-            panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
-            button[i].setText(button[i].getText().replaceAll("na", tenKhachHang[i]));
-			if(trangThai[i]==1) {
-				button[i].setBackground(new Color(34, 242, 93));
-			}
-			else if (trangThai[i] == 2) {
-				button[i].setBackground(new Color(242, 128, 116));
-			}else if (trangThai[i] == 3) {
-				button[i].setBackground(new Color(5, 207, 251));
-			} else if (trangThai[i] == 4) {
-				button[i].setBackground(new Color(251, 193, 146));
-			}
-            panel.add(button[i]);
-        }
+//        for (int i = 0; i < soPhong.length; i++) {
+//            button[i] = new JButton();
+//            StringBuilder htmlText = new StringBuilder("<html><center>");
+//            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(soPhong[i]).append("</span><br/>");
+//            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
+//            htmlText.append("</center></html>");
+//            button[i].setText(htmlText.toString());
+//            button[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
+//            panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
+//            button[i].setText(button[i].getText().replaceAll("na", tenKhachHang[i]));
+//			if(trangThai[i]==1) {
+//				button[i].setBackground(new Color(34, 242, 93));
+//			}
+//			else if (trangThai[i] == 2) {
+//				button[i].setBackground(new Color(242, 128, 116));
+//			}else if (trangThai[i] == 3) {
+//				button[i].setBackground(new Color(5, 207, 251));
+//			} else if (trangThai[i] == 4) {
+//				button[i].setBackground(new Color(251, 193, 146));
+//			}
+//            panel.add(button[i]);
+//        }
 		
         
 		
+        //xử lý các checkbox
+        mangHaiChieu = new String[3][soPhong.length];
+        for (int i = 0; i < soPhong.length; i++) {
+            mangHaiChieu[0][i] = soPhong[i];
+            mangHaiChieu[1][i] = tenKhachHang[i];
+            mangHaiChieu[2][i] = String.valueOf(trangThai[i]);
+        }
+//        
+        mangHaiChieu = sapXep(mangHaiChieu);
+        soPhong = mangHaiChieu[0];
+        tenKhachHang = mangHaiChieu[1];
+        trangThai = new int[soPhong.length];
+        
+		for (int i = 0; i < soPhong.length; i++) {
+			trangThai[i] = Integer.parseInt(mangHaiChieu[2][i]);
+		}
+		
+        button=createButtons(panel, soPhong, tenKhachHang, trangThai);
+        
+        
+        
+        
+        
+        
+        
+        
 		
 		Frame.addMouseListener(new MouseAdapter() {
             @Override
@@ -811,45 +851,301 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 
 	public void itemStateChanged(ItemEvent e) {
 		// TODO Auto-generated method stub
-		int style = Font.PLAIN;
+		maphongs = new String[0];
+		tens = new String[0];
+		trangTs = new int[0];
+		
 		if (chckbxdadat.isSelected()) {
 			if (chckbxPdon.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("A")&& trangThai[i]==1) {
-						button[i].setVisible(true);
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}}
-			if (chckbxPdon.isSelected()==false) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("A")&& trangThai[i]==1) {
-						button[i].setVisible(false);
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A")&& trangTs[i]==1) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
 					}
-				}}
-			if (chckbxPdoi.isSelected()) {
+				}
+			}if (chckbxPdoi.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("B")&& trangThai[i]==1) {
-						button[i].setVisible(true);
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}
 			}
-			if (chckbxPdoi.isSelected() == false) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("B") && trangThai[i] == 1) {
-						button[i].setVisible(false);
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("B") && trangTs[i] == 1) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
 					}
 				}
 			}
 			if (chckbxPVip.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("C") && trangThai[i]==1) {
-						button[i].setVisible(true);
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}
 			}
-			if (chckbxPVip.isSelected() == false) {
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("C") && trangTs[i] == 1) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
+				chckbxPdon.setSelected(true);
+				chckbxPdoi.setSelected(true);
+				chckbxPVip.setSelected(true);
+			}
+			
+		}else {
+			for (int i = 0; i < maphongs.length; i++) {
+				if (trangTs[i] == 1) {
+					maphongs[i] = null;
+					tens[i] = null;
+					trangTs[i] = 0;
+				}
+			}
+		}if(chckbxThue.isSelected()) {
+			if (chckbxPdon.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("C") && trangThai[i] == 1) {
-						button[i].setVisible(false);
+					if (soPhong[i].contains("A")&& trangThai[i]==2) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A")&& trangTs[i]==2) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			
+			if (chckbxPdoi.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("B")&& trangThai[i]==2) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("B") && trangTs[i] == 2) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			if (chckbxPVip.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("C") && trangThai[i]==1) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("C") && trangTs[i] == 2) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
+				chckbxPdon.setSelected(true);
+				chckbxPdoi.setSelected(true);
+				chckbxPVip.setSelected(true);
+			}
+		}else {
+            for (int i = 0; i < maphongs.length; i++) {
+                if (trangTs[i] == 2) {
+                    maphongs[i] = null;
+                    tens[i] = null;
+                    trangTs[i] = 0;
+                }
+        }}if(chckbxTrong.isSelected()) {
+        	if (chckbxPdon.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("A")&& trangThai[i]==3) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A")&& trangTs[i]==3) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			
+			if (chckbxPdoi.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("B")&& trangThai[i]==3) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("B") && trangTs[i] == 3) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			if (chckbxPVip.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("C") && trangThai[i]==1) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("C") && trangTs[i] == 3) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
+				chckbxPdon.setSelected(true);
+				chckbxPdoi.setSelected(true);
+				chckbxPVip.setSelected(true);
+			}
+        }
+                else {
+            for (int i = 0; i < maphongs.length; i++) {
+                if (trangTs[i] == 3) {
+                    maphongs[i] = null;
+                    tens[i] = null;
+                    trangTs[i] = 0;
+                }
+        }}
+        if(chckbxBaotri.isSelected()) {
+        	if (chckbxPdon.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("A")&& trangThai[i]==4) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A")&& trangTs[i]==4) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			
+			if (chckbxPdoi.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("B")&& trangThai[i]==4) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("B") && trangTs[i] == 4) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+			}
+			if (chckbxPVip.isSelected()) {
+				for (int i = 0; i < soPhong.length; i++) {
+					if (soPhong[i].contains("C") && trangThai[i]==4) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("C") && trangTs[i] == 4) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
 					}
 				}
 			}
@@ -859,393 +1155,403 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				chckbxPVip.setSelected(true);
 			}
 		} else {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (trangThai[i] == 1) {
-					button[i].setVisible(false);
+			for (int i = 0; i < maphongs.length; i++) {
+				if (trangTs[i] == 4) {
+					maphongs[i] = null;
+					tens[i] = null;
+					trangTs[i] = 0;
 				}
 			}
 		}
-		if (chckbxThue.isSelected()) {
-            if (chckbxPdon.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 2) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxPdon.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 2) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxPdoi.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 2) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxPdoi.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 2) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxPVip.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 2) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxPVip.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 2) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
-                chckbxPdon.setSelected(true);
-                chckbxPdoi.setSelected(true);
-                chckbxPVip.setSelected(true);
-            }
-		} else {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (trangThai[i] == 2) {
-					button[i].setVisible(false);
+        if(chckbxPdon.isSelected()) {
+        	if (chckbxdadat.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("A")&& trangThai[i]==1) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}
+        	}else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A") && trangTs[i] == 1) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
 				}
-			}
-		}
-		if (chckbxTrong.isSelected()) {
-			if (chckbxPdon.isSelected()) {
+        	}
+        	if (chckbxThue.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("A")&& trangThai[i]==2) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}
+        	}else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A") && trangTs[i] == 2) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+        	}if (chckbxTrong.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("A")&& trangThai[i]==3) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}}else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A") && trangTs[i] == 3) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+        	}if (chckbxBaotri.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("A")&& trangThai[i]==4) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}}else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("A") && trangTs[i] == 4) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+        	}}
+        if(chckbxPdoi.isSelected()) {
+        	if (chckbxdadat.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("B")&& trangThai[i]==1) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}
+        	}else {
+        		for (int i = 0; i < maphongs.length; i++) {
+        			if (maphongs[i].contains("B") && trangTs[i] == 1) {
+        				maphongs[i] = null;
+        				tens[i] = null;
+        				trangTs[i] = 0;
+        			}
+        		}
+        	}if (chckbxThue.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("B")&& trangThai[i]==2) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}}else {
+        			for (int i = 0; i < maphongs.length; i++) {
+        			if (maphongs[i].contains("B") && trangTs[i] == 2) {
+        				maphongs[i] = null;
+        				tens[i] = null;
+        				trangTs[i] = 0;
+        			}
+        		}
+        	}if (chckbxTrong.isSelected()) {
+        		for (int i = 0; i < soPhong.length; i++) {
+        			if (soPhong[i].contains("B")&& trangThai[i]==3) {
+        				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        				maphongs[maphongs.length - 1] = soPhong[i];
+        				tens = Arrays.copyOf(tens, tens.length + 1);
+        				tens[tens.length - 1] = tenKhachHang[i];
+        				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        				trangTs[trangTs.length - 1] = trangThai[i];
+        			}
+        		}}else {
+        			for (int i = 0; i < maphongs.length; i++) {
+        			if (maphongs[i].contains("B") && trangTs[i] == 3) {
+        				maphongs[i] = null;
+        				tens[i] = null;
+        				trangTs[i] = 0;
+        			}
+        		}}
+        	if (chckbxBaotri.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("A") && trangThai[i] == 3) {
-						button[i].setVisible(true);
+					if (soPhong[i].contains("B") && trangThai[i] == 4) {
+						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+						maphongs[maphongs.length - 1] = soPhong[i];
+						tens = Arrays.copyOf(tens, tens.length + 1);
+						tens[tens.length - 1] = tenKhachHang[i];
+						trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+						trangTs[trangTs.length - 1] = trangThai[i];
+					}
+				}
+			} else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (maphongs[i].contains("B") && trangTs[i] == 4) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
+					}
+				}
+        	}
+        	}if(chckbxPVip.isSelected()) {
+        		if (chckbxdadat.isSelected()) {
+        			for (int i = 0; i < soPhong.length; i++) {
+        				if (soPhong[i].contains("C")&& trangThai[i]==1) {
+        					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        					maphongs[maphongs.length - 1] = soPhong[i];
+        					tens = Arrays.copyOf(tens, tens.length + 1);
+        					tens[tens.length - 1] = tenKhachHang[i];
+        					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        					trangTs[trangTs.length - 1] = trangThai[i];
+        				}
+        			}
+        		}else {
+        			for (int i = 0; i < maphongs.length; i++) {
+        				if (maphongs[i].contains("C") && trangTs[i] == 1) {
+        					maphongs[i] = null;
+        					tens[i] = null;
+        					trangTs[i] = 0;
+        				}
+        			}
+        		}if (chckbxThue.isSelected()) {
+        			for (int i = 0; i < soPhong.length; i++) {
+        				if (soPhong[i].contains("C")&& trangThai[i]==2) {
+        					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        					maphongs[maphongs.length - 1] = soPhong[i];
+        					tens = Arrays.copyOf(tens, tens.length + 1);
+        					tens[tens.length - 1] = tenKhachHang[i];
+        					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        					trangTs[trangTs.length - 1] = trangThai[i];
+        				}
+        			}}else {
+        				for (int i = 0; i < maphongs.length; i++) {
+        				if (maphongs[i].contains("C") && trangTs[i] == 2) {
+        					maphongs[i] = null;
+        					tens[i] = null;
+        					trangTs[i] = 0;
+        				}
+        			}
+        		}if(chckbxTrong.isSelected()) {
+        			for (int i = 0; i < soPhong.length; i++) {
+        				if (soPhong[i].contains("C")&& trangThai[i]==3) {
+        					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+        					maphongs[maphongs.length - 1] = soPhong[i];
+        					tens = Arrays.copyOf(tens, tens.length + 1);
+        					tens[tens.length - 1] = tenKhachHang[i];
+        					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+        					trangTs[trangTs.length - 1] = trangThai[i];
+        				}
+        			}}else {
+        				for (int i = 0; i < maphongs.length; i++) {
+        				if (maphongs[i].contains("C") && trangTs[i] == 3) {
+        					maphongs[i] = null;
+        					tens[i] = null;
+        					trangTs[i] = 0;
+        				}
+        			}}
+        		if (chckbxBaotri.isSelected()) {
+					for (int i = 0; i < soPhong.length; i++) {
+						if (soPhong[i].contains("C") && trangThai[i] == 4) {
+							maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+							maphongs[maphongs.length - 1] = soPhong[i];
+							tens = Arrays.copyOf(tens, tens.length + 1);
+							tens[tens.length - 1] = tenKhachHang[i];
+							trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+							trangTs[trangTs.length - 1] = trangThai[i];
+						}
+					}
+				} else {
+					for (int i = 0; i < maphongs.length; i++) {
+						if (maphongs[i].contains("C") && trangTs[i] == 4) {
+							maphongs[i] = null;
+							tens[i] = null;
+							trangTs[i] = 0;
+						}
+					}
+        		}
+			}else {
+				for (int i = 0; i < maphongs.length; i++) {
+					if (trangTs[i] == 4) {
+						maphongs[i] = null;
+						tens[i] = null;
+						trangTs[i] = 0;
 					}
 				}
 			}
-			if (chckbxPdon.isSelected() == false) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("A") && trangThai[i] == 3) {
-						button[i].setVisible(false);
-					}
-				}
-			}
-			if (chckbxPdoi.isSelected()) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("B") && trangThai[i] == 3) {
-						button[i].setVisible(true);
-					}
-				}
-			}
-			if (chckbxPdoi.isSelected() == false) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("B") && trangThai[i] == 3) {
-						button[i].setVisible(false);
-					}
-				}
-			}
-			if (chckbxPVip.isSelected()) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("C") && trangThai[i] == 3) {
-						button[i].setVisible(true);
-					}
-				}
-			}
-			if (chckbxPVip.isSelected() == false) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("C") && trangThai[i] == 3) {
-						button[i].setVisible(false);
-					}
-				}
-			}
-			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false
+        	if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false
 					&& chckbxPVip.isSelected() == false) {
 				chckbxPdon.setSelected(true);
 				chckbxPdoi.setSelected(true);
 				chckbxPVip.setSelected(true);
 			}
-		} else {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (trangThai[i] == 3) {
-					button[i].setVisible(false);
-				}
-			}
-		}
-		if (chckbxBaotri.isSelected()) {
-            if (chckbxPdon.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 4) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxPdon.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 4) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxPdoi.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 4) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxPdoi.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 4) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxPVip.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 4) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxPVip.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 4) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false
-                    && chckbxPVip.isSelected() == false) {
-                chckbxPdon.setSelected(true);
-                chckbxPdoi.setSelected(true);
-                chckbxPVip.setSelected(true);}
-		} else {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (trangThai[i] == 4) {
-					button[i].setVisible(false);
-				}
-			}
-		}
-		
-		if (chckbxPdon.isSelected()) {
-            if (chckbxdadat.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 1) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxdadat.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 1) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxThue.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 2) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxThue.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("A") && trangThai[i] == 2) {
-                        button[i].setVisible(false);
-                    }
-                }}
-            if (chckbxTrong.isSelected()) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("A") && trangThai[i] == 3) {
-						button[i].setVisible(true);
-					}
-				}
-            }
-            if (chckbxTrong.isSelected() == false) {
-            	for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("A") && trangThai[i] == 3) {
-						button[i].setVisible(false);
-					}
-            	}
-            }
-            if (chckbxBaotri.isSelected()) {
-            	for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("A") && trangThai[i] == 4) {
-						button[i].setVisible(true);
-					}
-            	}
-            }
-            if (chckbxBaotri.isSelected() == false) {
-            	for (int i = 0; i < soPhong.length; i++) {
-            		if (soPhong[i].contains("A") && trangThai[i] == 4) {
-            			button[i].setVisible(false);
-            		}
-            	}
-            }
-            if (chckbxdadat.isSelected() == false && chckbxThue.isSelected()== false && chckbxTrong.isSelected() == false && chckbxBaotri.isSelected() == false) {
-                chckbxdadat.setSelected(true);
-            	chckbxThue.setSelected(true);
-                chckbxTrong.setSelected(true);
-                chckbxBaotri.setSelected(true);}
-            
-            }else {
-            	for (int i = 0; i < soPhong.length; i++) {
-            		if (soPhong[i].contains("A")) {
-            			button[i].setVisible(false);
-            		}
-            }}
-		if (chckbxPdoi.isSelected()) {
-			            if (chckbxdadat.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 1) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxdadat.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 1) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxThue.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 2) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxThue.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 2) {
-                        button[i].setVisible(false);
-                    }
-                }}
-            if (chckbxTrong.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 3) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxTrong.isSelected() == false) {
-            	for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 3) {
-                        button[i].setVisible(false);
-                    }
-            	}
-            }
-            if (chckbxBaotri.isSelected()) {
-            	for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("B") && trangThai[i] == 4) {
-                        button[i].setVisible(true);
-                    }
-            	}
-            }
-            if (chckbxBaotri.isSelected() == false) {
-            	for (int i = 0; i < soPhong.length; i++) {
-            		if (soPhong[i].contains("B") && trangThai[i] == 4) {
-            			button[i].setVisible(false);
-            		}
-            	}}
-            if (chckbxdadat.isSelected() == false && chckbxThue.isSelected()== false && chckbxTrong.isSelected() == false && chckbxBaotri.isSelected() == false) {
-                chckbxdadat.setSelected(true);
-                chckbxThue.setSelected(true);
-                chckbxTrong.setSelected(true);
-                chckbxBaotri.setSelected(true);}
-            
-		} else {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (soPhong[i].contains("B")) {
-					button[i].setVisible(false);
-				}
-			}
-		}
-		
-		if (chckbxPVip.isSelected()) {
-            if (chckbxdadat.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 1) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxdadat.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 1) {
-                        button[i].setVisible(false);
-                    }
-                }
-            }
-            if (chckbxThue.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 2) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxThue.isSelected() == false) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 2) {
-                        button[i].setVisible(false);
-                    }
-                }}
-            if (chckbxTrong.isSelected()) {
-                for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 3) {
-                        button[i].setVisible(true);
-                    }
-                }
-            }
-            if (chckbxTrong.isSelected() == false) {
-            	for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 3) {
-                        button[i].setVisible(false);
-                    }
-            	}
-            }
-            if (chckbxBaotri.isSelected()) {
-            	for (int i = 0; i < soPhong.length; i++) {
-                    if (soPhong[i].contains("C") && trangThai[i] == 4) {
-                        button[i].setVisible(true);
-                    }
-            	}
-            }
-            if (chckbxBaotri.isSelected() == false) {
-				for (int i = 0; i < soPhong.length; i++) {
-					if (soPhong[i].contains("C") && trangThai[i] == 4) {
-						button[i].setVisible(false);
-					}
-				}
-			}
-			if (chckbxdadat.isSelected() == false && chckbxThue.isSelected() == false
-					&& chckbxTrong.isSelected() == false && chckbxBaotri.isSelected() == false) {
+			if (chckbxdadat.isSelected()==false&&chckbxTrong.isSelected() == false && chckbxThue.isSelected() == false
+					&& chckbxBaotri.isSelected() == false) {
 				chckbxdadat.setSelected(true);
-				chckbxThue.setSelected(true);
 				chckbxTrong.setSelected(true);
+				chckbxThue.setSelected(true);
 				chckbxBaotri.setSelected(true);
 			}
-		} else {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (soPhong[i].contains("C")) {
-					button[i].setVisible(false);
+			for (int i = 0; i < maphongs.length; i++) {
+				if (maphongs[i] == null) {
+					for (int j = i; j < maphongs.length - 1; j++) {
+						maphongs[j] = maphongs[j + 1];
+						tens[j] = tens[j + 1];
+						trangTs[j] = trangTs[j + 1];
+					}
+					maphongs = Arrays.copyOf(maphongs, maphongs.length - 1);
+					tens = Arrays.copyOf(tens, tens.length - 1);
+					trangTs = Arrays.copyOf(trangTs, trangTs.length - 1);
+					i--;
+				}
+			}
+			panel.removeAll();
+			panel.repaint();
+			panel.revalidate();
+			String[][] mangHaiChie = new String[3][maphongs.length];
+			for (int i = 0; i < maphongs.length; i++) {
+				mangHaiChie[0][i] = maphongs[i];
+				mangHaiChie[1][i] = tens[i];
+				mangHaiChie[2][i] = String.valueOf(trangTs[i]);
+			}
+			mangHaiChie = createTwoDimensionalArray(maphongs,tens, trangTs);
+			mangHaiChie = sapXep(mangHaiChie);
+			
+			maphongs = mangHaiChie[0];
+			tens = mangHaiChie[1];
+			trangTs = new int[maphongs.length];
+			for (int i = 0; i < maphongs.length; i++) {
+				trangTs[i] = Integer.parseInt(mangHaiChie[2][i]);
+			}
+			button = createButtons(panel, maphongs, tens, trangTs);
+			maphongs = null;
+			tens = null;
+			trangTs = null;
+			
+	}
+//		mangHaiChieu=new String[3][maphong.length];
+//		for (int i = 0; i < maphong.length; i++) {
+//			mangHaiChieu[0][i] = maphong[i];
+//			mangHaiChieu[1][i] = ten[i];
+//			mangHaiChieu[2][i] = String.valueOf(trangT[i]);
+//		}
+//		mangHaiChieu = sapXep(mangHaiChieu);
+//	    maphong = mangHaiChieu[0];
+//	    ten = mangHaiChieu[1];
+//	    trangT = new int[maphong.length];
+//	       	for (int i = 0; i < maphong.length; i++) {
+//	            trangT[i] = Integer.parseInt(mangHaiChieu[2][i]);	                    
+//	       	}
+//		button = createButtons(panel, maphong, ten, trangT);
+//	}
+			
+				
+	public static String[][] createTwoDimensionalArray(String[] maphong, String[] ten, int[] trangT) {
+        Set<String> uniqueMaphong = new HashSet<>();
+        List<String> uniqueMaphongList = new ArrayList<>();
+        List<String> tenList = new ArrayList<>();
+        List<Integer> trangTList = new ArrayList<>();
+
+        for (int i = 0; i < maphong.length; i++) {
+            if (!uniqueMaphong.contains(maphong[i])) {
+                uniqueMaphong.add(maphong[i]);
+                uniqueMaphongList.add(maphong[i]);
+                tenList.add(ten[i]);
+                trangTList.add(trangT[i]);
+            }
+        }
+
+        String[][] mangHaiChieu = new String[3][uniqueMaphongList.size()];
+        for (int i = 0; i < uniqueMaphongList.size(); i++) {
+            mangHaiChieu[0][i] = uniqueMaphongList.get(i);
+            mangHaiChieu[1][i] = tenList.get(i);
+            mangHaiChieu[2][i] = String.valueOf(trangTList.get(i));
+        }
+        return mangHaiChieu;
+    }
+	
+	
+	public static JButton[] createButtons(JPanel panel, String[] roomNumbers, String[] customerNames, int[] statuses) {
+        JButton[] buttons = new JButton[roomNumbers.length];
+        for (int i = 0; i < roomNumbers.length; i++) {
+            buttons[i] = new JButton();
+            StringBuilder htmlText = new StringBuilder("<html><center>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(roomNumbers[i]).append("</span><br/>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
+            htmlText.append("</center></html>");
+            buttons[i].setText(htmlText.toString());
+            buttons[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
+            panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
+            buttons[i].setText(buttons[i].getText().replaceAll("na", customerNames[i]));
+
+            switch (statuses[i]) {
+                case 1:
+                    buttons[i].setBackground(new Color(34, 242, 93));
+                    break;
+                case 2:
+                    buttons[i].setBackground(new Color(242, 128, 116));
+                    break;
+                case 3:
+                    buttons[i].setBackground(new Color(5, 207, 251));
+                    break;
+                case 4:
+                    buttons[i].setBackground(new Color(251, 193, 146));
+                    break;
+                default:
+                    // Handle other statuses if necessary
+                    break;
+            }
+
+            panel.add(buttons[i]);
+        }
+		return buttons;
+    }
+
+	
+	public static String[][] sapXep(String[][] mangHaiChieu) {
+		String temp;
+		for (int i = 0; i < mangHaiChieu[0].length; i++) {
+			for (int j = i + 1; j < mangHaiChieu[0].length; j++) {
+				if (mangHaiChieu[0][i].compareTo(mangHaiChieu[0][j]) > 0) {
+					temp = mangHaiChieu[0][i];
+					mangHaiChieu[0][i] = mangHaiChieu[0][j];
+					mangHaiChieu[0][j] = temp;
+
+					temp = mangHaiChieu[1][i];
+					mangHaiChieu[1][i] = mangHaiChieu[1][j];
+					mangHaiChieu[1][j] = temp;
+
+					temp = mangHaiChieu[2][i];
+					mangHaiChieu[2][i] = mangHaiChieu[2][j];
+					mangHaiChieu[2][j] = temp;
 				}
 			}
 		}
-		
-		
-		
-		
-			
+		return mangHaiChieu;
 	}
-
+	
 	public JButton getBtnTK() {
 		return btnTK;
 	}
