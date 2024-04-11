@@ -1,37 +1,74 @@
 package gui;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
-import java.awt.*;
-import java.awt.event.*;
-
-
-public class GUI_QuanLiKhachHang extends JFrame{
+public class GUI_QuanLiKhachHang extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
 	private JPanel Frame;
+	private Panel panelTK;
+	private JButton btnTKDMK;
+	private JButton btnTKDX;
+	private JLabel btnTKHTNV;
+	private JLabel btnTKTNV;
+	private JLabel btnTKca;
+	private JLabel btnmaNV;
 	private JButton btnTK;
-    private JButton btnTKDMK;
-    private JButton btnTKDX;
-    private JButton btnTrangChu;
-    private JButton btnQLP;
-    private JButton btnQLHD;
-    private JButton btnQLKH;
-    private JButton btnQLNV;
-    private JButton btnQLKM;
-    private JButton btnQLDV;
-    private JButton btnHT;
-    private JLabel lblNewLabel_2;
-    private JLabel lblNewLabel_3;
-    private JLabel lblNewLabel_4;
-    private JLabel lblNewLabel_5;
-    private JLabel lblNewLabel_6;
-    private Panel panelTK;
-    private JLabel btnTKHTNV;
-    private JLabel btnTKTNV;
-    private JLabel btnTKca;
-    private JLabel btnmaNV;
+	private JButton btnTrangChu;
+	private JButton btnQLP;
+	private JButton btnQLHD;
+	private JButton btnQLKH;
+	private JButton btnQLNV;
+	private JButton btnQLKM;
+	private JButton btnQLDV;
+	private JButton btnHT;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel lblNewLabel_6;
+	private JPanel panel_Center_Top;
+	private JLabel lblMaKH;
+	private JLabel lblEmail;
+	private JTextField txtMa;
+	private JTextField txtEmail;
+	private JLabel lblTen;
+	private JLabel lblSDT;
+	private JLabel lblDC;
+	private JTextField txtTenKH;
+	private JTextField txtSDT;
+	private JTextField txtDC;
+	private JButton btbXoaTrang;
+	private DefaultTableModel modelHD;
+	private JTable tableNV;
+	private JTextField textField;
+	private JTextField textField_1;
+
 	/**
 	 * Launch the application.
 	 */
@@ -57,8 +94,8 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1920,1000);
 		setLocationRelativeTo(null);
-		setResizable(false);
 		Frame = new JPanel();
+		Frame.setBackground(new Color(255, 255, 255));
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Frame);
 		Frame.setLayout(null);
@@ -133,19 +170,35 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
+		JButton btnThongKe = new JButton("Thống kê khách hàng");
+		btnThongKe.setBackground(new Color(55, 149, 128));
+		btnThongKe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnThongKe.setBounds(647, 27, 334, 99);
+		panel_top.add(btnThongKe);
+		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JButton btnThemNhanVien = new JButton("Thêm khách hàng");
+		btnThemNhanVien.setBackground(new Color(55, 149, 128));
+		btnThemNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnThemNhanVien.setBounds(248, 27, 334, 99);
+		panel_top.add(btnThemNhanVien);
+		
 		
 
 		
 		Panel panel_menu = new Panel();
 		panel_menu.setLayout(null);
 		panel_menu.setBackground(Color.LIGHT_GRAY);
-		panel_menu.setBounds(0, 150, 250, 815);
+		panel_menu.setBounds(0, 150, 250, 821);
 		Frame.add(panel_menu);
 		
 		
 		btnTrangChu = new JButton("Trang chủ");
-		btnTrangChu.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnTrangChu.setBackground(new Color(255, 255, 255));
+		btnTrangChu.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnTrangChu.setBounds(0, 0, 250, 70);
 		panel_menu.add(btnTrangChu);
 		
@@ -158,14 +211,14 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		
 		
 		btnQLHD = new JButton("Quản lí hóa đơn");
-		btnQLHD.setBackground(new Color(255, 255, 255));
+		btnQLHD.setBackground(Color.WHITE);
 		btnQLHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLHD.setBounds(0, 133, 250, 68);
 		panel_menu.add(btnQLHD);
 		
 		
 		btnQLKH = new JButton("Quản lí Khách hàng");
-		btnQLKH.setBackground(new Color(41, 139, 106));
+		btnQLKH.setBackground(new Color(55, 149, 128));
 		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		btnQLKH.setBounds(0, 198, 250, 68);
 		panel_menu.add(btnQLKH);
@@ -186,7 +239,7 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		btnQLDV = new JButton("Quản lí dịch vụ");
 		btnQLDV.setBackground(new Color(255, 255, 255));
 		btnQLDV.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnQLDV.setBounds(0, 388, 250, 68);
+		btnQLDV.setBounds(0, 387, 250, 68);
 		panel_menu.add(btnQLDV);
 		
 		btnHT = new JButton("Hỗ trợ");
@@ -228,21 +281,133 @@ public class GUI_QuanLiKhachHang extends JFrame{
 		lblNewLabel_6.setBounds(0, 754, 250, 30);
 		panel_menu.add(lblNewLabel_6);
 		
+		panel_Center_Top = new JPanel();
+		panel_Center_Top.setBackground(new Color(255, 255, 255));
+		panel_Center_Top.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_Center_Top.setBounds(251, 150, 1653, 223);
+		Frame.add(panel_Center_Top);
+		panel_Center_Top.setLayout(null);
+		
+		lblMaKH = new JLabel("Mã khách hàng");
+		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaKH.setBounds(140, 25, 186, 35);
+		panel_Center_Top.add(lblMaKH);
+		
+		lblEmail = new JLabel("Email");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblEmail.setBounds(140, 75, 186, 35);
+		panel_Center_Top.add(lblEmail);
+		
+		txtMa = new JTextField();
+		txtMa.setBackground(new Color(55, 149, 128));
+		txtMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtMa.setColumns(10);
+		txtMa.setBounds(350, 25, 350, 40);
+		panel_Center_Top.add(txtMa);
+		
+		txtEmail = new JTextField();
+		txtEmail.setBackground(new Color(55, 149, 128));
+		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(350, 75, 350, 40);
+		panel_Center_Top.add(txtEmail);
+		
+		lblTen = new JLabel("Tên khách hàng");
+		lblTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTen.setBounds(900, 25, 210, 35);
+		panel_Center_Top.add(lblTen);
+		
+		lblSDT = new JLabel("Số điện thoại");
+		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSDT.setBounds(900, 75, 175, 35);
+		panel_Center_Top.add(lblSDT);
+		
+		lblDC = new JLabel("Địa chỉ");
+		lblDC.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDC.setBounds(900, 125, 198, 35);
+		panel_Center_Top.add(lblDC);
+		
+		txtTenKH = new JTextField();
+		txtTenKH.setBackground(new Color(55, 149, 128));
+		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtTenKH.setColumns(10);
+		txtTenKH.setBounds(1100, 25, 350, 40);
+		panel_Center_Top.add(txtTenKH);
+		
+		txtSDT = new JTextField();
+		txtSDT.setBackground(new Color(55, 149, 128));
+		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtSDT.setColumns(10);
+		txtSDT.setBounds(1100, 75, 350, 40);
+		panel_Center_Top.add(txtSDT);
+		
+		txtDC = new JTextField();
+		txtDC.setBackground(new Color(55, 149, 128));
+		txtDC.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtDC.setColumns(10);
+		txtDC.setBounds(1100, 125, 350, 40);
+		panel_Center_Top.add(txtDC);
+		
+		JButton btnTim = new JButton("Tìm");
+		btnTim.setBounds(1160, 176, 175, 35);
+		panel_Center_Top.add(btnTim);
+		btnTim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		btbXoaTrang = new JButton("Xóa trắng");
+		btbXoaTrang.setBounds(1389, 176, 175, 35);
+		panel_Center_Top.add(btbXoaTrang);
+		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel lblTuoi = new JLabel("Tuổi");
+		lblTuoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTuoi.setBounds(140, 125, 186, 35);
+		panel_Center_Top.add(lblTuoi);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField.setColumns(10);
+		textField.setBackground(new Color(55, 149, 128));
+		textField.setBounds(225, 125, 100, 40);
+		panel_Center_Top.add(textField);
+		
+		JLabel lblGioiTinh = new JLabel("Giới tính");
+		lblGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblGioiTinh.setBounds(375, 125, 186, 35);
+		panel_Center_Top.add(lblGioiTinh);
+		
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_1.setColumns(10);
+		textField_1.setBackground(new Color(55, 149, 128));
+		textField_1.setBounds(514, 125, 186, 40);
+		panel_Center_Top.add(textField_1);
+		
+		JPanel panel_Center_Bot = new JPanel();
+		panel_Center_Bot.setBackground(new Color(255, 255, 255));
+		panel_Center_Bot.setBounds(271, 369, 1648, 576);
+
+		
+		String[] cols = new String[] {"Mã nhân viên", "Họ tên", "Giới tính" , "Số căn cước công dân", "Vị trí", "Số điện thoại", "Địa chỉ", "Ngày sinh", "Ngày vào làm", "Ngày nghỉ làm", "Trạng thái", "Trình độ học vấn", "Hệ số lương", "Lương cơ bản", "Tổng lương"};
+		modelHD = new DefaultTableModel(cols,0);
+		panel_Center_Bot.setLayout(null);
+		tableNV = new JTable(modelHD);
+		tableNV.setBackground(new Color(128, 255, 0));
+		JScrollPane paneNV = new JScrollPane(tableNV);
+		paneNV.setBounds(10, 38, 1610, 538);
+		paneNV.setPreferredSize(new Dimension(1000,1000));
+		panel_Center_Bot.add(paneNV);;
+		JTableHeader headers = tableNV.getTableHeader();
+        Font headerFont = new Font("Tahoma", Font.PLAIN, 15);
+        headers.setFont(headerFont);
+		Frame.add(panel_Center_Bot);
 		
 		
 		
 		
-		
-		//Sự kiện coi menu tài khoản
-//		btnTK.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                // Hiển thị btnXTT và btnDX
-//                btnXTT.setVisible(true);
-//                btnDX.setVisible(true);
-//            }
-//        });
-		
-		// Thêm sự kiện cho tất cả các nút
         
 		
 		
@@ -279,20 +444,14 @@ public class GUI_QuanLiKhachHang extends JFrame{
                         // Xử lý khi nhấn vào nút btnTrangChu
 	                	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_TrangChu().setVisible(true);
                     } else if (clickedButton == btnQLP) {
                         // Xử lý khi nhấn vào nút btnQLP
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiDatPhong().setVisible(true);
                     } else if (clickedButton == btnQLHD) {
                         // Xử lý khi nhấn vào nút btnQLHD
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiHoaDon().setVisible(true);
                     } else if (clickedButton == btnQLKH) {
                         // Xử lý khi nhấn vào nút btnQLKH
                     	btnTKDMK.setVisible(false);
@@ -301,25 +460,18 @@ public class GUI_QuanLiKhachHang extends JFrame{
                         // Xử lý khi nhấn vào nút btnQLNV
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiNhanVien().setVisible(true);
                     } else if (clickedButton == btnQLKM) {
                         // Xử lý khi nhấn vào nút btnQLKM
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiKhuyenMai().setVisible(true);
                     } else if (clickedButton == btnQLDV) {
                         // Xử lý khi nhấn vào nút btnQLDV
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiDichVu().setVisible(true);
                     } else if (clickedButton == btnHT) {
                         // Xử lý khi nhấn vào nút btnHT
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
                     }}};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);

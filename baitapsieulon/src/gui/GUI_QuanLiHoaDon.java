@@ -158,6 +158,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		panel_top.add(btnTK);
 		
 		btnTKDT = new JButton("Thống Kê doanh thu");
+		btnTKDT.setBackground(new Color(55, 149, 128));
 		btnTKDT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
