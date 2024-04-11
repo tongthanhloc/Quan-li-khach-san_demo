@@ -186,7 +186,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 		
 		btnQLKH = new JButton("Quản lí Khách hàng");
 		btnQLKH.setBackground(new Color(255, 255, 255));
-		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		btnQLKH.setBounds(0, 198, 250, 68);
 		panel_menu.add(btnQLKH);
 		
