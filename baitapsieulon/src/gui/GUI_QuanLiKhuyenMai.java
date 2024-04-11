@@ -312,8 +312,6 @@ public class GUI_QuanLiKhuyenMai extends JFrame{
                         // Xử lý khi nhấn vào nút btnQLKM
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiKhuyenMai().setVisible(true);
                     } else if (clickedButton == btnQLDV) {
                         // Xử lý khi nhấn vào nút btnQLDV
                     	btnTKDMK.setVisible(false);

@@ -424,8 +424,6 @@ public class GUI_QuanLiHoaDon extends JFrame{
                     // Xử lý khi nhấn vào nút btnQLHD
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
-                    setVisible(false); // Đóng frame hiện tại
-                    new GUI_QuanLiHoaDon().setVisible(true);
                 } else if (clickedButton == btnQLKH) {
                     // Xử lý khi nhấn vào nút btnQLKH
                 	btnTKDMK.setVisible(false);

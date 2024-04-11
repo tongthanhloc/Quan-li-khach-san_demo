@@ -306,8 +306,6 @@ public class GUI_QuanLiNhanVien extends JFrame{
                         // Xử lý khi nhấn vào nút btnQLNV
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiNhanVien().setVisible(true);
                     } else if (clickedButton == btnQLKM) {
                         // Xử lý khi nhấn vào nút btnQLKM
                     	btnTKDMK.setVisible(false);

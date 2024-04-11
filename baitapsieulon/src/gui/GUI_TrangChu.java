@@ -285,8 +285,6 @@ public class GUI_TrangChu extends JFrame{
                         // Xử lý khi nhấn vào nút btnTrangChu
 	                	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_TrangChu().setVisible(true);
                     } else if (clickedButton == btnQLP) {
                         // Xử lý khi nhấn vào nút btnQLP
                     	btnTKDMK.setVisible(false);

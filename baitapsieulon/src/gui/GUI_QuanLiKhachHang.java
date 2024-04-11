@@ -297,8 +297,6 @@ public class GUI_QuanLiKhachHang extends JFrame{
                         // Xử lý khi nhấn vào nút btnQLKH
                     	btnTKDMK.setVisible(false);
 	                    btnTKDX.setVisible(false);
-	                    setVisible(false); // Đóng frame hiện tại
-	                    new GUI_QuanLiKhachHang().setVisible(true);
                     } else if (clickedButton == btnQLNV) {
                         // Xử lý khi nhấn vào nút btnQLNV
                     	btnTKDMK.setVisible(false);
