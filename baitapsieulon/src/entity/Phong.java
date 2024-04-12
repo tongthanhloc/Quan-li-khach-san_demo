@@ -7,14 +7,14 @@ public class Phong {
 	private String maPhong;
 	private String loaiPhong;
 	private double donGiaTheoNgay;
-	private int soGiuong;
+	private String soGiuong;
 	private String soTang;
 	private String phongCach;
 	private String trangThai;
 	private String moTa;
 	private String hinhAnh;
 	
-	public Phong(String maPhong, String loaiPhong, double donGiaTheoNgay, int soGiuong, String soTang,
+	public Phong(String maPhong, String loaiPhong, double donGiaTheoNgay, String soGiuong, String soTang,
 			String phongCach, String trangThai, String moTa, String hinhAnh) {
 		super();
 		this.maPhong = maPhong;
@@ -51,10 +51,10 @@ public class Phong {
 	public void setDonGiaTheoNgay(double donGiaTheoNgay) {
 		this.donGiaTheoNgay = donGiaTheoNgay;
 	}
-	public int getSoGiuong() {
+	public String getSoGiuong() {
 		return soGiuong;
 	}
-	public void setSoGiuong(int soGiuong) {
+	public void setSoGiuong(String soGiuong) {
 		this.soGiuong = soGiuong;
 	}
 	public String getSoTang() {

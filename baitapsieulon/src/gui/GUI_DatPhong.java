@@ -3,6 +3,9 @@ package gui;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import connectDB.ConnectDB;
+
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -60,6 +63,7 @@ public class GUI_DatPhong extends JFrame{
 	 * Create the frame.
 	 */
 	public GUI_DatPhong() {
+		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
