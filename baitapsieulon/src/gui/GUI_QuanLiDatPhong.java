@@ -851,9 +851,28 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 
 	public void itemStateChanged(ItemEvent e) {
 		// TODO Auto-generated method stub
+		
 		maphongs = new String[0];
 		tens = new String[0];
 		trangTs = new int[0];
+		for (int i = 0; i < maphongs.length; i++) {
+			maphongs[i] = null;
+			tens[i] = null;
+			trangTs[i] = 0;
+		}
+		if (chckbxdadat.isSelected() == false && chckbxThue.isSelected() == false && chckbxTrong.isSelected() == false
+				&& chckbxBaotri.isSelected() == false) {
+			chckbxdadat.setSelected(true);
+			chckbxThue.setSelected(true);
+			chckbxTrong.setSelected(true);
+			chckbxBaotri.setSelected(true);
+			
+		}
+		if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
+			chckbxPdon.setSelected(true);
+			chckbxPdoi.setSelected(true);
+			chckbxPVip.setSelected(true);
+		}
 		
 		if (chckbxdadat.isSelected()) {
 			if (chckbxPdon.isSelected()) {
@@ -867,15 +886,8 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A")&& trangTs[i]==1) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}if (chckbxPdoi.isSelected()) {
+			
+			if (chckbxPdoi.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("B")&& trangThai[i]==1) {
 						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -887,15 +899,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("B") && trangTs[i] == 1) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPVip.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("C") && trangThai[i]==1) {
@@ -908,29 +912,13 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("C") && trangTs[i] == 1) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
 				chckbxPdon.setSelected(true);
 				chckbxPdoi.setSelected(true);
 				chckbxPVip.setSelected(true);
 			}
 			
-		}else {
-			for (int i = 0; i < maphongs.length; i++) {
-				if (trangTs[i] == 1) {
-					maphongs[i] = null;
-					tens[i] = null;
-					trangTs[i] = 0;
-				}
-			}
 		}if(chckbxThue.isSelected()) {
 			if (chckbxPdon.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
@@ -943,15 +931,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A")&& trangTs[i]==2) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			
 			if (chckbxPdoi.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
@@ -965,15 +945,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("B") && trangTs[i] == 2) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPVip.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("C") && trangThai[i]==1) {
@@ -986,28 +958,13 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("C") && trangTs[i] == 2) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
 				chckbxPdon.setSelected(true);
 				chckbxPdoi.setSelected(true);
 				chckbxPVip.setSelected(true);
 			}
-		}else {
-            for (int i = 0; i < maphongs.length; i++) {
-                if (trangTs[i] == 2) {
-                    maphongs[i] = null;
-                    tens[i] = null;
-                    trangTs[i] = 0;
-                }
-        }}if(chckbxTrong.isSelected()) {
+		}if(chckbxTrong.isSelected()) {
         	if (chckbxPdon.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("A")&& trangThai[i]==3) {
@@ -1019,15 +976,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A")&& trangTs[i]==3) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			
 			if (chckbxPdoi.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
@@ -1041,15 +990,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("B") && trangTs[i] == 3) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPVip.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("C") && trangThai[i]==1) {
@@ -1062,30 +1003,13 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("C") && trangTs[i] == 3) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
 				chckbxPdon.setSelected(true);
 				chckbxPdoi.setSelected(true);
 				chckbxPVip.setSelected(true);
 			}
-        }
-                else {
-            for (int i = 0; i < maphongs.length; i++) {
-                if (trangTs[i] == 3) {
-                    maphongs[i] = null;
-                    tens[i] = null;
-                    trangTs[i] = 0;
-                }
-        }}
-        if(chckbxBaotri.isSelected()) {
+        }if(chckbxBaotri.isSelected()) {
         	if (chckbxPdon.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("A")&& trangThai[i]==4) {
@@ -1097,15 +1021,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A")&& trangTs[i]==4) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			
 			if (chckbxPdoi.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
@@ -1119,15 +1035,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("B") && trangTs[i] == 4) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPVip.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("C") && trangThai[i]==4) {
@@ -1140,30 +1048,13 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					}
 				}
 			}
-			else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("C") && trangTs[i] == 4) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-			}
+			
 			if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
 				chckbxPdon.setSelected(true);
 				chckbxPdoi.setSelected(true);
 				chckbxPVip.setSelected(true);
 			}
-		} else {
-			for (int i = 0; i < maphongs.length; i++) {
-				if (trangTs[i] == 4) {
-					maphongs[i] = null;
-					tens[i] = null;
-					trangTs[i] = 0;
-				}
-			}
-		}
-        if(chckbxPdon.isSelected()) {
+        }if(chckbxPdon.isSelected()) {
         	if (chckbxdadat.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
         			if (soPhong[i].contains("A")&& trangThai[i]==1) {
@@ -1175,14 +1066,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
         		}
-        	}else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A") && trangTs[i] == 1) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
         	}
         	if (chckbxThue.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
@@ -1195,15 +1078,8 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
         		}
-        	}else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A") && trangTs[i] == 2) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-        	}if (chckbxTrong.isSelected()) {
+        	}
+        	if (chckbxTrong.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
         			if (soPhong[i].contains("A")&& trangThai[i]==3) {
         				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -1213,15 +1089,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
-        		}}else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A") && trangTs[i] == 3) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-        	}if (chckbxBaotri.isSelected()) {
+        		}}if (chckbxBaotri.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
         			if (soPhong[i].contains("A")&& trangThai[i]==4) {
         				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -1231,15 +1099,8 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
-        		}}else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("A") && trangTs[i] == 4) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-        	}}
+        		}}
+        }
         if(chckbxPdoi.isSelected()) {
         	if (chckbxdadat.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
@@ -1252,14 +1113,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
         		}
-        	}else {
-        		for (int i = 0; i < maphongs.length; i++) {
-        			if (maphongs[i].contains("B") && trangTs[i] == 1) {
-        				maphongs[i] = null;
-        				tens[i] = null;
-        				trangTs[i] = 0;
-        			}
-        		}
         	}if (chckbxThue.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
         			if (soPhong[i].contains("B")&& trangThai[i]==2) {
@@ -1270,15 +1123,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
-        		}}else {
-        			for (int i = 0; i < maphongs.length; i++) {
-        			if (maphongs[i].contains("B") && trangTs[i] == 2) {
-        				maphongs[i] = null;
-        				tens[i] = null;
-        				trangTs[i] = 0;
-        			}
-        		}
-        	}if (chckbxTrong.isSelected()) {
+        		}}if (chckbxTrong.isSelected()) {
         		for (int i = 0; i < soPhong.length; i++) {
         			if (soPhong[i].contains("B")&& trangThai[i]==3) {
         				maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -1288,15 +1133,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         				trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
         				trangTs[trangTs.length - 1] = trangThai[i];
         			}
-        		}}else {
-        			for (int i = 0; i < maphongs.length; i++) {
-        			if (maphongs[i].contains("B") && trangTs[i] == 3) {
-        				maphongs[i] = null;
-        				tens[i] = null;
-        				trangTs[i] = 0;
-        			}
-        		}}
-        	if (chckbxBaotri.isSelected()) {
+        		}}if (chckbxBaotri.isSelected()) {
 				for (int i = 0; i < soPhong.length; i++) {
 					if (soPhong[i].contains("B") && trangThai[i] == 4) {
 						maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -1307,15 +1144,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						trangTs[trangTs.length - 1] = trangThai[i];
 					}
 				}
-			} else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (maphongs[i].contains("B") && trangTs[i] == 4) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
-        	}
+			} 
         	}if(chckbxPVip.isSelected()) {
         		if (chckbxdadat.isSelected()) {
         			for (int i = 0; i < soPhong.length; i++) {
@@ -1328,14 +1157,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         					trangTs[trangTs.length - 1] = trangThai[i];
         				}
         			}
-        		}else {
-        			for (int i = 0; i < maphongs.length; i++) {
-        				if (maphongs[i].contains("C") && trangTs[i] == 1) {
-        					maphongs[i] = null;
-        					tens[i] = null;
-        					trangTs[i] = 0;
-        				}
-        			}
         		}if (chckbxThue.isSelected()) {
         			for (int i = 0; i < soPhong.length; i++) {
         				if (soPhong[i].contains("C")&& trangThai[i]==2) {
@@ -1346,15 +1167,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
         					trangTs[trangTs.length - 1] = trangThai[i];
         				}
-        			}}else {
-        				for (int i = 0; i < maphongs.length; i++) {
-        				if (maphongs[i].contains("C") && trangTs[i] == 2) {
-        					maphongs[i] = null;
-        					tens[i] = null;
-        					trangTs[i] = 0;
-        				}
-        			}
-        		}if(chckbxTrong.isSelected()) {
+        			}}if(chckbxTrong.isSelected()) {
         			for (int i = 0; i < soPhong.length; i++) {
         				if (soPhong[i].contains("C")&& trangThai[i]==3) {
         					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -1364,15 +1177,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
         					trangTs[trangTs.length - 1] = trangThai[i];
         				}
-        			}}else {
-        				for (int i = 0; i < maphongs.length; i++) {
-        				if (maphongs[i].contains("C") && trangTs[i] == 3) {
-        					maphongs[i] = null;
-        					tens[i] = null;
-        					trangTs[i] = 0;
-        				}
-        			}}
-        		if (chckbxBaotri.isSelected()) {
+        			}}if (chckbxBaotri.isSelected()) {
 					for (int i = 0; i < soPhong.length; i++) {
 						if (soPhong[i].contains("C") && trangThai[i] == 4) {
 							maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
@@ -1383,50 +1188,11 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 							trangTs[trangTs.length - 1] = trangThai[i];
 						}
 					}
-				} else {
-					for (int i = 0; i < maphongs.length; i++) {
-						if (maphongs[i].contains("C") && trangTs[i] == 4) {
-							maphongs[i] = null;
-							tens[i] = null;
-							trangTs[i] = 0;
-						}
-					}
-        		}
-			}else {
-				for (int i = 0; i < maphongs.length; i++) {
-					if (trangTs[i] == 4) {
-						maphongs[i] = null;
-						tens[i] = null;
-						trangTs[i] = 0;
-					}
-				}
+				} 
 			}
-        	if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false
-					&& chckbxPVip.isSelected() == false) {
-				chckbxPdon.setSelected(true);
-				chckbxPdoi.setSelected(true);
-				chckbxPVip.setSelected(true);
-			}
-			if (chckbxdadat.isSelected()==false&&chckbxTrong.isSelected() == false && chckbxThue.isSelected() == false
-					&& chckbxBaotri.isSelected() == false) {
-				chckbxdadat.setSelected(true);
-				chckbxTrong.setSelected(true);
-				chckbxThue.setSelected(true);
-				chckbxBaotri.setSelected(true);
-			}
-			for (int i = 0; i < maphongs.length; i++) {
-				if (maphongs[i] == null) {
-					for (int j = i; j < maphongs.length - 1; j++) {
-						maphongs[j] = maphongs[j + 1];
-						tens[j] = tens[j + 1];
-						trangTs[j] = trangTs[j + 1];
-					}
-					maphongs = Arrays.copyOf(maphongs, maphongs.length - 1);
-					tens = Arrays.copyOf(tens, tens.length - 1);
-					trangTs = Arrays.copyOf(trangTs, trangTs.length - 1);
-					i--;
-				}
-			}
+		
+        	
+			
 			panel.removeAll();
 			panel.repaint();
 			panel.revalidate();
@@ -1446,9 +1212,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				trangTs[i] = Integer.parseInt(mangHaiChie[2][i]);
 			}
 			button = createButtons(panel, maphongs, tens, trangTs);
-			maphongs = null;
-			tens = null;
-			trangTs = null;
+			
 			
 	}
 //		mangHaiChieu=new String[3][maphong.length];
