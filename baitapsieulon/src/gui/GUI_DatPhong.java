@@ -24,7 +24,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.calendar.JYearChooser;
+import connectDB.ConnectDB;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 
 
 
@@ -72,6 +80,7 @@ public class GUI_DatPhong extends JFrame{
     private JTextField textField_2;
     private JLabel lblNewLabel_1_6;
     private JLabel lblNewLabel_1_7;
+	private JDateChooser dateChooser;
     
 
 	/**
@@ -444,9 +453,14 @@ public class GUI_DatPhong extends JFrame{
 		lblNewLabel_1_7.setBounds(823, 79, 281, 31);
 		panel_datphong.add(lblNewLabel_1_7);
 		
-		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("New JGoodies label");
-		lblNewJgoodiesLabel.setBounds(1087, 566, 241, 245);
-		Frame.add(lblNewJgoodiesLabel);
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(1094, 22, 307, 31);
+		panel_datphong.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(1094, 79, 307, 31);
+		panel_datphong.add(dateChooser_1);
+		
 		
         
 		 
