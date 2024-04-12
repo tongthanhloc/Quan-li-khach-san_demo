@@ -1,13 +1,30 @@
 package gui;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Calendar;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import connectDB.ConnectDB;
-
-
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.border.LineBorder;
+import javax.swing.JDesktopPane;
+import javax.swing.JTextArea;
+import javax.swing.JToggleButton;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 
 
@@ -41,7 +58,21 @@ public class GUI_DatPhong extends JFrame{
     private JButton btnGUI_TraPhong;
     private JButton btnGUI_doiPhong;
     private JButton btnGUI_GiahanPhong;
-
+    private JTextField txtmaKHtim;
+    private JTextField txtSDT;
+    private JTextField txttenKH;
+    private JTextField txttuoiKH;
+    private JTextField txtgioiTinhKH;
+    private JLabel lblNewLabel_1_1_2;
+    private JLabel lblNewLabel_1_3;
+    private JTextField textField;
+    private JLabel lblNewLabel_1_4;
+    private JTextField textField_1;
+    private JLabel lblNewLabel_1_5;
+    private JTextField textField_2;
+    private JLabel lblNewLabel_1_6;
+    private JLabel lblNewLabel_1_7;
+    
 
 	/**
 	 * Launch the application.
@@ -172,7 +203,7 @@ public class GUI_DatPhong extends JFrame{
 		btnGUI_doiPhong = new JButton("Đổi Phòng");
 		btnGUI_doiPhong.setForeground(Color.WHITE);
 		btnGUI_doiPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_doiPhong.setBackground(new Color(41, 139, 116));
+		btnGUI_doiPhong.setBackground(new Color(0, 128, 116));
 		btnGUI_doiPhong.setBounds(980, 26, 200, 100);
 		panel_top.add(btnGUI_doiPhong);
 		
@@ -280,8 +311,145 @@ public class GUI_DatPhong extends JFrame{
 		lblNewLabel_6.setBounds(0, 754, 250, 30);
 		panel_menu.add(lblNewLabel_6);
 		
-        
+		JPanel panel_timkhach = new JPanel();
+		panel_timkhach.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_timkhach.setForeground(new Color(255, 255, 255));
+		panel_timkhach.setBounds(249, 150, 1655, 133);
+		Frame.add(panel_timkhach);
+		panel_timkhach.setLayout(null);
 		
+		JLabel lblNewLabel_1 = new JLabel("Căn cước công dân:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1.setBounds(124, 21, 281, 31);
+		panel_timkhach.add(lblNewLabel_1);
+		
+		txtmaKHtim = new JTextField();
+		txtmaKHtim.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtmaKHtim.setBackground(new Color(41, 139, 116));
+		txtmaKHtim.setBounds(393, 21, 237, 31);
+		panel_timkhach.add(txtmaKHtim);
+		txtmaKHtim.setColumns(10);
+		
+		txtSDT = new JTextField();
+		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtSDT.setBackground(new Color(192, 192, 192));
+		
+		txtSDT.setColumns(10);
+		txtSDT.setBounds(393, 67, 237, 31);
+		txtSDT.setEnabled(false);
+		panel_timkhach.add(txtSDT);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_1.setBounds(124, 67, 281, 31);
+		panel_timkhach.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Tên Khách hàng:");
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_2.setBounds(824, 21, 281, 31);
+		panel_timkhach.add(lblNewLabel_1_2);
+		
+		txttenKH = new JTextField();
+		txttenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txttenKH.setBackground(new Color(192, 192, 192));
+		txttenKH.setColumns(10);
+		txttenKH.setBounds(1093, 21, 350, 31);
+		txttenKH.setEnabled(false);
+		panel_timkhach.add(txttenKH);
+		
+		txttuoiKH = new JTextField();
+		txttuoiKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txttuoiKH.setBackground(new Color(192, 192, 192));
+		txttuoiKH.setColumns(10);
+		txttuoiKH.setBounds(909, 67, 179, 31);
+		txttuoiKH.setEnabled(false);
+		panel_timkhach.add(txttuoiKH);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Tuổi:");
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_1_1.setBounds(824, 67, 62, 31);
+		panel_timkhach.add(lblNewLabel_1_1_1);
+		
+		txtgioiTinhKH = new JTextField();
+		txtgioiTinhKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtgioiTinhKH.setBackground(new Color(192, 192, 192));
+		txtgioiTinhKH.setColumns(10);
+		txtgioiTinhKH.setBounds(1271, 67, 172, 31);
+		txtgioiTinhKH.setEnabled(false);
+		panel_timkhach.add(txtgioiTinhKH);
+		
+		lblNewLabel_1_1_2 = new JLabel("Giới Tính:");
+		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_1_2.setBounds(1128, 67, 124, 31);
+		panel_timkhach.add(lblNewLabel_1_1_2);
+		
+		JButton btnNewButton = new JButton("Tìm");
+		btnNewButton.setBackground(new Color(164, 194, 163));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		btnNewButton.setBounds(653, 21, 82, 31);
+		panel_timkhach.add(btnNewButton);
+		
+		JPanel panel_datphong = new JPanel();
+		panel_datphong.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_datphong.setBounds(249, 282, 1655, 256);
+		Frame.add(panel_datphong);
+		panel_datphong.setLayout(null);
+		
+		lblNewLabel_1_3 = new JLabel("Mã Phòng:");
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_3.setBounds(123, 22, 281, 31);
+		panel_datphong.add(lblNewLabel_1_3);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField.setEnabled(false);
+		textField.setColumns(10);
+		textField.setBackground(Color.LIGHT_GRAY);
+		textField.setBounds(392, 22, 237, 31);
+		panel_datphong.add(textField);
+		
+		lblNewLabel_1_4 = new JLabel("Số người:");
+		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_4.setBounds(123, 79, 281, 31);
+		panel_datphong.add(lblNewLabel_1_4);
+		
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_1.setEnabled(false);
+		textField_1.setColumns(10);
+		textField_1.setBackground(Color.LIGHT_GRAY);
+		textField_1.setBounds(392, 79, 237, 31);
+		panel_datphong.add(textField_1);
+		
+		lblNewLabel_1_5 = new JLabel("Dịch vụ:");
+		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_5.setBounds(123, 136, 281, 31);
+		panel_datphong.add(lblNewLabel_1_5);
+		
+		textField_2 = new JTextField();
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textField_2.setEnabled(false);
+		textField_2.setColumns(10);
+		textField_2.setBackground(Color.LIGHT_GRAY);
+		textField_2.setBounds(392, 136, 237, 31);
+		panel_datphong.add(textField_2);
+		
+		lblNewLabel_1_6 = new JLabel("Ngày nhận phòng:");
+		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_6.setBounds(823, 22, 281, 31);
+		panel_datphong.add(lblNewLabel_1_6);
+		
+		lblNewLabel_1_7 = new JLabel("Ngày trả phòng:");
+		lblNewLabel_1_7.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblNewLabel_1_7.setBounds(823, 79, 281, 31);
+		panel_datphong.add(lblNewLabel_1_7);
+		
+		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("New JGoodies label");
+		lblNewJgoodiesLabel.setBounds(1087, 566, 241, 245);
+		Frame.add(lblNewJgoodiesLabel);
+		
+        
+		 
         
 		
 		
@@ -411,7 +579,6 @@ public class GUI_DatPhong extends JFrame{
                     
 	}
 
-	
 
 	public JButton getBtnTK() {
 		return btnTK;
