@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+<<<<<<< HEAD
 import javax.swing.border.LineBorder;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextArea;
@@ -33,6 +34,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+=======
+
+import java.awt.*;
+import java.awt.event.*;
+>>>>>>> parent of 10d9dd9 (sua bai ne)
 
 
 
@@ -103,7 +109,6 @@ public class GUI_DatPhong extends JFrame{
 	 * Create the frame.
 	 */
 	public GUI_DatPhong() {
-		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

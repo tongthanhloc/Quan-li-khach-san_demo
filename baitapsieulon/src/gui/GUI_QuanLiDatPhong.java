@@ -5,7 +5,6 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,12 +13,6 @@ import java.util.Arrays;
 
 
 import javax.swing.border.LineBorder;
-import connectDB.ConnectDB;
-import dao.Phong_DAO;
-import entity.Phong;
-
-
-
 
 
 public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
@@ -70,17 +63,14 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	private JLabel lblBoTr;
 	private JLabel lblbaotri;
 	private JButton[] button;
-    String soPhong[];
-    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
-    int trangThai[];
-//    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+    String soPhong[] = {"A0101","C0103","A0102","A0103","A0104","A0105","A0106","A0107","A0108","A0109","A0110","B0101","B0102","B0103","B0104","B0105","C0101","C0102"};
+    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc",""};
+    int trangThai[] = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4};
 	private String[][] mangHaiChieu;
 	private JPanel panel;
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
-	private JComboBox<String> cbPhongBan;
 	/**
 	 * Launch the application.
 	 */
@@ -101,7 +91,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	 * Create the frame.
 	 */
 	public GUI_QuanLiDatPhong() {
-		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,32 +103,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 
 		
 		
-		try {
-			ConnectDB.getInstance().connect();
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		Phong_dao  = new Phong_DAO();
-		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
-		soPhong = new String[dsP.size()];
-		for (int i = 0; i < dsP.size(); i++) {
-			soPhong[i] = dsP.get(i).getMaPhong();
-		}
-		trangThai = new int[dsP.size()];
-		for (int i = 0; i < dsP.size(); i++) {
-			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
-				trangThai[i] = 1;
-			}
-			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
-				trangThai[i] = 2;
-			}
-			if (dsP.get(i).getTrangThai().equals("Tr?ng")) {
-				trangThai[i] = 3;
-			}
-			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
-				trangThai[i] = 4;
-			}
-		}
 		
 		
 		
@@ -885,7 +848,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
                  
                     
 	}
-
 
 	public void itemStateChanged(ItemEvent e) {
 		// TODO Auto-generated method stub
