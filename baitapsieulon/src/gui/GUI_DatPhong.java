@@ -143,7 +143,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
 				trangThai[i] = 2;
 			}
-			if (dsP.get(i).getTrangThai().equals("Tr?ng")) {
+			if (dsP.get(i).getTrangThai().equals("Trống")) {
 				trangThai[i] = 3;
 			}
 			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
