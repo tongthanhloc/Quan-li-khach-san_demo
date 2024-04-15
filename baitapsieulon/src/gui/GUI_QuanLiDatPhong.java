@@ -701,7 +701,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         
         
         
-        button = new JButton[soPhong.length];
+//        button = new JButton[soPhong.length];
 //        for (int i = 0; i < soPhong.length; i++) {
 //            button[i] = new JButton();
 //            StringBuilder htmlText = new StringBuilder("<html><center>");

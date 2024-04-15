@@ -4,14 +4,23 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-
+import dao.Phong_DAO;
+import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.swing.border.LineBorder;
 
 
 
-public class GUI_DatPhong extends JFrame{
+public class GUI_DatPhong extends JFrame implements ItemListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel Frame;
@@ -41,6 +50,44 @@ public class GUI_DatPhong extends JFrame{
     private JButton btnGUI_TraPhong;
     private JButton btnGUI_doiPhong;
     private JButton btnGUI_GiahanPhong;
+    private JTextField textField;
+    private JTextField textField_1;
+    private JTextField textField_2;
+    private JTextField textField_3;
+    private JLabel lblNewLabel_1_4;
+    private JTextField textField_4;
+    private JPanel panelP;
+    private JLabel lblNewLabel_7;
+    private JTextField textField_5;
+    private JLabel lblNewLabel_8;
+    private JTextField textField_6;
+    private JLabel lblNewLabel_9;
+    private JTextField textField_7;
+    private JLabel lblNewLabel_10;
+    private JLabel lblNewLabel_11;
+    private JTextField textField_8;
+    private JTextField textField_9;
+    private JButton btntPhng;
+    private JButton btnHy;
+	private Container outerPanel;
+	private JButton[] button;
+	String soPhong[];
+    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+    int trangThai[];
+//    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+	private String[][] mangHaiChieu;
+	private JPanel panel;
+	private String maphongs[]=null;
+	private int trangTs[]=null;
+	private String tens[]=null;
+	private Phong_DAO Phong_dao;
+	private JComboBox<String> cbPhongBan;
+	private JCheckBox chckbxPdon;
+	private JCheckBox chckbxPdoi;
+	private JCheckBox chckbxPVip;
+	private JPanel panelKH;
+	
+
 
 
 	/**
@@ -76,6 +123,33 @@ public class GUI_DatPhong extends JFrame{
 
 		
 		
+		
+		try {
+			ConnectDB.getInstance().connect();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		Phong_dao  = new Phong_DAO();
+		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
+		soPhong = new String[dsP.size()];
+		for (int i = 0; i < dsP.size(); i++) {
+			soPhong[i] = dsP.get(i).getMaPhong();
+		}
+		trangThai = new int[dsP.size()];
+		for (int i = 0; i < dsP.size(); i++) {
+			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
+				trangThai[i] = 1;
+			}
+			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
+				trangThai[i] = 2;
+			}
+			if (dsP.get(i).getTrangThai().equals("Tr?ng")) {
+				trangThai[i] = 3;
+			}
+			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
+				trangThai[i] = 4;
+			}
+		}
 		
 		
 		
@@ -280,7 +354,193 @@ public class GUI_DatPhong extends JFrame{
 		lblNewLabel_6.setBounds(0, 754, 250, 30);
 		panel_menu.add(lblNewLabel_6);
 		
-        
+		panelKH = new JPanel();
+		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelKH.setBounds(250, 150, 1654, 138);
+		Frame.add(panelKH);
+		panelKH.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Căn cước công dân:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(100, 37, 185, 26);
+		panelKH.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(313, 37, 350, 26);
+		panelKH.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Tìm");
+		btnNewButton.setBackground(new Color(234, 232, 214));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnNewButton.setBounds(696, 37, 96, 26);
+		panelKH.add(btnNewButton);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(313, 86, 350, 26);
+		panelKH.add(textField_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1.setBounds(100, 86, 185, 26);
+		panelKH.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Tên Khách hàng:");
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_2.setBounds(990, 37, 185, 26);
+		panelKH.add(lblNewLabel_1_2);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(1185, 37, 350, 26);
+		panelKH.add(textField_2);
+		
+		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_3.setBounds(990, 86, 61, 26);
+		panelKH.add(lblNewLabel_1_3);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(1067, 86, 120, 26);
+		panelKH.add(textField_3);
+		
+		lblNewLabel_1_4 = new JLabel("Giới Tính:");
+		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_4.setBounds(1243, 86, 96, 26);
+		panelKH.add(lblNewLabel_1_4);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(1370, 86, 166, 26);
+		panelKH.add(textField_4);
+		
+		panelP = new JPanel();
+		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelP.setBounds(250, 288, 1654, 208);
+		Frame.add(panelP);
+		panelP.setLayout(null);
+		
+		lblNewLabel_7 = new JLabel("Mã Phòng:");
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_7.setBounds(100, 27, 185, 26);
+		panelP.add(lblNewLabel_7);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(313, 27, 350, 26);
+		panelP.add(textField_5);
+		
+		lblNewLabel_8 = new JLabel("Số người");
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_8.setBounds(100, 75, 185, 26);
+		panelP.add(lblNewLabel_8);
+		
+		textField_6 = new JTextField();
+		textField_6.setColumns(10);
+		textField_6.setBounds(313, 75, 350, 26);
+		panelP.add(textField_6);
+		
+		lblNewLabel_9 = new JLabel("Dịch vụ:");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_9.setBounds(100, 120, 185, 26);
+		panelP.add(lblNewLabel_9);
+		
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		textField_7.setBounds(313, 120, 350, 26);
+		panelP.add(textField_7);
+		
+		lblNewLabel_10 = new JLabel("Số người");
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_10.setBounds(992, 75, 185, 26);
+		panelP.add(lblNewLabel_10);
+		
+		lblNewLabel_11 = new JLabel("Mã Phòng:");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_11.setBounds(992, 27, 185, 26);
+		panelP.add(lblNewLabel_11);
+		
+		textField_8 = new JTextField();
+		textField_8.setColumns(10);
+		textField_8.setBounds(1205, 27, 350, 26);
+		panelP.add(textField_8);
+		
+		textField_9 = new JTextField();
+		textField_9.setColumns(10);
+		textField_9.setBounds(1205, 75, 350, 26);
+		panelP.add(textField_9);
+		
+		btntPhng = new JButton("Đặt phòng");
+		btntPhng.setBackground(new Color(234, 232, 214));
+		btntPhng.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btntPhng.setBounds(1205, 166, 153, 26);
+		panelP.add(btntPhng);
+		
+		btnHy = new JButton("Hủy");
+		btnHy.setBackground(new Color(234, 232, 214));
+		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnHy.setBounds(1378, 166, 153, 26);
+		panelP.add(btnHy);
+		
+		chckbxPdon = new JCheckBox("Phòng đơn (A)");
+		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		chckbxPdon.setBounds(287, 500, 178, 43);
+		Frame.add(chckbxPdon);
+		chckbxPdon.setSelected(true);
+		
+
+		
+		chckbxPdoi = new JCheckBox("Phòng đôi (B)");
+		chckbxPdoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		chckbxPdoi.setBounds(577, 503, 178, 43);
+		Frame.add(chckbxPdoi);
+		chckbxPdoi.setSelected(true);
+		
+
+		
+		chckbxPVip = new JCheckBox("Phòng VIP (C)");
+		chckbxPVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		chckbxPVip.setBounds(863, 503, 178, 43);
+		Frame.add(chckbxPVip);
+		chckbxPVip.setSelected(true);
+		
+		outerPanel = new JPanel(null);
+		outerPanel.setBounds(287, 550, 1580, 400);
+		Frame.add(outerPanel);
+		
+		
+
+        // Tạo một panel bên trong với layout null và kích thước cố định
+		panel = new JPanel(null);
+        panel.setPreferredSize(new Dimension(1500, 380));
+		
+		 JScrollPane scrollPane = new JScrollPane(panel);                      
+		 scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+	        // Đặt vị trí và kích thước của JScrollPane để trùng với panel bên ngoài
+		 scrollPane.setBounds(0, 0, 1580, 400);
+
+	        // Thêm JScrollPane vào panel bên ngoài
+	     outerPanel.add(scrollPane);
+	     mangHaiChieu = new String[3][soPhong.length];
+	        for (int i = 0; i < soPhong.length; i++) {
+	            mangHaiChieu[0][i] = soPhong[i];
+	            mangHaiChieu[1][i] = tenKhachHang[i];
+	            mangHaiChieu[2][i] = String.valueOf(trangThai[i]);
+	        }
+//	        
+	        mangHaiChieu = sapXep(mangHaiChieu);
+	        soPhong = mangHaiChieu[0];
+	        tenKhachHang = mangHaiChieu[1];
+	        trangThai = new int[soPhong.length];
+	        
+			for (int i = 0; i < soPhong.length; i++) {
+				trangThai[i] = Integer.parseInt(mangHaiChieu[2][i]);
+			}
+			
+	        button=createButtons(panel, soPhong, tenKhachHang, trangThai);
 		
         
 		
@@ -406,12 +666,176 @@ public class GUI_DatPhong extends JFrame{
                     btnGUI_TraPhong.addActionListener(actionListener);
                     btnGUI_doiPhong.addActionListener(actionListener);
                     btnGUI_GiahanPhong.addActionListener(actionListener);
+                    chckbxPdon.addItemListener(this);
+                    chckbxPdoi.addItemListener(this);
+                    chckbxPVip.addItemListener(this);
                     
                  
                     
 	}
+	public void itemStateChanged(ItemEvent e) {
+		maphongs = new String[0];
+		tens = new String[0];
+		trangTs = new int[0];
+		System.out.println("itemStateChanged");
+		for (int i = 0; i < maphongs.length; i++) {
+			maphongs[i] = null;
+			tens[i] = null;
+			trangTs[i] = 0;
+		}
+		
+		
+		if (chckbxPdon.isSelected()) {
+			for (int i = 0; i < soPhong.length; i++) {
+				if (soPhong[i].contains("A")&& trangThai[i]==3) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}
+		}}
+		
+		
+		if (chckbxPdoi.isSelected()) {
+			for (int i = 0; i < soPhong.length; i++) {
+				if (soPhong[i].contains("B")&& trangThai[i]==3) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+					
+				}
+				
+			}
+			
+		}
+		
+		if (chckbxPVip.isSelected()) {
+			for (int i = 0; i < soPhong.length; i++) {
+				if (soPhong[i].contains("C") && trangThai[i]==3) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}
+			}
+		}
+		if (chckbxPdon.isSelected() == false && chckbxPdoi.isSelected() == false && chckbxPVip.isSelected() == false) {
+			chckbxPdon.setSelected(true);
+			chckbxPdoi.setSelected(true);
+			chckbxPVip.setSelected(true);
+		}
+		panel.removeAll();
+		panel.repaint();
+		panel.revalidate();
+		String[][] mangHaiChie = new String[3][maphongs.length];
+		
+		for (int i = 0; i < maphongs.length; i++) {
+			mangHaiChie[0][i] = maphongs[i];
+			mangHaiChie[1][i] = tens[i];
+			mangHaiChie[2][i] = String.valueOf(trangTs[i]);
+		}
+		mangHaiChie = createTwoDimensionalArray(maphongs,tens, trangTs);
+		mangHaiChie = sapXep(mangHaiChie);
+		
+		maphongs = mangHaiChie[0];
+		tens = mangHaiChie[1];
+		trangTs = new int[maphongs.length];
+		for (int i = 0; i < maphongs.length; i++) {
+			trangTs[i] = Integer.parseInt(mangHaiChie[2][i]);
+		}
+		button = createButtons(panel, maphongs, tens, trangTs);
+	}
+
+	public static String[][] createTwoDimensionalArray(String[] maphong, String[] ten, int[] trangT) {
+        Set<String> uniqueMaphong = new HashSet<>();
+        List<String> uniqueMaphongList = new ArrayList<>();
+        List<String> tenList = new ArrayList<>();
+        List<Integer> trangTList = new ArrayList<>();
+
+        for (int i = 0; i < maphong.length; i++) {
+            if (!uniqueMaphong.contains(maphong[i])) {
+                uniqueMaphong.add(maphong[i]);
+                uniqueMaphongList.add(maphong[i]);
+                tenList.add(ten[i]);
+                trangTList.add(trangT[i]);
+            }
+        }
+
+        String[][] mangHaiChieu = new String[3][uniqueMaphongList.size()];
+        for (int i = 0; i < uniqueMaphongList.size(); i++) {
+            mangHaiChieu[0][i] = uniqueMaphongList.get(i);
+            mangHaiChieu[1][i] = tenList.get(i);
+            mangHaiChieu[2][i] = String.valueOf(trangTList.get(i));
+        }
+        return mangHaiChieu;
+    }
+	
+	
+	public static JButton[] createButtons(JPanel panel, String[] roomNumbers, String[] customerNames, int[] statuses) {
+        JButton[] buttons = new JButton[roomNumbers.length];
+        for (int i = 0; i < roomNumbers.length; i++) {
+            buttons[i] = new JButton();
+            StringBuilder htmlText = new StringBuilder("<html><center>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(roomNumbers[i]).append("</span><br/>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
+            htmlText.append("</center></html>");
+            buttons[i].setText(htmlText.toString());
+            buttons[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
+            panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
+            buttons[i].setText(buttons[i].getText().replaceAll("na", customerNames[i]));
+
+            switch (statuses[i]) {
+                case 1:
+                    buttons[i].setBackground(new Color(34, 242, 93));
+                    break;
+                case 2:
+                    buttons[i].setBackground(new Color(242, 128, 116));
+                    break;
+                case 3:
+                    buttons[i].setBackground(new Color(5, 207, 251));
+                    break;
+                case 4:
+                    buttons[i].setBackground(new Color(251, 193, 146));
+                    break;
+                default:
+                    // Handle other statuses if necessary
+                    break;
+            }
+
+            panel.add(buttons[i]);
+        }
+		return buttons;
+    }
 
 	
+	public static String[][] sapXep(String[][] mangHaiChieu) {
+		String temp;
+		for (int i = 0; i < mangHaiChieu[0].length; i++) {
+			for (int j = i + 1; j < mangHaiChieu[0].length; j++) {
+				if (mangHaiChieu[0][i].compareTo(mangHaiChieu[0][j]) > 0) {
+					temp = mangHaiChieu[0][i];
+					mangHaiChieu[0][i] = mangHaiChieu[0][j];
+					mangHaiChieu[0][j] = temp;
+
+					temp = mangHaiChieu[1][i];
+					mangHaiChieu[1][i] = mangHaiChieu[1][j];
+					mangHaiChieu[1][j] = temp;
+
+					temp = mangHaiChieu[2][i];
+					mangHaiChieu[2][i] = mangHaiChieu[2][j];
+					mangHaiChieu[2][j] = temp;
+				}
+			}
+		}
+		return mangHaiChieu;
+	}
 
 	public JButton getBtnTK() {
 		return btnTK;
