@@ -545,7 +545,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			maphongs = new String[0];
 			tens = new String[0];
 			trangTs = new int[0];
-			System.out.println("itemStateChanged");
+			
 			for (int i = 0; i < maphongs.length; i++) {
 				maphongs[i] = null;
 				tens[i] = null;

@@ -218,8 +218,8 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		
 		btnGUI_datPhong = new JButton("Đặt phòng");
 		btnGUI_datPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_datPhong.setForeground(new Color(0, 0, 0));
-		btnGUI_datPhong.setBackground(new Color(164, 194, 163));
+		btnGUI_datPhong.setForeground(Color.WHITE);
+		btnGUI_datPhong.setBackground(new Color(41, 139, 116));
 		btnGUI_datPhong.setBounds(290, 25, 200, 100);
 		panel_top.add(btnGUI_datPhong);
 		
@@ -231,9 +231,9 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panel_top.add(btnGUI_nhanPhong);
 		
 		btnGUI_TraPhong = new JButton("Trả Phòng");
-		btnGUI_TraPhong.setForeground(Color.WHITE);
+		btnGUI_TraPhong.setForeground(new Color(0, 0, 0));
 		btnGUI_TraPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_TraPhong.setBackground(new Color(41, 139, 116));
+		btnGUI_TraPhong.setBackground(new Color(164, 194, 163));
 		btnGUI_TraPhong.setBounds(750, 26, 200, 100);
 		panel_top.add(btnGUI_TraPhong);
 		

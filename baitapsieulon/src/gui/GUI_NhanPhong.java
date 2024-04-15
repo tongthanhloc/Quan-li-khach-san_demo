@@ -55,14 +55,12 @@ public class GUI_NhanPhong extends JFrame {
     private JTextField textField_2;
     private JTextField textField_3;
     private JLabel lblNewLabel_1_4;
-    private JTextField textField_4;
     private JPanel panelP;
     private JLabel lblNewLabel_7;
     private JTextField textField_5;
     private JLabel lblNewLabel_8;
     private JTextField textField_6;
     private JLabel lblNewLabel_9;
-    private JTextField textField_7;
     private JLabel lblNewLabel_10;
     private JLabel lblNewLabel_11;
     private JTextField textField_8;
@@ -79,8 +77,9 @@ public class GUI_NhanPhong extends JFrame {
 	private int trangTs[]=null;
 	private String tens[]=null;
 	private Phong_DAO Phong_dao;
-	private JComboBox<String> cbPhongBan;
+	
 	private JPanel panelKH;
+	private JComboBox cbxDichvu;
 	
 
 
@@ -403,13 +402,15 @@ public class GUI_NhanPhong extends JFrame {
 		
 		lblNewLabel_1_4 = new JLabel("Giới Tính:");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_4.setBounds(1243, 86, 96, 26);
+		lblNewLabel_1_4.setBounds(1294, 86, 96, 26);
 		panelKH.add(lblNewLabel_1_4);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(1370, 86, 166, 26);
-		panelKH.add(textField_4);
+		JComboBox cbxGioiT = new JComboBox();
+		cbxGioiT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cbxGioiT.setBounds(1415, 86, 120, 26);
+		cbxGioiT.addItem("Nam");
+		cbxGioiT.addItem("Nữ");
+		panelKH.add(cbxGioiT);
 		
 		panelP = new JPanel();
 		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -441,11 +442,6 @@ public class GUI_NhanPhong extends JFrame {
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_9.setBounds(100, 120, 185, 26);
 		panelP.add(lblNewLabel_9);
-		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(313, 120, 350, 26);
-		panelP.add(textField_7);
 		
 		lblNewLabel_10 = new JLabel("Số người");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -512,6 +508,11 @@ public class GUI_NhanPhong extends JFrame {
 		lblsoPhongVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblsoPhongVip.setBounds(524, 167, 59, 24);
 		panelP.add(lblsoPhongVip);
+		
+		cbxDichvu = new JComboBox();
+		cbxDichvu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cbxDichvu.setBounds(313, 126, 350, 26);
+		panelP.add(cbxDichvu);
 	     
         
 		
