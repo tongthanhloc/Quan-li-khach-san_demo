@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.border.LineBorder;
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -73,7 +74,6 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private JCheckBox chckbxPVip;
 	private JPanel panelKH;
 	private JTextField txt;
-	private JTextField textField_6;
 	private JLabel lblNewLabel_1_1_3;
 	private JTextField txtPhongs;
 	private JLabel lblNewLabel_1_1_4;
@@ -420,11 +420,6 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		lblNewLabel_1_1_2.setBounds(990, 132, 185, 26);
 		panelKH.add(lblNewLabel_1_1_2);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(1203, 132, 350, 26);
-		panelKH.add(textField_6);
-		
 		lblNewLabel_1_1_3 = new JLabel("Phòng:");
 		lblNewLabel_1_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_1_3.setBounds(100, 179, 185, 26);
@@ -442,7 +437,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		
 		txtSoNguoi = new JTextField();
 		txtSoNguoi.setColumns(10);
-		txtSoNguoi.setBounds(1203, 179, 350, 26);
+		txtSoNguoi.setBounds(1185, 179, 368, 26);
 		panelKH.add(txtSoNguoi);
 		
 		btnXutHan = new JButton("Xuất Hóa đơn");
@@ -461,6 +456,13 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		comboBox.setBounds(1364, 88, 189, 24);
 		panelKH.add(comboBox);
+		
+		JDateChooser dateTraPhong = new JDateChooser();
+		dateTraPhong.setDateFormatString("dd/MM/yyyy");
+		
+		dateTraPhong.setBounds(1185, 132, 368, 26);
+		dateTraPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panelKH.add(dateTraPhong);
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -533,7 +535,6 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 			maphongs = new String[0];
 			tens = new String[0];
 			trangTs = new int[0];
-			System.out.println("itemStateChanged");
 			for (int i = 0; i < maphongs.length; i++) {
 				maphongs[i] = null;
 				tens[i] = null;
