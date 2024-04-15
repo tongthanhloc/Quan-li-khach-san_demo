@@ -3,12 +3,24 @@ package gui;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import connectDB.ConnectDB;
+import dao.Phong_DAO;
+import entity.Phong;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.swing.border.LineBorder;
 
 
 
-public class GUI_NhanPhong extends JFrame{
+public class GUI_NhanPhong extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel Frame;
@@ -33,11 +45,44 @@ public class GUI_NhanPhong extends JFrame{
     private JLabel btnTKTNV;
     private JLabel btnTKca;
     private JLabel btnmaNV;
+    private JButton btnGUI_datPhong;
     private JButton btnGUI_nhanPhong;
     private JButton btnGUI_TraPhong;
     private JButton btnGUI_doiPhong;
     private JButton btnGUI_GiahanPhong;
-	private JButton btnGUI_datPhong;
+    private JTextField textField;
+    private JTextField textField_1;
+    private JTextField textField_2;
+    private JTextField textField_3;
+    private JLabel lblNewLabel_1_4;
+    private JTextField textField_4;
+    private JPanel panelP;
+    private JLabel lblNewLabel_7;
+    private JTextField textField_5;
+    private JLabel lblNewLabel_8;
+    private JTextField textField_6;
+    private JLabel lblNewLabel_9;
+    private JTextField textField_7;
+    private JLabel lblNewLabel_10;
+    private JLabel lblNewLabel_11;
+    private JTextField textField_8;
+    private JTextField textField_9;
+    private JButton btntPhng;
+    private JButton btnHy;
+	private JButton[] button;
+	String soPhong[];
+    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+    int trangThai[];
+//    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+	private String[][] mangHaiChieu;
+	private String maphongs[]=null;
+	private int trangTs[]=null;
+	private String tens[]=null;
+	private Phong_DAO Phong_dao;
+	private JComboBox<String> cbPhongBan;
+	private JPanel panelKH;
+	
+
 
 
 	/**
@@ -60,6 +105,7 @@ public class GUI_NhanPhong extends JFrame{
 	 * Create the frame.
 	 */
 	public GUI_NhanPhong() {
+		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,6 +118,33 @@ public class GUI_NhanPhong extends JFrame{
 
 		
 		
+		
+		try {
+			ConnectDB.getInstance().connect();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		Phong_dao  = new Phong_DAO();
+		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
+		soPhong = new String[dsP.size()];
+		for (int i = 0; i < dsP.size(); i++) {
+			soPhong[i] = dsP.get(i).getMaPhong();
+		}
+		trangThai = new int[dsP.size()];
+		for (int i = 0; i < dsP.size(); i++) {
+			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
+				trangThai[i] = 1;
+			}
+			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
+				trangThai[i] = 2;
+			}
+			if (dsP.get(i).getTrangThai().equals("Tr?ng")) {
+				trangThai[i] = 3;
+			}
+			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
+				trangThai[i] = 4;
+			}
+		}
 		
 		
 		
@@ -146,15 +219,15 @@ public class GUI_NhanPhong extends JFrame{
 		
 		btnGUI_datPhong = new JButton("Đặt phòng");
 		btnGUI_datPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_datPhong.setForeground(new Color(255, 255, 255));
-		btnGUI_datPhong.setBackground(new Color(41, 139, 116));
+		btnGUI_datPhong.setForeground(new Color(0, 0, 0));
+		btnGUI_datPhong.setBackground(new Color(164, 194, 163));
 		btnGUI_datPhong.setBounds(290, 25, 200, 100);
 		panel_top.add(btnGUI_datPhong);
 		
 		btnGUI_nhanPhong = new JButton("Nhận Phòng");
-		btnGUI_nhanPhong.setForeground(new Color(0, 0, 0));
+		btnGUI_nhanPhong.setForeground(Color.WHITE);
 		btnGUI_nhanPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_nhanPhong.setBackground(new Color(164, 194, 163));
+		btnGUI_nhanPhong.setBackground(new Color(41, 139, 116));
 		btnGUI_nhanPhong.setBounds(520, 26, 200, 100);
 		panel_top.add(btnGUI_nhanPhong);
 		
@@ -245,7 +318,7 @@ public class GUI_NhanPhong extends JFrame{
 		
 		lblNewLabel_2 = new JLabel("__________________________________________");
 		lblNewLabel_2.setForeground(new Color(41, 111, 106));
-		lblNewLabel_2.setBounds(0, 624, 260, 19);
+		lblNewLabel_2.setBounds(0, 628, 260, 19);
 		panel_menu.add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("Thông tin khách sạn");
@@ -276,8 +349,170 @@ public class GUI_NhanPhong extends JFrame{
 		lblNewLabel_6.setBounds(0, 754, 250, 30);
 		panel_menu.add(lblNewLabel_6);
 		
-        
+		panelKH = new JPanel();
+		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelKH.setBounds(250, 150, 1654, 138);
+		Frame.add(panelKH);
+		panelKH.setLayout(null);
 		
+		JLabel lblNewLabel_1 = new JLabel("Căn cước công dân:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(100, 37, 185, 26);
+		panelKH.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(313, 37, 350, 26);
+		panelKH.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Tìm");
+		btnNewButton.setBackground(new Color(234, 232, 214));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnNewButton.setBounds(696, 37, 96, 26);
+		panelKH.add(btnNewButton);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(313, 86, 350, 26);
+		panelKH.add(textField_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1.setBounds(100, 86, 185, 26);
+		panelKH.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Tên Khách hàng:");
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_2.setBounds(990, 37, 185, 26);
+		panelKH.add(lblNewLabel_1_2);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(1185, 37, 350, 26);
+		panelKH.add(textField_2);
+		
+		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_3.setBounds(990, 86, 61, 26);
+		panelKH.add(lblNewLabel_1_3);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(1067, 86, 120, 26);
+		panelKH.add(textField_3);
+		
+		lblNewLabel_1_4 = new JLabel("Giới Tính:");
+		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_4.setBounds(1243, 86, 96, 26);
+		panelKH.add(lblNewLabel_1_4);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(1370, 86, 166, 26);
+		panelKH.add(textField_4);
+		
+		panelP = new JPanel();
+		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelP.setBounds(250, 288, 1654, 260);
+		Frame.add(panelP);
+		panelP.setLayout(null);
+		
+		lblNewLabel_7 = new JLabel("Mã Phòng:");
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_7.setBounds(100, 27, 185, 26);
+		panelP.add(lblNewLabel_7);
+		
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(313, 27, 350, 26);
+		panelP.add(textField_5);
+		
+		lblNewLabel_8 = new JLabel("Số người");
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_8.setBounds(100, 75, 185, 26);
+		panelP.add(lblNewLabel_8);
+		
+		textField_6 = new JTextField();
+		textField_6.setColumns(10);
+		textField_6.setBounds(313, 75, 350, 26);
+		panelP.add(textField_6);
+		
+		lblNewLabel_9 = new JLabel("Dịch vụ:");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_9.setBounds(100, 120, 185, 26);
+		panelP.add(lblNewLabel_9);
+		
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		textField_7.setBounds(313, 120, 350, 26);
+		panelP.add(textField_7);
+		
+		lblNewLabel_10 = new JLabel("Số người");
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_10.setBounds(992, 75, 185, 26);
+		panelP.add(lblNewLabel_10);
+		
+		lblNewLabel_11 = new JLabel("Mã Phòng:");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_11.setBounds(992, 27, 185, 26);
+		panelP.add(lblNewLabel_11);
+		
+		textField_8 = new JTextField();
+		textField_8.setColumns(10);
+		textField_8.setBounds(1205, 27, 350, 26);
+		panelP.add(textField_8);
+		
+		textField_9 = new JTextField();
+		textField_9.setColumns(10);
+		textField_9.setBounds(1205, 75, 350, 26);
+		panelP.add(textField_9);
+		
+		btntPhng = new JButton("Nhận Phòng");
+		btntPhng.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btntPhng.setBackground(new Color(234, 232, 214));
+		btntPhng.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btntPhng.setBounds(1207, 223, 153, 26);
+		panelP.add(btntPhng);
+		
+		btnHy = new JButton("Hủy");
+		btnHy.setBackground(new Color(234, 232, 214));
+		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnHy.setBounds(1380, 223, 153, 26);
+		panelP.add(btnHy);
+		
+		JLabel lblNewLabel_12 = new JLabel("Phòng đơn:");
+		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_12.setBounds(100, 166, 101, 24);
+		panelP.add(lblNewLabel_12);
+		
+		JLabel lblNewLabel_12_1 = new JLabel("Phòng đơn:");
+		lblNewLabel_12_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_12_1.setBounds(254, 167, 101, 24);
+		panelP.add(lblNewLabel_12_1);
+		
+		JLabel lblNewLabel_12_2 = new JLabel("Phòng đơn:");
+		lblNewLabel_12_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_12_2.setBounds(413, 167, 101, 24);
+		panelP.add(lblNewLabel_12_2);
+		
+		JLabel lblsoPhongDon = new JLabel("10");
+		lblsoPhongDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblsoPhongDon.setBounds(211, 166, 33, 24);
+		panelP.add(lblsoPhongDon);
+		
+		JLabel lblsoPhongDoi = new JLabel("10");
+		lblsoPhongDoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblsoPhongDoi.setBounds(365, 167, 59, 24);
+		panelP.add(lblsoPhongDoi);
+		
+		JLabel lblsoPhongVip = new JLabel("10");
+		lblsoPhongVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblsoPhongVip.setBounds(524, 167, 59, 24);
+		panelP.add(lblsoPhongVip);
+	     
         
 		
 		
@@ -361,12 +596,12 @@ public class GUI_NhanPhong extends JFrame{
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
-                    setVisible(false); // Đóng frame hiện tại
-                    new GUI_DatPhong().setVisible(true);
                 } else if (clickedButton == btnGUI_nhanPhong) {
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
+                    setVisible(false); // Đóng frame hiện tại
+                    new GUI_NhanPhong().setVisible(true);
                 } else if (clickedButton == btnGUI_TraPhong) {
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
@@ -406,7 +641,6 @@ public class GUI_NhanPhong extends JFrame{
                  
                     
 	}
-
 	
 
 	public JButton getBtnTK() {
