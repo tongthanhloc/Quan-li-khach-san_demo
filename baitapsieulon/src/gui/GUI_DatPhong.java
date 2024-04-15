@@ -540,9 +540,44 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 				trangThai[i] = Integer.parseInt(mangHaiChieu[2][i]);
 			}
 			
-	        button=createButtons(panel, soPhong, tenKhachHang, trangThai);
+//	        button=createButtons(panel, soPhong, tenKhachHang, trangThai);
 		
-        
+			maphongs = new String[0];
+			tens = new String[0];
+			trangTs = new int[0];
+			System.out.println("itemStateChanged");
+			for (int i = 0; i < maphongs.length; i++) {
+				maphongs[i] = null;
+				tens[i] = null;
+				trangTs[i] = 0;
+			}
+			for (int i = 0; i < soPhong.length; i++) {
+				if (soPhong[i].contains("A")&& trangThai[i]==3) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}
+				if (soPhong[i].contains("B")&& trangThai[i]==3) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}
+				if (soPhong[i].contains("B")&& trangThai[i]==3) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}}
+			button = createButtons(panel, maphongs, tens, trangTs);
+			
 		
 		
 		Frame.addMouseListener(new MouseAdapter() {
@@ -677,7 +712,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		maphongs = new String[0];
 		tens = new String[0];
 		trangTs = new int[0];
-		System.out.println("itemStateChanged");
 		for (int i = 0; i < maphongs.length; i++) {
 			maphongs[i] = null;
 			tens[i] = null;

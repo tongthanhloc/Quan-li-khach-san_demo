@@ -592,16 +592,18 @@ public class GUI_NhanPhong extends JFrame {
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
+                    
                 } else if (clickedButton == btnGUI_datPhong) {
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
+                    setVisible(false); // Đóng frame hiện tại
+                    new GUI_DatPhong().setVisible(true);
                 } else if (clickedButton == btnGUI_nhanPhong) {
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
-                    setVisible(false); // Đóng frame hiện tại
-                    new GUI_NhanPhong().setVisible(true);
+                    
                 } else if (clickedButton == btnGUI_TraPhong) {
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
