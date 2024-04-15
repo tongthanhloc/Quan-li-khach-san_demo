@@ -12,11 +12,13 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.swing.border.LineBorder;
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -65,8 +67,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
     private JTextField textField_7;
     private JLabel lblNewLabel_10;
     private JLabel lblNewLabel_11;
-    private JTextField textField_8;
-    private JTextField textField_9;
     private JButton btntPhng;
     private JButton btnHy;
 	private Container outerPanel;
@@ -452,25 +452,15 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		textField_7.setBounds(313, 120, 350, 26);
 		panelP.add(textField_7);
 		
-		lblNewLabel_10 = new JLabel("Số người");
+		lblNewLabel_10 = new JLabel("Ngày trả Phòng:");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_10.setBounds(992, 75, 185, 26);
 		panelP.add(lblNewLabel_10);
 		
-		lblNewLabel_11 = new JLabel("Mã Phòng:");
+		lblNewLabel_11 = new JLabel("Ngày nhận phòng:");
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_11.setBounds(992, 27, 185, 26);
 		panelP.add(lblNewLabel_11);
-		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(1205, 27, 350, 26);
-		panelP.add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(1205, 75, 350, 26);
-		panelP.add(textField_9);
 		
 		btntPhng = new JButton("Đặt phòng");
 		btntPhng.setBackground(new Color(234, 232, 214));
@@ -483,6 +473,26 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnHy.setBounds(1378, 166, 153, 26);
 		panelP.add(btnHy);
+		
+		JDateChooser dateNhanP = new JDateChooser();
+		dateNhanP.setDateFormatString("dd/MM/yyyy");
+		dateNhanP.setBounds(1205, 27, 350, 26);
+		dateNhanP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		dateNhanP.setDate(new java.util.Date());
+		panelP.add(dateNhanP);
+		
+		JDateChooser dateTraP = new JDateChooser();
+		dateTraP.setDateFormatString("dd/MM/yyyy");
+		dateTraP.setBounds(1205, 75, 350, 26);
+		dateTraP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		//set date ngày mai
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, 1);
+		dateTraP.setDate(cal.getTime());
+		panelP.add(dateTraP);
+		//in ngày đã chọn của dateTraP
+		
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
