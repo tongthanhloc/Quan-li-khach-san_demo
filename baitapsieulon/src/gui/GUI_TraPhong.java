@@ -45,31 +45,18 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
     private JLabel btnTKTNV;
     private JLabel btnTKca;
     private JLabel btnmaNV;
+    private JButton btnGUI_datPhong;
     private JButton btnGUI_nhanPhong;
     private JButton btnGUI_TraPhong;
     private JButton btnGUI_doiPhong;
     private JButton btnGUI_GiahanPhong;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
+    private JTextField txtCCKH;
+    private JTextField txtSDTKH;
+    private JTextField txtTenKH;
+    private JTextField txtTuoiKH;
     private JLabel lblNewLabel_1_4;
-    private JTextField textField_4;
-    private JPanel panelP;
-    private JLabel lblNewLabel_7;
-    private JTextField textField_5;
-    private JLabel lblNewLabel_8;
-    private JTextField textField_6;
-    private JLabel lblNewLabel_9;
-    private JTextField textField_7;
-    private JLabel lblNewLabel_10;
-    private JLabel lblNewLabel_11;
-    private JTextField textField_8;
-    private JTextField textField_9;
-    private JButton btntPhng;
-    private JButton btnHy;
 	private Container outerPanel;
-	private JButton[] button;
+	private JButton button[];
 	String soPhong[];
     String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
     int trangThai[];
@@ -80,12 +67,19 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private int trangTs[]=null;
 	private String tens[]=null;
 	private Phong_DAO Phong_dao;
-	private JComboBox<String> cbPhongBan;
+
 	private JCheckBox chckbxPdon;
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
 	private JPanel panelKH;
-	private JButton btnGUI_DatPhong;
+	private JTextField txt;
+	private JTextField textField_6;
+	private JLabel lblNewLabel_1_1_3;
+	private JTextField txtPhongs;
+	private JLabel lblNewLabel_1_1_4;
+	private JTextField txtSoNguoi;
+	private JButton btnXutHan;
+	private JButton btnHy;
 	
 
 
@@ -222,12 +216,12 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
-		btnGUI_DatPhong = new JButton("Đặt phòng");
-		btnGUI_DatPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_DatPhong.setForeground(new Color(0, 0, 0));
-		btnGUI_DatPhong.setBackground(new Color(164, 194, 163));
-		btnGUI_DatPhong.setBounds(290, 25, 200, 100);
-		panel_top.add(btnGUI_DatPhong);
+		btnGUI_datPhong = new JButton("Đặt phòng");
+		btnGUI_datPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnGUI_datPhong.setForeground(new Color(0, 0, 0));
+		btnGUI_datPhong.setBackground(new Color(164, 194, 163));
+		btnGUI_datPhong.setBounds(290, 25, 200, 100);
+		panel_top.add(btnGUI_datPhong);
 		
 		btnGUI_nhanPhong = new JButton("Nhận Phòng");
 		btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -356,7 +350,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		
 		panelKH = new JPanel();
 		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelKH.setBounds(250, 150, 1654, 138);
+		panelKH.setBounds(250, 150, 1654, 279);
 		Frame.add(panelKH);
 		panelKH.setLayout(null);
 		
@@ -365,10 +359,10 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		lblNewLabel_1.setBounds(100, 37, 185, 26);
 		panelKH.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(313, 37, 350, 26);
-		panelKH.add(textField);
-		textField.setColumns(10);
+		txtCCKH = new JTextField();
+		txtCCKH.setBounds(313, 37, 350, 26);
+		panelKH.add(txtCCKH);
+		txtCCKH.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Tìm");
 		btnNewButton.setBackground(new Color(234, 232, 214));
@@ -376,10 +370,10 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		btnNewButton.setBounds(696, 37, 96, 26);
 		panelKH.add(btnNewButton);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(313, 86, 350, 26);
-		panelKH.add(textField_1);
+		txtSDTKH = new JTextField();
+		txtSDTKH.setColumns(10);
+		txtSDTKH.setBounds(313, 86, 350, 26);
+		panelKH.add(txtSDTKH);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -391,102 +385,86 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		lblNewLabel_1_2.setBounds(990, 37, 185, 26);
 		panelKH.add(lblNewLabel_1_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(1185, 37, 350, 26);
-		panelKH.add(textField_2);
+		txtTenKH = new JTextField();
+		txtTenKH.setColumns(10);
+		txtTenKH.setBounds(1185, 37, 368, 26);
+		panelKH.add(txtTenKH);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_3.setBounds(990, 86, 61, 26);
 		panelKH.add(lblNewLabel_1_3);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(1067, 86, 120, 26);
-		panelKH.add(textField_3);
+		txtTuoiKH = new JTextField();
+		txtTuoiKH.setColumns(10);
+		txtTuoiKH.setBounds(1067, 86, 120, 26);
+		panelKH.add(txtTuoiKH);
 		
 		lblNewLabel_1_4 = new JLabel("Giới Tính:");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_4.setBounds(1243, 86, 96, 26);
 		panelKH.add(lblNewLabel_1_4);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(1370, 86, 166, 26);
-		panelKH.add(textField_4);
+		JLabel lblNewLabel_1_1_1 = new JLabel("Ngày nhận phòng:");
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1_1.setBounds(100, 132, 185, 26);
+		panelKH.add(lblNewLabel_1_1_1);
 		
-		panelP = new JPanel();
-		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelP.setBounds(250, 288, 1654, 208);
-		Frame.add(panelP);
-		panelP.setLayout(null);
+		txt = new JTextField();
+		txt.setColumns(10);
+		txt.setBounds(313, 132, 350, 26);
+		panelKH.add(txt);
 		
-		lblNewLabel_7 = new JLabel("Mã Phòng:");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_7.setBounds(100, 27, 185, 26);
-		panelP.add(lblNewLabel_7);
-		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(313, 27, 350, 26);
-		panelP.add(textField_5);
-		
-		lblNewLabel_8 = new JLabel("Số người");
-		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_8.setBounds(100, 75, 185, 26);
-		panelP.add(lblNewLabel_8);
+		JLabel lblNewLabel_1_1_2 = new JLabel("Ngày trả phòng:");
+		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1_2.setBounds(990, 132, 185, 26);
+		panelKH.add(lblNewLabel_1_1_2);
 		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
-		textField_6.setBounds(313, 75, 350, 26);
-		panelP.add(textField_6);
+		textField_6.setBounds(1203, 132, 350, 26);
+		panelKH.add(textField_6);
 		
-		lblNewLabel_9 = new JLabel("Dịch vụ:");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_9.setBounds(100, 120, 185, 26);
-		panelP.add(lblNewLabel_9);
+		lblNewLabel_1_1_3 = new JLabel("Phòng:");
+		lblNewLabel_1_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1_3.setBounds(100, 179, 185, 26);
+		panelKH.add(lblNewLabel_1_1_3);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(313, 120, 350, 26);
-		panelP.add(textField_7);
+		txtPhongs = new JTextField();
+		txtPhongs.setColumns(10);
+		txtPhongs.setBounds(313, 179, 350, 26);
+		panelKH.add(txtPhongs);
 		
-		lblNewLabel_10 = new JLabel("Số người");
-		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_10.setBounds(992, 75, 185, 26);
-		panelP.add(lblNewLabel_10);
+		lblNewLabel_1_1_4 = new JLabel("Số Người:");
+		lblNewLabel_1_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1_4.setBounds(990, 179, 185, 26);
+		panelKH.add(lblNewLabel_1_1_4);
 		
-		lblNewLabel_11 = new JLabel("Mã Phòng:");
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_11.setBounds(992, 27, 185, 26);
-		panelP.add(lblNewLabel_11);
+		txtSoNguoi = new JTextField();
+		txtSoNguoi.setColumns(10);
+		txtSoNguoi.setBounds(1203, 179, 350, 26);
+		panelKH.add(txtSoNguoi);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(1205, 27, 350, 26);
-		panelP.add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(1205, 75, 350, 26);
-		panelP.add(textField_9);
-		
-		btntPhng = new JButton("Đặt phòng");
-		btntPhng.setBackground(new Color(234, 232, 214));
-		btntPhng.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btntPhng.setBounds(1205, 166, 153, 26);
-		panelP.add(btntPhng);
+		btnXutHan = new JButton("Xuất Hóa đơn");
+		btnXutHan.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnXutHan.setBackground(new Color(234, 232, 214));
+		btnXutHan.setBounds(1203, 238, 166, 26);
+		panelKH.add(btnXutHan);
 		
 		btnHy = new JButton("Hủy");
-		btnHy.setBackground(new Color(234, 232, 214));
 		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnHy.setBounds(1378, 166, 153, 26);
-		panelP.add(btnHy);
+		btnHy.setBackground(new Color(234, 232, 214));
+		btnHy.setBounds(1387, 238, 166, 26);
+		panelKH.add(btnHy);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		comboBox.setBounds(1364, 88, 189, 24);
+		panelKH.add(comboBox);
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		chckbxPdon.setBounds(287, 500, 178, 43);
+		chckbxPdon.setBounds(287, 436, 178, 43);
 		Frame.add(chckbxPdon);
 		chckbxPdon.setSelected(true);
 		
@@ -494,7 +472,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		
 		chckbxPdoi = new JCheckBox("Phòng đôi (B)");
 		chckbxPdoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		chckbxPdoi.setBounds(577, 503, 178, 43);
+		chckbxPdoi.setBounds(577, 439, 178, 43);
 		Frame.add(chckbxPdoi);
 		chckbxPdoi.setSelected(true);
 		
@@ -502,13 +480,14 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		
 		chckbxPVip = new JCheckBox("Phòng VIP (C)");
 		chckbxPVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		chckbxPVip.setBounds(863, 503, 178, 43);
+		chckbxPVip.setBounds(863, 439, 178, 43);
 		Frame.add(chckbxPVip);
 		chckbxPVip.setSelected(true);
 		
 		outerPanel = new JPanel(null);
-		outerPanel.setBounds(287, 550, 1580, 400);
+		outerPanel.setBounds(287, 486, 1580, 464);
 		Frame.add(outerPanel);
+		
 		
 		
 
@@ -520,7 +499,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		 scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 	        // Đặt vị trí và kích thước của JScrollPane để trùng với panel bên ngoài
-		 scrollPane.setBounds(0, 0, 1580, 400);
+		 scrollPane.setBounds(0, 0, 1580, 464);
 
 	        // Thêm JScrollPane vào panel bên ngoài
 	     outerPanel.add(scrollPane);
@@ -540,8 +519,56 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 				trangThai[i] = Integer.parseInt(mangHaiChieu[2][i]);
 			}
 			
-	        
-        
+//	        button=createButtons(panel, soPhong, tenKhachHang, trangThai);
+			
+//			soPhong = Arrays.copyOf(soPhong, soPhong.length + 1);
+//			soPhong[soPhong.length - 1] = "A11";
+//			tenKhachHang = Arrays.copyOf(tenKhachHang, tenKhachHang.length + 1);
+//			tenKhachHang[tenKhachHang.length - 1] = "Khongbie";
+//			trangThai = Arrays.copyOf(trangThai, trangThai.length + 1);
+//			trangThai[trangThai.length - 1] = 2;
+			
+			
+			
+			maphongs = new String[0];
+			tens = new String[0];
+			trangTs = new int[0];
+			System.out.println("itemStateChanged");
+			for (int i = 0; i < maphongs.length; i++) {
+				maphongs[i] = null;
+				tens[i] = null;
+				trangTs[i] = 0;
+			}
+			
+			for (int i = 0; i < soPhong.length; i++) {
+				if (soPhong[i].contains("A")&& trangThai[i]==2) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}
+				if (soPhong[i].contains("B")&& trangThai[i]==2) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}
+				if (soPhong[i].contains("B")&& trangThai[i]==2) {
+					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+					maphongs[maphongs.length - 1] = soPhong[i];
+					tens = Arrays.copyOf(tens, tens.length + 1);
+					tens[tens.length - 1] = tenKhachHang[i];
+					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
+					trangTs[trangTs.length - 1] = trangThai[i];
+				}}
+			
+			
+			button = createButtons(panel, maphongs, tens, trangTs);
+			
 		
 		
 		Frame.addMouseListener(new MouseAdapter() {
@@ -620,7 +647,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
-                } else if (clickedButton == btnGUI_DatPhong) {
+                } else if (clickedButton == btnGUI_datPhong) {
                     // Xử lý khi nhấn vào nút btnHT
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
@@ -661,7 +688,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
                     btnQLKM.addActionListener(actionListener);
                     btnQLDV.addActionListener(actionListener);
                     btnHT.addActionListener(actionListener);
-                    btnGUI_DatPhong.addActionListener(actionListener);
+                    btnGUI_datPhong.addActionListener(actionListener);
                     btnGUI_nhanPhong.addActionListener(actionListener);
                     btnGUI_TraPhong.addActionListener(actionListener);
                     btnGUI_doiPhong.addActionListener(actionListener);
@@ -677,7 +704,6 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		maphongs = new String[0];
 		tens = new String[0];
 		trangTs = new int[0];
-		System.out.println("itemStateChanged");
 		for (int i = 0; i < maphongs.length; i++) {
 			maphongs[i] = null;
 			tens[i] = null;
