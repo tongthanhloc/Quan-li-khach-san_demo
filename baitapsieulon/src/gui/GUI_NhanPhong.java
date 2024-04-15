@@ -219,15 +219,15 @@ public class GUI_NhanPhong extends JFrame {
 		
 		btnGUI_datPhong = new JButton("Đặt phòng");
 		btnGUI_datPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_datPhong.setForeground(new Color(0, 0, 0));
-		btnGUI_datPhong.setBackground(new Color(164, 194, 163));
+		btnGUI_datPhong.setForeground(Color.WHITE);
+		btnGUI_datPhong.setBackground(new Color(41, 139, 116));
 		btnGUI_datPhong.setBounds(290, 25, 200, 100);
 		panel_top.add(btnGUI_datPhong);
 		
 		btnGUI_nhanPhong = new JButton("Nhận Phòng");
-		btnGUI_nhanPhong.setForeground(Color.WHITE);
 		btnGUI_nhanPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnGUI_nhanPhong.setBackground(new Color(41, 139, 116));
+		btnGUI_nhanPhong.setForeground(new Color(0, 0, 0));
+		btnGUI_nhanPhong.setBackground(new Color(164, 194, 163));
 		btnGUI_nhanPhong.setBounds(520, 26, 200, 100);
 		panel_top.add(btnGUI_nhanPhong);
 		
