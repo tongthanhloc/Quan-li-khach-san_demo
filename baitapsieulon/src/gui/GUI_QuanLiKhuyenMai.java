@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import com.toedter.calendar.JDateChooser;
 
 public class GUI_QuanLiKhuyenMai extends JFrame {
 
@@ -56,11 +57,9 @@ public class GUI_QuanLiKhuyenMai extends JFrame {
 	private JLabel lblMa;
 	private JLabel lblThoiGianBD;
 	private JTextField txtMaKM;
-	private JTextField txtTGBD;
 	private JLabel lblTenKM;
 	private JLabel lblThoiGianKT;
 	private JTextField txtTenKM;
-	private JTextField txtTGKT;
 	private JButton btbXoaTrang;
 	private DefaultTableModel modelHD;
 	private JTable tableNV;
@@ -218,7 +217,8 @@ public class GUI_QuanLiKhuyenMai extends JFrame {
 		panel_menu.add(btnQLNV);
 		
 		btnQLKM = new JButton("Quản lí khuyến mãi");
-		btnQLKM.setBackground(new Color(55, 149, 128));
+		btnQLKM.setForeground(new Color(244, 244, 244));
+		btnQLKM.setBackground(new Color(41, 139, 116));
 		btnQLKM.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLKM.setBounds(0, 323, 250, 68);
 		panel_menu.add(btnQLKM);
@@ -286,18 +286,11 @@ public class GUI_QuanLiKhuyenMai extends JFrame {
 		panel_Center_Top.add(lblThoiGianBD);
 		
 		txtMaKM = new JTextField();
-		txtMaKM.setBackground(new Color(55, 149, 128));
+		txtMaKM.setBackground(new Color(41, 139, 116));
 		txtMaKM.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaKM.setColumns(10);
 		txtMaKM.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMaKM);
-		
-		txtTGBD = new JTextField();
-		txtTGBD.setBackground(new Color(55, 149, 128));
-		txtTGBD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTGBD.setColumns(10);
-		txtTGBD.setBounds(350, 75, 350, 40);
-		panel_Center_Top.add(txtTGBD);
 		
 		lblTenKM = new JLabel("Tên khuyến mãi");
 		lblTenKM.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -310,20 +303,14 @@ public class GUI_QuanLiKhuyenMai extends JFrame {
 		panel_Center_Top.add(lblThoiGianKT);
 		
 		txtTenKM = new JTextField();
-		txtTenKM.setBackground(new Color(55, 149, 128));
+		txtTenKM.setBackground(new Color(41, 139, 116));
 		txtTenKM.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenKM.setColumns(10);
 		txtTenKM.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenKM);
 		
-		txtTGKT = new JTextField();
-		txtTGKT.setBackground(new Color(55, 149, 128));
-		txtTGKT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTGKT.setColumns(10);
-		txtTGKT.setBounds(1100, 75, 350, 40);
-		panel_Center_Top.add(txtTGKT);
-		
 		btbXoaTrang = new JButton("Xóa trắng");
+		btbXoaTrang.setBackground(new Color(234, 232, 214));
 		btbXoaTrang.setBounds(1438, 176, 158, 35);
 		panel_Center_Top.add(btbXoaTrang);
 		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -336,21 +323,24 @@ public class GUI_QuanLiKhuyenMai extends JFrame {
 		txtPTKM = new JTextField();
 		txtPTKM.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtPTKM.setColumns(10);
-		txtPTKM.setBackground(new Color(55, 149, 128));
-		txtPTKM.setBounds(350, 123, 126, 40);
+		txtPTKM.setBackground(new Color(41, 139, 116));
+		txtPTKM.setBounds(350, 123, 350, 40);
 		panel_Center_Top.add(txtPTKM);
 		
 		JButton btn_Sua = new JButton("Sửa");
+		btn_Sua.setBackground(new Color(234, 232, 214));
 		btn_Sua.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Sua.setBounds(1229, 176, 175, 35);
 		panel_Center_Top.add(btn_Sua);
 		
 		JButton btn_Xoa = new JButton("Xóa");
+		btn_Xoa.setBackground(new Color(234, 232, 214));
 		btn_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Xoa.setBounds(1021, 176, 175, 35);
 		panel_Center_Top.add(btn_Xoa);
 		
 		JButton btnThem = new JButton("Thêm");
+		btnThem.setBackground(new Color(234, 232, 214));
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -358,6 +348,18 @@ public class GUI_QuanLiKhuyenMai extends JFrame {
 		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnThem.setBounds(822, 176, 175, 35);
 		panel_Center_Top.add(btnThem);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("dd/MM/yyyy");
+		dateChooser.setBackground(new Color(41, 139, 116));
+		dateChooser.setBounds(350, 75, 350, 35);
+		panel_Center_Top.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setDateFormatString("dd/MM/yyyy");
+		dateChooser_1.setBackground(new Color(41, 139, 116));
+		dateChooser_1.setBounds(1100, 75, 350, 35);
+		panel_Center_Top.add(dateChooser_1);
 		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));

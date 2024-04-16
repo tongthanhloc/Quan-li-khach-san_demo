@@ -8,6 +8,7 @@ import java.awt.event.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -47,8 +48,6 @@ public class GUI_QuanLiHoaDon extends JFrame{
     private JLabel lblNgDatPhong;
     private JLabel lblNgTraPhong;
     private JTextField txtMaKhachHang;
-    private JTextField txtNgDatPhong;
-    private JTextField txtNgTraPhong;
     private JButton btbXoaTrang;
     private JTable table;
 	private DefaultTableModel modelHD;
@@ -150,7 +149,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		btnTK = new JButton("<html><div style='text-align: center;'>Trần ngu</div></html>");
 		btnTK.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnTK.setForeground(new Color(244, 244, 244));
-		btnTK.setBackground(new Color(41, 139, 106));
+		btnTK.setBackground(new Color(41, 139, 116));
 		btnTK.setBounds(1647, 11, 247, 40);
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
@@ -192,7 +191,8 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		
 		
 		btnQLHD = new JButton("Quản lí hóa đơn");
-		btnQLHD.setBackground(new Color(55, 149, 128));
+		btnQLHD.setForeground(new Color(255, 255, 255));
+		btnQLHD.setBackground(new Color(41, 139, 116));
 		btnQLHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLHD.setBounds(0, 133, 250, 68);
 		panel_menu.add(btnQLHD);
@@ -285,21 +285,21 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		panel_Center_Top.add(lblNgNhanPhong);
 		
 		txtMahoaDon = new JTextField();
-		txtMahoaDon.setBackground(new Color(55, 149, 128));
+		txtMahoaDon.setBackground(new Color(41, 139, 116));
 		txtMahoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMahoaDon.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMahoaDon);
 		txtMahoaDon.setColumns(10);
 		
 		txtMaNhanVien = new JTextField();
-		txtMaNhanVien.setBackground(new Color(55, 149, 128));
+		txtMaNhanVien.setBackground(new Color(41, 139, 116));
 		txtMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaNhanVien.setColumns(10);
 		txtMaNhanVien.setBounds(350, 73, 350, 40);
 		panel_Center_Top.add(txtMaNhanVien);
 		
 		txtNgNhanPhong = new JTextField();
-		txtNgNhanPhong.setBackground(new Color(55, 149, 128));
+		txtNgNhanPhong.setBackground(new Color(41, 139, 116));
 		txtNgNhanPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNgNhanPhong.setColumns(10);
 		txtNgNhanPhong.setBounds(350, 125, 350, 40);
@@ -321,27 +321,14 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		panel_Center_Top.add(lblNgTraPhong);
 		
 		txtMaKhachHang = new JTextField();
-		txtMaKhachHang.setBackground(new Color(55, 149, 128));
+		txtMaKhachHang.setBackground(new Color(41, 139, 116));
 		txtMaKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaKhachHang.setColumns(10);
 		txtMaKhachHang.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtMaKhachHang);
 		
-		txtNgDatPhong = new JTextField();
-		txtNgDatPhong.setBackground(new Color(55, 149, 128));
-		txtNgDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgDatPhong.setColumns(10);
-		txtNgDatPhong.setBounds(1100, 75, 350, 40);
-		panel_Center_Top.add(txtNgDatPhong);
-		
-		txtNgTraPhong = new JTextField();
-		txtNgTraPhong.setBackground(new Color(55, 149, 128));
-		txtNgTraPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgTraPhong.setColumns(10);
-		txtNgTraPhong.setBounds(1100, 125, 350, 40);
-		panel_Center_Top.add(txtNgTraPhong);
-		
 		JButton btnTim = new JButton("Tìm");
+		btnTim.setBackground(new Color(234, 232, 214));
 		btnTim.setBounds(1160, 176, 175, 35);
 		panel_Center_Top.add(btnTim);
 		btnTim.addActionListener(new ActionListener() {
@@ -351,9 +338,18 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		btbXoaTrang = new JButton("Xóa trắng");
+		btbXoaTrang.setBackground(new Color(234, 232, 214));
 		btbXoaTrang.setBounds(1389, 176, 175, 35);
 		panel_Center_Top.add(btbXoaTrang);
 		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(1100, 75, 350, 35);
+		panel_Center_Top.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(1100, 125, 350, 35);
+		panel_Center_Top.add(dateChooser_1);
 		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));

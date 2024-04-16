@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.JComboBox;
 
 public class GUI_QuanLiNhanVien extends JFrame {
 
@@ -67,7 +68,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	private DefaultTableModel modelHD;
 	private JTable tableNV;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JComboBox comboBox;
 
 	/**
 	 * Launch the application.
@@ -171,6 +172,8 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		panel_top.add(btnTK);
 		
 		JButton btnThongKe = new JButton("Thống kê nhân viên");
+		btnThongKe.setBackground(new Color(41, 139, 116));
+		btnThongKe.setForeground(new Color(0, 0, 0));
 		btnThongKe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -180,6 +183,8 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnThemNhanVien = new JButton("Thêm nhân viên");
+		btnThemNhanVien.setForeground(new Color(0, 0, 0));
+		btnThemNhanVien.setBackground(new Color(41, 139, 116));
 		btnThemNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnThemNhanVien.setBounds(248, 27, 334, 99);
 		panel_top.add(btnThemNhanVien);
@@ -223,7 +228,8 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		
 		
 		btnQLNV = new JButton("Quản lí nhân viên");
-		btnQLNV.setBackground(new Color(55, 149, 128));
+		btnQLNV.setForeground(new Color(244, 244, 244));
+		btnQLNV.setBackground(new Color(41, 139, 116));
 		btnQLNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLNV.setBounds(0, 261, 250, 68);
 		panel_menu.add(btnQLNV);
@@ -297,14 +303,14 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		panel_Center_Top.add(lblCCCD);
 		
 		txtMaNhanVien = new JTextField();
-		txtMaNhanVien.setBackground(new Color(55, 149, 128));
+		txtMaNhanVien.setBackground(new Color(41, 139, 116));
 		txtMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaNhanVien.setColumns(10);
 		txtMaNhanVien.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMaNhanVien);
 		
 		txtCCCD = new JTextField();
-		txtCCCD.setBackground(new Color(55, 149, 128));
+		txtCCCD.setBackground(new Color(41, 139, 116));
 		txtCCCD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtCCCD.setColumns(10);
 		txtCCCD.setBounds(350, 75, 350, 40);
@@ -326,27 +332,28 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		panel_Center_Top.add(lblDC);
 		
 		txtTenNV = new JTextField();
-		txtTenNV.setBackground(new Color(55, 149, 128));
+		txtTenNV.setBackground(new Color(41, 139, 116));
 		txtTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenNV.setColumns(10);
 		txtTenNV.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenNV);
 		
 		txtSDT = new JTextField();
-		txtSDT.setBackground(new Color(55, 149, 128));
+		txtSDT.setBackground(new Color(41, 139, 116));
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSDT.setColumns(10);
 		txtSDT.setBounds(1100, 75, 350, 40);
 		panel_Center_Top.add(txtSDT);
 		
 		txtDC = new JTextField();
-		txtDC.setBackground(new Color(55, 149, 128));
+		txtDC.setBackground(new Color(41, 139, 116));
 		txtDC.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtDC.setColumns(10);
 		txtDC.setBounds(1100, 125, 350, 40);
 		panel_Center_Top.add(txtDC);
 		
 		JButton btnTim = new JButton("Tìm");
+		btnTim.setBackground(new Color(234, 232, 214));
 		btnTim.setBounds(1160, 176, 175, 35);
 		panel_Center_Top.add(btnTim);
 		btnTim.addActionListener(new ActionListener() {
@@ -356,11 +363,13 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		btbXoaTrang = new JButton("Xóa trắng");
+		btbXoaTrang.setBackground(new Color(234, 232, 214));
 		btbXoaTrang.setBounds(1389, 176, 175, 35);
 		panel_Center_Top.add(btbXoaTrang);
 		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblTuoi = new JLabel("Tuổi");
+		lblTuoi.setBackground(new Color(41, 139, 116));
 		lblTuoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTuoi.setBounds(140, 125, 186, 35);
 		panel_Center_Top.add(lblTuoi);
@@ -368,7 +377,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textField.setColumns(10);
-		textField.setBackground(new Color(55, 149, 128));
+		textField.setBackground(new Color(41, 139, 116));
 		textField.setBounds(225, 125, 100, 40);
 		panel_Center_Top.add(textField);
 		
@@ -377,12 +386,13 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		lblGioiTinh.setBounds(375, 125, 186, 35);
 		panel_Center_Top.add(lblGioiTinh);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(55, 149, 128));
-		textField_1.setBounds(514, 125, 186, 40);
-		panel_Center_Top.add(textField_1);
+		comboBox = new JComboBox();
+		comboBox.setForeground(new Color(0, 0, 0));
+		comboBox.setBackground(new Color(41, 139, 116));
+		comboBox.setBounds(489, 126, 211, 35);
+		comboBox.addItem("Nam");
+		comboBox.addItem("Nữ");
+		panel_Center_Top.add(comboBox);
 		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));

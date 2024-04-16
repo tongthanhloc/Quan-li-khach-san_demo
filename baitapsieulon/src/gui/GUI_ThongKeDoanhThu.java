@@ -136,7 +136,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 		btnTK = new JButton("<html><div style='text-align: center;'>Trần ngu</div></html>");
 		btnTK.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnTK.setForeground(new Color(244, 244, 244));
-		btnTK.setBackground(new Color(41, 139, 106));
+		btnTK.setBackground(new Color(41, 139, 116));
 		btnTK.setBounds(1647, 11, 247, 40);
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
@@ -178,7 +178,8 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 		
 		
 		btnQLHD = new JButton("Quản lí hóa đơn");
-		btnQLHD.setBackground(new Color(55, 149, 128));
+		btnQLHD.setForeground(new Color(244, 244, 244));
+		btnQLHD.setBackground(new Color(41, 139, 116));
 		btnQLHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLHD.setBounds(0, 133, 250, 68);
 		panel_menu.add(btnQLHD);

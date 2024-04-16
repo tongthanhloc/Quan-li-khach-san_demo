@@ -179,7 +179,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		
 		btnDatDV = new JButton("Đặt dịch vụ");
 		btnDatDV.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnDatDV.setBackground(Color.WHITE);
+		btnDatDV.setBackground(new Color(41, 139, 116));
 		btnDatDV.setBounds(244, 45, 250, 70);
 		panel_top.add(btnDatDV);
 		
@@ -234,7 +234,8 @@ public class GUI_QuanLiDichVu extends JFrame {
 		panel_menu.add(btnQLKM);
 		
 		btnQLDV = new JButton("Quản lí dịch vụ");
-		btnQLDV.setBackground(new Color(55, 149, 128));
+		btnQLDV.setForeground(new Color(244, 244, 244));
+		btnQLDV.setBackground(new Color(41, 139, 116));
 		btnQLDV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLDV.setBounds(0, 389, 250, 68);
 		panel_menu.add(btnQLDV);
@@ -296,14 +297,14 @@ public class GUI_QuanLiDichVu extends JFrame {
 		panel_Center_Top.add(lblThueVat);
 		
 		txtMaDV = new JTextField();
-		txtMaDV.setBackground(new Color(55, 149, 128));
+		txtMaDV.setBackground(new Color(41, 139, 116));
 		txtMaDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaDV.setColumns(10);
 		txtMaDV.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMaDV);
 		
 		txtThueVat = new JTextField();
-		txtThueVat.setBackground(new Color(55, 149, 128));
+		txtThueVat.setBackground(new Color(41, 139, 116));
 		txtThueVat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtThueVat.setColumns(10);
 		txtThueVat.setBounds(350, 75, 350, 40);
@@ -320,35 +321,39 @@ public class GUI_QuanLiDichVu extends JFrame {
 		panel_Center_Top.add(lblGiaNhap);
 		
 		txtTenDV = new JTextField();
-		txtTenDV.setBackground(new Color(55, 149, 128));
+		txtTenDV.setBackground(new Color(41, 139, 116));
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenDV.setColumns(10);
 		txtTenDV.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenDV);
 		
 		txtGiaNhao = new JTextField();
-		txtGiaNhao.setBackground(new Color(55, 149, 128));
+		txtGiaNhao.setBackground(new Color(41, 139, 116));
 		txtGiaNhao.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaNhao.setColumns(10);
 		txtGiaNhao.setBounds(1100, 75, 350, 40);
 		panel_Center_Top.add(txtGiaNhao);
 		
 		btbXoaTrang = new JButton("Xóa trắng");
+		btbXoaTrang.setBackground(new Color(234, 232, 214));
 		btbXoaTrang.setBounds(1438, 176, 158, 35);
 		panel_Center_Top.add(btbXoaTrang);
 		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btn_Sua = new JButton("Sửa");
+		btn_Sua.setBackground(new Color(234, 232, 214));
 		btn_Sua.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Sua.setBounds(1229, 176, 175, 35);
 		panel_Center_Top.add(btn_Sua);
 		
 		JButton btn_Xoa = new JButton("Xóa");
+		btn_Xoa.setBackground(new Color(234, 232, 214));
 		btn_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Xoa.setBounds(1021, 176, 175, 35);
 		panel_Center_Top.add(btn_Xoa);
 		
 		JButton btnThem = new JButton("Thêm");
+		btnThem.setBackground(new Color(234, 232, 214));
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -365,7 +370,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textField.setColumns(10);
-		textField.setBackground(new Color(55, 149, 128));
+		textField.setBackground(new Color(41, 139, 116));
 		textField.setBounds(350, 125, 350, 40);
 		panel_Center_Top.add(textField);
 		
@@ -377,7 +382,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		txtGiaBan = new JTextField();
 		txtGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaBan.setColumns(10);
-		txtGiaBan.setBackground(new Color(55, 149, 128));
+		txtGiaBan.setBackground(new Color(41, 139, 116));
 		txtGiaBan.setBounds(1100, 125, 350, 40);
 		panel_Center_Top.add(txtGiaBan);
 		
