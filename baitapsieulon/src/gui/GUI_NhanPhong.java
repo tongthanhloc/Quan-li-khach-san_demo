@@ -12,11 +12,14 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.swing.border.LineBorder;
+
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -80,6 +83,7 @@ public class GUI_NhanPhong extends JFrame {
 	
 	private JPanel panelKH;
 	private JComboBox cbxDichvu;
+	private JTextField textField_4;
 	
 
 
@@ -387,7 +391,7 @@ public class GUI_NhanPhong extends JFrame {
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(1185, 37, 350, 26);
+		textField_2.setBounds(1205, 41, 350, 26);
 		panelKH.add(textField_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
@@ -407,9 +411,11 @@ public class GUI_NhanPhong extends JFrame {
 		
 		JComboBox cbxGioiT = new JComboBox();
 		cbxGioiT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cbxGioiT.setBounds(1415, 86, 120, 26);
+		cbxGioiT.setBounds(1415, 86, 140, 26);
+		cbxGioiT.setAlignmentX(JComboBox.CENTER_ALIGNMENT);
 		cbxGioiT.addItem("Nam");
 		cbxGioiT.addItem("Nữ");
+		
 		panelKH.add(cbxGioiT);
 		
 		panelP = new JPanel();
@@ -443,34 +449,38 @@ public class GUI_NhanPhong extends JFrame {
 		lblNewLabel_9.setBounds(100, 120, 185, 26);
 		panelP.add(lblNewLabel_9);
 		
-		lblNewLabel_10 = new JLabel("Số người");
+		lblNewLabel_10 = new JLabel("Ngày trả Phòng:");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_10.setBounds(992, 75, 185, 26);
 		panelP.add(lblNewLabel_10);
 		
-		lblNewLabel_11 = new JLabel("Mã Phòng:");
+		lblNewLabel_11 = new JLabel("Ngày nhận phòng:");
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_11.setBounds(992, 27, 185, 26);
 		panelP.add(lblNewLabel_11);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(1205, 27, 350, 26);
-		panelP.add(textField_8);
+		JDateChooser dateNhanP = new JDateChooser();
+		dateNhanP.setDateFormatString("dd/MM/yyyy");
+		dateNhanP.setBounds(1205, 27, 350, 26);
+		dateNhanP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		dateNhanP.setDate(new java.util.Date());
+		panelP.add(dateNhanP);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(1205, 75, 350, 26);
-		panelP.add(textField_9);
+		JDateChooser dateTraP = new JDateChooser();
+		dateTraP.setDateFormatString("dd/MM/yyyy");
+		dateTraP.setBounds(1205, 75, 350, 26);
+		dateTraP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		//set date ngày mai
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, 1);
+		dateTraP.setDate(cal.getTime());
+		panelP.add(dateTraP);
 		
 		btntPhng = new JButton("Nhận Phòng");
-		btntPhng.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btntPhng.setBackground(new Color(234, 232, 214));
 		btntPhng.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btntPhng.setBounds(1207, 223, 153, 26);
+		btntPhng.setBounds(1205, 223, 153, 26);
 		panelP.add(btntPhng);
 		
 		btnHy = new JButton("Hủy");
@@ -513,6 +523,16 @@ public class GUI_NhanPhong extends JFrame {
 		cbxDichvu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cbxDichvu.setBounds(313, 126, 350, 26);
 		panelP.add(cbxDichvu);
+		
+		JLabel lblNewLabel_10_1 = new JLabel("Ngày trả Phòng:");
+		lblNewLabel_10_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_10_1.setBounds(992, 120, 185, 26);
+		panelP.add(lblNewLabel_10_1);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(1205, 120, 350, 26);
+		panelP.add(textField_4);
 	     
         
 		
