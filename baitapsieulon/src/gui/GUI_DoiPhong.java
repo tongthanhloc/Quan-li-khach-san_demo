@@ -73,10 +73,10 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
 	private JPanel panelKH;
-	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtNgayN;
+	private JTextField txtNgayT;
+	private JTextField txtGioi;
 	
 
 
@@ -383,6 +383,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 		txtTenKH = new JTextField();
 		txtTenKH.setColumns(10);
 		txtTenKH.setBounds(1185, 37, 368, 26);
+		txtTenKH.setEditable(false);
 		panelKH.add(txtTenKH);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
@@ -393,6 +394,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 		txtTuoiKH = new JTextField();
 		txtTuoiKH.setColumns(10);
 		txtTuoiKH.setBounds(1067, 86, 120, 26);
+		txtTuoiKH.setEditable(false);
 		panelKH.add(txtTuoiKH);
 		
 		lblNewLabel_1_4 = new JLabel("Giới Tính:");
@@ -400,12 +402,11 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 		lblNewLabel_1_4.setBounds(1243, 86, 96, 26);
 		panelKH.add(lblNewLabel_1_4);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		comboBox.setBounds(1364, 88, 189, 24);
-		comboBox.addItem("Nam");
-		comboBox.addItem("Nữ");
-		panelKH.add(comboBox);
+		txtGioi = new JTextField();
+		txtGioi.setColumns(10);
+		txtGioi.setBounds(1354, 86, 199, 26);
+		txtGioi.setEditable(false);
+		panelKH.add(txtGioi);
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -524,17 +525,6 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 			lblNewLabel_1_5.setBounds(100, 37, 185, 26);
 			panelKH_1.add(lblNewLabel_1_5);
 			
-			textField = new JTextField();
-			textField.setColumns(10);
-			textField.setBounds(313, 37, 350, 26);
-			panelKH_1.add(textField);
-			
-			JButton btnNewButton_1 = new JButton("Tìm");
-			btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btnNewButton_1.setBackground(new Color(234, 232, 214));
-			btnNewButton_1.setBounds(696, 37, 96, 26);
-			panelKH_1.add(btnNewButton_1);
-			
 			textField_1 = new JTextField();
 			textField_1.setColumns(10);
 			textField_1.setBounds(313, 86, 350, 26);
@@ -555,15 +545,21 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 			lblNewLabel_1_2_1_1.setBounds(990, 86, 185, 26);
 			panelKH_1.add(lblNewLabel_1_2_1_1);
 			
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(1185, 37, 368, 26);
-			panelKH_1.add(textField_2);
+			txtNgayN = new JTextField();
+			txtNgayN.setColumns(10);
+			txtNgayN.setBounds(1185, 37, 368, 26);
+			txtNgayN.setEditable(false);
+			panelKH_1.add(txtNgayN);
 			
-			textField_3 = new JTextField();
-			textField_3.setColumns(10);
-			textField_3.setBounds(1185, 86, 368, 26);
-			panelKH_1.add(textField_3);
+			txtNgayT = new JTextField();
+			txtNgayT.setColumns(10);
+			txtNgayT.setBounds(1185, 86, 368, 26);
+			txtNgayT.setEditable(false);
+			panelKH_1.add(txtNgayT);
+			
+			JComboBox cbxPhong = new JComboBox();
+			cbxPhong.setBounds(313, 37, 350, 26);
+			panelKH_1.add(cbxPhong);
 			
 		
 		

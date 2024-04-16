@@ -54,15 +54,15 @@ public class GUI_NhanPhong extends JFrame {
     private JButton btnGUI_doiPhong;
     private JButton btnGUI_GiahanPhong;
     private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
+    private JTextField txtSDT;
+    private JTextField txtTen;
+    private JTextField txtTuoi;
     private JLabel lblNewLabel_1_4;
     private JPanel panelP;
     private JLabel lblNewLabel_7;
-    private JTextField textField_5;
+    private JTextField txtmaP;
     private JLabel lblNewLabel_8;
-    private JTextField textField_6;
+    private JTextField txtNguoi;
     private JLabel lblNewLabel_9;
     private JLabel lblNewLabel_10;
     private JLabel lblNewLabel_11;
@@ -83,7 +83,7 @@ public class GUI_NhanPhong extends JFrame {
 	
 	private JPanel panelKH;
 	private JComboBox cbxDichvu;
-	private JTextField textField_4;
+	private JTextField txtGT;
 	
 
 
@@ -374,10 +374,11 @@ public class GUI_NhanPhong extends JFrame {
 		btnNewButton.setBounds(696, 37, 96, 26);
 		panelKH.add(btnNewButton);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(313, 86, 350, 26);
-		panelKH.add(textField_1);
+		txtSDT = new JTextField();
+		txtSDT.setColumns(10);
+		txtSDT.setBounds(313, 86, 350, 26);
+		txtSDT.setEditable(false);
+		panelKH.add(txtSDT);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -389,34 +390,33 @@ public class GUI_NhanPhong extends JFrame {
 		lblNewLabel_1_2.setBounds(990, 37, 185, 26);
 		panelKH.add(lblNewLabel_1_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(1205, 41, 350, 26);
-		panelKH.add(textField_2);
+		txtTen = new JTextField();
+		txtTen.setColumns(10);
+		txtTen.setBounds(1205, 41, 350, 26);
+		txtTen.setEditable(false);
+		panelKH.add(txtTen);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_3.setBounds(990, 86, 61, 26);
 		panelKH.add(lblNewLabel_1_3);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(1067, 86, 120, 26);
-		panelKH.add(textField_3);
+		txtTuoi = new JTextField();
+		txtTuoi.setColumns(10);
+		txtTuoi.setBounds(1067, 86, 120, 26);
+		txtTuoi.setEditable(false);
+		panelKH.add(txtTuoi);
 		
 		lblNewLabel_1_4 = new JLabel("Giới Tính:");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_4.setBounds(1294, 86, 96, 26);
+		lblNewLabel_1_4.setBounds(1243, 86, 96, 26);
 		panelKH.add(lblNewLabel_1_4);
 		
-		JComboBox cbxGioiT = new JComboBox();
-		cbxGioiT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cbxGioiT.setBounds(1415, 86, 140, 26);
-		cbxGioiT.setAlignmentX(JComboBox.CENTER_ALIGNMENT);
-		cbxGioiT.addItem("Nam");
-		cbxGioiT.addItem("Nữ");
-		
-		panelKH.add(cbxGioiT);
+		txtGT = new JTextField();
+		txtGT.setColumns(10);
+		txtGT.setBounds(1370, 86, 185, 26);
+		txtGT.setEditable(false);
+		panelKH.add(txtGT);
 		
 		panelP = new JPanel();
 		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -429,20 +429,20 @@ public class GUI_NhanPhong extends JFrame {
 		lblNewLabel_7.setBounds(100, 27, 185, 26);
 		panelP.add(lblNewLabel_7);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(313, 27, 350, 26);
-		panelP.add(textField_5);
+		txtmaP = new JTextField();
+		txtmaP.setColumns(10);
+		txtmaP.setBounds(313, 27, 350, 26);
+		panelP.add(txtmaP);
 		
 		lblNewLabel_8 = new JLabel("Số người");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_8.setBounds(100, 75, 185, 26);
 		panelP.add(lblNewLabel_8);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(313, 75, 350, 26);
-		panelP.add(textField_6);
+		txtNguoi = new JTextField();
+		txtNguoi.setColumns(10);
+		txtNguoi.setBounds(313, 75, 350, 26);
+		panelP.add(txtNguoi);
 		
 		lblNewLabel_9 = new JLabel("Dịch vụ:");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -523,16 +523,6 @@ public class GUI_NhanPhong extends JFrame {
 		cbxDichvu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cbxDichvu.setBounds(313, 126, 350, 26);
 		panelP.add(cbxDichvu);
-		
-		JLabel lblNewLabel_10_1 = new JLabel("Ngày trả Phòng:");
-		lblNewLabel_10_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_10_1.setBounds(992, 120, 185, 26);
-		panelP.add(lblNewLabel_10_1);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(1205, 120, 350, 26);
-		panelP.add(textField_4);
 	     
         
 		

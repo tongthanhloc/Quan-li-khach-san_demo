@@ -73,13 +73,15 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
 	private JPanel panelKH;
-	private JTextField txt;
+	private JTextField txtNgayN;
 	private JLabel lblNewLabel_1_1_3;
 	private JTextField txtPhongs;
 	private JLabel lblNewLabel_1_1_4;
 	private JTextField txtSoNguoi;
 	private JButton btnXutHan;
 	private JButton btnHy;
+	private JTextField txtGT;
+	private JTextField txtNgayT;
 	
 
 
@@ -373,6 +375,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		txtSDTKH = new JTextField();
 		txtSDTKH.setColumns(10);
 		txtSDTKH.setBounds(313, 86, 350, 26);
+		txtSDTKH.setEditable(false);
 		panelKH.add(txtSDTKH);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
@@ -388,6 +391,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		txtTenKH = new JTextField();
 		txtTenKH.setColumns(10);
 		txtTenKH.setBounds(1185, 37, 368, 26);
+		txtTenKH.setEditable(false);
 		panelKH.add(txtTenKH);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Tuổi:");
@@ -398,6 +402,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		txtTuoiKH = new JTextField();
 		txtTuoiKH.setColumns(10);
 		txtTuoiKH.setBounds(1067, 86, 120, 26);
+		txtTuoiKH.setEditable(false);
 		panelKH.add(txtTuoiKH);
 		
 		lblNewLabel_1_4 = new JLabel("Giới Tính:");
@@ -410,10 +415,11 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		lblNewLabel_1_1_1.setBounds(100, 132, 185, 26);
 		panelKH.add(lblNewLabel_1_1_1);
 		
-		txt = new JTextField();
-		txt.setColumns(10);
-		txt.setBounds(313, 132, 350, 26);
-		panelKH.add(txt);
+		txtNgayN = new JTextField();
+		txtNgayN.setColumns(10);
+		txtNgayN.setBounds(313, 132, 350, 26);
+		txtNgayN.setEditable(false);
+		panelKH.add(txtNgayN);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("Ngày trả phòng:");
 		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -428,6 +434,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		txtPhongs = new JTextField();
 		txtPhongs.setColumns(10);
 		txtPhongs.setBounds(313, 179, 350, 26);
+		txtPhongs.setEditable(false);
 		panelKH.add(txtPhongs);
 		
 		lblNewLabel_1_1_4 = new JLabel("Số Người:");
@@ -438,6 +445,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		txtSoNguoi = new JTextField();
 		txtSoNguoi.setColumns(10);
 		txtSoNguoi.setBounds(1185, 179, 368, 26);
+		txtSoNguoi.setEditable(false);
 		panelKH.add(txtSoNguoi);
 		
 		btnXutHan = new JButton("Xuất Hóa đơn");
@@ -452,17 +460,17 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		btnHy.setBounds(1387, 238, 166, 26);
 		panelKH.add(btnHy);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		comboBox.setBounds(1364, 88, 189, 24);
-		panelKH.add(comboBox);
+		txtGT = new JTextField();
+		txtGT.setColumns(10);
+		txtGT.setBounds(1349, 86, 204, 26);
+		txtGT.setEditable(false);
+		panelKH.add(txtGT);
 		
-		JDateChooser dateTraPhong = new JDateChooser();
-		dateTraPhong.setDateFormatString("dd/MM/yyyy");
-		
-		dateTraPhong.setBounds(1185, 132, 368, 26);
-		dateTraPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panelKH.add(dateTraPhong);
+		txtNgayT = new JTextField();
+		txtNgayT.setColumns(10);
+		txtNgayT.setBounds(1185, 132, 368, 26);
+		txtNgayT.setEditable(false);
+		panelKH.add(txtNgayT);
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
