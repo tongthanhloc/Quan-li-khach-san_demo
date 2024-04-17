@@ -4,12 +4,15 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
 import dao.Phong_DAO;
+import entity.KhachHang;
 import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -52,7 +55,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
     private JButton btnGUI_TraPhong;
     private JButton btnGUI_doiPhong;
     private JButton btnGUI_GiahanPhong;
-    private JTextField textField;
+    private JTextField txtmaKH;
     private JTextField txtSDT;
     private JTextField txtTen;
     private JTextField txtTuoi;
@@ -73,8 +76,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private JButton[] button;
 	String soPhong[];
     String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
-    int trangThai[];
-//    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
+    int trangThai[]= {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3};
 	private String[][] mangHaiChieu;
 	private JPanel panel;
 	private String maphongs[]=null;
@@ -86,6 +88,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
 	private JPanel panelKH;
+	private KhachHang_DAO khachHang_DAO;
 	
 
 
@@ -129,27 +132,29 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		khachHang_DAO = new KhachHang_DAO();
+		ArrayList<KhachHang> dsKH = khachHang_DAO.getalltbKhachHang();
 		Phong_dao  = new Phong_DAO();
 		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
 		soPhong = new String[dsP.size()];
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
 		}
-		trangThai = new int[dsP.size()];
-		for (int i = 0; i < dsP.size(); i++) {
-			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
-				trangThai[i] = 1;
-			}
-			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
-				trangThai[i] = 2;
-			}
-			if (dsP.get(i).getTrangThai().equals("Trống")) {
-				trangThai[i] = 3;
-			}
-			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
-				trangThai[i] = 4;
-			}
-		}
+//		trangThai = new int[dsP.size()];
+//		for (int i = 0; i < dsP.size(); i++) {
+//			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
+//				trangThai[i] = 1;
+//			}
+//			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
+//				trangThai[i] = 2;
+//			}
+//			if (dsP.get(i).getTrangThai().equals("Trống")) {
+//				trangThai[i] = 3;
+//			}
+//			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
+//				trangThai[i] = 4;
+//			}
+//		}
 		
 		
 		
@@ -159,7 +164,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		panelTK.setLayout(null);
 		panelTK.setVisible(false);
 		
-       
+
+		
+//		JOptionPane.showMessageDialog(null, dsKH.size());
 		
 		btnTKDMK = new JButton("Đổi mật khẩu");
 		btnTKDMK.setBounds(0, 141, 247, 39);
@@ -365,16 +372,16 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		lblNewLabel_1.setBounds(100, 37, 185, 26);
 		panelKH.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(313, 37, 350, 26);
-		panelKH.add(textField);
-		textField.setColumns(10);
+		txtmaKH = new JTextField();
+		txtmaKH.setBounds(313, 37, 350, 26);
+		panelKH.add(txtmaKH);
+		txtmaKH.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Tìm");
-		btnNewButton.setBackground(new Color(234, 232, 214));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(696, 37, 96, 26);
-		panelKH.add(btnNewButton);
+		JButton btnTim = new JButton("Tìm");
+		btnTim.setBackground(new Color(234, 232, 214));
+		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnTim.setBounds(696, 37, 96, 26);
+		panelKH.add(btnTim);
 		
 		txtSDT = new JTextField();
 		txtSDT.setColumns(10);
@@ -699,7 +706,32 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
                     new GUI_GiaHanPhong().setVisible(true);
-                }}};
+               }else if (clickedButton == btnTim) {
+                	                    // Xử lý khi nhấn vào nút btnHT
+            	   KhachHang khs = new KhachHang(txtmaKH.getText());
+            	   if(dsKH.contains(khs)) {
+            		   KhachHang kh = dsKH.get(dsKH.indexOf(khs));
+            		   JOptionPane.showMessageDialog(null,"Tìm thấy khách hàng");
+            		   
+            		   String maKH = txtmaKH.getText();
+            		   // lay nam hien tai
+            		   Calendar cal = Calendar.getInstance();
+            		   txtTen.setText(kh.getHoTen());
+            		   //tuoi la nam hien tai - ngay sinh
+            		   txtTuoi.setText(String.valueOf(cal.get(Calendar.YEAR) - kh.getNgaySinh().getYear()));
+            		   txtSDT.setText(kh.getSoDT());
+            		   if(kh.getGioiTinh()==true) {
+            			   txtGT.setText("Nam");
+						} else {
+							txtGT.setText("Nữ");
+						}
+                		
+                	}
+            	   else {
+            	   		JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
+            	   	}
+                	}}};
+                
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
                     btnTKDX.addActionListener(actionListener);
@@ -716,6 +748,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
                     btnGUI_TraPhong.addActionListener(actionListener);
                     btnGUI_doiPhong.addActionListener(actionListener);
                     btnGUI_GiahanPhong.addActionListener(actionListener);
+                    btnTim.addActionListener(actionListener);
                     chckbxPdon.addItemListener(this);
                     chckbxPdoi.addItemListener(this);
                     chckbxPVip.addItemListener(this);

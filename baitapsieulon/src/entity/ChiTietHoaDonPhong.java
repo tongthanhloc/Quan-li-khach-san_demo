@@ -1,7 +1,7 @@
 package entity;
 
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -10,15 +10,15 @@ public class ChiTietHoaDonPhong {
 	private HoaDon hoaDon;
 	private PhieuDatPhong phieuDatPhong;
 	private int soluongNguoiO;
-	private LocalDateTime thoiGianDat;
-	private LocalDateTime thoiGianTra;
-	private LocalDateTime thoiGianNhan;
+	private LocalDate thoiGianDat;
+	private LocalDate thoiGianTra;
+	private LocalDate thoiGianNhan;
 	private int soNgayO;
 	private double donGiaPhong;
 	public double thanhTien;
 
-	public ChiTietHoaDonPhong(HoaDon hoaDon, PhieuDatPhong phieuDatPhong, int soluongNguoiO, LocalDateTime thoiGianDat,
-			LocalDateTime thoiGianTra, LocalDateTime thoiGianNhan, double donGiaPhong) {
+	public ChiTietHoaDonPhong(HoaDon hoaDon, PhieuDatPhong phieuDatPhong, int soluongNguoiO, LocalDate thoiGianDat,
+			LocalDate thoiGianTra, LocalDate thoiGianNhan, double donGiaPhong) {
 		super();
 		this.hoaDon = hoaDon;
 		this.phieuDatPhong = phieuDatPhong;
@@ -30,22 +30,22 @@ public class ChiTietHoaDonPhong {
 		this.donGiaPhong = donGiaPhong;
 		tinhThanhTien();
 	}
-	public LocalDateTime getThoiGianDat() {
+	public LocalDate getThoiGianDat() {
 		return thoiGianDat;
 	}
-	public void setThoiGianDat(LocalDateTime thoiGianDat) {
+	public void setThoiGianDat(LocalDate thoiGianDat) {
 		this.thoiGianDat = thoiGianDat;
 	}
-	public LocalDateTime getThoiGianTra() {
+	public LocalDate getThoiGianTra() {
 		return thoiGianTra;
 	}
-	public void setThoiGianTra(LocalDateTime thoiGianTra) {
+	public void setThoiGianTra(LocalDate thoiGianTra) {
 		this.thoiGianTra = thoiGianTra;
 	}
-	public LocalDateTime getThoiGianNhan() {
+	public LocalDate getThoiGianNhan() {
 		return thoiGianNhan;
 	}
-	public void setThoiGianNhan(LocalDateTime thoiGianNhan) {
+	public void setThoiGianNhan(LocalDate thoiGianNhan) {
 		this.thoiGianNhan = thoiGianNhan;
 	}
 	public void setDonGiaPhong(double donGiaPhong) {

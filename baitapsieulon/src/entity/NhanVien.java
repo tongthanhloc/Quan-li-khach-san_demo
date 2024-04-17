@@ -21,7 +21,7 @@ public class NhanVien {
 	private double tongLuong;
 	public NhanVien(String maNV, String hoTenNV, boolean gioiTinh, String viTri, String soDT, String diaChi,
 			LocalDate ngaySinh, LocalDate ngayVaoLam, LocalDate ngayNghiLam, String trangThai, String trinhDoHocVan,
-			String anhDaiDien, double heSoLuong, double luongCoBan) {
+			String anhDaiDien, double heSoLuong, double luongCoBan, double tongLuong) {
 		super();
 		this.maNV = maNV;
 		this.hoTenNV = hoTenNV;
@@ -37,7 +37,9 @@ public class NhanVien {
 		this.anhDaiDien = anhDaiDien;
 		this.heSoLuong = heSoLuong;
 		this.luongCoBan = luongCoBan;
+		setTongLuong(tongLuong);
 	}
+	
 	public NhanVien() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -130,8 +132,10 @@ public class NhanVien {
 		this.luongCoBan = luongCoBan;
 	}
 
-	
-	
-	
-
+	public double getTongLuong() {
+		return tongLuong;
+	}
+    public void setTongLuong(double tongLuong) {
+    	this.tongLuong = luongCoBan * heSoLuong;
+    }
 }

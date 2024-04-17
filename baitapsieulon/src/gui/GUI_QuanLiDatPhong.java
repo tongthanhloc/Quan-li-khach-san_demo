@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,11 @@ import java.util.Arrays;
 
 import javax.swing.border.LineBorder;
 import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
+import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
+import entity.KhachHang;
+import entity.PhieuDatPhong;
 import entity.Phong;
 
 
@@ -71,7 +76,8 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	private JLabel lblbaotri;
 	private JButton[] button;
     String soPhong[];
-    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+    String tenKhachHang[] ;
+//    		= {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
     int trangThai[];
 //    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
 	private String[][] mangHaiChieu;
@@ -81,6 +87,9 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	private String tens[]=null;
 	private Phong_DAO Phong_dao;
 	private JComboBox<String> cbPhongBan;
+	private KhachHang_DAO khachHang_DAO;
+	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private int count;
 	/**
 	 * Launch the application.
 	 */
@@ -101,7 +110,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	 * Create the frame.
 	 */
 	public GUI_QuanLiDatPhong() {
-		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,21 +133,108 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
 		}
+		khachHang_DAO = new KhachHang_DAO();
+		ArrayList<KhachHang> dsKH = khachHang_DAO.getalltbKhachHang();
+		
+		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		trangThai = new int[dsP.size()];
+		// lay thoi gian hien tai
+		LocalDate tghientai = LocalDate.now();
+		
+		tenKhachHang = new String[dsP.size()];
+//		for (int i = 0; i < dsP.size(); i++) {
+//			for (int j = 0; j < dsPDP.size(); j++) {
+////				System.out.println(dsPDP.get(i).getPhong().getMaPhong().equals(dsP.get(j).getMaPhong())&&dsPDP.get(i).getTrangThai().equals("Đã đặt    ")&&(dsPDP.get(i).getThoiGianNhan().compareTo(tghientai)==1));
+////				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())&&dsPDP.get(j).getTrangThai().equals("Đã đặt    ")&&(dsPDP.get(j).getThoiGianNhan().compareTo(tghientai)==1)) {
+////					trangThai[i] = 1;
+////				}
+////				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())&&dsPDP.get(j).getTrangThai().equals("Đã thuê   ")) {
+////					trangThai[i] = 2;
+////				}
+////				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())&&dsPDP.get(j).getTrangThai().equals("Đã thanh toán")&&(dsPDP.get(j).getThoiGianTra().compareTo(tghientai)==1)) {
+////					trangThai[i] = 4;
+////				}
+////				else {
+////					trangThai[i] = 3;
+////				}
+//				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+//						&& dsPDP.get(j).getTrangThai().equals("Đã đặt    ")
+//						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 1)) {
+//					trangThai[i] = 1;
+//				}
+//				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+//						&& dsPDP.get(j).getTrangThai().equals("Đã thuê   ")) {
+//					trangThai[i] = 2;
+//				}
+//				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+//						&& dsPDP.get(j).getTrangThai().equals("Đã thanh toán")
+//						&& (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 1)) {
+//					trangThai[i] = 4;
+//				} else {
+//					trangThai[i] = 3;
+//				}
+//				
+//				
+//			}
+//		}
+
 		for (int i = 0; i < dsP.size(); i++) {
-			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
-				trangThai[i] = 1;
-			}
-			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
-				trangThai[i] = 2;
-			}
-			if (dsP.get(i).getTrangThai().equals("Tr?ng")) {
-				trangThai[i] = 3;
-			}
-			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
-				trangThai[i] = 4;
+			trangThai[i] = 3;
+			for(int j = 0; j < dsPDP.size(); j++) {
+				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+						&& dsPDP.get(j).getTrangThai().equals("Đã đặt    ")
+						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 1)) {
+					trangThai[i] = 1;
+					for (int k = 0; k < dsKH.size(); k++) {
+						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							tenKhachHang[i] = dsKH.get(k).getHoTen();
+						}
+					}
+				}
+				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+						&& dsPDP.get(j).getTrangThai().equals("Đã thuê   ")) {
+					trangThai[i] = 2;
+					for (int k = 0; k < dsKH.size(); k++) {
+						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							tenKhachHang[i] = dsKH.get(k).getHoTen();
+						}
+					}
+				}
+				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+						&& dsPDP.get(j).getTrangThai().equals("Đã thanh toán")
+						&& (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 1)) {
+					trangThai[i] = 4;
+					tenKhachHang[i] = "";
+				}
+				if (trangThai[i] != 1 && trangThai[i] != 2 && trangThai[i] != 4) {
+					trangThai[i] = 3;
+					tenKhachHang[i] = "";
+				}
 			}
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -751,8 +846,39 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         
         
         
-        
-        
+        count = 0;
+        for(int i=0; i<trangThai.length; i++) {
+        	
+        	if(trangThai[i]==1) {
+        		count++;
+        	}
+        	System.out.println(count);
+        }
+        lbldadat.setText(String.valueOf(count));
+        count = 0;
+		for (int i = 0; i < trangThai.length; i++) {
+			
+			if (trangThai[i] == 2) {
+				count++;
+			}
+		}
+		lbldathue.setText(String.valueOf(count));
+		count = 0;
+		for (int i = 0; i < trangThai.length; i++) {
+			
+			if (trangThai[i] == 3) {
+				count++;
+			}
+		}
+		lbltrong.setText(String.valueOf(count));
+		count = 0;
+		for (int i = 0; i < trangThai.length; i++) {
+			
+			if (trangThai[i] == 4) {
+				count++;
+			}
+		}
+		lblbaotri.setText(String.valueOf(count));
 		
 		Frame.addMouseListener(new MouseAdapter() {
             @Override

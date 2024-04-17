@@ -1,17 +1,18 @@
 package entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class KhuyenMai {
 	private String maKhuyenMai;
 	private String tenKhuyenMai;
-	private	LocalDateTime thoiGianTao;
-	private LocalDateTime thoiGianKetThuc;
-	private LocalDateTime thoiGIanBatDau;
+	private	LocalDate thoiGianTao;
+	private LocalDate thoiGianKetThuc;
+	private LocalDate thoiGIanBatDau;
 	private double phanTramKhuyenMai;
-	public KhuyenMai(String maKhuyenMai, String tenKhuyenMai, LocalDateTime thoiGianTao, LocalDateTime thoiGianKetThuc,
-			LocalDateTime thoiGIanBatDau, double phanTramKhuyenMai) {
+	public KhuyenMai(String maKhuyenMai, String tenKhuyenMai, LocalDate thoiGianTao, LocalDate thoiGianKetThuc,
+			LocalDate thoiGIanBatDau, double phanTramKhuyenMai) {
 		super();
 		this.maKhuyenMai = maKhuyenMai;
 		this.tenKhuyenMai = tenKhuyenMai;
@@ -39,22 +40,22 @@ public class KhuyenMai {
 	public void setTenKhuyenMai(String tenKhuyenMai) {
 		this.tenKhuyenMai = tenKhuyenMai;
 	}
-	public LocalDateTime getThoiGianTao() {
+	public LocalDate getThoiGianTao() {
 		return thoiGianTao;
 	}
-	public void setThoiGianTao(LocalDateTime thoiGianTao) {
+	public void setThoiGianTao(LocalDate thoiGianTao) {
 		this.thoiGianTao = thoiGianTao;
 	}
-	public LocalDateTime getThoiGianKetThuc() {
+	public LocalDate getThoiGianKetThuc() {
 		return thoiGianKetThuc;
 	}
-	public void setThoiGianKetThuc(LocalDateTime thoiGianKetThuc) {
+	public void setThoiGianKetThuc(LocalDate thoiGianKetThuc) {
 		this.thoiGianKetThuc = thoiGianKetThuc;
 	}
-	public LocalDateTime getThoiGIanBatDau() {
+	public LocalDate getThoiGIanBatDau() {
 		return thoiGIanBatDau;
 	}
-	public void setThoiGIanBatDau(LocalDateTime thoiGIanBatDau) {
+	public void setThoiGIanBatDau(LocalDate thoiGIanBatDau) {
 		this.thoiGIanBatDau = thoiGIanBatDau;
 	}
 	public double getPhanTramKhuyenMai() {

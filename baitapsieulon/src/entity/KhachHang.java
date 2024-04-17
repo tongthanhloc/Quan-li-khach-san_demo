@@ -25,10 +25,10 @@ public class KhachHang {
 		this.email = email;
 		this.anhCanCuoc = anhCanCuoc;
 	}
-	public String getMaKH() {
+	public String getmaKH() {
 		return maKH;
 	}
-	public void setMaKH(String maKH) {
+	public void setmaKH(String maKH) {
 		this.maKH = maKH;
 	}
 	public String getHoTen() {
@@ -92,7 +92,5 @@ public class KhachHang {
 		KhachHang other = (KhachHang) obj;
 		return Objects.equals(maKH, other.maKH);
 	}
-	
-	
 	
 }

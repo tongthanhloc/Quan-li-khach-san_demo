@@ -1,12 +1,12 @@
 package entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class HoaDon {
 	private String MaHD;
-	private LocalDateTime ngayLap;
+	private LocalDate ngayLap;
 	private String trangThai;
 	private double tienThanhToan;
 	private double thanhTien;
@@ -24,7 +24,7 @@ public class HoaDon {
 		this.tienThoi = tienThoi;
 	}
 	public HoaDon(String maHD,
-			LocalDateTime ngayLap, String trangThai, double tienThanhToan) {
+			LocalDate ngayLap, String trangThai, double tienThanhToan) {
 		super();
 		MaHD = maHD;
 		this.ngayLap = ngayLap;
@@ -37,10 +37,10 @@ public class HoaDon {
 	public void setMaHD(String maHD) {
 		MaHD = maHD;
 	}
-	public LocalDateTime getNgayLap() {
+	public LocalDate getNgayLap() {
 		return ngayLap;
 	}
-	public void setNgayLap(LocalDateTime ngayLap) {
+	public void setNgayLap(LocalDate ngayLap) {
 		ngayLap = ngayLap;
 	}
 	public String getTrangThai() {

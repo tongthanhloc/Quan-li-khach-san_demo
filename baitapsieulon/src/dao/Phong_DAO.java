@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,4 +44,22 @@ public class Phong_DAO {
 		}
 		return dsP;
 	}
+	public void updateTrangThaiPhong(String maPhong, String trangThaiMoi) {
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            // Chuẩn bị câu lệnh SQL cho việc cập nhật trạng thái của phòng
+            String sql = "UPDATE Phong SET trangThai = ? WHERE maPhong = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            // Thiết lập giá trị cho các tham số của câu lệnh SQL
+            statement.setString(1, trangThaiMoi);
+            statement.setString(2, maPhong);
+            // Thực hiện câu lệnh SQL cập nhật
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+
 }
