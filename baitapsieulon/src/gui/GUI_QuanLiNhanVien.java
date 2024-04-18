@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,13 +27,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import connectDB.ConnectDB;
+import dao.NhanVien_DAO;
+import entity.NhanVien;
+
+
 import javax.swing.JComboBox;
 
 public class GUI_QuanLiNhanVien extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private static final Object String = null;
 	private JPanel contentPane;
 	private JPanel Frame;
 	private Panel panelTK;
@@ -67,8 +79,17 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	private JButton btbXoaTrang;
 	private DefaultTableModel modelHD;
 	private JTable tableNV;
-	private JTextField textField;
+	private JTextField txtTuoi;
 	private JComboBox comboBox;
+	private NhanVien_DAO nv_dao;
+	private Object rowData;
+	static DefaultTableModel model;
+	private LocalDate decimalFormat;
+	private JTable tableHD;
+	private JButton btnXem;
+	private java.lang.String maNVChon;
+	static ArrayList<NhanVien> ListNV;
+	static ArrayList<NhanVien> dsnv;
 
 	/**
 	 * Launch the application.
@@ -89,7 +110,15 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public GUI_QuanLiNhanVien() {
+		try {
+			ConnectDB.getInstance().connect();
+			} catch (Exception e) {
+				e.printStackTrace();
+		}
+		nv_dao = new  NhanVien_DAO();
+		ListNV = nv_dao.getNhanVienTiepTan();
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,9 +136,6 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		Frame.add(panelTK);
 		panelTK.setLayout(null);
 		panelTK.setVisible(false);
-		
-       
-		
 		btnTKDMK = new JButton("Đổi mật khẩu");
 		btnTKDMK.setBounds(0, 141, 247, 39);
 		panelTK.add(btnTKDMK);
@@ -172,22 +198,15 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		panel_top.add(btnTK);
 		
 		JButton btnThongKe = new JButton("Thống kê nhân viên");
+		btnThongKe.setForeground(new Color(255, 255, 255));
 		btnThongKe.setBackground(new Color(41, 139, 116));
-		btnThongKe.setForeground(new Color(0, 0, 0));
 		btnThongKe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnThongKe.setBounds(647, 27, 334, 99);
+		btnThongKe.setBounds(262, 26, 334, 99);
 		panel_top.add(btnThongKe);
 		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
-		JButton btnThemNhanVien = new JButton("Thêm nhân viên");
-		btnThemNhanVien.setForeground(new Color(0, 0, 0));
-		btnThemNhanVien.setBackground(new Color(41, 139, 116));
-		btnThemNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnThemNhanVien.setBounds(248, 27, 334, 99);
-		panel_top.add(btnThemNhanVien);
 		
 		
 
@@ -228,8 +247,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		
 		
 		btnQLNV = new JButton("Quản lí nhân viên");
-		btnQLNV.setForeground(new Color(244, 244, 244));
-		btnQLNV.setBackground(new Color(41, 139, 116));
+		btnQLNV.setBackground(new Color(55, 149, 128));
 		btnQLNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLNV.setBounds(0, 261, 250, 68);
 		panel_menu.add(btnQLNV);
@@ -303,14 +321,14 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		panel_Center_Top.add(lblCCCD);
 		
 		txtMaNhanVien = new JTextField();
-		txtMaNhanVien.setBackground(new Color(41, 139, 116));
+		txtMaNhanVien.setBackground(new Color(164, 194, 163));
 		txtMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaNhanVien.setColumns(10);
 		txtMaNhanVien.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMaNhanVien);
 		
 		txtCCCD = new JTextField();
-		txtCCCD.setBackground(new Color(41, 139, 116));
+		txtCCCD.setBackground(new Color(164, 194, 163));
 		txtCCCD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtCCCD.setColumns(10);
 		txtCCCD.setBounds(350, 75, 350, 40);
@@ -332,21 +350,21 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		panel_Center_Top.add(lblDC);
 		
 		txtTenNV = new JTextField();
-		txtTenNV.setBackground(new Color(41, 139, 116));
+		txtTenNV.setBackground(new Color(164, 194, 163));
 		txtTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenNV.setColumns(10);
 		txtTenNV.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenNV);
 		
 		txtSDT = new JTextField();
-		txtSDT.setBackground(new Color(41, 139, 116));
+		txtSDT.setBackground(new Color(164, 194, 163));
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSDT.setColumns(10);
 		txtSDT.setBounds(1100, 75, 350, 40);
 		panel_Center_Top.add(txtSDT);
 		
 		txtDC = new JTextField();
-		txtDC.setBackground(new Color(41, 139, 116));
+		txtDC.setBackground(new Color(164, 194, 163));
 		txtDC.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtDC.setColumns(10);
 		txtDC.setBounds(1100, 125, 350, 40);
@@ -354,7 +372,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		
 		JButton btnTim = new JButton("Tìm");
 		btnTim.setBackground(new Color(234, 232, 214));
-		btnTim.setBounds(1160, 176, 175, 35);
+		btnTim.setBounds(1080, 176, 175, 35);
 		panel_Center_Top.add(btnTim);
 		btnTim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -364,57 +382,90 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		
 		btbXoaTrang = new JButton("Xóa trắng");
 		btbXoaTrang.setBackground(new Color(234, 232, 214));
-		btbXoaTrang.setBounds(1389, 176, 175, 35);
+		btbXoaTrang.setBounds(1458, 176, 175, 35);
 		panel_Center_Top.add(btbXoaTrang);
 		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblTuoi = new JLabel("Tuổi");
-		lblTuoi.setBackground(new Color(41, 139, 116));
 		lblTuoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTuoi.setBounds(140, 125, 186, 35);
+		lblTuoi.setBounds(140, 125, 76, 35);
 		panel_Center_Top.add(lblTuoi);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField.setColumns(10);
-		textField.setBackground(new Color(41, 139, 116));
-		textField.setBounds(225, 125, 100, 40);
-		panel_Center_Top.add(textField);
+		txtTuoi = new JTextField();
+		txtTuoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtTuoi.setColumns(10);
+		txtTuoi.setBackground(new Color(164, 194, 163));
+		txtTuoi.setBounds(225, 125, 100, 40);
+		panel_Center_Top.add(txtTuoi);
 		
 		JLabel lblGioiTinh = new JLabel("Giới tính");
 		lblGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblGioiTinh.setBounds(375, 125, 186, 35);
 		panel_Center_Top.add(lblGioiTinh);
 		
+		
 		comboBox = new JComboBox();
-		comboBox.setForeground(new Color(0, 0, 0));
-		comboBox.setBackground(new Color(41, 139, 116));
-		comboBox.setBounds(489, 126, 211, 35);
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		comboBox.setEditable(true);
+		
 		comboBox.addItem("Nam");
 		comboBox.addItem("Nữ");
+		
+		
+		comboBox.setBounds(513, 125, 186, 40);
 		panel_Center_Top.add(comboBox);
+		
+		btnXem = new JButton("Xem Chi Tiết");
+		btnXem.setBackground(new Color(234, 232, 214));
+		btnXem.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnXem.setBounds(1270, 176, 175, 35);
+		panel_Center_Top.add(btnXem);
 		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));
-		panel_Center_Bot.setBounds(271, 369, 1648, 576);
+		panel_Center_Bot.setBounds(251, 369, 1648, 576);
 
 		
-		String[] cols = new String[] {"Mã nhân viên", "Họ tên", "Giới tính" , "Số căn cước công dân", "Vị trí", "Số điện thoại", "Địa chỉ", "Ngày sinh", "Ngày vào làm", "Ngày nghỉ làm", "Trạng thái", "Trình độ học vấn", "Hệ số lương", "Lương cơ bản", "Tổng lương"};
-		modelHD = new DefaultTableModel(cols,0);
+		String[] cols = new String[] {"Mã nhân viên", "Họ tên", "Giới tính" , "CCCD", "Vị trí", "Số điện thoại", "Ngày sinh", "Trạng thái","Tổng lương"};
+		
+        model = new DefaultTableModel(cols, 0);
+        
 		panel_Center_Bot.setLayout(null);
-		tableNV = new JTable(modelHD);
-		tableNV.setBackground(new Color(128, 255, 0));
-		JScrollPane paneNV = new JScrollPane(tableNV);
-		paneNV.setBounds(10, 38, 1610, 538);
-		paneNV.setPreferredSize(new Dimension(1000,1000));
-		panel_Center_Bot.add(paneNV);;
-		JTableHeader headers = tableNV.getTableHeader();
-        Font headerFont = new Font("Tahoma", Font.PLAIN, 15);
-        headers.setFont(headerFont);
+		
+	
+	
+		tableHD = new JTable(model);
+		JScrollPane paneNV = new JScrollPane(tableHD);
+		paneNV.setBounds(30, 30, 1590, 530);
+		panel_Center_Bot.add(paneNV);
+	
+		JTableHeader headers = tableHD.getTableHeader();
+		Font headerFont = new Font("Tahoma", Font.PLAIN, 20);
+		headers.setFont(headerFont);
+		headers.setBackground(new Color(164, 194, 163));
+	
+		tableHD.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		tableHD.setDefaultRenderer(Object.class, centerRenderer);
+        int rowHeight = 30; // Chiều cao mong muốn cho mỗi hàng
+        tableHD.setRowHeight(rowHeight);
 		Frame.add(panel_Center_Bot);
+	
 		
-		
-		
+		// Lắng nghe sự kiện khi một dòng được chọn trong bảng
+		tableHD.addMouseListener(new MouseAdapter() {
+		  
+	
+
+		    public void mouseClicked(MouseEvent e) {
+		        int row = tableHD.getSelectedRow();
+		        maNVChon = (String) tableHD.getValueAt(row, 0);
+		       
+		    }
+		});
+
 		
         
 		
@@ -427,11 +478,18 @@ public class GUI_QuanLiNhanVien extends JFrame {
                 // Hiển thị btnTK
                 btnTK.setVisible(true);
             }
+
+//			public void mouseClicked(MouseC e) {
+//				panelTK.setVisible(false);
+//			}  
         });
 		ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            
+
+			public void actionPerformed(ActionEvent e) {
                 JButton clickedButton = (JButton) e.getSource();
                 // Xử lý sự kiện cho mỗi nút ở đây
+                
                 boolean isVisible = panelTK.isVisible();
                 if (clickedButton == btnTK && isVisible == false) {
                     // Xử lý khi nhấn vào nút btnTK
@@ -494,7 +552,69 @@ public class GUI_QuanLiNhanVien extends JFrame {
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
-                }}};
+                } else if(clickedButton == btnTim) {
+                    // Xử lý khi nhấn vào nút btnTim
+                		NhanVien nv = new NhanVien();
+                		nv.setMaNV(txtMaNhanVien.getText());
+                	    nv.setHoTenNV(txtTenNV.getText());
+                	    nv.setCanCuoc(txtCCCD.getText());
+              	        nv.setSoDT(txtSDT.getText());
+               	        nv.setViTri(txtDC.getText());
+               	        if (comboBox.getSelectedItem().equals("Nam")) {
+               	        	nv.setGioiTinh(true);
+               	        } else {
+               	        	nv.setGioiTinh(false);
+               	        }
+               	        if (txtTuoi.getText().isEmpty()) {
+               	            nv.setNgaySinh(null);
+               	        } else {
+               	            try {
+               	                int tuoi = Integer.parseInt(txtTuoi.getText());
+               	                nv.setNgaySinh(LocalDate.now().minusYears(tuoi));
+               	                JOptionPane.showMessageDialog(null, nv.getNgaySinh());
+               	            } catch (NumberFormatException ex) {
+               	                JOptionPane.showMessageDialog(null, "Tuổi phải là một số nguyên dương.");
+               	                return; // Stop processing further
+               	            }
+               	        }
+               	        if (comboBox.getSelectedItem().equals("Giới Tính")) {
+					
+               	        } else if (comboBox.getSelectedItem().equals("Nam")) {
+               	        	nv.setGioiTinh(true);					
+               	        } else {
+						nv.setGioiTinh(false);
+               	        }
+               	        // Lấy danh sách trung voi nhân viên tim kiem tu co so du lieu
+               	        dsnv = new ArrayList<NhanVien>();
+               	        dsnv= timKiemNhanVien(nv);
+               	        // Cập nhật lại model
+               	        if (dsnv.isEmpty()) {
+               	        	JOptionPane.showMessageDialog(null, "Không tìm thấy nhân viên nào.");
+               	        } else {
+               	        	updateModel(dsnv);
+               	        }
+                
+                	                            
+                	        
+                	   
+
+                } else if(clickedButton == btbXoaTrang) {
+                	txtMaNhanVien.setText("");
+                	txtTenNV.setText("");
+                	txtCCCD.setText("");
+                	txtSDT.setText("");
+                	txtDC.setText("");
+                	txtMaNhanVien.requestFocus();
+                } else if(clickedButton == btnXem) {
+                	if(maNVChon == null) {
+                		JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xem");
+                	} else {
+                	Frm_ChiTietNhanVien chiTietNhanVien;
+      		        chiTietNhanVien= new Frm_ChiTietNhanVien(maNVChon);
+      		        chiTietNhanVien.setVisible(true);
+      		        }
+                }
+                }};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
                     btnTKDX.addActionListener(actionListener);
@@ -506,7 +626,10 @@ public class GUI_QuanLiNhanVien extends JFrame {
                     btnQLKM.addActionListener(actionListener);
                     btnQLDV.addActionListener(actionListener);
                     btnHT.addActionListener(actionListener);
-	}
+                    btnTim.addActionListener(actionListener);
+                    btbXoaTrang.addActionListener(actionListener);
+                    btnXem.addActionListener(actionListener);
+                  }
 
 	
 
@@ -525,4 +648,63 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	public void setBtnXTT(JButton btnXTT) {
 		this.btnTKDMK = btnXTT;
 	}
+	
+	public static void updateModel(ArrayList<NhanVien> dsNV) {
+		model.setRowCount(0);
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		for (NhanVien nv : dsNV) {
+		    // Tạo một mảng chứa dữ liệu của từng đối tượng NhanVien
+		    Object[] rowData = new Object[] { 
+		        nv.getMaNV(),
+		        nv.getHoTenNV(),
+		        nv.isGioiTinh() ? "Nam" : "Nữ",
+		        nv.getCanCuoc(),
+		        nv.getViTri(),
+		        nv.getSoDT(),
+		        nv.getNgaySinh(),
+		        nv.getTrangThai(),
+		        decimalFormat.format(nv.getTongLuong()),
+		        nv.getTongLuong()
+		        
+		    };
+		    model.addRow(rowData);
+		}
+
+		    // Thêm hàng mới vào mô hình với dữ liệu từ đối tượng NhanVien
+	
+
+	}
+	public ArrayList<NhanVien> timKiemNhanVien(NhanVien nv) {
+	    ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+	    for (NhanVien nhanVien : ListNV) {
+	        // Check if the attributes of the current NhanVien object match the attributes of nv
+			if (nv.getMaNV() != null && !nhanVien.getMaNV().contains(nv.getMaNV())) {
+				continue;
+			}
+			if (nv.getHoTenNV() != null && !nhanVien.getHoTenNV().contains(nv.getHoTenNV())) {
+				continue;
+			}
+			if (nv.getCanCuoc() != null && !nhanVien.getCanCuoc().contains(nv.getCanCuoc())) {
+				continue;
+			}
+			if (nv.getSoDT() != null && !nhanVien.getSoDT().contains(nv.getSoDT())) {
+				continue;
+			}
+			if (nv.getViTri() != null && !nhanVien.getViTri().contains(nv.getViTri())) {
+				continue;
+			}
+			if (nv.getNgaySinh() != null && !nhanVien.getNgaySinh().equals(nv.getNgaySinh())) {
+				continue;
+			}
+			if ((nv.isGioiTinh() == true || nv.isGioiTinh()==false)&& nhanVien.isGioiTinh() != nv.isGioiTinh()) {
+				continue;
+			}
+			// Add the current NhanVien object to the list
+			dsnv.add(ListNV.get(ListNV.indexOf(nhanVien)));
+	    }
+	    return dsnv;
+	}
+
+
 }
+

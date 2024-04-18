@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
+import entity.DichVuTienIch;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
@@ -37,7 +38,13 @@ public class PhieuDatPhong_DAO {
 				KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
 				NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
 				String tt = rs.getString("trangThai");
-			    PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt);
+				String sN= rs.getString("soNguoi");
+				String maDichVu = rs.getString("dichVu");
+				DichVuTienIch dV = null;
+				if (maDichVu != null) {
+				    dV = new DichVuTienIch(maDichVu);
+				}
+			    PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN, dV);
 				dsPDP.add(pdp);
 			}
 		} catch (SQLException e) {
@@ -50,13 +57,13 @@ public class PhieuDatPhong_DAO {
             ConnectDB.getInstance();
             Connection con = ConnectDB.getConnection();
             // Chuẩn bị câu lệnh SQL cho việc chèn dữ liệu
-            String sql = "INSERT INTO PhieuDatPhong (maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, donGiaPhieu, maPhong, maKhachHang, maNhanVien) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO PhieuDatPhong (maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, donGiaPhieu, maPhong, maKhachHang, maNhanVien, trangThai, dichVu, soNguoi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = con.prepareStatement(sql);
             
             // Duyệt qua danh sách các đối tượng PhieuDatPhong và chèn từng đối tượng này vào cơ sở dữ liệu
             for (PhieuDatPhong pdp : danhSachPhieuDatPhong) {
                 statement.setString(1, pdp.getMaPhieu());
-                statement.setDate(2, Date.valueOf(pdp.getThoiGianDat()));
+                statement.setDate(2,Date.valueOf(pdp.getThoiGianDat()));
                 statement.setDate(3, Date.valueOf(pdp.getThoiGianNhan()));
                 statement.setDate(4, Date.valueOf(pdp.getThoiGianTra()));
                 statement.setDouble(5, pdp.getDonGiaPhieu());
@@ -64,7 +71,8 @@ public class PhieuDatPhong_DAO {
                 statement.setString(7, pdp.getKhachHang().getmaKH());
                 statement.setString(8, pdp.getNhanVien().getMaNV());
                 statement.setString(9, pdp.getTrangThai());
-                
+                statement.setString(10, pdp.getDichVu().getMaDichVu());
+                statement.setString(11, pdp.getSoNguoi());
                 // Thực hiện câu lệnh chèn dữ liệu
                 statement.executeUpdate();
             }
@@ -88,5 +96,7 @@ public class PhieuDatPhong_DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }}
+	//them phieu dat phong
+	
 	
 }

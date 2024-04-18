@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class NhanVien {
@@ -9,26 +10,37 @@ public class NhanVien {
 	private boolean gioiTinh;
 	private String viTri;
 	private String soDT;
+	private String email;
 	private String diaChi;
+	private String canCuoc;
 	private LocalDate ngaySinh;
+	public String getCanCuoc() {
+		return canCuoc;
+	}
+
+	public void setCanCuoc(String canCuoc) {
+		this.canCuoc = canCuoc;
+	}
 	private LocalDate ngayVaoLam;
 	private LocalDate ngayNghiLam;
 	private String trangThai;
 	private String trinhDoHocVan;
-	private String anhDaiDien;
+	private byte[] anhDaiDien;
 	private double heSoLuong;
 	private double luongCoBan;
 	private double tongLuong;
-	public NhanVien(String maNV, String hoTenNV, boolean gioiTinh, String viTri, String soDT, String diaChi,
+	public NhanVien(String maNV, String hoTenNV, boolean gioiTinh, String viTri, String soDT,String email, String diaChi, String canCuoc,
 			LocalDate ngaySinh, LocalDate ngayVaoLam, LocalDate ngayNghiLam, String trangThai, String trinhDoHocVan,
-			String anhDaiDien, double heSoLuong, double luongCoBan, double tongLuong) {
+			byte[] anhDaiDien, double heSoLuong, double luongCoBan, double tongLuong) {
 		super();
 		this.maNV = maNV;
 		this.hoTenNV = hoTenNV;
 		this.gioiTinh = gioiTinh;
 		this.viTri = viTri;
 		this.soDT = soDT;
+		this.email = email;
 		this.diaChi = diaChi;
+		this.canCuoc = canCuoc;
 		this.ngaySinh = ngaySinh;
 		this.ngayVaoLam = ngayVaoLam;
 		this.ngayNghiLam = ngayNghiLam;
@@ -37,9 +49,31 @@ public class NhanVien {
 		this.anhDaiDien = anhDaiDien;
 		this.heSoLuong = heSoLuong;
 		this.luongCoBan = luongCoBan;
-		setTongLuong(tongLuong);
+		setTongLuong(heSoLuong,luongCoBan);
 	}
 	
+	public NhanVien(String maNV, String hoTenNV, boolean gioiTinh, String viTri, String soDT, String email,
+			String diaChi, String canCuoc, LocalDate ngaySinh, LocalDate ngayVaoLam, LocalDate ngayNghiLam,
+			String trangThai, String trinhDoHocVan, byte[] anhDaiDien, double heSoLuong, double luongCoBan) {
+		super();
+		this.maNV = maNV;
+		this.hoTenNV = hoTenNV;
+		this.gioiTinh = gioiTinh;
+		this.viTri = viTri;
+		this.soDT = soDT;
+		this.email = email;
+		this.diaChi = diaChi;
+		this.canCuoc = canCuoc;
+		this.ngaySinh = ngaySinh;
+		this.ngayVaoLam = ngayVaoLam;
+		this.ngayNghiLam = ngayNghiLam;
+		this.trangThai = trangThai;
+		this.trinhDoHocVan = trinhDoHocVan;
+		this.anhDaiDien = anhDaiDien;
+		this.heSoLuong = heSoLuong;
+		this.luongCoBan = luongCoBan;
+	}
+
 	public NhanVien() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -59,6 +93,14 @@ public class NhanVien {
 	public void setHoTenNV(String hoTenNV) {
 		this.hoTenNV = hoTenNV;
 	}
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public boolean isGioiTinh() {
 		return gioiTinh;
 	}
@@ -113,12 +155,15 @@ public class NhanVien {
 	public void setTrinhDoHocVan(String trinhDoHocVan) {
 		this.trinhDoHocVan = trinhDoHocVan;
 	}
-	public String getAnhDaiDien() {
+
+	public byte[] getAnhDaiDien() {
 		return anhDaiDien;
 	}
-	public void setAnhDaiDien(String anhDaiDien) {
+
+	public void setAnhDaiDien(byte[] anhDaiDien) {
 		this.anhDaiDien = anhDaiDien;
 	}
+
 	public double getHeSoLuong() {
 		return heSoLuong;
 	}
@@ -131,11 +176,10 @@ public class NhanVien {
 	public void setLuongCoBan(double luongCoBan) {
 		this.luongCoBan = luongCoBan;
 	}
-
-	public double getTongLuong() {
-		return tongLuong;
-	}
-    public void setTongLuong(double tongLuong) {
-    	this.tongLuong = luongCoBan * heSoLuong;
+    public double getTongLuong() {
+    	return tongLuong;
+    }
+    public void setTongLuong(double heSoLuong, double luongCoBan) {
+    	this.tongLuong = heSoLuong*luongCoBan;
     }
 }

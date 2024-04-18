@@ -685,7 +685,24 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
                     new GUI_GiaHanPhong().setVisible(true);
-                }}};
+                }else if (clickedButton == btnXutHan) {
+                	
+				} else if (clickedButton == btnHy) {
+					txtCCKH.setText("");
+					txtSDTKH.setText("");
+					txtTenKH.setText("");
+					txtTuoiKH.setText("");
+					txtGT.setText("");
+					txtNgayN.setText("");
+					txtNgayT.setText("");
+					txtPhongs.setText("");
+					txtSoNguoi.setText("");
+					txtCCKH.requestFocus();
+				}
+                
+                
+            }};
+                
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
                     btnTKDX.addActionListener(actionListener);
@@ -702,6 +719,8 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
                     btnGUI_TraPhong.addActionListener(actionListener);
                     btnGUI_doiPhong.addActionListener(actionListener);
                     btnGUI_GiahanPhong.addActionListener(actionListener);
+                    btnXutHan.addActionListener(actionListener);
+                    btnHy.addActionListener(actionListener);
                     chckbxPdon.addItemListener(this);
                     chckbxPdoi.addItemListener(this);
                     chckbxPVip.addItemListener(this);

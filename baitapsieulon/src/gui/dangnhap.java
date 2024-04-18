@@ -9,6 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import connectDB.ConnectDB;
+import dao.PhieuDatPhong_DAO;
+import dao.TaiKhoan_DAO;
+import entity.PhieuDatPhong;
+import entity.TaiKhoan;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -19,6 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.Panel;
 
@@ -28,8 +38,9 @@ public class dangnhap extends JFrame {
 	private JPanel contentPane;
 	private JTextField txttendangnhap;
 	private JPasswordField txtmatkhau;
-	private String tk="NV12";
-	private String mk="0123";
+	private String[] tk;
+	private String[] mk;
+	private TaiKhoan_DAO taiKhoan_DAO;
 
 	/**
 	 * Launch the application.
@@ -63,6 +74,37 @@ public class dangnhap extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		try {
+			ConnectDB.getInstance().connect();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		taiKhoan_DAO = new TaiKhoan_DAO();
+		ArrayList<TaiKhoan> dsTK = taiKhoan_DAO.getTaiKhoan();
+		tk = new String[dsTK.size()];
+		mk = new String[dsTK.size()];
+		for (int i = 0; i < dsTK.size(); i++) {
+			tk[i] = dsTK.get(i).getNhanVien().getMaNV().toString();
+			mk[i] = dsTK.get(i).getMatKhau();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		JLabel logo = new JLabel("");
 		logo.setBounds(29,128, 397, 400);
@@ -109,15 +151,27 @@ public class dangnhap extends JFrame {
 		JButton btnNewButton = new JButton("Đăng nhập");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			if (txttendangnhap.getText().equals(tk) && txtmatkhau.getText().equals(mk)) { 
-				// Kiểm tra tài khoản và mật khẩu
-				setVisible(false); // Ẩn frame đăng nhập
-                new GUI_TrangChu().setVisible(true); // Hiển thị trang chủ
-			}
-			else {
-				
-				JOptionPane.showMessageDialog(null,"Sai mật khẩu");;	
-			}
+				String tenDangNhap = txttendangnhap.getText();
+				String matKhau = txtmatkhau.getText();
+				if(kiemtraDN(tenDangNhap, matKhau) == 1) {
+					setVisible(false); // Đóng frame hiện tại
+					new GUI_MenuQL().setVisible(true);
+                    new GUI_TrangChu().setVisible(true);
+                    }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {
+                    	setVisible(false); // Đóng frame hiện tại
+    					new GUI_MenuNV().setVisible(true);
+                        new GUI_TrangChu().setVisible(true);
+				} else if(kiemtraDN(tenDangNhap, matKhau) == 3){
+					txtmatkhau.setText("");
+					txtmatkhau.requestFocus();
+					JOptionPane.showMessageDialog(null, "mật khẩu không đúng");
+				} else {
+					txttendangnhap.setText("");
+					txtmatkhau.setText("");
+					txttendangnhap.requestFocus();
+					JOptionPane.showMessageDialog(null, "tên đăng nhập không đúng");
+				}
+			
 			}
 			
 			
@@ -145,5 +199,23 @@ public class dangnhap extends JFrame {
 		btnQMK.setText("<html><u><i>Quên mật khẩu?</i></u></html>");
 
         
+	}
+
+	public int kiemtraDN(String tenDN, String matKhau) {
+		for (int i = 0; i < tk.length; i++) {
+			if (tk[i].equals(tenDN) && mk[i].equals(matKhau)) {
+				if (tenDN.contains("QL")) {
+					return 1;
+				} else {
+					return 2;
+				}
+			}
+		}
+		for (int i = 0; i < tk.length; i++) {
+			if (tk[i].equals(tenDN) && mk[i].equals(matKhau)==false) {
+				return 3;
+			}
+		}
+		return 4;
 	}
 }

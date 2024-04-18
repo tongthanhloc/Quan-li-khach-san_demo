@@ -14,6 +14,8 @@ public class PhieuDatPhong {
 	private KhachHang khachHang;
 	private NhanVien nhanVien;
 	private String trangThai;
+	private String soNguoi;
+	private DichVuTienIch dichVu;
 	public String getMaPhieu() {
 		return maPhieu;
 	}
@@ -68,8 +70,22 @@ public class PhieuDatPhong {
 	public void setTrangThai(String trangThai) {
 		this.trangThai = trangThai;
 	}
+	public String getSoNguoi() {
+		return soNguoi;
+	}
+	public void setSoNguoi(String soNguoi) {
+		this.soNguoi = soNguoi;
+	}
+	
+	public DichVuTienIch getDichVu() {
+		return dichVu;
+	}
+	public void setDichVu(DichVuTienIch dichVu) {
+		this.dichVu = dichVu;
+	}
 	public PhieuDatPhong(String maPhieu, LocalDate thoiGianDat, LocalDate thoiGianNhan, LocalDate thoiGianTra,
-			double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai) {
+			double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai, String soNguoi,
+			DichVuTienIch dichVu) {
 		super();
 		this.maPhieu = maPhieu;
 		this.thoiGianDat = thoiGianDat;
@@ -80,6 +96,8 @@ public class PhieuDatPhong {
 		this.khachHang = khachHang;
 		this.nhanVien = nhanVien;
 		this.trangThai = trangThai;
+		this.soNguoi = soNguoi;
+		this.dichVu = dichVu;
 	}
 	public PhieuDatPhong(String maPhieu) {
 		super();
@@ -100,6 +118,8 @@ public class PhieuDatPhong {
 		PhieuDatPhong other = (PhieuDatPhong) obj;
 		return Objects.equals(maPhieu, other.maPhieu);
 	}
+	
+	
 
 	
 	
