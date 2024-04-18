@@ -590,13 +590,10 @@ public class GUI_QuanLiNhanVien extends JFrame {
                	        // Cập nhật lại model
                	        if (dsnv.isEmpty()) {
                	        	JOptionPane.showMessageDialog(null, "Không tìm thấy nhân viên nào.");
+               	        	updateModel(dsnv);
                	        } else {
                	        	updateModel(dsnv);
                	        }
-                
-                	                            
-                	        
-                	   
 
                 } else if(clickedButton == btbXoaTrang) {
                 	txtMaNhanVien.setText("");
@@ -676,8 +673,14 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	}
 	public ArrayList<NhanVien> timKiemNhanVien(NhanVien nv) {
 	    ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+	    int cl = 0;
 	    for (NhanVien nhanVien : ListNV) {
-	        // Check if the attributes of the current NhanVien object match the attributes of nv
+			if (nv.getNgaySinh() != null) {
+				int date = nhanVien.getNgaySinh().getYear();
+		    	int tuoi = nv.getNgaySinh().getYear();
+		    	cl = date - tuoi;
+			}
+	    
 			if (nv.getMaNV() != null && !nhanVien.getMaNV().contains(nv.getMaNV())) {
 				continue;
 			}
@@ -693,7 +696,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 			if (nv.getViTri() != null && !nhanVien.getViTri().contains(nv.getViTri())) {
 				continue;
 			}
-			if (nv.getNgaySinh() != null && !nhanVien.getNgaySinh().equals(nv.getNgaySinh())) {
+			if (nv.getNgaySinh() != null && cl != 0) {
 				continue;
 			}
 			if ((nv.isGioiTinh() == true || nv.isGioiTinh()==false)&& nhanVien.isGioiTinh() != nv.isGioiTinh()) {

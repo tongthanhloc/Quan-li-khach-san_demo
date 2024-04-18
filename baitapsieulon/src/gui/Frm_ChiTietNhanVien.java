@@ -306,6 +306,7 @@ public class Frm_ChiTietNhanVien extends JFrame {
 		txtLuongCoBan.setColumns(10);
 		
 		txtTongLuong = new JTextField();
+		txtTongLuong.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtTongLuong.setBounds(108, 90, 138, 22);
 		txtTongLuong.setEditable(false);
 		panel_3.add(txtTongLuong);
@@ -434,17 +435,19 @@ public class Frm_ChiTietNhanVien extends JFrame {
 					GUI_QuanLiNhanVien.ListNV = new NhanVien_DAO().getNhanVienTiepTan();
 					if (GUI_QuanLiNhanVien.ListNV.contains(nv)) {
 						JOptionPane.showMessageDialog(null, "Nhân viên đã tồn tại");
-					} else {	
-						try {
-							new NhanVien_DAO().themNhanVien(nv);
-							GUI_QuanLiNhanVien.ListNV.add(nv);
-							JOptionPane.showMessageDialog(null, "Thêm thành công");
-						} catch (Exception e2) {
-							e2.printStackTrace();
-							JOptionPane.showMessageDialog(null, "Thêm thất bại");
+					} else {
+						if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm nhân viên này không?","Xác nhận",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							try {
+								new NhanVien_DAO().themNhanVien(nv);
+								GUI_QuanLiNhanVien.ListNV.add(nv);
+								JOptionPane.showMessageDialog(null, "Thêm thành công");
+							} catch (Exception e2) {
+								e2.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Thêm thất bại");
+							}
+						} else {
+							return;
 						}
-							
-						
 					}
 				}
 				
@@ -461,19 +464,22 @@ public class Frm_ChiTietNhanVien extends JFrame {
 					if (GUI_QuanLiNhanVien.ListNV.contains(nv)) {
 						JOptionPane.showMessageDialog(null, "Nhân viên đã tồn tại");
 					} else {
-						try {
-							new NhanVien_DAO().capNhatNhanVien(nv);
-							GUI_QuanLiNhanVien.model.setRowCount(0);
-							
-							JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-							GUI_QuanLiNhanVien.ListNV = new NhanVien_DAO().getNhanVienTiepTan();
-							GUI_QuanLiNhanVien.dsnv = timKiemNhanVien(GUI_QuanLiNhanVien.dsnv);
-							GUI_QuanLiNhanVien.updateModel(GUI_QuanLiNhanVien.dsnv);
-						} catch (Exception e2) {
-							e2.printStackTrace();
-							JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+						if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật nhân viên này không?","Xác nhận",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							try {
+								new NhanVien_DAO().capNhatNhanVien(nv);
+								GUI_QuanLiNhanVien.model.setRowCount(0);
+								
+								JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+								GUI_QuanLiNhanVien.ListNV = new NhanVien_DAO().getNhanVienTiepTan();
+								GUI_QuanLiNhanVien.dsnv = timKiemNhanVien(GUI_QuanLiNhanVien.dsnv);
+								GUI_QuanLiNhanVien.updateModel(GUI_QuanLiNhanVien.dsnv);
+							} catch (Exception e2) {
+								e2.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+							}
+						} else {
+							return;
 						}
-
 					}
 				}
 
