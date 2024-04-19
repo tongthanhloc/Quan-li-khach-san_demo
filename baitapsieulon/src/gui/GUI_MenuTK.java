@@ -75,7 +75,7 @@ public class GUI_MenuTK extends JFrame {
 			e.printStackTrace();
 		}
 		nv_dao = new  NhanVien_DAO();
-		ListNV = nv_dao.getNhanVienTiepTan();
+		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
 			if (nhanVien.getMaNV().equals(nv.getMaNV())) {
@@ -112,15 +112,15 @@ public class GUI_MenuTK extends JFrame {
 		btnTKHTNV = new JLabel("Họ tên nhân viên");
 		btnTKHTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnTKHTNV.setHorizontalAlignment(SwingConstants.CENTER);
-		btnTKHTNV.setBounds(0, 26, 247, 20);
+		btnTKHTNV.setBounds(0, 26, 247, 40);
 		panelTK.add(btnTKHTNV);
 		
-		btnTKHTNV.setText("Họ tên nhân viên: "+nv.getHoTenNV());
+		btnTKHTNV.setText("<html><div style='text-align: center;'>Họ tên nhân viên:<br>"+nv.getHoTenNV()+"</div></html>");
 		
 		btnTKTNV = new JLabel("Tuổi");
 		btnTKTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnTKTNV.setHorizontalAlignment(SwingConstants.CENTER);
-		btnTKTNV.setBounds(0, 50, 247, 20);
+		btnTKTNV.setBounds(0, 70, 247, 20);
 		panelTK.add(btnTKTNV);
 		
 		//tuổi bằng năm hiện tại trừ năm sinh
@@ -133,7 +133,7 @@ public class GUI_MenuTK extends JFrame {
 		btnmaNV = new JLabel("Mã nhân viên");
 		btnmaNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnmaNV.setHorizontalAlignment(SwingConstants.CENTER);
-		btnmaNV.setBounds(0, 69, 247, 20);
+		btnmaNV.setBounds(0, 90, 247, 20);
 		panelTK.add(btnmaNV);
 		btnmaNV.setText("Mã nhân viên: "+nv.getMaNV());
 		

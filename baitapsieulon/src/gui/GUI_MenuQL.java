@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import entity.NhanVien;
 
 public class GUI_MenuQL extends JFrame {
 
@@ -30,6 +34,7 @@ public class GUI_MenuQL extends JFrame {
     private JLabel lblNewLabel_5;
     private JLabel lblNewLabel_6;
     private JButton btnQLPD;
+    private NhanVien nv;
 	/**
 
 	/**
@@ -39,7 +44,8 @@ public class GUI_MenuQL extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_MenuQL frame = new GUI_MenuQL();
+					NhanVien nv = new NhanVien("QL0000010");
+					GUI_MenuQL frame = new GUI_MenuQL(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +57,7 @@ public class GUI_MenuQL extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI_MenuQL() {
+	public GUI_MenuQL(NhanVien nv) {
 		
 			setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 			setTitle("Quản lý khách sạn");
@@ -166,6 +172,117 @@ public class GUI_MenuQL extends JFrame {
 			btnQLPD.setBackground(Color.WHITE);
 			btnQLPD.setBounds(0, 454, 250, 68);
 			panel_menu.add(btnQLPD);
+			
+			GUI_TrangChu trangchu = new GUI_TrangChu();
+			GUI_QuanLiDatPhong qlp = new GUI_QuanLiDatPhong();
+			GUI_QuanLiHoaDon qlhd = new GUI_QuanLiHoaDon();
+			GUI_QuanLiKhachHang qlkh = new GUI_QuanLiKhachHang();
+			GUI_QuanLiKhuyenMai qlkm = new GUI_QuanLiKhuyenMai();
+			GUI_QuanLiDichVu qldv = new GUI_QuanLiDichVu();
+			GUI_MenuTK menuTK = new GUI_MenuTK(nv);
+			GUI_MenuTrangChu menuTrangChu = new GUI_MenuTrangChu(nv);
+			GUI_MenuQLDP menuqldp = new GUI_MenuQLDP(nv);
+			
+			
+			
+			
+			
+			ActionListener actionListener = new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			    	boolean isVisibleTChu = trangchu.isVisible();
+			    	boolean isVisibleQLP = qlp.isVisible();
+			    	boolean isVisibleQLHD = qlhd.isVisible();
+			    	boolean isVisibleQLKH = qlkh.isVisible();
+			    	boolean isVisibleQLKM = qlkm.isVisible();
+			    	boolean isVisibleQLDV = qldv.isVisible();
+			    	
+			    	
+			        JButton clickedButton = (JButton) e.getSource();
+					
+					if (clickedButton == btnTrangChu && !isVisibleTChu) {
+			            // Xử lý khi nhấn vào nút btnTK
+			            trangchu.setVisible(true);
+			            menuTK.setVisible(false);
+			            menuTrangChu.setVisible(true);
+			            qlp.setVisible(false);
+			            qlhd.setVisible(false);
+			            qlkh.setVisible(false);
+			            qlkm.setVisible(false);
+			            qldv.setVisible(false);
+			            menuqldp.setVisible(false);
+			            
+			            btnTrangChu.setForeground(Color.WHITE);
+			            btnTrangChu.setBackground(new Color(41, 139, 106));
+			            btnQLP.setBackground(new Color(255, 255, 255));
+			            btnQLP.setForeground(Color.BLACK);
+			            btnQLHD.setBackground(new Color(255, 255, 255));
+			            btnQLHD.setForeground(Color.BLACK);
+			            btnQLKH.setBackground(new Color(255, 255, 255));
+			            btnQLKH.setForeground(Color.BLACK);
+			            btnQLKM.setBackground(new Color(255, 255, 255));
+			            btnQLKM.setForeground(Color.BLACK);
+			            btnQLDV.setBackground(new Color(255, 255, 255));
+			            btnQLDV.setForeground(Color.BLACK);
+			            btnHT.setBackground(new Color(255, 255, 255));
+			            btnHT.setForeground(Color.BLACK);
+			            btnQLPD.setBackground(new Color(255, 255, 255));
+			            btnQLPD.setForeground(Color.BLACK);
+			            
+			            
+			           
+			        } else if (clickedButton == btnTrangChu && isVisibleTChu) {
+			            // Xử lý khi nhấn vào nút btnXTT
+						
+			        	menuTK.setVisible(false);
+						
+			        	
+			        }else if (clickedButton == btnQLP && !isVisibleQLP) {
+                    	//tat het cac panel
+			        	qldv.setVisible(false);
+                    	trangchu.setVisible(false);
+                    	qlhd.setVisible(false);
+                    	qlkh.setVisible(false);
+                    	qlkm.setVisible(false);
+                    	menuTK.setVisible(false);
+                    	menuTrangChu.setVisible(false);
+                    	//bat qldp
+                    	menuqldp.setVisible(true);
+                    	qlp.setVisible(true);
+                    	
+                    	//doi mau button
+                    	btnQLP.setForeground(Color.WHITE);
+                    	btnQLP.setBackground(new Color(41, 139, 106));
+                    	btnTrangChu.setBackground(Color.WHITE);
+                    	btnTrangChu.setForeground(Color.BLACK);
+                    	btnQLHD.setBackground(Color.WHITE);
+                    	btnQLHD.setForeground(Color.BLACK);
+                    	btnQLKH.setBackground(Color.WHITE);
+                    	btnQLKH.setForeground(Color.BLACK);
+                    	btnQLKM.setBackground(Color.WHITE);
+                    	btnQLKM.setForeground(Color.BLACK);
+                    	btnQLDV.setBackground(Color.WHITE);
+                    	btnQLDV.setForeground(Color.BLACK);
+                    	btnHT.setBackground(Color.WHITE);
+                    	btnHT.setForeground(Color.BLACK);
+                    	btnQLPD.setBackground(Color.WHITE);
+                    	btnQLPD.setForeground(Color.BLACK);
+                    	
+                    	
+			        }else if (clickedButton == btnQLP && isVisibleQLP) {
+                    	//tat het cac panel
+                    	menuTK.setVisible(false);
+			        }
+					
+			    }
+			};
+			btnTrangChu.addActionListener(actionListener);
+			btnQLP.addActionListener(actionListener);
+			btnQLHD.addActionListener(actionListener);
+			btnQLKH.addActionListener(actionListener);
+			btnQLKM.addActionListener(actionListener);
+			btnQLDV.addActionListener(actionListener);
+			btnHT.addActionListener(actionListener);
+			btnQLPD.addActionListener(actionListener);
 	}
 
 }

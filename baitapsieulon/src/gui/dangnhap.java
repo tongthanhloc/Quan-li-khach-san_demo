@@ -169,7 +169,7 @@ public class dangnhap extends JFrame {
 				String matKhau = txtmatkhau.getText();
 				if(kiemtraDN(tenDangNhap, matKhau) == 1) {
 					setVisible(false); // Đóng frame hiện tại
-					new GUI_MenuQL().setVisible(true);
+					new GUI_MenuQL(nv).setVisible(true);
                     new GUI_TrangChu().setVisible(true);
                     new GUI_MenuTrangChu(nv).setVisible(true);
                 }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {

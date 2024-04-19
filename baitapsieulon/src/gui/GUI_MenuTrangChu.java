@@ -67,7 +67,7 @@ public class GUI_MenuTrangChu extends JFrame {
 			e.printStackTrace();
 		}
 		nv_dao = new  NhanVien_DAO();
-		ListNV = nv_dao.getNhanVienTiepTan();
+		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
 			if (nhanVien.getMaNV().equals(nv.getMaNV())) {
