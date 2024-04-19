@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,12 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import entity.NhanVien;
+
 public class GUI_MenuNV extends JFrame {
 
 	private JPanel Frame;
-	private JButton btnTK;
-    private JButton btnTKDMK;
-    private JButton btnTKDX;
     private JButton btnTrangChu;
     private JButton btnQLP;
     private JButton btnQLHD;
@@ -31,11 +34,6 @@ public class GUI_MenuNV extends JFrame {
     private JLabel lblNewLabel_4;
     private JLabel lblNewLabel_5;
     private JLabel lblNewLabel_6;
-    private Panel panelTK;
-    private JLabel btnTKHTNV;
-    private JLabel btnTKTNV;
-    private JLabel btnTKca;
-    private JLabel btnmaNV;
     private JButton btnQLPD;
 	/**
 
@@ -46,7 +44,8 @@ public class GUI_MenuNV extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_MenuNV frame = new GUI_MenuNV();
+					NhanVien nv = new NhanVien("NV0000001");
+					GUI_MenuNV frame = new GUI_MenuNV(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,89 +57,21 @@ public class GUI_MenuNV extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI_MenuNV() {
+	public GUI_MenuNV(NhanVien nv) {
 		
 			setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 			setTitle("Quản lý khách sạn");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(0,0,1920,1050);
-			setLocationRelativeTo(null);
+			setBounds(8,181,250,869);
+			setUndecorated(true);
 			setResizable(false);
+			
+			
 			
 			Frame = new JPanel();
 			Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(Frame);
 			Frame.setLayout(null);
-
-			
-			panelTK = new Panel();
-			panelTK.setBounds(1647, 53, 247, 218);
-			Frame.add(panelTK);
-			panelTK.setLayout(null);
-			panelTK.setVisible(false);
-			
-	       
-			
-			btnTKDMK = new JButton("Đổi mật khẩu");
-			btnTKDMK.setBounds(0, 141, 247, 39);
-			panelTK.add(btnTKDMK);
-			btnTKDMK.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnTKDMK.setForeground(new Color(244, 244, 244));
-			btnTKDMK.setBackground(new Color(41, 139, 106));
-			
-			btnTKDX = new JButton("<html><div style='text-align: center;'>Đăng xuất</div></html>");
-			btnTKDX.setBounds(0, 179, 247, 39);
-			panelTK.add(btnTKDX);
-			btnTKDX.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnTKDX.setForeground(new Color(244, 244, 244));
-			btnTKDX.setBackground(new Color(41, 139, 106));
-			
-			btnTKHTNV = new JLabel("Họ tên nhân viên");
-			btnTKHTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnTKHTNV.setHorizontalAlignment(SwingConstants.CENTER);
-			btnTKHTNV.setBounds(0, 26, 247, 20);
-			panelTK.add(btnTKHTNV);
-			
-			btnTKTNV = new JLabel("Tuổi");
-			btnTKTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnTKTNV.setHorizontalAlignment(SwingConstants.CENTER);
-			btnTKTNV.setBounds(0, 50, 247, 20);
-			panelTK.add(btnTKTNV);
-			
-			btnTKca = new JLabel("Ca làm");
-			btnTKca.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnTKca.setHorizontalAlignment(SwingConstants.CENTER);
-			btnTKca.setBounds(0, 69, 247, 20);
-			panelTK.add(btnTKca);
-			
-			btnmaNV = new JLabel("Mã nhân viên");
-			btnmaNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnmaNV.setHorizontalAlignment(SwingConstants.CENTER);
-			btnmaNV.setBounds(0, 0, 247, 29);
-			panelTK.add(btnmaNV);
-			
-			Panel panel_top = new Panel();
-			panel_top.setBackground(new Color(192, 192, 192));
-			panel_top.setBounds(0, 0, 1904, 150);
-			Frame.add(panel_top);
-			panel_top.setLayout(null);
-			
-			JLabel logo = new JLabel("");
-			logo.setHorizontalAlignment(SwingConstants.CENTER);
-			logo.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
-			logo.setBounds(0, 0, 250, 150);
-			panel_top.add(logo);
-			
-			
-			btnTK = new JButton("<html><div style='text-align: center;'>Trần ngu</div></html>");
-			btnTK.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnTK.setForeground(new Color(244, 244, 244));
-			btnTK.setBackground(new Color(41, 139, 106));
-			btnTK.setBounds(1647, 11, 247, 40);
-			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
-			btnTK.add(lblNewLabel);
-			panel_top.add(btnTK);
 			
 			
 
@@ -148,7 +79,7 @@ public class GUI_MenuNV extends JFrame {
 			Panel panel_menu = new Panel();
 			panel_menu.setLayout(null);
 			panel_menu.setBackground(Color.LIGHT_GRAY);
-			panel_menu.setBounds(0, 150, 250, 861);
+			panel_menu.setBounds(0, 0, 250, 861);
 			Frame.add(panel_menu);
 			
 			
@@ -236,6 +167,119 @@ public class GUI_MenuNV extends JFrame {
 			btnQLPD.setBackground(Color.WHITE);
 			btnQLPD.setBounds(0, 395, 250, 68);
 			panel_menu.add(btnQLPD);
+			
+			GUI_TrangChu trangchu = new GUI_TrangChu();
+			GUI_QuanLiDatPhong qlp = new GUI_QuanLiDatPhong();
+			GUI_QuanLiHoaDon qlhd = new GUI_QuanLiHoaDon();
+			GUI_QuanLiKhachHang qlkh = new GUI_QuanLiKhachHang();
+			GUI_QuanLiKhuyenMai qlkm = new GUI_QuanLiKhuyenMai();
+			GUI_QuanLiDichVu qldv = new GUI_QuanLiDichVu();
+			GUI_MenuTK menuTK = new GUI_MenuTK(nv);
+			GUI_MenuTrangChu menuTrangChu = new GUI_MenuTrangChu(nv);
+			GUI_MenuQLDP menuqldp = new GUI_MenuQLDP(nv);
+			
+			
+			
+			
+			
+			ActionListener actionListener = new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			    	boolean isVisibleTChu = trangchu.isVisible();
+			    	boolean isVisibleQLP = qlp.isVisible();
+			    	boolean isVisibleQLHD = qlhd.isVisible();
+			    	boolean isVisibleQLKH = qlkh.isVisible();
+			    	boolean isVisibleQLKM = qlkm.isVisible();
+			    	boolean isVisibleQLDV = qldv.isVisible();
+			    	
+			    	
+			        JButton clickedButton = (JButton) e.getSource();
+					
+					if (clickedButton == btnTrangChu && !isVisibleTChu) {
+			            // Xử lý khi nhấn vào nút btnTK
+			            trangchu.setVisible(true);
+			            menuTK.setVisible(false);
+			            menuTrangChu.setVisible(true);
+			            qlp.setVisible(false);
+			            qlhd.setVisible(false);
+			            qlkh.setVisible(false);
+			            qlkm.setVisible(false);
+			            qldv.setVisible(false);
+			            menuqldp.setVisible(false);
+			            
+			            btnTrangChu.setForeground(Color.WHITE);
+			            btnTrangChu.setBackground(new Color(41, 139, 106));
+			            btnQLP.setBackground(new Color(255, 255, 255));
+			            btnQLP.setForeground(Color.BLACK);
+			            btnQLHD.setBackground(new Color(255, 255, 255));
+			            btnQLHD.setForeground(Color.BLACK);
+			            btnQLKH.setBackground(new Color(255, 255, 255));
+			            btnQLKH.setForeground(Color.BLACK);
+			            btnQLKM.setBackground(new Color(255, 255, 255));
+			            btnQLKM.setForeground(Color.BLACK);
+			            btnQLDV.setBackground(new Color(255, 255, 255));
+			            btnQLDV.setForeground(Color.BLACK);
+			            btnHT.setBackground(new Color(255, 255, 255));
+			            btnHT.setForeground(Color.BLACK);
+			            btnQLPD.setBackground(new Color(255, 255, 255));
+			            btnQLPD.setForeground(Color.BLACK);
+			            
+			            
+			           
+			        } else if (clickedButton == btnTrangChu && isVisibleTChu) {
+			            // Xử lý khi nhấn vào nút btnXTT
+						
+			        	menuTK.setVisible(false);
+						
+			        	
+			        }else if (clickedButton == btnQLP && !isVisibleQLP) {
+                    	//tat het cac panel
+			        	qldv.setVisible(false);
+                    	trangchu.setVisible(false);
+                    	qlhd.setVisible(false);
+                    	qlkh.setVisible(false);
+                    	qlkm.setVisible(false);
+                    	menuTK.setVisible(false);
+                    	menuTrangChu.setVisible(false);
+                    	//bat qldp
+                    	menuqldp.setVisible(true);
+                    	qlp.setVisible(true);
+                    	
+                    	//doi mau button
+                    	btnQLP.setForeground(Color.WHITE);
+                    	btnQLP.setBackground(new Color(41, 139, 106));
+                    	btnTrangChu.setBackground(Color.WHITE);
+                    	btnTrangChu.setForeground(Color.BLACK);
+                    	btnQLHD.setBackground(Color.WHITE);
+                    	btnQLHD.setForeground(Color.BLACK);
+                    	btnQLKH.setBackground(Color.WHITE);
+                    	btnQLKH.setForeground(Color.BLACK);
+                    	btnQLKM.setBackground(Color.WHITE);
+                    	btnQLKM.setForeground(Color.BLACK);
+                    	btnQLDV.setBackground(Color.WHITE);
+                    	btnQLDV.setForeground(Color.BLACK);
+                    	btnHT.setBackground(Color.WHITE);
+                    	btnHT.setForeground(Color.BLACK);
+                    	btnQLPD.setBackground(Color.WHITE);
+                    	btnQLPD.setForeground(Color.BLACK);
+                    	
+                    	
+			        }else if (clickedButton == btnQLP && isVisibleQLP) {
+                    	//tat het cac panel
+                    	menuTK.setVisible(false);
+			        }
+					
+			    }
+			};
+			btnTrangChu.addActionListener(actionListener);
+			btnQLP.addActionListener(actionListener);
+			btnQLHD.addActionListener(actionListener);
+			btnQLKH.addActionListener(actionListener);
+			btnQLKM.addActionListener(actionListener);
+			btnQLDV.addActionListener(actionListener);
+			btnHT.addActionListener(actionListener);
+			btnQLPD.addActionListener(actionListener);
+			
+			
 	}
 
 }

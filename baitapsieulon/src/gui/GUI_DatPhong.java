@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
 import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
 import entity.DichVuTienIch;
@@ -81,6 +82,8 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private ArrayList<PhieuDatPhong> dsPDP;
 	private ArrayList<KhachHang> dsKH;
 	private ArrayList<Phong> dsP;
+	private NhanVien_DAO nv_dao;
+	private ArrayList<NhanVien> ListNV;
 
 
 
@@ -125,6 +128,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		nv_dao = new  NhanVien_DAO();
+		ListNV = nv_dao.getNhanVienTiepTan();
+		
 		Phong_dao  = new Phong_DAO();
 		dsP = Phong_dao.getalltbPhong();
 		

@@ -11,8 +11,10 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
+import dao.NhanVien_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.TaiKhoan_DAO;
+import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.TaiKhoan;
 
@@ -150,17 +152,32 @@ public class dangnhap extends JFrame {
 		
 		JButton btnNewButton = new JButton("Đăng nhập");
 		btnNewButton.addActionListener(new ActionListener() {
+			private NhanVien nv = new NhanVien(txttendangnhap.getText());
+			NhanVien_DAO nv_dao = new NhanVien_DAO();
+			ArrayList<NhanVien> ListNV = nv_dao.getalltbNhanVien();
+			
+			
+			
+			
 			public void actionPerformed(ActionEvent e) {
+				for (NhanVien NV : ListNV) {
+	                if (NV.getMaNV().equals(txttendangnhap.getText())) {
+	                    nv = NV;
+	                }
+	            }
 				String tenDangNhap = txttendangnhap.getText();
 				String matKhau = txtmatkhau.getText();
 				if(kiemtraDN(tenDangNhap, matKhau) == 1) {
 					setVisible(false); // Đóng frame hiện tại
 					new GUI_MenuQL().setVisible(true);
                     new GUI_TrangChu().setVisible(true);
-                    }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {
+                    new GUI_MenuTrangChu(nv).setVisible(true);
+                }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {
+                	
                     	setVisible(false); // Đóng frame hiện tại
-    					new GUI_MenuNV().setVisible(true);
+    					new GUI_MenuNV(nv).setVisible(true);
                         new GUI_TrangChu().setVisible(true);
+                        new GUI_MenuTrangChu(nv).setVisible(true);
 				} else if(kiemtraDN(tenDangNhap, matKhau) == 3){
 					txtmatkhau.setText("");
 					txtmatkhau.requestFocus();

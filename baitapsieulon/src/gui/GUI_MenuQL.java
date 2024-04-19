@@ -16,9 +16,6 @@ import javax.swing.border.EmptyBorder;
 public class GUI_MenuQL extends JFrame {
 
 	private JPanel Frame;
-	private JButton btnTK;
-    private JButton btnTKDMK;
-    private JButton btnTKDX;
     private JButton btnTrangChu;
     private JButton btnQLP;
     private JButton btnQLHD;
@@ -32,11 +29,6 @@ public class GUI_MenuQL extends JFrame {
     private JLabel lblNewLabel_4;
     private JLabel lblNewLabel_5;
     private JLabel lblNewLabel_6;
-    private Panel panelTK;
-    private JLabel btnTKHTNV;
-    private JLabel btnTKTNV;
-    private JLabel btnTKca;
-    private JLabel btnmaNV;
     private JButton btnQLPD;
 	/**
 
@@ -64,84 +56,14 @@ public class GUI_MenuQL extends JFrame {
 			setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 			setTitle("Quản lý khách sạn");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(0,0,1920,1050);
-			setLocationRelativeTo(null);
+			setBounds(8,181,250,869);
+			setUndecorated(true);
 			setResizable(false);
 			
 			Frame = new JPanel();
 			Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(Frame);
 			Frame.setLayout(null);
-
-			
-			panelTK = new Panel();
-			panelTK.setBounds(1647, 53, 247, 218);
-			Frame.add(panelTK);
-			panelTK.setLayout(null);
-			panelTK.setVisible(false);
-			
-	       
-			
-			btnTKDMK = new JButton("Đổi mật khẩu");
-			btnTKDMK.setBounds(0, 141, 247, 39);
-			panelTK.add(btnTKDMK);
-			btnTKDMK.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnTKDMK.setForeground(new Color(244, 244, 244));
-			btnTKDMK.setBackground(new Color(41, 139, 106));
-			
-			btnTKDX = new JButton("<html><div style='text-align: center;'>Đăng xuất</div></html>");
-			btnTKDX.setBounds(0, 179, 247, 39);
-			panelTK.add(btnTKDX);
-			btnTKDX.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnTKDX.setForeground(new Color(244, 244, 244));
-			btnTKDX.setBackground(new Color(41, 139, 106));
-			
-			btnTKHTNV = new JLabel("Họ tên nhân viên");
-			btnTKHTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnTKHTNV.setHorizontalAlignment(SwingConstants.CENTER);
-			btnTKHTNV.setBounds(0, 26, 247, 20);
-			panelTK.add(btnTKHTNV);
-			
-			btnTKTNV = new JLabel("Tuổi");
-			btnTKTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnTKTNV.setHorizontalAlignment(SwingConstants.CENTER);
-			btnTKTNV.setBounds(0, 50, 247, 20);
-			panelTK.add(btnTKTNV);
-			
-			btnTKca = new JLabel("Ca làm");
-			btnTKca.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnTKca.setHorizontalAlignment(SwingConstants.CENTER);
-			btnTKca.setBounds(0, 69, 247, 20);
-			panelTK.add(btnTKca);
-			
-			btnmaNV = new JLabel("Mã nhân viên");
-			btnmaNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			btnmaNV.setHorizontalAlignment(SwingConstants.CENTER);
-			btnmaNV.setBounds(0, 0, 247, 29);
-			panelTK.add(btnmaNV);
-			
-			Panel panel_top = new Panel();
-			panel_top.setBackground(new Color(192, 192, 192));
-			panel_top.setBounds(0, 0, 1904, 150);
-			Frame.add(panel_top);
-			panel_top.setLayout(null);
-			
-			JLabel logo = new JLabel("");
-			logo.setHorizontalAlignment(SwingConstants.CENTER);
-			logo.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
-			logo.setBounds(0, 0, 250, 150);
-			panel_top.add(logo);
-			
-			
-			btnTK = new JButton("<html><div style='text-align: center;'>Trần ngu</div></html>");
-			btnTK.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnTK.setForeground(new Color(244, 244, 244));
-			btnTK.setBackground(new Color(41, 139, 106));
-			btnTK.setBounds(1647, 11, 247, 40);
-			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
-			btnTK.add(lblNewLabel);
-			panel_top.add(btnTK);
 			
 			
 
@@ -149,7 +71,7 @@ public class GUI_MenuQL extends JFrame {
 			Panel panel_menu = new Panel();
 			panel_menu.setLayout(null);
 			panel_menu.setBackground(Color.LIGHT_GRAY);
-			panel_menu.setBounds(0, 150, 250, 861);
+			panel_menu.setBounds(0, 0, 250, 861);
 			Frame.add(panel_menu);
 			
 			
