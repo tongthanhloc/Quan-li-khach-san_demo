@@ -182,6 +182,7 @@ public class GUI_MenuQL extends JFrame {
 			GUI_MenuTK menuTK = new GUI_MenuTK(nv);
 			GUI_MenuTrangChu menuTrangChu = new GUI_MenuTrangChu(nv);
 			GUI_MenuQLDP menuqldp = new GUI_MenuQLDP(nv);
+			GUI_QuanLiNhanVien qlnv = new GUI_QuanLiNhanVien();
 			
 			
 			
@@ -195,6 +196,7 @@ public class GUI_MenuQL extends JFrame {
 			    	boolean isVisibleQLKH = qlkh.isVisible();
 			    	boolean isVisibleQLKM = qlkm.isVisible();
 			    	boolean isVisibleQLDV = qldv.isVisible();
+			    	boolean isVisibleQLNV = qlnv.isVisible();
 			    	
 			    	
 			        JButton clickedButton = (JButton) e.getSource();
@@ -209,6 +211,7 @@ public class GUI_MenuQL extends JFrame {
 			            qlkh.setVisible(false);
 			            qlkm.setVisible(false);
 			            qldv.setVisible(false);
+			            qlnv.setVisible(false);
 			            menuqldp.setVisible(false);
 			            
 			            btnTrangChu.setForeground(Color.WHITE);
@@ -243,6 +246,7 @@ public class GUI_MenuQL extends JFrame {
                     	qlhd.setVisible(false);
                     	qlkh.setVisible(false);
                     	qlkm.setVisible(false);
+                    	qlnv.setVisible(false);
                     	menuTK.setVisible(false);
                     	menuTrangChu.setVisible(false);
                     	//bat qldp
@@ -271,7 +275,40 @@ public class GUI_MenuQL extends JFrame {
 			        }else if (clickedButton == btnQLP && isVisibleQLP) {
                     	//tat het cac panel
                     	menuTK.setVisible(false);
+			        }else if (clickedButton == btnQLNV && !isVisibleQLNV) {
+                    	//tat het cac panel
+						qldv.setVisible(false);
+						trangchu.setVisible(false);
+						qlhd.setVisible(false);
+						qlkh.setVisible(false);
+						qlkm.setVisible(false);
+						qlp.setVisible(false);
+						
+						menuTK.setVisible(false);
+						menuTrangChu.setVisible(false);
+						menuqldp.setVisible(false);
+						// bat qldp
+						qlnv.setVisible(true);
+
+						// doi mau button
+						btnQLNV.setForeground(Color.WHITE);
+						btnQLNV.setBackground(new Color(41, 139, 106));
+						btnTrangChu.setBackground(Color.WHITE);
+						btnTrangChu.setForeground(Color.BLACK);
+						btnQLHD.setBackground(Color.WHITE);
+						btnQLHD.setForeground(Color.BLACK);
+						btnQLKH.setBackground(Color.WHITE);
+						btnQLKH.setForeground(Color.BLACK);
+						btnQLKM.setBackground(Color.WHITE);
+						btnQLKM.setForeground(Color.BLACK);
+						btnQLDV.setBackground(Color.WHITE);
+						btnQLDV.setForeground(Color.BLACK);
+						btnHT.setBackground(Color.WHITE);
+						btnHT.setForeground(Color.BLACK);
+						btnQLPD.setBackground(Color.WHITE);
+						btnQLPD.setForeground(Color.BLACK);
 			        }
+                    	
 					
 			    }
 			};
@@ -283,6 +320,7 @@ public class GUI_MenuQL extends JFrame {
 			btnQLDV.addActionListener(actionListener);
 			btnHT.addActionListener(actionListener);
 			btnQLPD.addActionListener(actionListener);
+			btnQLNV.addActionListener(actionListener);
 	}
 
 }

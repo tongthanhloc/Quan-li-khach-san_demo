@@ -120,9 +120,6 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		}
 		nv_dao = new  NhanVien_DAO();
 		ListNV = nv_dao.getNhanVienTiepTan();
-		for (NhanVien nv : ListNV) {
-			System.out.println(nv.getHoTenNV());
-		}
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
