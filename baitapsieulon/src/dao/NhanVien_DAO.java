@@ -52,9 +52,9 @@ public class NhanVien_DAO {
 				}
 				double hesoluong = rs.getDouble(15);
 				double luongcoban = rs.getDouble(16);
-				double tongluong = rs.getDouble(17);
+				
 				NhanVien nv = new NhanVien(manv1, tennv, gioitinh, vitri, sdt, email, diachi, cancuoc, ngaysinh, ngayvaolam,
-						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban, tongluong);
+						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban);
 				dsnv.add(nv);
 
 			}
@@ -97,9 +97,9 @@ public class NhanVien_DAO {
 				}
 				double hesoluong = rs.getDouble(15);
 				double luongcoban = rs.getDouble(16);
-				double tongluong = rs.getDouble(17);
+				
 				NhanVien nv = new NhanVien(manv1, tennv, gioitinh, vitri, sdt, email, diachi, cancuoc, ngaysinh, ngayvaolam,
-						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban, tongluong);
+						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban);
 				dsnv.add(nv);
 
 			}
@@ -143,9 +143,9 @@ public class NhanVien_DAO {
 				}
 				double hesoluong = rs.getDouble(15);
 				double luongcoban = rs.getDouble(16);
-				double tongluong = rs.getDouble(17);
+				
 				nv = new NhanVien(manv1, tennv, gioitinh, vitri, sdt, email, diachi, cancuoc, ngaysinh, ngayvaolam,
-						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban, tongluong);
+						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban);
             }
          } catch (SQLException ee) {
                 ee.printStackTrace();
@@ -159,7 +159,7 @@ public class NhanVien_DAO {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Insert into NhanVien (maNhanVien, hoTen, gioiTinh, viTri, soDT, email, diaChi, canCuoc, ngaySinh, ngayVaoLam, ngayNghiLam, trangThai, trinhDoHocVan, anhDaiDien, heSoLuong, luongCoBan, tongLuong)  values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "Insert into NhanVien (maNhanVien, hoTen, gioiTinh, viTri, soDT, email, diaChi, canCuoc, ngaySinh, ngayVaoLam, ngayNghiLam, trangThai, trinhDoHocVan, anhDaiDien, heSoLuong, luongCoBan)  values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			statement = con.prepareStatement(sql);
 			statement.setString(1, nv.getMaNV());
 			statement.setString(2, nv.getHoTenNV());
@@ -181,7 +181,7 @@ public class NhanVien_DAO {
 			statement.setBytes(14, nv.getAnhDaiDien());
 			statement.setDouble(15, nv.getHeSoLuong());
 			statement.setDouble(16, nv.getLuongCoBan());
-			statement.setNull(17, java.sql.Types.DOUBLE);
+			
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

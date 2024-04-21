@@ -1,14 +1,74 @@
 package gui;
 
 import javax.swing.*;
+
+import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
+import dao.PhieuDatPhong_DAO;
+import dao.Phong_DAO;
+import entity.KhachHang;
+import entity.PhieuDatPhong;
+import entity.Phong;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 
 public class GUI_ManHinhCho {
-    public static void main(String[] args) {
+    private static Phong_DAO Phong_dao;
+	private static String[] soPhong;
+	private static KhachHang_DAO khachHang_DAO;
+	private static PhieuDatPhong_DAO phieuDatPhong_DAO;
+
+	public static void main(String[] args) {
+    	
+    	try {
+			ConnectDB.getInstance().connect();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		Phong_dao  = new Phong_DAO();
+		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
+		
+		
+		
+		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
+		// kiểm tra trạng thái phòng
+		for (int i = 0; i < dsPDP.size(); i++) {
+			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
+				String maPhieu = dsPDP.get(i).getMaPhieu();
+				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
+			}
+			if (dsPDP.get(i).getTrangThai().contains("Đã nhận")
+					&& dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()) ==-1) {
+				String maPhieu = dsPDP.get(i).getMaPhieu();
+				JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã quá hạn"+(dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()))+"ngày");
+			}
+		}
+		LocalDate tghientai = LocalDate.now();
+		for (int i = 0; i < dsP.size(); i++) {
+			
+			for(int j = 0; j < dsPDP.size(); j++) {
+			
+				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+						&& dsPDP.get(j).getTrangThai().contains("Đã đặt")
+						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 0)
+						) {
+					Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã đặt");
+				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+                        && dsPDP.get(j).getTrangThai().contains("Đã nhận")
+                        && (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 0)
+                        ) {
+                    Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
+				}
+			}
+		}
         // Tạo một JFrame
         JFrame frame = new JFrame();
         frame.setSize(564, 781);

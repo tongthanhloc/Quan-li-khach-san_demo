@@ -422,6 +422,12 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		btnXem.setBounds(1270, 176, 175, 35);
 		panel_Center_Top.add(btnXem);
 		
+		JButton btnThem = new JButton("Thêm Nhân Viên");
+		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnThem.setBackground(new Color(234, 232, 214));
+		btnThem.setBounds(852, 176, 210, 35);
+		panel_Center_Top.add(btnThem);
+		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));
 		panel_Center_Bot.setBounds(251, 369, 1648, 576);
@@ -611,7 +617,11 @@ public class GUI_QuanLiNhanVien extends JFrame {
       		        chiTietNhanVien= new Frm_ChiTietNhanVien(maNVChon);
       		        chiTietNhanVien.setVisible(true);
       		        }
-                }
+                }else if(clickedButton == btnThem) {
+                	Frm_ThemNhanVien themNhanVien;
+                	themNhanVien = new Frm_ThemNhanVien();
+                	themNhanVien.setVisible(true);
+                	}
                 }};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
@@ -627,6 +637,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
                     btnTim.addActionListener(actionListener);
                     btbXoaTrang.addActionListener(actionListener);
                     btnXem.addActionListener(actionListener);
+                    btnThem.addActionListener(actionListener);
                   }
 
 	
@@ -708,7 +719,5 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	    }
 	    return dsnv;
 	}
-
-
 }
 

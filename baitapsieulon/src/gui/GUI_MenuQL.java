@@ -35,6 +35,11 @@ public class GUI_MenuQL extends JFrame {
     private JLabel lblNewLabel_6;
     private JButton btnQLPD;
     private NhanVien nv;
+    static GUI_QuanLiDatPhong qlp;
+    static GUI_QuanLiHoaDon qlhd;
+    static GUI_QuanLiKhachHang qlkh;
+    static GUI_QuanLiKhuyenMai qlkm;
+    static GUI_QuanLiDichVu qldv;
 	/**
 
 	/**
@@ -174,11 +179,11 @@ public class GUI_MenuQL extends JFrame {
 			panel_menu.add(btnQLPD);
 			
 			GUI_TrangChu trangchu = new GUI_TrangChu();
-			GUI_QuanLiDatPhong qlp = new GUI_QuanLiDatPhong();
-			GUI_QuanLiHoaDon qlhd = new GUI_QuanLiHoaDon();
-			GUI_QuanLiKhachHang qlkh = new GUI_QuanLiKhachHang();
-			GUI_QuanLiKhuyenMai qlkm = new GUI_QuanLiKhuyenMai();
-			GUI_QuanLiDichVu qldv = new GUI_QuanLiDichVu();
+			qlp = new GUI_QuanLiDatPhong();
+			qlhd = new GUI_QuanLiHoaDon();
+			qlkh = new GUI_QuanLiKhachHang();
+			qlkm = new GUI_QuanLiKhuyenMai();
+			qldv = new GUI_QuanLiDichVu();
 			GUI_MenuTK menuTK = new GUI_MenuTK(nv);
 			GUI_MenuTrangChu menuTrangChu = new GUI_MenuTrangChu(nv);
 			GUI_MenuQLDP menuqldp = new GUI_MenuQLDP(nv);

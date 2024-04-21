@@ -37,6 +37,12 @@ public class GUI_MenuQLDP extends JFrame {
 	private JButton btnGUI_TraPhong;
 	private JButton btnGUI_doiPhong;
 	private JButton btnGUI_GiahanPhong;
+	static GUI_GiaHanPhong giaHanPhong;
+	static GUI_DoiPhong doiPhong;
+	static GUI_TraPhong tp;
+	static GUI_NhanPhong np;
+	static GUI_DatPhong dp;
+	static GUI_QuanLiDatPhong qldp;
 	/**
 	 * Launch the application.
 	 */
@@ -154,14 +160,16 @@ public class GUI_MenuQLDP extends JFrame {
 		        btnTK.setVisible(true);
 		    }
 		});
-		GUI_DatPhong dp = new GUI_DatPhong();
-		GUI_NhanPhong np = new GUI_NhanPhong();
-		GUI_TraPhong tp = new GUI_TraPhong();
-		GUI_DoiPhong doiPhong = new GUI_DoiPhong();
-		GUI_GiaHanPhong giaHanPhong = new GUI_GiaHanPhong();
+		qldp = new GUI_QuanLiDatPhong();
+		dp = new GUI_DatPhong(nv);
+		np = new GUI_NhanPhong();
+		tp = new GUI_TraPhong();
+		doiPhong = new GUI_DoiPhong();
+		giaHanPhong = new GUI_GiaHanPhong();
 		ActionListener actionListener = new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        JButton clickedButton = (JButton) e.getSource();
+		        boolean isVisibleqldp = qldp.isVisible();
 		        boolean isVisible = menuTK.isVisible();
 		        boolean isVisibleDP = dp.isVisible();
 		        boolean isVisibleNP = np.isVisible();
@@ -182,6 +190,7 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	giaHanPhong.setVisible(false);
+                	GUI_MenuQL.qlp.setVisible(false);
                 	
                 	btnGUI_datPhong.setForeground(new Color(0, 0, 0));
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -202,6 +211,7 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	giaHanPhong.setVisible(false);
+                	GUI_MenuQL.qlp.setVisible(false);
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(new Color(0, 0, 0));
@@ -222,6 +232,7 @@ public class GUI_MenuQLDP extends JFrame {
                 	dp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	giaHanPhong.setVisible(false);
+                	GUI_MenuQL.qlp.setVisible(false);
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -242,6 +253,7 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	dp.setVisible(false);
                 	giaHanPhong.setVisible(false);
+                	GUI_MenuQL.qlp.setVisible(false);
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -262,6 +274,7 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	dp.setVisible(false);
+                	GUI_MenuQL.qlp.setVisible(false);
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);

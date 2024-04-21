@@ -84,6 +84,8 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private ArrayList<Phong> dsP;
 	private NhanVien_DAO nv_dao;
 	private ArrayList<NhanVien> ListNV;
+	private NhanVien_DAO nhanVien_DAO;
+	private Object dsNV;
 
 
 
@@ -94,7 +96,8 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_DatPhong frame = new GUI_DatPhong();
+					NhanVien nv = new NhanVien("NV0000001");
+					GUI_DatPhong frame = new GUI_DatPhong(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,7 +109,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	/**
 	 * Create the frame.
 	 */
-	public GUI_DatPhong() {
+	public GUI_DatPhong(NhanVien nv) {
 		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
@@ -139,63 +142,36 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
-		for (int i = 0; i < dsPDP.size(); i++) {
-			if (dsPDP.get(i).getTrangThai().equals("Đã đặt    ")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
-				String maPhieu = dsPDP.get(i).getMaPhieu();
-				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
+		
+		nhanVien_DAO = new NhanVien_DAO();
+		dsNV = nhanVien_DAO.getalltbNhanVien();
+		
+		for (NhanVien nv1 : ListNV) {
+			if (nv1.getMaNV().equals(nv.getMaNV())) {
+				nv = nv1;
 			}
 		}
+		maNV = nv.getMaNV();
 		
 		
+		trangThai = new int[dsP.size()];
 		
 		soPhong = new String[dsP.size()];
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
-		}
-		trangThai = new int[dsP.size()];
-		// lay thoi gian hien tai
-		LocalDate tghientai = LocalDate.now();
-		
-		tenKhachHang = new String[dsP.size()];
-
-
-		for (int i = 0; i < dsP.size(); i++) {
 			trangThai[i] = 3;
-			for(int j = 0; j < dsPDP.size(); j++) {
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã đặt    ")
-						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 1)) {
-					trangThai[i] = 1;
-					for (int k = 0; k < dsKH.size(); k++) {
-						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
-							tenKhachHang[i] = dsKH.get(k).getHoTen();
-						}
-					}
-				}
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã thuê   ")) {
-					trangThai[i] = 2;
-					for (int k = 0; k < dsKH.size(); k++) {
-						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
-							tenKhachHang[i] = dsKH.get(k).getHoTen();
-						}
-					}
-				}
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã thanh toán")
-						&& (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 1)) {
-					trangThai[i] = 4;
-					tenKhachHang[i] = "";
-				}
-				if (trangThai[i] != 1 && trangThai[i] != 2 && trangThai[i] != 4) {
-					trangThai[i] = 3;
-					tenKhachHang[i] = "";
-				}
-			}
 		}
 		
-		maNV = "NV0000001";
-		tenNV="Nguyễn Văn A";
+		// lay thoi gian hien tai
+		
+		
+		
+		
+		
+		
+		
+		
+
 		
 		panelKH = new JPanel();
 		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -344,8 +320,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		dateTraP.setDateFormatString("dd/MM/yyyy");
 		dateTraP.setBounds(1205, 75, 350, 26);
 		dateTraP.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		//set date ngày mai
+		//set date ngày hôm sau của dateNhanP
 		Calendar cal = Calendar.getInstance();
+		cal.setTime(dateNhanP.getDate());
 		cal.add(Calendar.DATE, 1);
 		dateTraP.setDate(cal.getTime());
 		panelP.add(dateTraP);
@@ -568,8 +545,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 				if (soPhong[i].contains("A")&& trangThai[i]==3) {
 					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
 					maphongs[maphongs.length - 1] = soPhong[i];
-					tens = Arrays.copyOf(tens, tens.length + 1);
-					tens[tens.length - 1] = tenKhachHang[i];
 					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
 					trangTs[trangTs.length - 1] = trangThai[i];
 				}
@@ -581,8 +556,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 				if (soPhong[i].contains("B")&& trangThai[i]==3) {
 					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
 					maphongs[maphongs.length - 1] = soPhong[i];
-					tens = Arrays.copyOf(tens, tens.length + 1);
-					tens[tens.length - 1] = tenKhachHang[i];
 					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
 					trangTs[trangTs.length - 1] = trangThai[i];
 					
@@ -597,8 +570,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 				if (soPhong[i].contains("C") && trangThai[i]==3) {
 					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
 					maphongs[maphongs.length - 1] = soPhong[i];
-					tens = Arrays.copyOf(tens, tens.length + 1);
-					tens[tens.length - 1] = tenKhachHang[i];
 					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
 					trangTs[trangTs.length - 1] = trangThai[i];
 				}
@@ -616,19 +587,17 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		for (int i = 0; i < maphongs.length; i++) {
 			mangHaiChie[0][i] = maphongs[i];
-			mangHaiChie[1][i] = tens[i];
-			mangHaiChie[2][i] = String.valueOf(trangTs[i]);
+			mangHaiChie[1][i] = String.valueOf(trangTs[i]);
 		}
-		mangHaiChie = createTwoDimensionalArray(maphongs,tens, trangTs);
+		mangHaiChie = createTwoDimensionalArray(maphongs, trangTs);
 		mangHaiChie = sapXep(mangHaiChie);
 		
 		maphongs = mangHaiChie[0];
-		tens = mangHaiChie[1];
 		trangTs = new int[maphongs.length];
 		for (int i = 0; i < maphongs.length; i++) {
-			trangTs[i] = Integer.parseInt(mangHaiChie[2][i]);
+			trangTs[i] = Integer.parseInt(mangHaiChie[1][i]);
 		}
-		button = createButtons(panel, maphongs, tens, trangTs);
+		button = createButtons(panel, maphongs, trangTs);
 		for (int i = 0; i < button.length; i++) {
 			button[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -636,8 +605,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 					String txtmaPhong = txtMaP.getText();
 					for (int j = 0; j < button.length; j++) {
 						if (clickedButton == button[j]) {
-							
-							
 							if(txtmaPhong.equals("")) {
                                 txtMaP.setText(maphongs[j]);
                             }else if(txtmaPhong.contains(maphongs[j]+" , ")) {
@@ -650,7 +617,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
                                 //xóa phòng đã chọn
                             	txtMaP.setText(txtmaPhong.replace(maphongs[j], ""));
                             }else {
-							txtMaP.setText(txtmaPhong + " , "+ maphongs[j] );
+                            	txtMaP.setText(txtmaPhong + " , "+ maphongs[j] );
 						}}
 					}
 				}
@@ -658,7 +625,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}
 	}
 
-	public static String[][] createTwoDimensionalArray(String[] maphong, String[] ten, int[] trangT) {
+	public static String[][] createTwoDimensionalArray(String[] maphong, int[] trangT) {
         Set<String> uniqueMaphong = new HashSet<>();
         List<String> uniqueMaphongList = new ArrayList<>();
         List<String> tenList = new ArrayList<>();
@@ -668,7 +635,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
             if (!uniqueMaphong.contains(maphong[i])) {
                 uniqueMaphong.add(maphong[i]);
                 uniqueMaphongList.add(maphong[i]);
-                tenList.add(ten[i]);
                 trangTList.add(trangT[i]);
             }
         }
@@ -676,14 +642,13 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
         String[][] mangHaiChieu = new String[3][uniqueMaphongList.size()];
         for (int i = 0; i < uniqueMaphongList.size(); i++) {
             mangHaiChieu[0][i] = uniqueMaphongList.get(i);
-            mangHaiChieu[1][i] = tenList.get(i);
-            mangHaiChieu[2][i] = String.valueOf(trangTList.get(i));
+            mangHaiChieu[1][i] = String.valueOf(trangTList.get(i));
         }
         return mangHaiChieu;
     }
 	
 	
-	public static JButton[] createButtons(JPanel panel, String[] roomNumbers, String[] customerNames, int[] statuses) {
+	public static JButton[] createButtons(JPanel panel, String[] roomNumbers, int[] statuses) {
         JButton[] buttons = new JButton[roomNumbers.length];
         for (int i = 0; i < roomNumbers.length; i++) {
             buttons[i] = new JButton();
@@ -694,25 +659,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
             buttons[i].setText(htmlText.toString());
             buttons[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
             panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
-            buttons[i].setText(buttons[i].getText().replaceAll("na", customerNames[i]));
-
-            switch (statuses[i]) {
-                case 1:
-                    buttons[i].setBackground(new Color(34, 242, 93));
-                    break;
-                case 2:
-                    buttons[i].setBackground(new Color(242, 128, 116));
-                    break;
-                case 3:
-                    buttons[i].setBackground(new Color(5, 207, 251));
-                    break;
-                case 4:
-                    buttons[i].setBackground(new Color(251, 193, 146));
-                    break;
-                default:
-                    // Handle other statuses if necessary
-                    break;
-            }
+            buttons[i].setText(buttons[i].getText().replaceAll("na", ""));
+            buttons[i].setBackground(new Color(5, 207, 251));
+            
 
             panel.add(buttons[i]);
         }
@@ -733,9 +682,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 					mangHaiChieu[1][i] = mangHaiChieu[1][j];
 					mangHaiChieu[1][j] = temp;
 
-					temp = mangHaiChieu[2][i];
-					mangHaiChieu[2][i] = mangHaiChieu[2][j];
-					mangHaiChieu[2][j] = temp;
+					
 				}
 			}
 		}

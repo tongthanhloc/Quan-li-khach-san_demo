@@ -72,6 +72,7 @@ public class NhanVien {
 		this.anhDaiDien = anhDaiDien;
 		this.heSoLuong = heSoLuong;
 		this.luongCoBan = luongCoBan;
+		setTongLuong(heSoLuong, luongCoBan);
 	}
 
 	public NhanVien() {

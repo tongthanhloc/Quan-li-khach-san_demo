@@ -7,6 +7,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoPeriod;
+import java.time.chrono.Chronology;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -113,14 +119,36 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		
 		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
 		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
-		
+		// kiểm tra trạng thái phòng
 		for (int i = 0; i < dsPDP.size(); i++) {
-			if (dsPDP.get(i).getTrangThai().equals("Đã đặt    ")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
+			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
 				String maPhieu = dsPDP.get(i).getMaPhieu();
 				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
 			}
+			if (dsPDP.get(i).getTrangThai().contains("Đã nhận")
+					&& dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()) ==-1) {
+				String maPhieu = dsPDP.get(i).getMaPhieu();
+				JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã quá hạn"+(dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()))+"ngày");
+			}
 		}
-		
+		LocalDate tghientai = LocalDate.now();
+		for (int i = 0; i < dsP.size(); i++) {
+			
+			for(int j = 0; j < dsPDP.size(); j++) {
+			
+				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+						&& dsPDP.get(j).getTrangThai().contains("Đã đặt")
+						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 0)
+						) {
+					Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã đặt");
+				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+                        && dsPDP.get(j).getTrangThai().contains("Đã nhận")
+                        && (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 0)
+                        ) {
+                    Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
+				}
+			}
+		}
 		
 		
 		
@@ -134,48 +162,47 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		
 		trangThai = new int[dsP.size()];
 		// lay thoi gian hien tai
-		LocalDate tghientai = LocalDate.now();
+		
 		
 		tenKhachHang = new String[dsP.size()];
 		
-//		for(int j = 0; j < dsPDP.size(); j++) {
-//			System.out.println(Math.abs(dsPDP.get(j).getThoiGianNhan().toEpochDay() - tghientai.toEpochDay()));
-//		}
 
+
+		
 		for (int i = 0; i < dsP.size(); i++) {
-			trangThai[i] = 3;
-			for(int j = 0; j < dsPDP.size(); j++) {
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã đặt    ")
-						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 1)) {
-					trangThai[i] = 1;
-					for (int k = 0; k < dsKH.size(); k++) {
-						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
-							tenKhachHang[i] = dsKH.get(k).getHoTen();
+			if (dsP.get(i).getTrangThai().contains("Đã đặt")) {
+				trangThai[i] = 1;
+				for (int j = 0; j < dsPDP.size(); j++) {
+					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
+							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
+						for (int k = 0; k < dsKH.size(); k++) {
+							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+								tenKhachHang[i] = dsKH.get(k).getHoTen();
+							}
 						}
 					}
 				}
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã thuê   ")) {
-					trangThai[i] = 2;
-					for (int k = 0; k < dsKH.size(); k++) {
-						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
-							tenKhachHang[i] = dsKH.get(k).getHoTen();
+			} else if (dsP.get(i).getTrangThai().contains("Đã thuê")) {
+				trangThai[i] = 2;
+				for (int j = 0; j < dsPDP.size(); j++) {
+					if (dsP.get(i).getMaPhong().contains(dsPDP.get(j).getPhong().getMaPhong())
+							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
+						for (int k = 0; k < dsKH.size(); k++) {
+							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+								tenKhachHang[i] = dsKH.get(k).getHoTen();
+							}
 						}
 					}
 				}
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã thanh toán")
-						&& (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 1)) {
-					trangThai[i] = 4;
-					tenKhachHang[i] = "";
-				}
-				if (trangThai[i] != 1 && trangThai[i] != 2 && trangThai[i] != 4) {
-					trangThai[i] = 3;
-					tenKhachHang[i] = "";
-				}
+			} else if (dsP.get(i).getTrangThai().contains("Trống")) {
+				trangThai[i] = 3;
+				tenKhachHang[i] = "";
+			} else if (dsP.get(i).getTrangThai().contains("Bảo trì")) {
+				trangThai[i] = 4;
+				tenKhachHang[i] = "";
 			}
 		}
+		
 		
 		chckbxdadat = new JCheckBox("Đã đặt");
 		chckbxdadat.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -183,30 +210,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxdadat);
 		chckbxdadat.setSelected(true);
 		
-//		chckbxdadat.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//                if (chckbxdadat.isSelected()) {
-//                	chckbxPdon.setSelected(true);
-//                	chckbxPdoi.setSelected(true);
-//                	chckbxPVip.setSelected(true);
-//                    // Thực hiện hành động khi checkbox được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 1) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//                } else {
-//                    // Thực hiện hành động khi checkbox không được chọn
-//                	for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 1) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//                }
-//            }
-//        });
+
 		
 		
 		
@@ -217,30 +221,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxThue);
 		chckbxThue.setSelected(true);
 		
-//		chckbxThue.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//				if (chckbxThue.isSelected()) {
-//					// Thực hiện hành động khi checkbox được chọn
-//					chckbxPdon.setSelected(true);
-//					chckbxPdoi.setSelected(true);
-//					chckbxPVip.setSelected(true);
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 2) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//				} else {
-//					// Thực hiện hành động khi checkbox không được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 2) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//				}
-//			}
-//		});
+
 		
 		chckbxTrong = new JCheckBox("Trống");
 		chckbxTrong.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -248,30 +229,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxTrong);
 		chckbxTrong.setSelected(true);
 		
-//		chckbxTrong.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//				if (chckbxTrong.isSelected()) {
-//					// Thực hiện hành động khi checkbox được chọn
-//					chckbxPdon.setSelected(true);
-//					chckbxPdoi.setSelected(true);
-//					chckbxPVip.setSelected(true);
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 3) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//				} else {
-//					// Thực hiện hành động khi checkbox không được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 3) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//				}
-//			}
-//		});
+
 		
 		chckbxBaotri = new JCheckBox("Bảo trì");
 		chckbxBaotri.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -279,30 +237,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxBaotri);
 		chckbxBaotri.setSelected(true);
 		
-//		chckbxBaotri.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//				if (chckbxBaotri.isSelected()) {
-//					// Thực hiện hành động khi checkbox được chọn
-//					chckbxPdon.setSelected(true);
-//					chckbxPdoi.setSelected(true);
-//					chckbxPVip.setSelected(true);
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 4) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//				} else {
-//					// Thực hiện hành động khi checkbox không được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (trangThai[i] == 4) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//				}
-//			}
-//		});
+
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -310,31 +245,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxPdon);
 		chckbxPdon.setSelected(true);
 		
-//		chckbxPdon.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//				if (chckbxPdon.isSelected()) {
-//					// Thực hiện hành động khi checkbox được chọn
-//					chckbxdadat.setSelected(true);
-//					chckbxThue.setSelected(true);
-//					chckbxTrong.setSelected(true);
-//					chckbxBaotri.setSelected(true);
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (soPhong[i].contains("A")) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//				} else {
-//					// Thực hiện hành động khi checkbox không được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (soPhong[i].contains("A")) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//				}
-//			}
-//		});
+
 		
 		chckbxPdoi = new JCheckBox("Phòng đôi (B)");
 		chckbxPdoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -342,31 +253,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxPdoi);
 		chckbxPdoi.setSelected(true);
 		
-//		chckbxPdoi.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//				if (chckbxPdoi.isSelected()) {
-//					// Thực hiện hành động khi checkbox được chọn
-//					chckbxdadat.setSelected(true);
-//					chckbxThue.setSelected(true);
-//					chckbxTrong.setSelected(true);
-//					chckbxBaotri.setSelected(true);
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (soPhong[i].contains("B")) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//				} else {
-//					// Thực hiện hành động khi checkbox không được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (soPhong[i].contains("B")) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//				}
-//			}
-//		});
 		
 		chckbxPVip = new JCheckBox("Phòng VIP (C)");
 		chckbxPVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -374,66 +260,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		Frame.add(chckbxPVip);
 		chckbxPVip.setSelected(true);
 		
-//		chckbxPVip.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// Xử lý sự kiện khi checkbox được chọn hoặc không được chọn
-//				chckbxdadat.setSelected(true);
-//				chckbxThue.setSelected(true);
-//				chckbxTrong.setSelected(true);
-//				chckbxBaotri.setSelected(true);
-//				if (chckbxPVip.isSelected()) {
-//					// Thực hiện hành động khi checkbox được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (soPhong[i].contains("C")) {
-//							button[i].setVisible(true);
-//						}
-//					}
-//				} else {
-//					// Thực hiện hành động khi checkbox không được chọn
-//					for (int i = 0; i < soPhong.length; i++) {
-//						if (soPhong[i].contains("C")) {
-//							button[i].setVisible(false);
-//						}
-//					}
-//				}
-//			}
-//		});
-		
-	
-		
-//		ItemListener itemListener1 = new ItemListener() {
-//            public void itemStateChanged(ItemEvent e) {
-//                if (e.getStateChange() == ItemEvent.SELECTED) {
-//                    chckbxPdon.setSelected(true);
-//                    chckbxPdoi.setSelected(true);
-//                    chckbxPVip.setSelected(true);
-//                } 
-//            }
-//        };
-//
-//        // Create item listener for group 2
-//        ItemListener itemListener2 = new ItemListener() {
-//            public void itemStateChanged(ItemEvent e) {
-//                if (e.getStateChange() == ItemEvent.SELECTED) {
-//                    chckbxdadat.setSelected(true);
-//                    chckbxThue.setSelected(true);
-//                    chckbxTrong.setSelected(true);
-//                    chckbxBaotri.setSelected(true);
-//                } 
-//            }
-//        };
-//        
-//     // Add item listener to checkboxes in group 1
-//        chckbxdadat.addItemListener(itemListener1);
-//        chckbxThue.addItemListener(itemListener1);
-//        chckbxTrong.addItemListener(itemListener1);
-//        chckbxBaotri.addItemListener(itemListener1);
-//
-//        // Add item listener to checkboxes in group 2
-//        chckbxPdon.addItemListener(itemListener2);
-//        chckbxPdoi.addItemListener(itemListener2);
-//        chckbxPVip.addItemListener(itemListener2);
+
 		
 		Panel panel_Center_dadat = new Panel();
 		panel_Center_dadat.setBackground(new Color(34, 242, 93));
@@ -534,29 +361,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
         
         
         
-//        button = new JButton[soPhong.length];
-//        for (int i = 0; i < soPhong.length; i++) {
-//            button[i] = new JButton();
-//            StringBuilder htmlText = new StringBuilder("<html><center>");
-//            htmlText.append("<span style='font-family:Tahoma; font-size:60pt;'>").append(soPhong[i]).append("</span><br/>");
-//            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("na").append("</span>");
-//            htmlText.append("</center></html>");
-//            button[i].setText(htmlText.toString());
-//            button[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
-//            panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
-//            button[i].setText(button[i].getText().replaceAll("na", tenKhachHang[i]));
-//			if(trangThai[i]==1) {
-//				button[i].setBackground(new Color(34, 242, 93));
-//			}
-//			else if (trangThai[i] == 2) {
-//				button[i].setBackground(new Color(242, 128, 116));
-//			}else if (trangThai[i] == 3) {
-//				button[i].setBackground(new Color(5, 207, 251));
-//			} else if (trangThai[i] == 4) {
-//				button[i].setBackground(new Color(251, 193, 146));
-//			}
-//            panel.add(button[i]);
-//        }
+
 		
         
 		
