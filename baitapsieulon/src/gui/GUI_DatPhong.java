@@ -115,7 +115,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(258,181,1654, 859);
-		
 		setResizable(false);
 		setUndecorated(true);
 		Frame = new JPanel();
@@ -679,9 +678,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}
 		String trangThai;
 		if(LocalDate.now().isBefore(dateNhanP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
-			trangThai = "Đã đặt    ";
+			trangThai = "Đã đặt";
 		} else {
-			trangThai = "Đã thuê   ";
+			trangThai = "Đã nhận";
 		}
 		String soPhong = txtSoN.getText();
 		DichVuTienIch dichVu = new DichVuTienIch();

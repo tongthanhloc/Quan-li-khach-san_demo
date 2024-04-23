@@ -364,6 +364,18 @@ public class GUI_NhanPhong extends JFrame{
                 // Xử lý sự kiện cho mỗi nút ở đây
                 if (clickedButton == bntNhanP) {
                     // Xử lý khi nhấn vào nút btnHT
+                	//lay ma phieu dat phong
+                	String[] maPhongs = txtmaP.getText().split(" , ");
+                	for (int i = 0; i < maPhongs.length; i++) {
+                		System.out.println(maPhongs[i]);
+						for (int j = 0; j < dsPDPKH.size(); j++) {
+							if (dsPDPKH.get(j).getPhong().getMaPhong().equals(maPhongs[i])) {
+								String maPhieu = dsPDPKH.get(j).getMaPhieu();
+								phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã thuê");
+							}
+						}
+					}
+                    
                 }else if (clickedButton == btnTim) {
                     // Xử lý khi nhấn vào nút btnHT
                 	KhachHang khs = new KhachHang(txtmaKH.getText());

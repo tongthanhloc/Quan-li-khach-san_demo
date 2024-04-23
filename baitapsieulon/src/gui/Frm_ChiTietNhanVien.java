@@ -113,6 +113,7 @@ public class Frm_ChiTietNhanVien extends JFrame {
 		setLocationRelativeTo(null);
 		setTitle("Chi tiết nhân viên");
 		setResizable(false);
+		setLayout(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
