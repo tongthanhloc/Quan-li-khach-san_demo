@@ -28,7 +28,7 @@ import com.toedter.calendar.JDateChooser;
 
 
 
-public class GUI_NhanPhong extends JFrame {
+public class GUI_NhanPhong extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel Frame;
@@ -39,9 +39,9 @@ public class GUI_NhanPhong extends JFrame {
     private JLabel lblNewLabel_1_4;
     private JPanel panelP;
     private JLabel lblNewLabel_7;
-    private JTextField txtmaP;
+    static JTextField txtmaP;
     private JLabel lblNewLabel_8;
-    private JTextField txtNguoi;
+    static JTextField txtNguoi;
     private JLabel lblNewLabel_9;
     private JLabel lblNewLabel_10;
     private JLabel lblNewLabel_11;
@@ -68,8 +68,15 @@ public class GUI_NhanPhong extends JFrame {
 	private ArrayList<KhachHang> dsKH;
 	private PhieuDatPhong_DAO phieuDatPhong_DAO;
 	private ArrayList<PhieuDatPhong> dsPDP;
-	private JTextField txtDV;
+	static JTextField txtDV;
 	private JButton btnThemDV;
+	private JPanel outerPanel;
+	private JPanel panel;
+	private static ArrayList<PhieuDatPhong> dsPDPKH;
+	private static String[][] roomNumbers;
+	private static String[] checkOutDates;
+	static JDateChooser dateNhanP;
+	static JDateChooser dateTraP;
 	
 
 
@@ -105,6 +112,7 @@ public class GUI_NhanPhong extends JFrame {
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Frame);
 		Frame.setLayout(null);
+		Frame.setVisible(true);
 
 		
 		
@@ -114,8 +122,8 @@ public class GUI_NhanPhong extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		Phong_dao  = new Phong_DAO();
-		dsP = Phong_dao.getalltbPhong();
+		Phong_DAO Phong_dao  = new Phong_DAO();
+		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
 		
 		khachHang_DAO = new KhachHang_DAO();
 		dsKH = khachHang_DAO.getalltbKhachHang();
@@ -123,7 +131,7 @@ public class GUI_NhanPhong extends JFrame {
 		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		for (int i = 0; i < dsPDP.size(); i++) {
-			if (dsPDP.get(i).getTrangThai().equals("Đã đặt    ")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
+			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
 				String maPhieu = dsPDP.get(i).getMaPhieu();
 				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
 			}
@@ -131,51 +139,7 @@ public class GUI_NhanPhong extends JFrame {
 		
 		
 		
-		soPhong = new String[dsP.size()];
-		for (int i = 0; i < dsP.size(); i++) {
-			soPhong[i] = dsP.get(i).getMaPhong();
-		}
-		trangThai = new int[dsP.size()];
-		// lay thoi gian hien tai
-		LocalDate tghientai = LocalDate.now();
 		
-		tenKhachHang = new String[dsP.size()];
-
-
-		for (int i = 0; i < dsP.size(); i++) {
-			trangThai[i] = 3;
-			for(int j = 0; j < dsPDP.size(); j++) {
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã đặt    ")
-						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 1)) {
-					trangThai[i] = 1;
-					for (int k = 0; k < dsKH.size(); k++) {
-						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
-							tenKhachHang[i] = dsKH.get(k).getHoTen();
-						}
-					}
-				}
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã thuê   ")) {
-					trangThai[i] = 2;
-					for (int k = 0; k < dsKH.size(); k++) {
-						if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
-							tenKhachHang[i] = dsKH.get(k).getHoTen();
-						}
-					}
-				}
-				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
-						&& dsPDP.get(j).getTrangThai().equals("Đã thanh toán")
-						&& (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 1)) {
-					trangThai[i] = 4;
-					tenKhachHang[i] = "";
-				}
-				if (trangThai[i] != 1 && trangThai[i] != 2 && trangThai[i] != 4) {
-					trangThai[i] = 3;
-					tenKhachHang[i] = "";
-				}
-			}
-		}
 		
 		panelKH = new JPanel();
 		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -284,7 +248,7 @@ public class GUI_NhanPhong extends JFrame {
 		lblNewLabel_11.setBounds(992, 27, 185, 26);
 		panelP.add(lblNewLabel_11);
 		
-		JDateChooser dateNhanP = new JDateChooser();
+		dateNhanP = new JDateChooser();
 		dateNhanP.setDateFormatString("dd/MM/yyyy");
 		dateNhanP.setBounds(1205, 27, 350, 26);
 		dateNhanP.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -292,7 +256,7 @@ public class GUI_NhanPhong extends JFrame {
 		dateNhanP.setDate(new java.util.Date());
 		panelP.add(dateNhanP);
 		
-		JDateChooser dateTraP = new JDateChooser();
+		dateTraP = new JDateChooser();
 		dateTraP.setDateFormatString("dd/MM/yyyy");
 		dateTraP.setBounds(1205, 75, 350, 26);
 		dateTraP.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -357,13 +321,45 @@ public class GUI_NhanPhong extends JFrame {
 		btnThemDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnThemDV.setBounds(699, 120, 168, 26);
 		panelP.add(btnThemDV);
-	     
-        
+		
+		
+
+		outerPanel = new JPanel(null);
+		outerPanel.setBounds(37, 430, 1580, 423);
+		Frame.add(outerPanel);
+		
+		
+
+        // Tạo một panel bên trong với layout null và kích thước cố định
+		panel = new JPanel(null);
+		panel.setVisible(true);
+        panel.setPreferredSize(new Dimension(1500, 380));
+		
+		JScrollPane scrollPane = new JScrollPane(panel);                      
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+	        // Đặt vị trí và kích thước của JScrollPane để trùng với panel bên ngoài
+		scrollPane.setBounds(0, 0, 1580, 423);
+
+	        // Thêm JScrollPane vào panel bên ngoài
+	    outerPanel.add(scrollPane);
+	    scrollPane.setVisible(true);
+	    outerPanel.setVisible(true);
+	    
+	    //lay maphong, ngay tra phong, ngay nhan phong tu button len cac textfield
+	    
+		
+	    
+        //tao su kien cho bien button
+	    
+	    
 		
 		
 		
 		ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            
+
+			public void actionPerformed(ActionEvent e) {
                 JButton clickedButton = (JButton) e.getSource();
                 // Xử lý sự kiện cho mỗi nút ở đây
                 if (clickedButton == bntNhanP) {
@@ -388,8 +384,21 @@ public class GUI_NhanPhong extends JFrame {
   							txtGT.setText("Nữ");
               		   }
               		   // lay danh sach phieu dat phong cua khach hang
-              		   
-                  		
+              		   dsPDPKH = new ArrayList<PhieuDatPhong>();
+              		   for (int i = 0; i < dsPDP.size(); i++) {
+              			   	
+							if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==1) {
+								dsPDPKH.add(dsPDP.get(i));
+								
+							}
+              		   }
+              		   if (dsPDPKH.size()>0) {
+              			   button = createButtons(panel);
+							
+              			   
+              		   }else {
+              			   JOptionPane.showMessageDialog(null,"Khách hàng chưa đặt phòng");
+              		   }
                   	}
               	   else {
               	   		JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
@@ -401,11 +410,153 @@ public class GUI_NhanPhong extends JFrame {
                     btnHy.addActionListener(actionListener);
                     bntNhanP.addActionListener(actionListener);
                     btnTim.addActionListener(actionListener);
+					
+					
+                    
+					
                     
                     
                  
                     
 	}
+	public static JButton createButtons1(int i,JPanel panel, String[] roomNumbers, String checkInDates, String checkOutDates) {
+        JButton buttons = new JButton();
+        
+        
+            buttons = new JButton();
+            StringBuilder htmlText = new StringBuilder("<html><center>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:25pt;'>");
+            htmlText.append(roomNumbers[0]);
+			for (int j = 1; j < roomNumbers.length; j++) {
+				htmlText.append(" , ");
+				htmlText.append(roomNumbers[j]);
+			}
+			//set kieu date cho checkInDates, checkOutDates
+			String[] temp = checkInDates.split("-");
+			checkInDates = temp[2]+"/"+temp[1]+"/"+temp[0];
+			temp = checkOutDates.split("-");
+			checkOutDates = temp[2]+"/"+temp[1]+"/"+temp[0];
+			
+            htmlText.append("</span><br/>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("Ngày nhận phòng: ").append(checkInDates).append("</span><br/>");
+            htmlText.append("<span style='font-family:Tahoma; font-size:20pt;'>").append("Ngày trả phòng: ").append(checkOutDates).append("</span>");
+            htmlText.append("</center></html>");
+            buttons.setText(htmlText.toString());
+            buttons.setBounds(70 +((i)%3)*490, 50+((i)/3)*240 , 420, 200);
+            panel.setPreferredSize(new Dimension(1500, 100+((i)/3)*20+150));
+            buttons.setText(buttons.getText().replaceAll("na", ""));
+            buttons.setBackground(new Color(5, 207, 251));
+            buttons.setVisible(true);
+            
+        
+		return buttons;
+    }
+	//create buttons
+	public static JButton[] createButtons(JPanel panel) {
+	    // Assuming dsPDPKH is a list of some custom object
+
+	    // Initialize arrays
+	    int size = dsPDPKH.size();
+	    roomNumbers = new String[size][0];
+	    checkOutDates = new String[size];
+	    // Populate arrays
+	    for (int i = 0; i < size; i++) {
+	        checkOutDates[i] = dsPDPKH.get(i).getThoiGianTra().toString();
+	        System.out.println(checkOutDates[i]);
+	    }
+	    String[] checkOutDates1 = countDuplicates(checkOutDates, checkOutDates[0]);
+	    for (int i = 0; i < size; i++) {
+        	for (int j = 0; j < checkOutDates1.length; j++) {
+				if (dsPDPKH.get(i).getThoiGianTra().toString().equals(checkOutDates1[j])) {
+					//them so phong vao mang
+                    roomNumbers[j] = Arrays.copyOf(roomNumbers[j], roomNumbers[j].length + 1);
+                    roomNumbers[j][roomNumbers[j].length - 1] = dsPDPKH.get(i).getPhong().getMaPhong();
+					
+				}
+        	}
+//        	roomNumbers[i] = temp;
+	    }
+	    
+	    
+	    // Create buttons
+	    JButton[] buttons = new JButton[checkOutDates1.length];
+	    panel.removeAll();
+		panel.repaint();
+		panel.revalidate();
+	    for (int i = 0; i < checkOutDates1.length; i++) {
+	    	System.out.println(roomNumbers[i]);
+	        buttons[i] = createButtons1(i, panel, roomNumbers[i], dsPDPKH.get(i).getThoiGianNhan().toString(), checkOutDates1[i]);
+	        buttons[i].setVisible(true);
+	        panel.add(buttons[i]);
+	    }
+	    for (int i = 0; i < buttons.length; i++) {
+			   buttons[i].addActionListener(new ActionListener() {
+                   public void actionPerformed(ActionEvent e) {
+                       JButton clickedButton = (JButton) e.getSource();
+                       for (int j = 0; j < buttons.length; j++) {
+                           if (clickedButton == buttons[j]) {
+                               StringBuilder htmlText = new StringBuilder("");
+								// Xử lý khi nhấn vào nút btnHT
+                        	   //thay doi txtmaP, txtNguoi, txtDV,txtNhanP, txtTraP
+                        	   	htmlText.append(roomNumbers[j][0].toString());
+                   				for (int k = 1;  k< roomNumbers[j].length; k++) {
+                   					htmlText.append(" , ");
+                   					htmlText.append(roomNumbers[j][k].toString());
+                   				}
+                   				
+                   				txtmaP.setText(htmlText.toString());
+                        	   
+                        	                          	   
+                        	   //set kieu date cho txtNhanP, txtTraP 
+                   			   for (int k = 0; k < dsPDPKH.size(); k++) {
+                   				   if (dsPDPKH.get(k).getPhong().getMaPhong().equals(roomNumbers[j][0])) {
+                   					   dateNhanP.setDate(java.sql.Date.valueOf(dsPDPKH.get(k).getThoiGianNhan()));
+                   					   dateTraP.setDate(java.sql.Date.valueOf(dsPDPKH.get(k).getThoiGianTra()));
+                   					   txtNguoi.setText(String.valueOf(dsPDPKH.get(k).getSoNguoi()));
+                   					   if (dsPDPKH.get(k).getDichVu()!=null) {
+                   						   txtDV.setText(dsPDPKH.get(k).getDichVu().getMaDichVu());
+                   					    }else {
+                   					    	txtDV.setText("");
+                   					    }
+                   					   break;
+                   				   }
+                   			   }
+                        	   
+                        	   
+                        	   
+                               
+                           }
+                       }
+                   }
+            });
+	    }
+			           
+	    return buttons;
+	}
+
+	
+	//ham dem co bao nhieu phan tu khong trung nhau
+	public static String[] countDuplicates(String[] arr, String value) {
+		String[] temp = new String[1];
+		temp[0] = value;
+		for (String s : arr) {
+			for (int i = 0; i < temp.length; i++) {
+				if (temp[i].equals(s)) {
+					break;
+				}
+				else if (i == temp.length - 1) {
+					temp = Arrays.copyOf(temp, temp.length + 1);
+					temp[temp.length - 1] = s;
+				}
+			}
+		}
+		return temp;
+	}
+
+	
+	
+	
+
 	
 
 	

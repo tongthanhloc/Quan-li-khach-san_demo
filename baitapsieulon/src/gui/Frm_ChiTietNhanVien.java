@@ -350,7 +350,11 @@ public class Frm_ChiTietNhanVien extends JFrame {
 		btnKhoiPhuc.setBackground(new Color(55, 149, 128));
 		btnKhoiPhuc.setBounds(388, 618, 162, 45);
 		contentPane.add(btnKhoiPhuc);
-		hienThiDuLieu(nv);
+		if (nv != null) {
+			hienThiDuLieu(nv);
+		} else {
+			txtmaNV.setText(maNV);
+		}
 		
 		btnXaTrng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -449,7 +453,10 @@ public class Frm_ChiTietNhanVien extends JFrame {
 										break;
 									}
 								}
-								hienThiDuLieu(nv);
+								GUI_QuanLiNhanVien.chiTietNhanVien.setVisible(false);
+								GUI_QuanLiNhanVien.chiTietNhanVien=new Frm_ChiTietNhanVien(nv.getMaNV());
+								
+								GUI_QuanLiNhanVien.chiTietNhanVien.setVisible(true);
 							} catch (Exception e2) {
 								e2.printStackTrace();
 								JOptionPane.showMessageDialog(null, "Cập nhật thất bại");

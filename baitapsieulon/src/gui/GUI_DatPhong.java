@@ -374,93 +374,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 
 	        // Thêm JScrollPane vào panel bên ngoài
 	     outerPanel.add(scrollPane);
-//	     mangHaiChieu = new String[3][soPhong.length];
-//	        for (int i = 0; i < soPhong.length; i++) {
-//	            mangHaiChieu[0][i] = soPhong[i];
-//	            mangHaiChieu[1][i] = tenKhachHang[i];
-//	            mangHaiChieu[2][i] = String.valueOf(trangThai[i]);
-//	        }
-////	        
-//	        
-//	        mangHaiChieu = sapXep(mangHaiChieu);
-//	        
-//	        soPhong = mangHaiChieu[0];
-//	        tenKhachHang = mangHaiChieu[1];
-//	        trangThai = new int[soPhong.length];
-//	        
-//			for (int i = 0; i < soPhong.length; i++) {
-//				trangThai[i] = Integer.parseInt(mangHaiChieu[2][i]);
-//			}
-//			
-////	        button=createButtons(panel, soPhong, tenKhachHang, trangThai);
-//		
-//			maphongs = new String[0];
-//			tens = new String[0];
-//			trangTs = new int[0];
-//			
-//			for (int i = 0; i < maphongs.length; i++) {
-//				maphongs[i] = null;
-//				tens[i] = null;
-//				trangTs[i] = 0;
-//			}
-//			for (int i = 0; i < soPhong.length; i++) {
-//				if (soPhong[i].contains("A")&& trangThai[i]==3) {
-//					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-//					maphongs[maphongs.length - 1] = soPhong[i];
-//					tens = Arrays.copyOf(tens, tens.length + 1);
-//					tens[tens.length - 1] = tenKhachHang[i];
-//					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-//					trangTs[trangTs.length - 1] = trangThai[i];
-//				}
-//				if (soPhong[i].contains("B")&& trangThai[i]==3) {
-//					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-//					maphongs[maphongs.length - 1] = soPhong[i];
-//					tens = Arrays.copyOf(tens, tens.length + 1);
-//					tens[tens.length - 1] = tenKhachHang[i];
-//					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-//					trangTs[trangTs.length - 1] = trangThai[i];
-//				}
-//				if (soPhong[i].contains("B")&& trangThai[i]==3) {
-//					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-//					maphongs[maphongs.length - 1] = soPhong[i];
-//					tens = Arrays.copyOf(tens, tens.length + 1);
-//					tens[tens.length - 1] = tenKhachHang[i];
-//					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-//					trangTs[trangTs.length - 1] = trangThai[i];
-//				}}
-//			
-//			
-//			
-//			
-//			button = createButtons(panel, maphongs, tens, trangTs);
-//			for (int i = 0; i < button.length; i++) {
-//				button[i].addActionListener(new ActionListener() {
-//					public void actionPerformed(ActionEvent e) {
-//						JButton clickedButton = (JButton) e.getSource();
-//						String txtmaPhong = txtMaP.getText();
-//						for (int j = 0; j < button.length; j++) {
-//							if (clickedButton == button[j]) {
-//								
-//								
-//								if(txtmaPhong.equals("")) {
-//                                    txtMaP.setText(maphongs[j]);
-//                                }else if(txtmaPhong.contains(maphongs[j]+" , ")) {
-//                                    //xóa phòng đã chọn
-//                                	txtMaP.setText(txtmaPhong.replace(maphongs[j]+" , ", ""));
-//                                }else if(txtmaPhong.contains(" , "+maphongs[j])) {
-//                                    //xóa phòng đã chọn
-//                                	txtMaP.setText(txtmaPhong.replace(" , "+maphongs[j], ""));
-//                                }else if(txtmaPhong.contains(maphongs[j])) {
-//                                    //xóa phòng đã chọn
-//                                	txtMaP.setText(txtmaPhong.replace(maphongs[j], ""));
-//                                }else {
-//								txtMaP.setText(txtmaPhong + " , "+ maphongs[j] );
-//							}}
-//						}
-//					}
-//				});
-//			}
-//		
+
 		
 		
 		ActionListener actionListener = new ActionListener() {
@@ -529,6 +443,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
                  
                     
 	}
+	
 	public void itemStateChanged(ItemEvent e) {
 		maphongs = new String[0];
 		tens = new String[0];
@@ -624,7 +539,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			});
 		}
 	}
-
+	
 	public static String[][] createTwoDimensionalArray(String[] maphong, int[] trangT) {
         Set<String> uniqueMaphong = new HashSet<>();
         List<String> uniqueMaphongList = new ArrayList<>();
@@ -661,8 +576,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
             panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
             buttons[i].setText(buttons[i].getText().replaceAll("na", ""));
             buttons[i].setBackground(new Color(5, 207, 251));
-            
-
             panel.add(buttons[i]);
         }
 		return buttons;

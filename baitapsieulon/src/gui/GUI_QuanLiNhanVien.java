@@ -90,6 +90,8 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	private java.lang.String maNVChon;
 	static ArrayList<NhanVien> ListNV;
 	static ArrayList<NhanVien> dsnv;
+	static Frm_ChiTietNhanVien chiTietNhanVien;
+	static Frm_ChiTietNhanVien themNhanVien;
 
 	/**
 	 * Launch the application.
@@ -613,14 +615,34 @@ public class GUI_QuanLiNhanVien extends JFrame {
                 	if(maNVChon == null) {
                 		JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xem");
                 	} else {
-                	Frm_ChiTietNhanVien chiTietNhanVien;
+                	
       		        chiTietNhanVien= new Frm_ChiTietNhanVien(maNVChon);
       		        chiTietNhanVien.setVisible(true);
       		        }
                 }else if(clickedButton == btnThem) {
-                	Frm_ThemNhanVien themNhanVien;
-                	themNhanVien = new Frm_ThemNhanVien();
+                	NhanVien_DAO NhanVienfull= new NhanVien_DAO();
+                	ArrayList<NhanVien> ListNVfull = NhanVienfull.getNhanVienTiepTan();
+                	int count = ListNVfull.size()+1;
+                	//tao ma nhan vien co dang NV0000001
+                	String maNV = "NV";
+					if (count < 10) {
+						maNV += "000000" + count;
+					} else if (count < 100) {
+						maNV += "00000" + count;
+					} else if (count < 1000) {
+						maNV += "0000" + count;
+					} else if (count < 10000) {
+						maNV += "000" + count;
+					} else if (count < 100000) {
+						maNV += "00" + count;
+					} else if (count < 1000000) {
+						maNV += "0" + count;
+					} else {
+						maNV += count;
+					}
+                	themNhanVien = new Frm_ChiTietNhanVien(maNV);
                 	themNhanVien.setVisible(true);
+                	
                 	}
                 }};
                     btnTK.addActionListener(actionListener);
