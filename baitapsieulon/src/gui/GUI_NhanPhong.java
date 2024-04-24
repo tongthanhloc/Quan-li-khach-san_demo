@@ -153,6 +153,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelKH.add(lblNewLabel_1);
 		
 		txtmaKH = new JTextField();
+		txtmaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtmaKH.setBounds(313, 37, 350, 26);
 		panelKH.add(txtmaKH);
 		txtmaKH.setColumns(10);
@@ -164,6 +165,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelKH.add(btnTim);
 		
 		txtSDT = new JTextField();
+		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSDT.setColumns(10);
 		txtSDT.setBounds(313, 86, 350, 26);
 		txtSDT.setEditable(false);
@@ -180,6 +182,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelKH.add(lblNewLabel_1_2);
 		
 		txtTen = new JTextField();
+		txtTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTen.setColumns(10);
 		txtTen.setBounds(1205, 41, 350, 26);
 		txtTen.setEditable(false);
@@ -191,6 +194,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelKH.add(lblNewLabel_1_3);
 		
 		txtTuoi = new JTextField();
+		txtTuoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTuoi.setColumns(10);
 		txtTuoi.setBounds(1067, 86, 120, 26);
 		txtTuoi.setEditable(false);
@@ -202,6 +206,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelKH.add(lblNewLabel_1_4);
 		
 		txtGT = new JTextField();
+		txtGT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGT.setColumns(10);
 		txtGT.setBounds(1370, 86, 185, 26);
 		txtGT.setEditable(false);
@@ -219,6 +224,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelP.add(lblNewLabel_7);
 		
 		txtmaP = new JTextField();
+		txtmaP.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtmaP.setColumns(10);
 		txtmaP.setBounds(313, 27, 350, 26);
 		panelP.add(txtmaP);
@@ -229,6 +235,7 @@ public class GUI_NhanPhong extends JFrame{
 		panelP.add(lblNewLabel_8);
 		
 		txtNguoi = new JTextField();
+		txtNguoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNguoi.setColumns(10);
 		txtNguoi.setBounds(313, 75, 350, 26);
 		panelP.add(txtNguoi);
@@ -399,7 +406,7 @@ public class GUI_NhanPhong extends JFrame{
               		   dsPDPKH = new ArrayList<PhieuDatPhong>();
               		   for (int i = 0; i < dsPDP.size(); i++) {
               			   	
-							if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==1) {
+							if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==0) {
 								dsPDPKH.add(dsPDP.get(i));
 								
 							}
@@ -417,6 +424,19 @@ public class GUI_NhanPhong extends JFrame{
               	   	}
                 }else if (clickedButton == btnHy) {
                     // Xử lý khi nhấn vào nút btnHT
+                	txtmaKH.setText("");
+                	txtTen.setText("");
+                	txtTuoi.setText("");
+                	txtSDT.setText("");
+                	txtGT.setText("");
+                	txtmaP.setText("");
+                	txtNguoi.setText("");
+                	txtDV.setText("");
+                	dateNhanP.setDate(new java.util.Date());
+                	dateTraP.setDate(cal.getTime());
+                	panel.removeAll();
+                	panel.repaint();
+                	panel.revalidate();
                 }
                 }};
                     btnHy.addActionListener(actionListener);
@@ -517,6 +537,11 @@ public class GUI_NhanPhong extends JFrame{
                    				}
                    				
                    				txtmaP.setText(htmlText.toString());
+                   				if(dsPDPKH.get(j).getDichVu()==null) {
+                   					txtDV.setText("");
+                   				}else {
+                   					txtDV.setText(dsPDPKH.get(j).getDichVu().getMaDichVu());
+                   				}
                         	   
                         	                          	   
                         	   //set kieu date cho txtNhanP, txtTraP 

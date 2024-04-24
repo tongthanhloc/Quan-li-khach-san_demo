@@ -4,12 +4,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
+import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
+import entity.KhachHang;
+import entity.PhieuDatPhong;
 import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,15 +31,15 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel Frame;
-    private JTextField txtCCKH;
-    private JTextField txtSDTKH;
-    private JTextField txtTenKH;
-    private JTextField txtTuoiKH;
+	static JTextField txtCCKH;
+    static JTextField txtSDTKH;
+    static JTextField txtTenKH;
+    static JTextField txtTuoiKH;
     private JLabel lblNewLabel_1_4;
 	private Container outerPanel;
 	private JButton button[];
 	String soPhong[];
-    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+    String tenKhachHang[] ;//= {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
     int trangThai[];
 //    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
 	private String[][] mangHaiChieu;
@@ -42,20 +48,25 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private int trangTs[]=null;
 	private String tens[]=null;
 	private Phong_DAO Phong_dao;
+	private PhieuDatPhong_DAO pdp;
 
 	private JCheckBox chckbxPdon;
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
 	private JPanel panelKH;
-	private JTextField txtNgayN;
+	static JTextField txtNgayN;
 	private JLabel lblNewLabel_1_1_3;
-	private JTextField txtPhongs;
+	static JTextField txtPhongs;
 	private JLabel lblNewLabel_1_1_4;
-	private JTextField txtSoNguoi;
+	static JTextField txtSoNguoi;
 	private JButton btnXutHan;
 	private JButton btnHy;
-	private JTextField txtGT;
-	private JTextField txtNgayT;
+	static JTextField txtGT;
+	static JTextField txtNgayT;
+	static ArrayList<PhieuDatPhong> dsPDP;
+	private KhachHang_DAO kh;
+	static ArrayList<Phong> dsP;
+	static ArrayList<KhachHang> dsKH;
 	
 
 
@@ -101,26 +112,43 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 			e.printStackTrace();
 		}
 		Phong_dao  = new Phong_DAO();
-		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
-		soPhong = new String[dsP.size()];
-		for (int i = 0; i < dsP.size(); i++) {
-			soPhong[i] = dsP.get(i).getMaPhong();
+		dsP = Phong_dao.getalltbPhong();
+		
+		pdp = new PhieuDatPhong_DAO();
+		dsPDP = pdp.getAllTbPhieuDatPhong();
+		
+		kh =new KhachHang_DAO();
+		dsKH = kh.getalltbKhachHang();
+		
+		
+		
+		
+		
+		
+		
+		
+		soPhong = new String[0];
+		trangThai = new int[0];
+		tenKhachHang = new String[0];
+		
+		
+		for (int i = 0; i < dsPDP.size(); i++) {
+			
+			if (dsPDP.get(i).getTrangThai().contains("Đã nhận")) {
+				soPhong = Arrays.copyOf(soPhong, soPhong.length + 1);
+				soPhong[soPhong.length - 1] = dsPDP.get(i).getPhong().getMaPhong();
+				trangThai = Arrays.copyOf(trangThai, trangThai.length + 1);
+				trangThai[trangThai.length - 1] = 2;
+				tenKhachHang = Arrays.copyOf(tenKhachHang, tenKhachHang.length + 1);
+				for (int j = 0; j < dsKH.size(); j++) {
+					if (dsKH.get(j).getmaKH().equals(dsPDP.get(i).getKhachHang().getmaKH())) {
+						tenKhachHang[tenKhachHang.length - 1] = dsKH.get(j).getHoTen();
+					}
+				}
+				
+			}
 		}
-		trangThai = new int[dsP.size()];
-		for (int i = 0; i < dsP.size(); i++) {
-			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
-				trangThai[i] = 1;
-			}
-			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
-				trangThai[i] = 2;
-			}
-			if (dsP.get(i).getTrangThai().equals("Trống")) {
-				trangThai[i] = 3;
-			}
-			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
-				trangThai[i] = 4;
-			}
-		}
+		
 		
 		panelKH = new JPanel();
 		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -134,6 +162,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(lblNewLabel_1);
 		
 		txtCCKH = new JTextField();
+		txtCCKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtCCKH.setBounds(313, 37, 350, 26);
 		panelKH.add(txtCCKH);
 		txtCCKH.setColumns(10);
@@ -145,6 +174,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(btnNewButton);
 		
 		txtSDTKH = new JTextField();
+		txtSDTKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSDTKH.setColumns(10);
 		txtSDTKH.setBounds(313, 86, 350, 26);
 		txtSDTKH.setEditable(false);
@@ -161,6 +191,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(lblNewLabel_1_2);
 		
 		txtTenKH = new JTextField();
+		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenKH.setColumns(10);
 		txtTenKH.setBounds(1185, 37, 368, 26);
 		txtTenKH.setEditable(false);
@@ -172,6 +203,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(lblNewLabel_1_3);
 		
 		txtTuoiKH = new JTextField();
+		txtTuoiKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTuoiKH.setColumns(10);
 		txtTuoiKH.setBounds(1067, 86, 120, 26);
 		txtTuoiKH.setEditable(false);
@@ -188,6 +220,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(lblNewLabel_1_1_1);
 		
 		txtNgayN = new JTextField();
+		txtNgayN.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNgayN.setColumns(10);
 		txtNgayN.setBounds(313, 132, 350, 26);
 		txtNgayN.setEditable(false);
@@ -204,6 +237,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(lblNewLabel_1_1_3);
 		
 		txtPhongs = new JTextField();
+		txtPhongs.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtPhongs.setColumns(10);
 		txtPhongs.setBounds(313, 179, 350, 26);
 		txtPhongs.setEditable(false);
@@ -215,6 +249,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(lblNewLabel_1_1_4);
 		
 		txtSoNguoi = new JTextField();
+		txtSoNguoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoNguoi.setColumns(10);
 		txtSoNguoi.setBounds(1185, 179, 368, 26);
 		txtSoNguoi.setEditable(false);
@@ -233,12 +268,14 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		panelKH.add(btnHy);
 		
 		txtGT = new JTextField();
+		txtGT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGT.setColumns(10);
 		txtGT.setBounds(1349, 86, 204, 26);
 		txtGT.setEditable(false);
 		panelKH.add(txtGT);
 		
 		txtNgayT = new JTextField();
+		txtNgayT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNgayT.setColumns(10);
 		txtNgayT.setBounds(1185, 132, 368, 26);
 		txtNgayT.setEditable(false);
@@ -312,43 +349,10 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 			
 			
 			
-			maphongs = new String[0];
-			tens = new String[0];
-			trangTs = new int[0];
-			for (int i = 0; i < maphongs.length; i++) {
-				maphongs[i] = null;
-				tens[i] = null;
-				trangTs[i] = 0;
-			}
-			
-			for (int i = 0; i < soPhong.length; i++) {
-				if (soPhong[i].contains("A")&& trangThai[i]==2) {
-					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-					maphongs[maphongs.length - 1] = soPhong[i];
-					tens = Arrays.copyOf(tens, tens.length + 1);
-					tens[tens.length - 1] = tenKhachHang[i];
-					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-					trangTs[trangTs.length - 1] = trangThai[i];
-				}
-				if (soPhong[i].contains("B")&& trangThai[i]==2) {
-					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-					maphongs[maphongs.length - 1] = soPhong[i];
-					tens = Arrays.copyOf(tens, tens.length + 1);
-					tens[tens.length - 1] = tenKhachHang[i];
-					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-					trangTs[trangTs.length - 1] = trangThai[i];
-				}
-				if (soPhong[i].contains("B")&& trangThai[i]==2) {
-					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-					maphongs[maphongs.length - 1] = soPhong[i];
-					tens = Arrays.copyOf(tens, tens.length + 1);
-					tens[tens.length - 1] = tenKhachHang[i];
-					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-					trangTs[trangTs.length - 1] = trangThai[i];
-				}}
 			
 			
-			button = createButtons(panel, maphongs, tens, trangTs);
+			
+			button = createButtons(panel, soPhong, tenKhachHang, trangThai);
 			
 		
 		
@@ -460,6 +464,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 			trangTs[i] = Integer.parseInt(mangHaiChie[2][i]);
 		}
 		button = createButtons(panel, maphongs, tens, trangTs);
+		
 	}
 
 	public static String[][] createTwoDimensionalArray(String[] maphong, String[] ten, int[] trangT) {
@@ -517,7 +522,46 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
                     // Handle other statuses if necessary
                     break;
             }
-
+            
+    			buttons[i].addActionListener(new ActionListener() {
+    				public void actionPerformed(ActionEvent e) {
+    					JButton clickedButton = (JButton) e.getSource();
+    					for (int i = 0; i < buttons.length; i++) {
+    						if (clickedButton == buttons[i]) {
+    							txtPhongs.setText(roomNumbers[i]);
+    							txtTenKH.setText(customerNames[i]);
+    							for (int j = 0; j < dsPDP.size(); j++) {
+    								if (dsPDP.get(i).getPhong().getMaPhong().equals(roomNumbers[i])) {
+    									txtCCKH.setText(dsPDP.get(i).getKhachHang().getmaKH());
+    									
+    									for (int k = 0; k < dsKH.size(); k++) {
+    										if (dsKH.get(k).getmaKH().equals(dsPDP.get(i).getKhachHang().getmaKH())) {
+    											if (dsKH.get(k).getGioiTinh() == true) {
+                                                    txtGT.setText("Nam");
+                                                } else {
+                                                	txtGT.setText("Nữ");
+                                                }
+    											txtTenKH.setText(dsKH.get(k).getHoTen());
+    											txtTuoiKH.setText(""+LocalDate.now().compareTo(dsKH.get(k).getNgaySinh()));
+    											txtSDTKH.setText(dsKH.get(k).getSoDT());
+    										}
+    									}
+    								}
+    							}
+    							txtNgayN.setText(dsPDP.get(i).getThoiGianNhan().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
+    							//lay thoi gian hien tai
+    							LocalDate now = LocalDate.now();
+    							
+    							//set dang dd/MM/yyyy
+    							
+    							txtNgayT.setText(now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
+    							txtSoNguoi.setText(""+dsPDP.get(i).getSoNguoi());
+    							
+    						}
+    					}
+    				}
+    			});
+    		
             panel.add(buttons[i]);
         }
 		return buttons;
