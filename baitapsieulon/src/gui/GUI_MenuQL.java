@@ -35,6 +35,7 @@ public class GUI_MenuQL extends JFrame {
     private JLabel lblNewLabel_6;
     private JButton btnQLPD;
     private NhanVien nv;
+	private GUI_MenuQLDP menuqldp;
     static GUI_QuanLiDatPhong qlp;
     static GUI_QuanLiHoaDon qlhd;
     static GUI_QuanLiKhachHang qlkh;
@@ -186,7 +187,7 @@ public class GUI_MenuQL extends JFrame {
 			qldv = new GUI_QuanLiDichVu();
 			GUI_MenuTK menuTK = new GUI_MenuTK(nv);
 			GUI_MenuTrangChu menuTrangChu = new GUI_MenuTrangChu(nv);
-			GUI_MenuQLDP menuqldp = new GUI_MenuQLDP(nv);
+			menuqldp = new GUI_MenuQLDP(nv);
 			GUI_QuanLiNhanVien qlnv = new GUI_QuanLiNhanVien();
 			
 			
@@ -218,6 +219,17 @@ public class GUI_MenuQL extends JFrame {
 			            qldv.setVisible(false);
 			            qlnv.setVisible(false);
 			            menuqldp.setVisible(false);
+			            
+			            menuqldp.btnGUI_datPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_datPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_doiPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_doiPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_GiahanPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_GiahanPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_nhanPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_nhanPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_TraPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_TraPhong.setForeground(Color.WHITE);
 			            
 			            btnTrangChu.setForeground(Color.WHITE);
 			            btnTrangChu.setBackground(new Color(41, 139, 106));
@@ -258,6 +270,17 @@ public class GUI_MenuQL extends JFrame {
                     	menuqldp.setVisible(true);
                     	qlp.setVisible(true);
                     	
+                    	menuqldp.btnGUI_datPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_datPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_doiPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_doiPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_GiahanPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_GiahanPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_nhanPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_nhanPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_TraPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_TraPhong.setForeground(Color.WHITE);
+                    	
                     	//doi mau button
                     	btnQLP.setForeground(Color.WHITE);
                     	btnQLP.setBackground(new Color(41, 139, 106));
@@ -294,6 +317,18 @@ public class GUI_MenuQL extends JFrame {
 						menuqldp.setVisible(false);
 						// bat qldp
 						qlnv.setVisible(true);
+						
+						
+						menuqldp.btnGUI_datPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_datPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_doiPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_doiPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_GiahanPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_GiahanPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_nhanPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_nhanPhong.setForeground(Color.WHITE);
+			            menuqldp.btnGUI_TraPhong.setBackground(new Color(41, 139, 116));
+			            menuqldp.btnGUI_TraPhong.setForeground(Color.WHITE);
 
 						// doi mau button
 						btnQLNV.setForeground(Color.WHITE);

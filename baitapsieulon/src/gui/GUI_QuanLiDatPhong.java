@@ -133,7 +133,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		}
 		LocalDate tghientai = LocalDate.now();
 		for (int i = 0; i < dsP.size(); i++) {
-			
 			for(int j = 0; j < dsPDP.size(); j++) {
 			
 				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
@@ -143,7 +142,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã đặt");
 				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
                         && dsPDP.get(j).getTrangThai().contains("Đã nhận")
-                        && (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 0)
+                        
                         ) {
                     Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
 				}
@@ -170,6 +169,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 
 		
 		for (int i = 0; i < dsP.size(); i++) {
+			
 			if (dsP.get(i).getTrangThai().contains("Đã đặt")) {
 				trangThai[i] = 1;
 				for (int j = 0; j < dsPDP.size(); j++) {
@@ -178,6 +178,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						for (int k = 0; k < dsKH.size(); k++) {
 							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
+								
 							}
 						}
 					}
@@ -187,9 +188,12 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				for (int j = 0; j < dsPDP.size(); j++) {
 					if (dsP.get(i).getMaPhong().contains(dsPDP.get(j).getPhong().getMaPhong())
 							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
+						System.out.println(""+i);
 						for (int k = 0; k < dsKH.size(); k++) {
 							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
+								System.out.println(""+i);
+								System.out.println(""+tenKhachHang[i]);
 							}
 						}
 					}
@@ -197,10 +201,13 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 			} else if (dsP.get(i).getTrangThai().contains("Trống")) {
 				trangThai[i] = 3;
 				tenKhachHang[i] = "";
-			} else if (dsP.get(i).getTrangThai().contains("Bảo trì")) {
+				
+			}else {
 				trangThai[i] = 4;
 				tenKhachHang[i] = "";
+				
 			}
+			
 		}
 		
 		
@@ -857,6 +864,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
             buttons[i].setText(htmlText.toString());
             buttons[i].setBounds(70 +((i)%5)*290, 50+((i)/5)*190 , 250, 150);
             panel.setPreferredSize(new Dimension(1500, 100+((i)/5)*190+150));
+            
             buttons[i].setText(buttons[i].getText().replaceAll("na", customerNames[i]));
 
             switch (statuses[i]) {

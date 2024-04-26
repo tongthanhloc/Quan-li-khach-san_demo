@@ -28,15 +28,15 @@ public class GUI_MenuQLDP extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private NhanVien nv;
+	static NhanVien nv;
 	
 	private ArrayList<NhanVien> ListNV;
 	private NhanVien_DAO nv_dao;
-	private JButton btnGUI_datPhong;
-	private JButton btnGUI_nhanPhong;
-	private JButton btnGUI_TraPhong;
-	private JButton btnGUI_doiPhong;
-	private JButton btnGUI_GiahanPhong;
+	static JButton btnGUI_datPhong;
+	static JButton btnGUI_nhanPhong;
+	static JButton btnGUI_TraPhong;
+	static JButton btnGUI_doiPhong;
+	static JButton btnGUI_GiahanPhong;
 	static GUI_GiaHanPhong giaHanPhong;
 	static GUI_DoiPhong doiPhong;
 	static GUI_TraPhong tp;
@@ -190,7 +190,13 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	giaHanPhong.setVisible(false);
-                	GUI_MenuQL.qlp.setVisible(false);
+					if(GUI_MenuQL.qlp != null) {
+						GUI_MenuQL.qlp.setVisible(false);
+					} else if (GUI_MenuNV.qlp != null) {
+						GUI_MenuNV.qlp.setVisible(false);
+					}
+					
+                	
                 	
                 	btnGUI_datPhong.setForeground(new Color(0, 0, 0));
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -211,7 +217,11 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	giaHanPhong.setVisible(false);
-                	GUI_MenuQL.qlp.setVisible(false);
+                	if(GUI_MenuQL.qlp != null) {
+						GUI_MenuQL.qlp.setVisible(false);
+					} else if (GUI_MenuNV.qlp != null) {
+						GUI_MenuNV.qlp.setVisible(false);
+					}
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(new Color(0, 0, 0));
@@ -232,7 +242,11 @@ public class GUI_MenuQLDP extends JFrame {
                 	dp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	giaHanPhong.setVisible(false);
-                	GUI_MenuQL.qlp.setVisible(false);
+                	if(GUI_MenuQL.qlp != null) {
+						GUI_MenuQL.qlp.setVisible(false);
+					} else if (GUI_MenuNV.qlp != null) {
+						GUI_MenuNV.qlp.setVisible(false);
+					}
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -253,7 +267,11 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	dp.setVisible(false);
                 	giaHanPhong.setVisible(false);
-                	GUI_MenuQL.qlp.setVisible(false);
+                	if(GUI_MenuQL.qlp != null) {
+						GUI_MenuQL.qlp.setVisible(false);
+					} else if (GUI_MenuNV.qlp != null) {
+						GUI_MenuNV.qlp.setVisible(false);
+					}
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
@@ -274,7 +292,11 @@ public class GUI_MenuQLDP extends JFrame {
                 	tp.setVisible(false);
                 	doiPhong.setVisible(false);
                 	dp.setVisible(false);
-                	GUI_MenuQL.qlp.setVisible(false);
+                	if(GUI_MenuQL.qlp != null) {
+						GUI_MenuQL.qlp.setVisible(false);
+					} else if (GUI_MenuNV.qlp != null) {
+						GUI_MenuNV.qlp.setVisible(false);
+					}
                 	
                 	btnGUI_datPhong.setForeground(Color.WHITE);
                 	btnGUI_nhanPhong.setForeground(Color.WHITE);
