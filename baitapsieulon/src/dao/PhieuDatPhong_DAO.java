@@ -39,7 +39,7 @@ public class PhieuDatPhong_DAO {
 				NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
 				String tt = rs.getString("trangThai");
 				String sN= rs.getString("soNguoi");
-				String maDichVu = rs.getString("dichVu");
+				String maDichVu = rs.getString("maDichVu");
 				DichVuTienIch dV = null;
 				if (maDichVu != null) {
 				    dV = new DichVuTienIch(maDichVu);
@@ -57,7 +57,7 @@ public class PhieuDatPhong_DAO {
             ConnectDB.getInstance();
             Connection con = ConnectDB.getConnection();
             // Chuẩn bị câu lệnh SQL cho việc chèn dữ liệu
-            String sql = "INSERT INTO PhieuDatPhong (maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, donGiaPhieu, maPhong, maKhachHang, maNhanVien, trangThai, dichVu, soNguoi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO PhieuDatPhong (maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, donGiaPhieu, maPhong, maKhachHang, maNhanVien, trangThai, maDichVu, soNguoi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = con.prepareStatement(sql);
             
             // Duyệt qua danh sách các đối tượng PhieuDatPhong và chèn từng đối tượng này vào cơ sở dữ liệu
@@ -96,7 +96,22 @@ public class PhieuDatPhong_DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }}
-	//them phieu dat phong
+	//doi phong
+	public void updatePhongPhieuDatPhong(String maPhieu, String maPhongMoi) {
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            // Chuẩn bị câu lệnh SQL cho việc cập nhật trạng thái của phiếu đặt phòng
+            String sql = "UPDATE PhieuDatPhong SET maPhong = ? WHERE maPhieu = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            // Thiết lập giá trị cho các tham số của câu lệnh SQL
+            statement.setString(1, maPhongMoi);
+            statement.setString(2, maPhieu);
+            // Thực hiện câu lệnh SQL cập nhật
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }}
 	
 	
 }

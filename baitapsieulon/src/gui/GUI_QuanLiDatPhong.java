@@ -142,7 +142,6 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã đặt");
 				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
                         && dsPDP.get(j).getTrangThai().contains("Đã nhận")
-                        
                         ) {
                     Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
 				}
