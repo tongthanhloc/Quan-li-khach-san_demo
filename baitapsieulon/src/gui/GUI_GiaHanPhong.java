@@ -4,12 +4,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
+import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
+import entity.KhachHang;
+import entity.PhieuDatPhong;
 import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -27,7 +33,7 @@ public class GUI_GiaHanPhong extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel Frame;
-    private JTextField textField;
+    private JTextField txtmaKH;
     private JTextField txtSDT;
     private JTextField txtTen;
     private JTextField txtTuoi;
@@ -40,22 +46,28 @@ public class GUI_GiaHanPhong extends JFrame {
     private JLabel lblNewLabel_11;
     private JTextField textField_8;
     private JTextField textField_9;
-    private JButton btntPhng;
-    private JButton btnHy;
+    private JButton btnGHP;
+    private JButton btnHuy;
 	private JButton[] button;
 	String soPhong[];
-    String tenKhachHang[] = {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
+    String tenKhachHang[]; //= {"Chau Tieu Long","","","","","","","","","","","","Nguyen Nhat Tung","","","","Tong Thanh Loc","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
     int trangThai[];
 //    = {1,3,3,3,3,3,3,3,3,3,3,3,2,3,3,4,2,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
 	private String[][] mangHaiChieu;
 	private String maphongs[]=null;
-	private int trangTs[]=null;
-	private String tens[]=null;
+	private String maPhieuDatPhong[]=null;
+	private long ngay;
+	
+	
+	
 	private Phong_DAO Phong_dao;
 	
 	private JPanel panelKH;
 	private JTextField txtPTrong;
 	private JTextField txtGioi;
+	private KhachHang_DAO khachHang_DAO;
+	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private ArrayList<PhieuDatPhong> dsPDP;
 	
 
 
@@ -91,9 +103,10 @@ public class GUI_GiaHanPhong extends JFrame {
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Frame);
 		Frame.setLayout(null);
+		maphongs = new String[0];
+		maPhieuDatPhong = new String[0];
+		
 
-		
-		
 		
 		try {
 			ConnectDB.getInstance().connect();
@@ -106,20 +119,98 @@ public class GUI_GiaHanPhong extends JFrame {
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
 		}
-		trangThai = new int[dsP.size()];
+		khachHang_DAO = new KhachHang_DAO();
+		ArrayList<KhachHang> dsKH = khachHang_DAO.getalltbKhachHang();
+		
+		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
+		// kiểm tra trạng thái phòng
+		for (int i = 0; i < dsPDP.size(); i++) {
+			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
+				String maPhieu = dsPDP.get(i).getMaPhieu();
+				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
+			}
+			if (dsPDP.get(i).getTrangThai().contains("Đã nhận")
+					&& dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()) ==-1) {
+				String maPhieu = dsPDP.get(i).getMaPhieu();
+//				JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã quá hạn"+(dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()))+"ngày");
+			}
+		}
+		LocalDate tghientai = LocalDate.now();
 		for (int i = 0; i < dsP.size(); i++) {
-			if (dsP.get(i).getTrangThai().equals("Đã đặt")) {
+			for(int j = 0; j < dsPDP.size(); j++) {
+			
+				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+						&& dsPDP.get(j).getTrangThai().contains("Đã đặt")
+						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 0)
+						) {
+					Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã đặt");
+				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
+                        && dsPDP.get(j).getTrangThai().contains("Đã nhận")
+                        ) {
+                    Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		trangThai = new int[dsP.size()];
+		// lay thoi gian hien tai
+		
+		
+		tenKhachHang = new String[dsP.size()];
+		
+
+
+		
+		for (int i = 0; i < dsP.size(); i++) {
+			
+			if (dsP.get(i).getTrangThai().contains("Đã đặt")) {
 				trangThai[i] = 1;
-			}
-			if (dsP.get(i).getTrangThai().equals("Đã thuê")) {
+				for (int j = 0; j < dsPDP.size(); j++) {
+					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
+							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
+						for (int k = 0; k < dsKH.size(); k++) {
+							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+								tenKhachHang[i] = dsKH.get(k).getHoTen();
+								
+							}
+						}
+					}
+				}
+			} else if (dsP.get(i).getTrangThai().contains("Đã thuê")) {
 				trangThai[i] = 2;
-			}
-			if (dsP.get(i).getTrangThai().equals("Tr?ng")) {
+				for (int j = 0; j < dsPDP.size(); j++) {
+					if (dsP.get(i).getMaPhong().contains(dsPDP.get(j).getPhong().getMaPhong())
+							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
+						
+						for (int k = 0; k < dsKH.size(); k++) {
+							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+								tenKhachHang[i] = dsKH.get(k).getHoTen();
+								
+							}
+						}
+					}
+				}
+			} else if (dsP.get(i).getTrangThai().contains("Trống")) {
 				trangThai[i] = 3;
-			}
-			if (dsP.get(i).getTrangThai().equals("Bảo trì")) {
+				tenKhachHang[i] = "";
+				
+			}else {
 				trangThai[i] = 4;
+				tenKhachHang[i] = "";
+				
 			}
+			
 		}
 		
 		panelKH = new JPanel();
@@ -133,16 +224,16 @@ public class GUI_GiaHanPhong extends JFrame {
 		lblNewLabel_1.setBounds(100, 37, 185, 26);
 		panelKH.add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(313, 37, 350, 26);
-		panelKH.add(textField);
-		textField.setColumns(10);
+		txtmaKH = new JTextField();
+		txtmaKH.setBounds(313, 37, 350, 26);
+		panelKH.add(txtmaKH);
+		txtmaKH.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Tìm");
-		btnNewButton.setBackground(new Color(234, 232, 214));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(696, 37, 96, 26);
-		panelKH.add(btnNewButton);
+		JButton btnTim = new JButton("Tìm");
+		btnTim.setBackground(new Color(234, 232, 214));
+		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnTim.setBounds(696, 37, 96, 26);
+		panelKH.add(btnTim);
 		
 		txtSDT = new JTextField();
 		txtSDT.setColumns(10);
@@ -228,20 +319,22 @@ public class GUI_GiaHanPhong extends JFrame {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 1);
 		dateTraP.setDate(cal.getTime());
+		//tat chuc nang sua text
+		dateTraP.getDateEditor().setEnabled(false);
 		panelP.add(dateTraP);
 		
-		btntPhng = new JButton("Gia hạn phòng");
-		btntPhng.setBackground(new Color(234, 232, 214));
-		btntPhng.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btntPhng.setBounds(1204, 133, 173, 26);
-		panelP.add(btntPhng);
+		btnGHP = new JButton("Gia hạn phòng");
+		btnGHP.setBackground(new Color(234, 232, 214));
+		btnGHP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnGHP.setBounds(1204, 133, 173, 26);
+		panelP.add(btnGHP);
 		
-		btnHy = new JButton("Hủy");
+		btnHuy = new JButton("Hủy");
 		
-		btnHy.setBackground(new Color(234, 232, 214));
-		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnHy.setBounds(1387, 133, 168, 26);
-		panelP.add(btnHy);
+		btnHuy.setBackground(new Color(234, 232, 214));
+		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnHuy.setBounds(1387, 133, 168, 26);
+		panelP.add(btnHuy);
 		
 		txtPTrong = new JTextField();
 		txtPTrong.setColumns(10);
@@ -249,24 +342,176 @@ public class GUI_GiaHanPhong extends JFrame {
 		txtPTrong.setEditable(false);
 		panelP.add(txtPTrong);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(313, 27, 350, 26);
-		panelP.add(comboBox);
+		JComboBox cbxPhong = new JComboBox();
+		cbxPhong.setBounds(313, 27, 350, 26);
+		panelP.add(cbxPhong);
 	     
         
 		
 		
 		
-		ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JButton clickedButton = (JButton) e.getSource();
-                // Xử lý sự kiện cho mỗi nút ở đây
-                }};
-                    
+		
+		           
                  
-                    
-	}
+		 ActionListener actionListener = new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                JButton clickedButton = (JButton) e.getSource();
+	                // Xử lý sự kiện cho mỗi nút ở đây
+	                if (clickedButton==btnTim) {
+	                	
+	                	KhachHang khs = new KhachHang(txtmaKH.getText());
+	             	   if(dsKH.contains(khs)) {
+	             		   KhachHang kh = dsKH.get(dsKH.indexOf(khs));
+	             		   JOptionPane.showMessageDialog(null,"Tìm thấy khách hàng");
+	             		   
+	             		   String maKH = txtmaKH.getText();
+	             		   // lay nam hien tai
+	             		   Calendar cal = Calendar.getInstance();
+	             		   txtTen.setText(kh.getHoTen());
+	             		   //tuoi la nam hien tai - ngay sinh
+	             		   txtTuoi.setText(String.valueOf(cal.get(Calendar.YEAR) - kh.getNgaySinh().getYear()));
+	             		   txtSDT.setText(kh.getSoDT());
+	             		   if(kh.getGioiTinh()==true) {
+	             			   txtGioi.setText("Nam");
+	 						} else {
+	 							txtGioi.setText("Nữ");
+	 						}
+	             		   
+	             		   cbxPhong.removeAllItems();
+	                 		for (int i = 0; i < dsPDP.size(); i++) {
+								if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&(dsPDP.get(i).getTrangThai().contains("Đã nhận")||dsPDP.get(i).getTrangThai().contains("Đã đặt")) ){
+									cbxPhong.addItem(dsPDP.get(i).getPhong().getMaPhong());
+									//tao bien lay ma phong va ma phieu
+									maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
+		        					maphongs[maphongs.length - 1] = soPhong[i];
+		        					maPhieuDatPhong = Arrays.copyOf(maPhieuDatPhong, maPhieuDatPhong.length + 1);
+		        					maPhieuDatPhong[maPhieuDatPhong.length - 1] = dsPDP.get(i).getMaPhieu();
+								}
+	                 		}
+	                 		cbxPhong.addActionListener(new ActionListener() {
+	    	    				
+
+								public void actionPerformed(ActionEvent e) {
+	    	    					
+	    	    					if(cbxPhong.getSelectedItem() != null) {
+	    	    						txtPTrong.setText("");
+	    	    						for (int i = 0; i < dsPDP.size(); i++) {
+	    	    							if (cbxPhong.getSelectedItem().equals(dsPDP.get(i).getPhong().getMaPhong())) {
+	    	    								txtNgayN.setText(dsPDP.get(i).getThoiGianDat().toString());
+	    	    								
+	    	    							}
+	    	    						}
+	    	    						int	count = 0;
+	    	    						int kiemtra=0;
+	    	    						//lay thoi gian phong con trong
+	    	    						for (int i = 0; i < dsPDP.size(); i++) {
+	    	    							//lay so thu tu cua cbxPhong
+	    	    							int so = cbxPhong.getSelectedIndex();
+	    	    							
+	    	    								if (dsPDP.get(i).getMaPhieu().equals(maPhieuDatPhong[so])) {
+	    	    									continue;
+	    	    								}
+	    	    							int dem = 0;
+	    	    							if (cbxPhong.getSelectedItem().toString().equals(dsPDP.get(i).getPhong().getMaPhong().toString())) {
+
+	    	    								if (ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now()) < 0 &&dsPDP.get(i).getTrangThai().contains("Đã đặt")) {
+//	    	    									JOptionPane.showMessageDialog(null, "Phòng còn trống tới ngày " + dsPDP.get(i).getThoiGianNhan());
+													if (dem == 0) {
+														ngay=-ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now());
+														txtPTrong.setText(-ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now())+" ngày");
+														LocalDate tra = dsPDP.get(i).getThoiGianNhan().plusDays(-1);
+														dateTraP.setDate(java.sql.Date.valueOf(tra));
+														dem++;
+													}else {
+														if(-ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now())<Integer.parseInt(txtPTrong.getText().substring(0, txtPTrong.getText().indexOf(" ")))) {
+                                                            ngay=-ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now());
+															txtPTrong.setText(-ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now())+" ngày");
+															LocalDate tra = dsPDP.get(i).getThoiGianNhan().plusDays(-1);
+															dateTraP.setDate(java.sql.Date.valueOf(tra));
+														}
+													}
+//	    	    									txtPTrong.setText(-ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now())+" ngày");
+//	    	    									System.out.println("phong "+dsPDP.get(i).getPhong().getMaPhong());
+	    	    									count++;
+	    	    								}
+	    	    								
+	    	    							}
+	    	    							
+	    	    						}
+	    	    						if (count == 0) {
+	    	    							txtPTrong.setText("Không có đặt trước");
+	    	    						}
+	    	    					}
+	    	    	                
+	    	    			}
+	    	    		});
+	                 	}
+	             	   else {
+	             	   		JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
+	             	   	
+	             	 }
+	                }else if(clickedButton==btnGHP) {
+                    	
+                    	if (cbxPhong.getSelectedItem() == null) {
+                    		JOptionPane.showMessageDialog(null, "Chưa chọn phòng");
+                    		return;
+                    	} else if (dateTraP.getDate() == null) {
+							JOptionPane.showMessageDialog(null, "Chưa chọn ngày trả phòng");
+							return;
+                    	} else if (txtmaKH.getText().equals("")) {
+							JOptionPane.showMessageDialog(null, "Chưa nhập mã khách hàng");
+							return;
+						}  //kiem tra ngay tra phong
+                    	else if(!txtPTrong.getText().equals("Không có đặt trước")) {
+                    		if (ChronoUnit.DAYS.between(LocalDate.now(), dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()) < 0) {
+                        		JOptionPane.showMessageDialog(null, "Ngày trả phòng không hợp lệ");
+                        		return;
+                    		} else if (ChronoUnit.DAYS.between(LocalDate.now(), dateTraP.getDate().toInstant()
+    								.atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()) 
+    								> ngay) {
+    							JOptionPane.showMessageDialog(null, "Ngày trả phòng không hợp lệ");
+    							return;
+                    		}
+                    	}
+                    	//update ngay tra
+                    	String maPhieu = maPhieuDatPhong[cbxPhong.getSelectedIndex()];
+                    	LocalDate ngayTra = dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
+                    	phieuDatPhong_DAO.updateNgayTraPhieuDatPhong(maPhieu, ngayTra);
+                    	JOptionPane.showMessageDialog(null, "Gia hạn thành công");
+						dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
+//                    	for (int i = 0; i < dsPDP.size(); i++) {
+//							if (dsPDP.get(i).getMaPhieu().equals(maPhieu)) {
+//								JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã được gia hạn tới ngày " + ngayTra);
+//							}
+//						}
+                    	
+                    		
+                    	
+	                
+	                
+	                
+	                }else if(clickedButton==btnHuy) {
+                    	txtmaKH.setText("");
+                    	txtSDT.setText("");
+                    	txtTen.setText("");
+                    	txtTuoi.setText("");
+                    	txtGioi.setText("");
+                    	txtNgayN.setText("");
+                    	txtPTrong.setText("");
+                    	cbxPhong.removeAllItems();
+                    	dateTraP.setDate(null);
+                    	maPhieuDatPhong = new String[0];
+                    	maphongs = new String[0];
+                    	
+	                }
+	                }};
+	                btnTim.addActionListener(actionListener);
+	                btnGHP.addActionListener(actionListener);
+	                btnHuy.addActionListener(actionListener);
+	                
+	                          
+	
 	
 
 	
-}
+}}

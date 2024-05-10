@@ -50,7 +50,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 	private JTextField txtTenDichVu_Tim;
 	private JButton btn_Tim;
 	private JLabel lblSoLuong;
-	private JTextField textField;
+	private JTextField txtSoLuong;
 	private JLabel lblGiaBan;
 	private JTextField txtGiaBan;
 
@@ -175,12 +175,12 @@ public class GUI_QuanLiDichVu extends JFrame {
 		lblSoLuong.setBounds(140, 125, 186, 35);
 		panel_Center_Top.add(lblSoLuong);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField.setColumns(10);
-		textField.setBackground(new Color(41, 139, 116));
-		textField.setBounds(350, 125, 350, 40);
-		panel_Center_Top.add(textField);
+		txtSoLuong = new JTextField();
+		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtSoLuong.setColumns(10);
+		txtSoLuong.setBackground(new Color(41, 139, 116));
+		txtSoLuong.setBounds(350, 125, 350, 40);
+		panel_Center_Top.add(txtSoLuong);
 		
 		lblGiaBan = new JLabel("Gía bán");
 		lblGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -254,11 +254,6 @@ public class GUI_QuanLiDichVu extends JFrame {
 		
 		
 		
-		ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JButton clickedButton = (JButton) e.getSource();
-                // Xử lý sự kiện cho mỗi nút ở đây
-                }};
 	}
 
 	

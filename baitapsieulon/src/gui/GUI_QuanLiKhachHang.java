@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +29,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
+import entity.KhachHang;
+import entity.NhanVien;
+
 import javax.swing.JComboBox;
 
 public class GUI_QuanLiKhachHang extends JFrame {
@@ -65,9 +76,11 @@ public class GUI_QuanLiKhachHang extends JFrame {
 	private JTextField txtSDT;
 	private JTextField txtDC;
 	private JButton btbXoaTrang;
-	private DefaultTableModel modelHD;
+	static DefaultTableModel modelHD;
 	private JTable tableNV;
 	private JTextField textField;
+	private String maKH;
+	private JButton btnThmKhchHng;
 
 	/**
 	 * Launch the application.
@@ -99,6 +112,11 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Frame);
 		Frame.setLayout(null);
+		try {
+			ConnectDB.getInstance().connect();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 
 		
 		panelTK = new Panel();
@@ -176,15 +194,9 @@ public class GUI_QuanLiKhachHang extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnThongKe.setBounds(647, 27, 334, 99);
+		btnThongKe.setBounds(260, 24, 334, 99);
 		panel_top.add(btnThongKe);
 		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
-		JButton btnThemNhanVien = new JButton("Thêm khách hàng");
-		btnThemNhanVien.setBackground(new Color(41, 139, 116));
-		btnThemNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnThemNhanVien.setBounds(248, 27, 334, 99);
-		panel_top.add(btnThemNhanVien);
 		
 		
 
@@ -351,7 +363,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		
 		JButton btnTim = new JButton("Tìm");
 		btnTim.setBackground(new Color(234, 232, 214));
-		btnTim.setBounds(1160, 176, 175, 35);
+		btnTim.setBounds(1125, 176, 210, 35);
 		panel_Center_Top.add(btnTim);
 		btnTim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -361,7 +373,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		
 		btbXoaTrang = new JButton("Xóa trắng");
 		btbXoaTrang.setBackground(new Color(234, 232, 214));
-		btbXoaTrang.setBounds(1389, 176, 175, 35);
+		btbXoaTrang.setBounds(1366, 176, 198, 35);
 		panel_Center_Top.add(btbXoaTrang);
 		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
@@ -389,12 +401,18 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		cbxGioi.addItem("Nữ");
 		panel_Center_Top.add(cbxGioi);
 		
+		btnThmKhchHng = new JButton("Thêm Khách Hàng");
+		btnThmKhchHng.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnThmKhchHng.setBackground(new Color(234, 232, 214));
+		btnThmKhchHng.setBounds(889, 176, 210, 35);
+		panel_Center_Top.add(btnThmKhchHng);
+		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));
 		panel_Center_Bot.setBounds(271, 369, 1648, 576);
 
 		
-		String[] cols = new String[] {"Mã nhân viên", "Họ tên", "Giới tính" , "Số căn cước công dân", "Vị trí", "Số điện thoại", "Địa chỉ", "Ngày sinh", "Ngày vào làm", "Ngày nghỉ làm", "Trạng thái", "Trình độ học vấn", "Hệ số lương", "Lương cơ bản", "Tổng lương"};
+		String[] cols = new String[] {"Mã khách hàng", "Tên khách hàng", "Giới tính", "Email", "Số điện thoại", "Địa chỉ", "Ngày sinh"};
 		modelHD = new DefaultTableModel(cols,0);
 		panel_Center_Bot.setLayout(null);
 		tableNV = new JTable(modelHD);
@@ -414,6 +432,23 @@ public class GUI_QuanLiKhachHang extends JFrame {
         
 		
 		
+		tableNV.addMouseListener(new MouseAdapter() {
+			  
+			
+
+		    
+
+			public void mouseClicked(MouseEvent e) {
+		        int row = tableNV.getSelectedRow();
+		        maKH = (String) tableNV.getValueAt(row, 0);
+		       
+		    }
+		});
+
+		
+        
+		
+		
 		Frame.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -422,11 +457,20 @@ public class GUI_QuanLiKhachHang extends JFrame {
                 // Hiển thị btnTK
                 btnTK.setVisible(true);
             }
+
+//			public void mouseClicked(MouseC e) {
+//				panelTK.setVisible(false);
+//			}  
         });
 		ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            
+
+			private ArrayList<KhachHang> dskh;
+
+			public void actionPerformed(ActionEvent e) {
                 JButton clickedButton = (JButton) e.getSource();
                 // Xử lý sự kiện cho mỗi nút ở đây
+                
                 boolean isVisible = panelTK.isVisible();
                 if (clickedButton == btnTK && isVisible == false) {
                     // Xử lý khi nhấn vào nút btnTK
@@ -449,6 +493,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
                     new GUI_TrangChu().setVisible(true);
+                    
                 } else if (clickedButton == btnQLP) {
                     // Xử lý khi nhấn vào nút btnQLP
                 	btnTKDMK.setVisible(false);
@@ -465,13 +510,12 @@ public class GUI_QuanLiKhachHang extends JFrame {
                     // Xử lý khi nhấn vào nút btnQLKH
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
-                    
+                    setVisible(false); // Đóng frame hiện tại
+                    new GUI_QuanLiKhachHang().setVisible(true);
                 } else if (clickedButton == btnQLNV) {
                     // Xử lý khi nhấn vào nút btnQLNV
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
-                    setVisible(false); // Đóng frame hiện tại
-                    new GUI_QuanLiNhanVien().setVisible(true);
                 } else if (clickedButton == btnQLKM) {
                     // Xử lý khi nhấn vào nút btnQLKM
                 	btnTKDMK.setVisible(false);
@@ -489,6 +533,90 @@ public class GUI_QuanLiKhachHang extends JFrame {
                 	btnTKDMK.setVisible(false);
                     btnTKDX.setVisible(false);
                     setVisible(false); // Đóng frame hiện tại
+                } else if(clickedButton == btnTim) {
+                    // Xử lý khi nhấn vào nút btnTim
+                		KhachHang kh = new KhachHang(null);
+                		kh.setmaKH(txtMa.getText());
+                	    kh.setHoTen(txtTenKH.getText());
+                	    kh.setEmail(txtEmail.getText());
+                	    kh.setSoDT(txtSDT.getText());
+                	    kh.setDiaChi(txtDC.getText());
+                	    if (textField.getText().isEmpty()) {
+                	        kh.setNgaySinh(null);
+                	    } else {
+                	        try {
+                	            int tuoi = Integer.parseInt(textField.getText());
+                	            kh.setNgaySinh(LocalDate.now().minusYears(tuoi));
+//                	            JOptionPane.showMessageDialog(null, kh.getNgaySinh());
+                	        } catch (NumberFormatException ex) {
+                	            JOptionPane.showMessageDialog(null, "Tuổi phải là một số nguyên dương.");
+                	            return; // Stop processing further
+                	        }}
+                	    if (cbxGioi.getSelectedItem().equals("Nam")) {
+						kh.setGioiTinh(true);
+                	    } else {
+						kh.setGioiTinh(false);
+                	    }
+                	    // Lấy danh sách trung voi khach hang tim kiem tu co so du lieu
+                	    dskh = new ArrayList<KhachHang>();
+                	    dskh = timKiemKhachHang(kh);
+               	        
+               	        // Cập nhật lại model
+               	        if (dskh.isEmpty()) {
+               	        	JOptionPane.showMessageDialog(null, "Không tìm thấy nhân viên nào.");
+               	        	updateModel(dskh);
+               	        } else {
+               	        	updateModel(dskh);
+               	        }
+
+                } else if(clickedButton == btbXoaTrang) {
+                	txtMa.setText("");
+                	txtTenKH.setText("");
+                	txtEmail.setText("");
+                	txtSDT.setText("");
+                	txtDC.setText("");
+                	textField.setText("");
+                	cbxGioi.setSelectedIndex(0);
+                	modelHD.setRowCount(0);
+                } else if(clickedButton == btnThmKhchHng) {
+					KhachHang kh = new KhachHang(null);
+					kh.setmaKH(txtMa.getText());
+					kh.setHoTen(txtTenKH.getText());
+					kh.setEmail(txtEmail.getText());
+					kh.setSoDT(txtSDT.getText());
+					kh.setDiaChi(txtDC.getText());
+					if (textField.getText().isEmpty()) {
+						kh.setNgaySinh(null);
+					} else {
+						try {
+							int tuoi = Integer.parseInt(textField.getText());
+							kh.setNgaySinh(LocalDate.now().minusYears(tuoi));
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(null, "Tuổi phải là một số nguyên dương.");
+							return; // Stop processing further
+						}
+					}
+					System.out.println(kh.getNgaySinh());
+					if (cbxGioi.getSelectedItem().equals("Nam")) {
+						kh.setGioiTinh(true);
+					} else {
+						kh.setGioiTinh(false);
+					}
+					// Lấy danh sách trung voi khach hang tim kiem tu co so du lieu
+					dskh = new ArrayList<KhachHang>();
+					dskh = timKiemKhachHang(kh);
+					// Cập nhật lại model
+					
+					if(dskh.size() == 0) {
+						new KhachHang_DAO().themKhachHang(kh);
+						JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công.");
+						modelHD.setRowCount(0);
+						updateModel(new KhachHang_DAO().getalltbKhachHang());
+					}else {
+						System.out.println("Thêm khách hàng thất bại.");
+					}
+					
+					
                 }}};
                     btnTK.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
@@ -501,7 +629,10 @@ public class GUI_QuanLiKhachHang extends JFrame {
                     btnQLKM.addActionListener(actionListener);
                     btnQLDV.addActionListener(actionListener);
                     btnHT.addActionListener(actionListener);
-	}
+                    btnTim.addActionListener(actionListener);
+                    btbXoaTrang.addActionListener(actionListener);
+                    btnThmKhchHng.addActionListener(actionListener);
+                  }
 
 	
 
@@ -520,4 +651,57 @@ public class GUI_QuanLiKhachHang extends JFrame {
 	public void setBtnXTT(JButton btnXTT) {
 		this.btnTKDMK = btnXTT;
 	}
+	
+	public static void updateModel(ArrayList<KhachHang> dsKH) {
+		modelHD.setRowCount(0);
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		for (KhachHang kh : dsKH) {
+		    // Tạo một mảng chứa dữ liệu của từng đối tượng NhanVien
+		    Object[] rowData = new Object[] { 
+		    		kh.getmaKH(),
+		            kh.getHoTen(),
+		            kh.getGioiTinh() == true ? "Nam" : "Nữ",
+		            kh.getEmail(), kh.getSoDT(), 
+		            kh.getDiaChi(), 
+		            kh.getNgaySinh()
+		        
+		    };
+		    modelHD.addRow(rowData);
+		}
+
+		    // Thêm hàng mới vào mô hình với dữ liệu từ đối tượng NhanVien
+	
+
+	}
+	public ArrayList<KhachHang> timKiemKhachHang(KhachHang kh) {
+	            ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
+        ArrayList<KhachHang> dskhTimKiem = new ArrayList<KhachHang>();
+        dskh = new KhachHang_DAO().getalltbKhachHang();
+        for (KhachHang khachHang : dskh) {
+            if (kh.getmaKH() != null && !kh.getmaKH().isEmpty() && !kh.getmaKH().equals(khachHang.getmaKH())) {
+                continue;
+            }
+            if (kh.getHoTen() != null && !kh.getHoTen().isEmpty() && !kh.getHoTen().equals(khachHang.getHoTen())) {
+                continue;
+            }
+            if (kh.getEmail() != null && !kh.getEmail().isEmpty() && !kh.getEmail().equals(khachHang.getEmail())) {
+                continue;
+            }
+            if (kh.getSoDT() != null && !kh.getSoDT().isEmpty() && !kh.getSoDT().equals(khachHang.getSoDT())) {
+                continue;
+            }
+            if (kh.getDiaChi() != null && !kh.getDiaChi().isEmpty() && !kh.getDiaChi().equals(khachHang.getDiaChi())) {
+                continue;
+            }
+            if (kh.getNgaySinh() != null && !kh.getNgaySinh().equals(khachHang.getNgaySinh())) {
+                continue;
+            }
+            if (kh.getGioiTinh() != khachHang.getGioiTinh()) {
+                continue;
+            }
+            dskhTimKiem.add(khachHang);
+        }
+        return dskhTimKiem;
+    }
 }
+

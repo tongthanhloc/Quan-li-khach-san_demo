@@ -112,6 +112,21 @@ public class PhieuDatPhong_DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }}
-	
+	//gia han ngay tra
+	public void updateNgayTraPhieuDatPhong(String maPhieu, LocalDate ngayTraMoi) {
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            // Chuẩn bị câu lệnh SQL cho việc cập nhật trạng thái của phiếu đặt phòng
+            String sql = "UPDATE PhieuDatPhong SET thoiGianTra = ? WHERE maPhieu = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            // Thiết lập giá trị cho các tham số của câu lệnh SQL
+            statement.setDate(1, Date.valueOf(ngayTraMoi));
+            statement.setString(2, maPhieu);
+            // Thực hiện câu lệnh SQL cập nhật
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }}
 	
 }

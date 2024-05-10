@@ -36,8 +36,8 @@ public class KhachHang_DAO {
 				String soDT = rs.getString(5);
 				String diaChi = rs.getString(6);
 				String email = rs.getString(7);
-				String anhCanCuoc = rs.getString(8);
-				KhachHang kh = new KhachHang(maKhachHang, hoTen, gioiTinh, ngaySinh, soDT, diaChi, email, anhCanCuoc);
+				
+				KhachHang kh = new KhachHang(maKhachHang, hoTen, gioiTinh, ngaySinh, soDT, diaChi, email);
 				dsKH.add(kh);
 			}
 		} catch (SQLException e) {
@@ -61,6 +61,28 @@ public class KhachHang_DAO {
 	        e.printStackTrace();
 	    }
 	    return tenKhachHangs;
+	}
+	//them khach hang
+	public boolean themKhachHang(KhachHang kh) {
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Insert into KhachHang values(?,?,?,?,?,?,?)";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, kh.getmaKH());
+			statement.setString(2, kh.getHoTen());
+			statement.setBoolean(3, kh.getGioiTinh());
+			statement.setDate(4, java.sql.Date.valueOf(kh.getNgaySinh()));
+			statement.setString(5, kh.getSoDT());
+			statement.setString(6, kh.getDiaChi());
+			statement.setString(7, kh.getEmail());
+			
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	

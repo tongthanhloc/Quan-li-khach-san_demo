@@ -11,10 +11,9 @@ public class KhachHang {
 	private String soDT;
 	private String diaChi;
 	private String email;
-	private String anhCanCuoc;
 
 	public KhachHang(String maKH, String hoTen, Boolean gioiTinh, LocalDate ngaySinh, String soDT, String diaChi,
-			String email, String anhCanCuoc) {
+			String email) {
 		super();
 		this.maKH = maKH;
 		this.hoTen = hoTen;
@@ -23,7 +22,6 @@ public class KhachHang {
 		this.soDT = soDT;
 		this.diaChi = diaChi;
 		this.email = email;
-		this.anhCanCuoc = anhCanCuoc;
 	}
 	public String getmaKH() {
 		return maKH;
@@ -67,12 +65,7 @@ public class KhachHang {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getAnhCanCuoc() {
-		return anhCanCuoc;
-	}
-	public void setAnhCanCuoc(String anhCanCuoc) {
-		this.anhCanCuoc = anhCanCuoc;
-	}
+
 	public KhachHang(String maKH) {
 		super();
 		this.maKH = maKH;

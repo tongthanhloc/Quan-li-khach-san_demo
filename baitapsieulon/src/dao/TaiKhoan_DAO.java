@@ -36,5 +36,17 @@ public class TaiKhoan_DAO {
 		}
 		return dsTK;
 	}
+	//doi mat khau
+	public void doiMatKhau(String tenDangNhap, String matKhau) {
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "UPDATE TaiKhoan SET matKhau = '" + matKhau + "' WHERE tenDangNhap = '" + tenDangNhap + "'";
+			Statement statement = con.createStatement();
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
