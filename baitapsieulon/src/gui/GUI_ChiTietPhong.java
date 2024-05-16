@@ -293,6 +293,25 @@ public class GUI_ChiTietPhong extends JFrame {
 				else JOptionPane.showMessageDialog(null, "Phòng không ở trạng thái bảo trì", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
+		btnBaoTri.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// nếu là trạng thái phòng là trống thì set lại trạng thái phòng bảo trì
+				if (ph.getTrangThai().equals("Trống")) {
+					pTop.setBackground(new Color(251, 193, 146));
+					ph = new Phong_DAO().getPhongTheoMaPhong(maphongcustom);
+					new Phong_DAO().updateTrangThaiPhong(maphongcustom, "Bảo trì");
+					// Đóng cửa sổ hiện tại
+					new GUI_QuanLiDatPhong().setVisible(false);
+					// Mở GUI_QuanLiDatPhong mới
+					new GUI_QuanLiDatPhong().setVisible(true);
+					// TÔI MUỐN LOADE LẠI GUI_CHITIETPHONG1
+					closeCurrentInstance();
+					new GUI_ChiTietPhong(maphongcustom).setVisible(true);
+				} else
+					JOptionPane.showMessageDialog(null, "Phòng không ở trạng thái trống", "Thông báo",
+							JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
         pCenter.add(btnTrong);
       
         TitledBorder titledBorder1 = BorderFactory.createTitledBorder("Khách hàng");
