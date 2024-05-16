@@ -406,7 +406,7 @@ public class GUI_NhanPhong extends JFrame{
               		   dsPDPKH = new ArrayList<PhieuDatPhong>();
               		   for (int i = 0; i < dsPDP.size(); i++) {
               			   	
-							if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==0) {
+							if (dsPDP.get(i).getKhachHang().getMaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==0) {
 								dsPDPKH.add(dsPDP.get(i));
 								
 							}
@@ -537,11 +537,7 @@ public class GUI_NhanPhong extends JFrame{
                    				}
                    				
                    				txtmaP.setText(htmlText.toString());
-                   				if(dsPDPKH.get(j).getDichVu()==null) {
-                   					txtDV.setText("");
-                   				}else {
-                   					txtDV.setText(dsPDPKH.get(j).getDichVu().getMaDichVu());
-                   				}
+                   				
                         	   
                         	                          	   
                         	   //set kieu date cho txtNhanP, txtTraP 
@@ -550,11 +546,7 @@ public class GUI_NhanPhong extends JFrame{
                    					   dateNhanP.setDate(java.sql.Date.valueOf(dsPDPKH.get(k).getThoiGianNhan()));
                    					   dateTraP.setDate(java.sql.Date.valueOf(dsPDPKH.get(k).getThoiGianTra()));
                    					   txtNguoi.setText(String.valueOf(dsPDPKH.get(k).getSoNguoi()));
-                   					   if (dsPDPKH.get(k).getDichVu()!=null) {
-                   						   txtDV.setText(dsPDPKH.get(k).getDichVu().getMaDichVu());
-                   					    }else {
-                   					    	txtDV.setText("");
-                   					    }
+                   					  
                    					   break;
                    				   }
                    			   }

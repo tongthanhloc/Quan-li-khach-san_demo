@@ -10,7 +10,9 @@ import connectDB.ConnectDB;
 import dao.KhachHang_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
+import entity.DichVuTienIch;
 import entity.KhachHang;
+import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
@@ -19,6 +21,7 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -136,7 +139,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 //					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
 //							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
 //						for (int k = 0; k < dsKH.size(); k++) {
-//							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+//							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 //								tenKhachHang[i] = dsKH.get(k).getHoTen();
 //								
 //							}
@@ -150,7 +153,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 //							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
 //						
 //						for (int k = 0; k < dsKH.size(); k++) {
-//							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+//							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 //								tenKhachHang[i] = dsKH.get(k).getHoTen();
 //								
 //							}
@@ -436,7 +439,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
  						}
              		   cbxPhong.removeAllItems();
                  		for (int i = 0; i < dsPDP.size(); i++) {
-							if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&(dsPDP.get(i).getTrangThai().contains("Đã đặt")||dsPDP.get(i).getTrangThai().contains("Đã nhận"))) {
+							if (dsPDP.get(i).getKhachHang().getMaKH().equals(maKH)&&(dsPDP.get(i).getTrangThai().contains("Đã đặt")||dsPDP.get(i).getTrangThai().contains("Đã nhận"))) {
 								cbxPhong.addItem(dsPDP.get(i).getPhong().getMaPhong());
 							}
                  		}
@@ -456,15 +459,52 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
              		 cbxPhong.removeAllItems();
              		 
              	 }else if(clickedButton==btnDoiPhong) {
-             		if(JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đổi phòng không?","Đổi phòng",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
-             			
-             			
+             		//lay chu cai dau
+             		  if(JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đổi phòng không?","Đổi phòng",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
              			for (int i = 0; i < dsPDP.size(); i++) {
              				if (dsPDP.get(i).getPhong().getMaPhong().equals(cbxPhong.getSelectedItem().toString())
-             						&& dsPDP.get(i).getKhachHang().getmaKH().equals(txtCCKH.getText())
+             						&& dsPDP.get(i).getKhachHang().getMaKH().equals(txtCCKH.getText())
              						&& dsPDP.get(i).getThoiGianNhan().toString().equals(txtNgayN.getText())
              						&& (dsPDP.get(i).getTrangThai().contains("Đã đặt")||dsPDP.get(i).getTrangThai().contains("Đã nhận"))) {
-             					phieuDatPhong_DAO.updatePhongPhieuDatPhong(dsPDP.get(i).getMaPhieu(), txtPhong.getText());
+//             					String maPhieu, LocalDate thoiGianDat, LocalDate thoiGianNhan, LocalDate thoiGianTra,
+////             					double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai, String soNguoi,
+////             					DichVuTienIch dichVu
+             					String maPhieu;
+             					LocalDate thoiGianDat = LocalDate.now();
+             					String formatter = thoiGianDat.format(DateTimeFormatter.ofPattern("yyMMdd"));
+             					int count = 1;
+             					for (int a = 0; a < dsPDP.size(); a++) {
+             						if (dsPDP.get(a).getMaPhieu().contains("PD"+formatter)) {
+             							count++;
+             						}
+             					}
+             					if (count < 10) {
+             						maPhieu="PD"+formatter + "000" + count;
+             					} else if (count < 100) {
+             						maPhieu = "PD" + formatter + "00" + count;
+             					} else if (count < 1000) {
+             						maPhieu = "PD" + formatter + "0" + count;
+             					} else {
+             						maPhieu = "PD" + formatter + count;
+             					}
+             					String maphongktra = txtPhong.getText().toString();
+             					LocalDate thoiGianNhan = LocalDate.parse(txtNgayN.getText());
+             					LocalDate thoiGianTra = LocalDate.parse(txtNgayT.getText());
+             					int soNgay= (int) ChronoUnit.DAYS.between(thoiGianNhan, thoiGianTra);
+             					Double DonGia = 0.0;
+             					if (maphongktra.contains("A")) {
+             						DonGia = 1500000.0*soNgay;
+             					}else if (maphongktra.contains("B")) {
+             						DonGia = 2000000.0*soNgay;
+             					}else {
+             						DonGia = 3000000.0*soNgay;
+             					}
+             					PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, LocalDate.now(), LocalDate.now(), dsPDP.get(i).getThoiGianTra(), DonGia,new Phong(txtPhong.getText()), dsPDP.get(i).getKhachHang(), dsPDP.get(i).getNhanVien(), "Đã nhận", dsPDP.get(i).getSoNguoi());
+             					ArrayList<PhieuDatPhong> ds = new ArrayList<PhieuDatPhong>();
+             					ds.add(pdp);
+             					phieuDatPhong_DAO.insertPhieuDatPhong(ds);
+             					phieuDatPhong_DAO.updateNgayTraPhieuDatPhong(dsPDP.get(i).getMaPhieu(), LocalDate.now());
+             					phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(dsPDP.get(i).getMaPhieu(), "Đã đổi");
              					JOptionPane.showMessageDialog(null,"Đổi phòng thành công");
              					//load lai het du lieu
              					updateData();
@@ -512,7 +552,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
     					if(cbxPhong.getSelectedItem() != null) {
     						String maPhong = cbxPhong.getSelectedItem().toString();
     						for (int i = 0; i < dsPDP.size(); i++) {
-    							if (dsPDP.get(i).getPhong().getMaPhong().equals(maPhong)&& dsPDP.get(i).getKhachHang().getmaKH().equals(txtCCKH.getText())&& (dsPDP.get(i).getTrangThai().contains("Đã đặt")||dsPDP.get(i).getTrangThai().contains("Đã nhận"))) {
+    							if (dsPDP.get(i).getPhong().getMaPhong().equals(maPhong)&& dsPDP.get(i).getKhachHang().getMaKH().equals(txtCCKH.getText())&& (dsPDP.get(i).getTrangThai().contains("Đã đặt")||dsPDP.get(i).getTrangThai().contains("Đã nhận"))) {
     								txtNgayN.setText(dsPDP.get(i).getThoiGianNhan().toString());
     								tgNhan = dsPDP.get(i).getThoiGianNhan();
     								txtNgayT.setText(dsPDP.get(i).getThoiGianTra().toString());
@@ -838,7 +878,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
 							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								
 							}
@@ -852,9 +892,8 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
 						
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
-								
 							}
 						}
 					}

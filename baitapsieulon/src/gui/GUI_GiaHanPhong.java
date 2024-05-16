@@ -180,7 +180,7 @@ public class GUI_GiaHanPhong extends JFrame {
 					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
 							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								
 							}
@@ -194,7 +194,7 @@ public class GUI_GiaHanPhong extends JFrame {
 							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
 						
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								
 							}
@@ -379,7 +379,7 @@ public class GUI_GiaHanPhong extends JFrame {
 	             		   
 	             		   cbxPhong.removeAllItems();
 	                 		for (int i = 0; i < dsPDP.size(); i++) {
-								if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&(dsPDP.get(i).getTrangThai().contains("Đã nhận")||dsPDP.get(i).getTrangThai().contains("Đã đặt")) ){
+								if (dsPDP.get(i).getKhachHang().getMaKH().equals(maKH)&&(dsPDP.get(i).getTrangThai().contains("Đã nhận")||dsPDP.get(i).getTrangThai().contains("Đã đặt")) ){
 									cbxPhong.addItem(dsPDP.get(i).getPhong().getMaPhong());
 									//tao bien lay ma phong va ma phieu
 									maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);

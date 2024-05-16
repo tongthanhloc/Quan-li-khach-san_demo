@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoPeriod;
 import java.time.chrono.Chronology;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
@@ -121,15 +122,13 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		// kiểm tra trạng thái phòng
 		for (int i = 0; i < dsPDP.size(); i++) {
-			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
+			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&& ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now()) > 0) {
+					
+					
 				String maPhieu = dsPDP.get(i).getMaPhieu();
 				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
 			}
-			if (dsPDP.get(i).getTrangThai().contains("Đã nhận")
-					&& dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()) ==-1) {
-				String maPhieu = dsPDP.get(i).getMaPhieu();
-				JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã quá hạn"+(dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()))+"ngày");
-			}
+			
 		}
 		LocalDate tghientai = LocalDate.now();
 		for (int i = 0; i < dsP.size(); i++) {
@@ -175,7 +174,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
 							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								
 							}
@@ -189,7 +188,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
 						System.out.println(""+i);
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
+							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								System.out.println(""+i);
 								System.out.println(""+tenKhachHang[i]);
@@ -389,7 +388,26 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		}
 		
         button=createButtons(panel, soPhong, tenKhachHang, trangThai);
-        
+        for (int i = 0; i < button.length; i++) {
+			button[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					JButton clickedButton = (JButton) e.getSource();
+					//lay ma phong khong lay the html
+					//skip text la ma phong
+					String maPhong = clickedButton.getText();
+					String maphongcustom = extractTextFromHTML(maPhong);
+					// Mở GUI_ChiTietPhong và truyền maphongcustom
+			          // Đóng cửa sổ hiện tại nếu có
+		            GUI_ChiTietPhong.closeCurrentInstance();
+
+		            // Mở GUI_ChiTietPhong1 mới và truyền maphongcustom
+		            new GUI_ChiTietPhong(maphongcustom).setVisible(true);
+					// khi tắt GUI_ChiTietPhong1 thì load lại GUI_QuanLiDatPhong
+					
+				}
+			});
+		}
         
         
         
@@ -912,5 +930,17 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		return mangHaiChieu;
 	}
 	
+	private static String extractTextFromHTML(String html) {
+        // Extract the content between the first opening <span> and the corresponding closing </span>
+        String startTag = "<span style='font-family:Tahoma; font-size:60pt;'>";
+        String endTag = "</span>";
+        
+        int start = html.indexOf(startTag) + startTag.length();
+        int end = html.indexOf(endTag, start);
+
+        return html.substring(start, end).trim();
+
+
+}
 	
 }

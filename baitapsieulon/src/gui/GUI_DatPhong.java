@@ -648,13 +648,14 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		LocalDate thoiGianNhan = dateNhanP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate thoiGianTra = dateTraP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate thoiGianDat = LocalDate.now();
+		int soNgay= (int) ChronoUnit.DAYS.between(thoiGianNhan, thoiGianTra);
 		Double DonGia = 0.0;
 		if (maphongktra.contains("A")) {
-			DonGia = 1500000.0;
+			DonGia = 1500000.0*soNgay;
 		}else if (maphongktra.contains("B")) {
-			DonGia = 2000000.0;
+			DonGia = 2000000.0*soNgay;
 		}else {
-			DonGia = 3000000.0;
+			DonGia = 3000000.0*soNgay;
 		}
 		KhachHang maKH = new KhachHang(txtmaKH.getText());
 		Phong maPhong = new Phong(maphongktra);
@@ -683,14 +684,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			trangThai = "Đã nhận";
 		}
 		String soPhong = txtSoN.getText();
-		DichVuTienIch dichVu = new DichVuTienIch();
-		if (txtDV.getText().equals("")) {
-			dichVu = new DichVuTienIch(null);
-		}else{
-			dichVu = new DichVuTienIch(txtDV.getText());
-		}
 		
-		PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, DonGia, maPhong, maKH,maNhanVien,trangThai,soPhong,dichVu);
+		
+		PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, DonGia, maPhong, maKH,maNhanVien,trangThai,soPhong);
 		ArrayList<PhieuDatPhong> danhSachPhieuDatPhong = new ArrayList<>();
 		danhSachPhieuDatPhong.add(pdp);
 		phieuDatPhong_DAO.insertPhieuDatPhong(danhSachPhieuDatPhong);

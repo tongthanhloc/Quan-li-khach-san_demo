@@ -39,12 +39,7 @@ public class PhieuDatPhong_DAO {
 				NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
 				String tt = rs.getString("trangThai");
 				String sN= rs.getString("soNguoi");
-				String maDichVu = rs.getString("maDichVu");
-				DichVuTienIch dV = null;
-				if (maDichVu != null) {
-				    dV = new DichVuTienIch(maDichVu);
-				}
-			    PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN, dV);
+			    PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN);
 				dsPDP.add(pdp);
 			}
 		} catch (SQLException e) {
@@ -57,7 +52,7 @@ public class PhieuDatPhong_DAO {
             ConnectDB.getInstance();
             Connection con = ConnectDB.getConnection();
             // Chuẩn bị câu lệnh SQL cho việc chèn dữ liệu
-            String sql = "INSERT INTO PhieuDatPhong (maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, donGiaPhieu, maPhong, maKhachHang, maNhanVien, trangThai, maDichVu, soNguoi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO PhieuDatPhong (maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, donGiaPhieu, maPhong, maKhachHang, maNhanVien, trangThai, soNguoi) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = con.prepareStatement(sql);
             
             // Duyệt qua danh sách các đối tượng PhieuDatPhong và chèn từng đối tượng này vào cơ sở dữ liệu
@@ -68,11 +63,11 @@ public class PhieuDatPhong_DAO {
                 statement.setDate(4, Date.valueOf(pdp.getThoiGianTra()));
                 statement.setDouble(5, pdp.getDonGiaPhieu());
                 statement.setString(6, pdp.getPhong().getMaPhong());
-                statement.setString(7, pdp.getKhachHang().getmaKH());
+                statement.setString(7, pdp.getKhachHang().getMaKH());
                 statement.setString(8, pdp.getNhanVien().getMaNV());
                 statement.setString(9, pdp.getTrangThai());
-                statement.setString(10, pdp.getDichVu().getMaDichVu());
-                statement.setString(11, pdp.getSoNguoi());
+                
+                statement.setString(10, pdp.getSoNguoi());
                 // Thực hiện câu lệnh chèn dữ liệu
                 statement.executeUpdate();
             }
@@ -128,5 +123,34 @@ public class PhieuDatPhong_DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }}
+	
+	// Lấy phiếu đặt phòng theo mã phòng
+		public PhieuDatPhong getPhieuDatPhongTheoMaPhong(String maPh) {
+			PhieuDatPhong pdp = null;
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "Select * from PhieuDatPhong where maPhong = ?";
+				PreparedStatement statement = con.prepareStatement(sql);
+				statement.setString(1, maPh);
+				ResultSet rs = statement.executeQuery();
+				while (rs.next()) {
+					String maPhieuDatPhong = rs.getString(1);
+					LocalDate ngayDat = rs.getDate(2).toLocalDate();
+					LocalDate ngayNhan = rs.getDate(3).toLocalDate();
+					LocalDate ngayTra = rs.getDate(4).toLocalDate();
+					double dongia = rs.getDouble(5);
+					Phong p = new Phong(rs.getString("maPhong"));
+					KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
+					NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
+					String tt = rs.getString("trangThai");
+					String sN = rs.getString("soNguoi");
+					pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return pdp;
+		}
 	
 }

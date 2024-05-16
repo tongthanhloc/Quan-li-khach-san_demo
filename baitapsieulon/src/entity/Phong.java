@@ -12,10 +12,10 @@ public class Phong {
 	private String phongCach;
 	private String trangThai;
 	private String moTa;
-	private String hinhAnh;
+	private byte[] hinhAnh;
 	
 	public Phong(String maPhong, String loaiPhong, double donGiaTheoNgay, String soGiuong, String soTang,
-			String phongCach, String trangThai, String moTa, String hinhAnh) {
+			String phongCach, String trangThai, String moTa, byte[] hinhAnh) {
 		super();
 		this.maPhong = maPhong;
 		this.loaiPhong = loaiPhong;
@@ -81,10 +81,10 @@ public class Phong {
 	public void setMoTa(String moTa) {
 		this.moTa = moTa;
 	}
-	public String getHinhAnh() {
+	public byte[] getHinhAnh() {
 		return hinhAnh;
 	}
-	public void setHinhAnh(String hinhAnh) {
+	public void setHinhAnh(byte[] hinhAnh) {
 		this.hinhAnh = hinhAnh;
 	}
 	@Override

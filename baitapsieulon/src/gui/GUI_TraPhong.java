@@ -141,7 +141,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 				trangThai[trangThai.length - 1] = 2;
 				tenKhachHang = Arrays.copyOf(tenKhachHang, tenKhachHang.length + 1);
 				for (int j = 0; j < dsKH.size(); j++) {
-					if (dsKH.get(j).getmaKH().equals(dsPDP.get(i).getKhachHang().getmaKH())) {
+					if (dsKH.get(j).getMaKH().equals(dsPDP.get(i).getKhachHang().getMaKH())) {
 						tenKhachHang[tenKhachHang.length - 1] = dsKH.get(j).getHoTen();
 					}
 				}
@@ -532,10 +532,10 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
     							txtTenKH.setText(customerNames[i]);
     							for (int j = 0; j < dsPDP.size(); j++) {
     								if (dsPDP.get(i).getPhong().getMaPhong().equals(roomNumbers[i])) {
-    									txtCCKH.setText(dsPDP.get(i).getKhachHang().getmaKH());
+    									txtCCKH.setText(dsPDP.get(i).getKhachHang().getMaKH());
     									
     									for (int k = 0; k < dsKH.size(); k++) {
-    										if (dsKH.get(k).getmaKH().equals(dsPDP.get(i).getKhachHang().getmaKH())) {
+    										if (dsKH.get(k).getMaKH().equals(dsPDP.get(i).getKhachHang().getMaKH())) {
     											if (dsKH.get(k).getGioiTinh() == true) {
                                                     txtGT.setText("Nam");
                                                 } else {

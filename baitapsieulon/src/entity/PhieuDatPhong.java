@@ -15,7 +15,6 @@ public class PhieuDatPhong {
 	private NhanVien nhanVien;
 	private String trangThai;
 	private String soNguoi;
-	private DichVuTienIch dichVu;
 	public String getMaPhieu() {
 		return maPhieu;
 	}
@@ -77,15 +76,10 @@ public class PhieuDatPhong {
 		this.soNguoi = soNguoi;
 	}
 	
-	public DichVuTienIch getDichVu() {
-		return dichVu;
-	}
-	public void setDichVu(DichVuTienIch dichVu) {
-		this.dichVu = dichVu;
-	}
+	
 	public PhieuDatPhong(String maPhieu, LocalDate thoiGianDat, LocalDate thoiGianNhan, LocalDate thoiGianTra,
-			double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai, String soNguoi,
-			DichVuTienIch dichVu) {
+			double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai, String soNguoi
+			) {
 		super();
 		this.maPhieu = maPhieu;
 		this.thoiGianDat = thoiGianDat;
@@ -97,7 +91,7 @@ public class PhieuDatPhong {
 		this.nhanVien = nhanVien;
 		this.trangThai = trangThai;
 		this.soNguoi = soNguoi;
-		this.dichVu = dichVu;
+		
 	}
 	public PhieuDatPhong(String maPhieu) {
 		super();
