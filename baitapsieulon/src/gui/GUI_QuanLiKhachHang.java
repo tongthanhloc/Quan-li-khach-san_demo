@@ -314,14 +314,14 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		panel_Center_Top.add(lblEmail);
 		
 		txtMa = new JTextField();
-		txtMa.setBackground(new Color(41, 139, 116));
+		txtMa.setBackground(new Color(164, 194, 163));
 		txtMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMa.setColumns(10);
 		txtMa.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMa);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBackground(new Color(41, 139, 116));
+		txtEmail.setBackground(new Color(164, 194, 163));
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(350, 75, 350, 40);
@@ -343,21 +343,21 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		panel_Center_Top.add(lblDC);
 		
 		txtTenKH = new JTextField();
-		txtTenKH.setBackground(new Color(41, 139, 116));
+		txtTenKH.setBackground(new Color(164, 194, 163));
 		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenKH.setColumns(10);
 		txtTenKH.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenKH);
 		
 		txtSDT = new JTextField();
-		txtSDT.setBackground(new Color(41, 139, 116));
+		txtSDT.setBackground(new Color(164, 194, 163));
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSDT.setColumns(10);
 		txtSDT.setBounds(1100, 75, 350, 40);
 		panel_Center_Top.add(txtSDT);
 		
 		txtDC = new JTextField();
-		txtDC.setBackground(new Color(41, 139, 116));
+		txtDC.setBackground(new Color(164, 194, 163));
 		txtDC.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtDC.setColumns(10);
 		txtDC.setBounds(1100, 125, 350, 40);
@@ -387,7 +387,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textField.setColumns(10);
-		textField.setBackground(new Color(41, 139, 116));
+		textField.setBackground(new Color(164, 194, 163));
 		textField.setBounds(225, 125, 127, 40);
 		panel_Center_Top.add(textField);
 		
@@ -397,7 +397,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		panel_Center_Top.add(lblGioiTinh);
 		
 		JComboBox cbxGioi = new JComboBox();
-		cbxGioi.setBackground(new Color(41, 139, 116));
+		cbxGioi.setBackground(new Color(164, 194, 163));
 		cbxGioi.setBounds(485, 126, 215, 35);
 		cbxGioi.addItem("Nam");
 		cbxGioi.addItem("Nữ");
@@ -424,7 +424,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		modelHD = new DefaultTableModel(cols,0);
 		panel_Center_Bot.setLayout(null);
 		tableNV = new JTable(modelHD);
-		tableNV.setBackground(new Color(128, 255, 0));
+		tableNV.setBackground(new Color(234, 232, 214));
 		JScrollPane paneNV = new JScrollPane(tableNV);
 		paneNV.setBounds(10, 38, 1610, 538);
 		paneNV.setPreferredSize(new Dimension(1000,1000));
@@ -432,6 +432,8 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		JTableHeader headers = tableNV.getTableHeader();
         Font headerFont = new Font("Tahoma", Font.PLAIN, 15);
         headers.setFont(headerFont);
+        headers.setPreferredSize(new Dimension(paneNV.getWidth(), 30));
+        headers.setBackground(new Color(164, 194, 163));
 		Frame.add(panel_Center_Bot);
 		
 		
