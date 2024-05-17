@@ -456,6 +456,18 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
                     setVisible(false); // Đóng frame hiện tại
                     new GUI_GiaHanPhong().setVisible(true);
                 }};
+        
+                
+      //add listener cho checkbox
+       chckbxdadat.addItemListener(this);
+       chckbxThue.addItemListener(this);
+       chckbxTrong.addItemListener(this);
+       chckbxBaotri.addItemListener(this);
+       chckbxPdon.addItemListener(this);
+       chckbxPdoi.addItemListener(this);
+       chckbxPVip.addItemListener(this);
+       
+        
                     
                  
                     
@@ -804,7 +816,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				} 
 			}
 		
-        	
+        	System.out.print("sss");
 			
 			panel.removeAll();
 			panel.repaint();

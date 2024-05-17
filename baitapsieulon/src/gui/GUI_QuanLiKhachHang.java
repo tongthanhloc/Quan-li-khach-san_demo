@@ -190,16 +190,6 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
-		JButton btnThongKe = new JButton("Thống kê khách hàng");
-		btnThongKe.setBackground(new Color(41, 139, 116));
-		btnThongKe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnThongKe.setBounds(260, 24, 334, 99);
-		panel_top.add(btnThongKe);
-		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
 		
 
 		

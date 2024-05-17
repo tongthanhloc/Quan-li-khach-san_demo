@@ -10,14 +10,29 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+
 import connectDB.ConnectDB;
+import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
+import entity.KhachHang;
 import entity.NhanVien;
 
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -58,7 +73,6 @@ public class GUI_ThongKeKhachHang extends JFrame{
 	private JLabel lblNewLabel_7;
 	private JLabel lblNewLabel_8;
 	private JTextField txtThanThiet;
-	private JLabel lblNewLabel_10;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_12;
 	private JTextField txtNam;
@@ -75,7 +89,11 @@ public class GUI_ThongKeKhachHang extends JFrame{
 	private JTextField txtTTN;
 	private ArrayList<NhanVien> dsNV;
 	private ArrayList<LocalDate> dsT;
-	private JTextField textField;
+	private JTextField txtavgTuoi;
+	private ArrayList<KhachHang> dsKH;
+	private int avg;
+	private JPanel panelBieuDo;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -104,13 +122,9 @@ public class GUI_ThongKeKhachHang extends JFrame{
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
-		dsNV = new  ArrayList<NhanVien>();
-		dsNV = new NhanVien_DAO().getalltbNhanVien();
-		dsT = new ArrayList<LocalDate>();
-		for (NhanVien nv : dsNV) {
-			dsT.add(nv.getNgaySinh());
-		}
-		System.out.println(dsNV.size());
+		dsKH = new KhachHang_DAO().getalltbKhachHang();
+		
+		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -301,12 +315,22 @@ public class GUI_ThongKeKhachHang extends JFrame{
 		panel_menu.add(lblNewLabel_6);
 		
 		JPanel panel_Center_Left = new JPanel();
-		panel_Center_Left.setBounds(257, 156, 685, 885);
+		panel_Center_Left.setBounds(250, 150, 690, 891);
 		panel_Center_Left.setLayout(null);
 		
 		JPanel panel_Center_Right = new JPanel();
-		panel_Center_Right.setBounds(942, 156, 962, 885);
+		panel_Center_Right.setBounds(940, 150, 962, 891);
 		panel_Center_Right.setLayout(null);
+		panelBieuDo = new JPanel();
+		panelBieuDo.setPreferredSize(new Dimension(962, 2050));
+		JScrollPane scrollPane = new JScrollPane(panelBieuDo);
+		scrollPane.setBounds(0,0, 962, 891);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		
+		panel_Center_Right.add(scrollPane);
+		
 		
 		String[] cols = new String[] {"Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Mã Khuyến mãi ", "Ngày lập hóa đơn", "Tổng tiền thanh toán" ,"Tiền khách đưa" , "Tiền thối", "Trang thái"};
 		modelHD = new DefaultTableModel(new Object[]{"Thông tin", "Giá trị"}, 0);
@@ -372,24 +396,24 @@ public class GUI_ThongKeKhachHang extends JFrame{
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_9 = new JLabel("Khách Hàng thân thiết");
-		lblNewLabel_9.setBounds(28, 9, 119, 16);
+		lblNewLabel_9.setBounds(28, 9, 175, 16);
 		panel.add(lblNewLabel_9);
 		
 		JPanel panel_2_1_1 = new JPanel();
 		panel_2_1_1.setBounds(0, 2, 10, 122);
 		panel.add(panel_2_1_1);
 		panel_2_1_1.setBackground(new Color(41, 139, 116));
-		
-		lblNewLabel_10 = new JLabel("40");
-		lblNewLabel_10.setFont(new Font("Dialog", Font.BOLD, 25));
-		lblNewLabel_10.setBounds(36, 37, 30, 58);
-		panel.add(lblNewLabel_10);
 				
-				JLabel lblNewLabel_11 = new JLabel("0.0%");
-				lblNewLabel_11.setFont(new Font("Dialog", Font.PLAIN, 18));
-				lblNewLabel_11.setForeground(new Color(0, 0, 0));
-				lblNewLabel_11.setBounds(78, 63, 55, 16);
-				panel.add(lblNewLabel_11);
+				JLabel lblTT = new JLabel("0.0%");
+				lblTT.setFont(new Font("Dialog", Font.PLAIN, 18));
+				lblTT.setForeground(new Color(0, 0, 0));
+				lblTT.setBounds(113, 61, 55, 16);
+				panel.add(lblTT);
+				
+				JLabel lbltileTT = new JLabel("0/0");
+				lbltileTT.setFont(new Font("Dialog", Font.BOLD, 25));
+				lbltileTT.setBounds(28, 37, 78, 58);
+				panel.add(lbltileTT);
 				
 				txtNam = new JTextField();
 				txtNam.setBounds(532, 32, 101, 25);
@@ -407,7 +431,7 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_1.setLayout(null);
 				panel_1.setBackground(Color.WHITE);
 				
-				JLabel lblNewLabel_9_1 = new JLabel("Tỉ lệ nam/nữ");
+				JLabel lblNewLabel_9_1 = new JLabel("Tỉ lệ Nam");
 				lblNewLabel_9_1.setBounds(28, 9, 119, 16);
 				panel_1.add(lblNewLabel_9_1);
 				
@@ -416,16 +440,16 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_2_1_1_1.setBounds(0, 2, 10, 122);
 				panel_1.add(panel_2_1_1_1);
 				
-				JLabel lblNewLabel_10_1 = new JLabel("40/50");
-				lblNewLabel_10_1.setFont(new Font("Dialog", Font.BOLD, 25));
-				lblNewLabel_10_1.setBounds(36, 37, 78, 58);
-				panel_1.add(lblNewLabel_10_1);
+				JLabel lbltileNam = new JLabel("40/50");
+				lbltileNam.setFont(new Font("Dialog", Font.BOLD, 25));
+				lbltileNam.setBounds(36, 37, 78, 58);
+				panel_1.add(lbltileNam);
 				
-				JLabel lblNewLabel_11_1 = new JLabel("0.0%");
-				lblNewLabel_11_1.setForeground(new Color(0, 0, 0));
-				lblNewLabel_11_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-				lblNewLabel_11_1.setBounds(116, 61, 55, 16);
-				panel_1.add(lblNewLabel_11_1);
+				JLabel lblNam = new JLabel("0.0%");
+				lblNam.setForeground(new Color(0, 0, 0));
+				lblNam.setFont(new Font("Dialog", Font.PLAIN, 18));
+				lblNam.setBounds(116, 61, 55, 16);
+				panel_1.add(lblNam);
 				
 				JLabel lblNewLabel_7_1 = new JLabel("Điểm Trung bình");
 				lblNewLabel_7_1.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -438,8 +462,8 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_1_2.setBounds(335, 232, 298, 124);
 				panel_2.add(panel_1_2);
 				
-				JLabel lblNewLabel_9_1_2 = new JLabel("");
-				lblNewLabel_9_1_2.setBounds(28, 9, 119, 16);
+				JLabel lblNewLabel_9_1_2 = new JLabel("Tỉ lệ Nữ");
+				lblNewLabel_9_1_2.setBounds(36, 10, 119, 16);
 				panel_1_2.add(lblNewLabel_9_1_2);
 				
 				JPanel panel_2_1_1_1_2 = new JPanel();
@@ -447,29 +471,25 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_2_1_1_1_2.setBounds(0, 2, 10, 122);
 				panel_1_2.add(panel_2_1_1_1_2);
 				
-				JLabel lblNewLabel_10_1_2 = new JLabel("40");
-				lblNewLabel_10_1_2.setFont(new Font("Dialog", Font.BOLD, 25));
-				lblNewLabel_10_1_2.setBounds(36, 37, 30, 58);
-				panel_1_2.add(lblNewLabel_10_1_2);
+				JLabel lbltileNu = new JLabel("40");
+				lbltileNu.setFont(new Font("Dialog", Font.BOLD, 25));
+				lbltileNu.setBounds(36, 37, 78, 58);
+				panel_1_2.add(lbltileNu);
 				
 
 				
-				JLabel lblNewLabel_11_1_2 = new JLabel("0.0%");
-				lblNewLabel_11_1_2.setForeground(Color.BLACK);
-				lblNewLabel_11_1_2.setFont(new Font("Dialog", Font.PLAIN, 18));
-				lblNewLabel_11_1_2.setBounds(78, 63, 55, 16);
-				panel_1_2.add(lblNewLabel_11_1_2);
-				
-				JLabel lblNewLabel_9_1_3 = new JLabel("Độ tuổi");
-				lblNewLabel_9_1_3.setBounds(28, 9, 85, 16);
-				panel_1_2.add(lblNewLabel_9_1_3);
+				JLabel lblNu = new JLabel("0.0%");
+				lblNu.setForeground(Color.BLACK);
+				lblNu.setFont(new Font("Dialog", Font.PLAIN, 18));
+				lblNu.setBounds(114, 61, 55, 16);
+				panel_1_2.add(lblNu);
 				
 				txtTBT = new JTextField();
 				txtTBT.setColumns(10);
 				txtTBT.setBounds(192, 230, 114, 25);
 				txtTBT.setEditable(false);
-				Integer avg = findAverageAge(dsT);
-				txtTBT.setText(avg.toString());
+//				Integer avg = findAverageAge(dsT);
+//				txtTBT.setText(avg.toString());
 				panel_2.add(txtTBT);
 				
 				JLabel lblNewLabel_7_1_1_1 = new JLabel("Điểm cao nhất");
@@ -483,8 +503,8 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				txtTCN.setEditable(false);
 				// Lấy danh sách tuổi của nhân viên
 
-				Integer maxT = findMaxAge(dsT);
-				txtTCN.setText(maxT.toString());
+//				Integer maxT = findMaxAge(dsT);
+//				txtTCN.setText(maxT.toString());
 				panel_2.add(txtTCN);
 				
 				JLabel lblNewLabel_7_1_1_1_1 = new JLabel("Điểm thấp nhất");
@@ -496,16 +516,16 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				txtTTN.setColumns(10);
 				txtTTN.setBounds(192, 293, 114, 25);
 				txtTTN.setEditable(false);
-				Integer minT = findMinAge(dsT);
-				txtTTN.setText(minT.toString());
+//				Integer minT = findMinAge(dsT);
+//				txtTTN.setText(minT.toString());
 				panel_2.add(txtTTN);
 				
-				textField = new JTextField();
-				textField.setText("100");
-				textField.setEditable(false);
-				textField.setColumns(10);
-				textField.setBounds(192, 328, 114, 25);
-				panel_2.add(textField);
+				txtavgTuoi = new JTextField();
+				txtavgTuoi.setText("100");
+				txtavgTuoi.setEditable(false);
+				txtavgTuoi.setColumns(10);
+				txtavgTuoi.setBounds(192, 328, 114, 25);
+				panel_2.add(txtavgTuoi);
 				
 				JLabel lblNewLabel_7_1_1_1_1_1 = new JLabel("Độ tuổi trung bình");
 				lblNewLabel_7_1_1_1_1_1.setFont(new Font("Dialog", Font.BOLD, 13));
@@ -549,20 +569,20 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_4.add(lblNewLabel_9_2);
 				
 				JPanel panel_2_1_1_2 = new JPanel();
-				panel_2_1_1_2.setBackground(new Color(222, 220, 203));
+				panel_2_1_1_2.setBackground(new Color(41, 139, 116));
 				panel_2_1_1_2.setBounds(0, 2, 10, 122);
 				panel_4.add(panel_2_1_1_2);
 				
-				JLabel lblNewLabel_10_2 = new JLabel("40/100");
-				lblNewLabel_10_2.setFont(new Font("Dialog", Font.BOLD, 25));
-				lblNewLabel_10_2.setBounds(36, 37, 84, 58);
-				panel_4.add(lblNewLabel_10_2);
+				JLabel lbltileVang = new JLabel("40/100");
+				lbltileVang.setFont(new Font("Dialog", Font.BOLD, 25));
+				lbltileVang.setBounds(36, 37, 84, 58);
+				panel_4.add(lbltileVang);
 				
-				JLabel lblNewLabel_11_2 = new JLabel("0.0%");
-				lblNewLabel_11_2.setForeground(Color.BLACK);
-				lblNewLabel_11_2.setFont(new Font("Dialog", Font.PLAIN, 18));
-				lblNewLabel_11_2.setBounds(199, 61, 55, 16);
-				panel_4.add(lblNewLabel_11_2);
+				JLabel lblVang = new JLabel("0.0%");
+				lblVang.setForeground(Color.BLACK);
+				lblVang.setFont(new Font("Dialog", Font.PLAIN, 18));
+				lblVang.setBounds(199, 61, 55, 16);
+				panel_4.add(lblVang);
 				
 				JPanel panel_1_1 = new JPanel();
 				panel_1_1.setLayout(null);
@@ -579,40 +599,219 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_2_1_1_1_1.setBounds(0, 2, 10, 122);
 				panel_1_1.add(panel_2_1_1_1_1);
 				
-				JLabel lblNewLabel_10_1_1 = new JLabel("5/10");
-				lblNewLabel_10_1_1.setFont(new Font("Dialog", Font.BOLD, 25));
-				lblNewLabel_10_1_1.setBounds(36, 37, 62, 58);
-				panel_1_1.add(lblNewLabel_10_1_1);
+				JLabel lbltileBac = new JLabel("5/10");
+				lbltileBac.setFont(new Font("Dialog", Font.BOLD, 25));
+				lbltileBac.setBounds(28, 37, 70, 58);
+				panel_1_1.add(lbltileBac);
 				
-				JLabel lblNewLabel_11_1_1 = new JLabel("0.0%");
-				lblNewLabel_11_1_1.setForeground(Color.BLACK);
-				lblNewLabel_11_1_1.setFont(new Font("Dialog", Font.PLAIN, 18));
-				lblNewLabel_11_1_1.setBounds(125, 61, 55, 16);
-				panel_1_1.add(lblNewLabel_11_1_1);
+				JLabel lblBac = new JLabel("0.0%");
+				lblBac.setForeground(Color.BLACK);
+				lblBac.setFont(new Font("Dialog", Font.PLAIN, 18));
+				lblBac.setBounds(125, 61, 55, 16);
+				panel_1_1.add(lblBac);
 				
 				JLabel lblNewLabel_15 = new JLabel("Top 5 Khách Hàng tiềm năng");
-				lblNewLabel_15.setBounds(30, 202, 200, 16);
+				lblNewLabel_15.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				lblNewLabel_15.setBounds(30, 202, 286, 25);
 				panel_3.add(lblNewLabel_15);
 				
-				String[] colNV = new String[] {"Mã Khách Hàng", "Họ tên","Điểm", "Hạng"};
+				String[] col = new String[] {"Mã Khách Hàng", "Họ tên","Điểm", "Hạng"};
+				headerFont = new Font("Tahoma", Font.PLAIN, 20);
 				
-		        model = new DefaultTableModel(colNV, 0);
-		        
+		        model = new DefaultTableModel(col, 0);
+		           
+		           
 				panel_3.setLayout(null);
+				
 				
 			
 			
 				tableNV = new JTable(model);
-				JScrollPane paneNV = new JScrollPane(tableNV);
-				paneNV.setBounds(10, 230, 623, 210);
-				panel_3.add(paneNV);
+//				tableNV.setTableHeader(tableNV.getTableHeader());
+				tableNV.getTableHeader().setFont(headerFont);
+				tableNV.getTableHeader().setReorderingAllowed(false);
+				tableNV.getTableHeader().setResizingAllowed(false);
+				
+				
+				tableNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				tableNV.setRowHeight(30);
+				
+				JScrollPane paneKH = new JScrollPane(tableNV);
+				paneKH.setBounds(7, 231, 623, 229);
+				panel_3.add(paneKH);
 		Frame.add(panel_Center_Right);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(255, 255, 255));
-		panel_5.setForeground(new Color(255, 255, 255));
-		panel_5.setBounds(26, 22, 644, 235);
-		panel_Center_Right.add(panel_5);
+		
+		txtSLKH.setText(dsKH.size()+"");
+		int slTT = 0;
+		for (KhachHang kh : dsKH) {
+			if (kh.getHang().equals("Gold")||kh.getHang().equals("Silver")) {
+				slTT++;
+			}
+		}
+		txtThanThiet.setText(slTT+"");
+		int slNam = 0;
+		int slNu = 0;
+		for (KhachHang kh : dsKH) {
+			if (kh.getGioiTinh()==true) {
+				slNam++;
+			} else {
+				slNu++;
+			}
+		}
+		txtNam.setText(slNam+"");
+		txtNu.setText(slNu+"");
+		int slV = 0;
+		int slB = 0;
+		for (KhachHang kh : dsKH) {
+			if (kh.getHang().equals("Gold")) {
+				slV++;
+			} else if (kh.getHang().equals("Silver")){
+				slB++;
+			}
+		}
+		txtTL.setText(slV+"");
+		txtHSL.setText(slB+"");
+		int sum = 0;
+		for (KhachHang kh : dsKH) {
+			sum += kh.getDiem();
+		}
+		avg = sum/dsKH.size();
+		txtTBT.setText(avg+"");
+		int max = 0;
+		for (KhachHang kh : dsKH) {
+			if (kh.getDiem() > max) {
+				max = kh.getDiem();
+			}
+		}
+		txtTCN.setText(max+"");
+		int min = 100;
+		for (KhachHang kh : dsKH) {
+			if (kh.getDiem() < min) {
+				min = kh.getDiem();
+			}
+		}
+		txtTTN.setText(min+"");
+		int sum1 = 0;
+		for (KhachHang kh : dsKH) {
+			sum1 += ChronoUnit.YEARS.between(kh.getNgaySinh(), LocalDate.now());
+		}
+		int avg1 = sum1/dsKH.size();
+		txtavgTuoi.setText(avg1+"");
+		
+		lbltileTT.setText(slTT+"/"+dsKH.size());
+		lblTT.setText((slTT*100/dsKH.size())+"%");
+        lbltileNam.setText(slNam+"/"+dsKH.size());
+        lblNam.setText((slNam*100/dsKH.size())+"%");
+        lbltileNu.setText(slNu+"/"+dsKH.size());
+        lblNu.setText((100-slNam*100/dsKH.size())+"%");
+        lbltileVang.setText(slV+"/"+dsKH.size());
+        lblVang.setText((slV*100/dsKH.size())+"%");
+        lbltileBac.setText(slB+"/"+dsKH.size());
+        lblBac.setText((slB*100/dsKH.size())+"%");
+        ArrayList<KhachHang> dsTT = new ArrayList<>();
+        for (KhachHang kh : dsKH) {
+			if (kh.getHang().equals("Gold") || kh.getHang().equals("Silver")) {
+				dsTT.add(kh);
+			}
+        }
+        dsTT.sort(new Comparator<KhachHang>() {
+        	@Override
+            public int compare(KhachHang o1, KhachHang o2) {
+        		return o2.getDiem() - o1.getDiem();
+            }});
+        for (int i = 0; i < 5; i++) {
+        	model.addRow(new Object[] {dsTT.get(i).getMaKH(), dsTT.get(i).getHoTen(), dsTT.get(i).getDiem(), dsTT.get(i).getHang()});
+        }
+        
+        //vẽ biểu đồ thống kê hình tròn số lương khách hàng
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        dataset.setValue("Khách hàng thân thiết", slTT);
+        dataset.setValue("Khách hàng mới", dsKH.size()-slTT);
+        JFreeChart chart = ChartFactory.createPieChart("Thống kê số lượng khách hàng", dataset, true, true, false);
+        
+        PiePlot plot = (PiePlot) chart.getPlot();
+        ChartPanel chartPanel = new ChartPanel(chart);
+//        chartPanel.setBounds(200,20, 200, 300);
+        chartPanel.setPreferredSize(new Dimension(900, 400));
+        //set them so luong khach hang tren hinh tron
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} = {1} ({2})"));
+        panelBieuDo.add(chartPanel);
+        
+        //vẽ biểu đồ thống kê hình tròn số lương khách hàng
+        DefaultPieDataset dataset1 = new DefaultPieDataset();
+        dataset1.setValue("Nam", slNam);
+        dataset1.setValue("Nữ", slNu);
+        JFreeChart chart1 = ChartFactory.createPieChart("Thống kê số lượng khách hàng", dataset1, true, true, false);
+        PiePlot plot1 = (PiePlot) chart1.getPlot();
+        ChartPanel chartPanel1 = new ChartPanel(chart1);
+        chartPanel1.setPreferredSize(new Dimension(900, 400));
+        //set them so luong khach hang tren hinh tron
+        plot1.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} = {1} ({2})"));
+        panelBieuDo.add(chartPanel1);
+        
+        //vẽ biểu đồ thống kê hình tròn số lương khách hàng
+        DefaultPieDataset dataset2 = new DefaultPieDataset();
+        dataset2.setValue("Khách hàng Vàng", slV);
+        dataset2.setValue("Khách hàng Bạc", slB);
+        dataset2.setValue("Khách hàng Đồng", dsKH.size()-slV-slB);
+        JFreeChart chart2 = ChartFactory.createPieChart("Thống kê số lượng khách hàng", dataset2, true, true, false);
+        PiePlot plot2 = (PiePlot) chart2.getPlot();
+        ChartPanel chartPanel2 = new ChartPanel(chart2);
+        chartPanel2.setPreferredSize(new Dimension(900, 400));
+        //set them so luong khach hang tren hinh tron
+        plot2.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} = {1} ({2})"));
+        //set color
+        plot2.setSectionPaint("Khách hàng Vàng", Color.YELLOW);
+        plot2.setSectionPaint("Khách hàng Bạc", Color.GRAY);
+        plot2.setSectionPaint("Khách hàng Đồng", Color.BLUE);
+        panelBieuDo.add(chartPanel2);
+        
+        
+        
+        //vẽ biểu đồ cột tuổi khách hàng
+        DefaultCategoryDataset dataset3 = new DefaultCategoryDataset();
+        int i = 0;
+		for (KhachHang kh : dsKH) {
+			i++;
+			dataset3.addValue(ChronoUnit.YEARS.between(kh.getNgaySinh(), LocalDate.now()), "Tuổi", i + "");
+		}
+		JFreeChart chart3 = ChartFactory.createBarChart("Tuổi khách hàng", "Tên khách hàng", "Tuổi", dataset3, PlotOrientation.VERTICAL, false, true, false);
+		CategoryPlot plot3 = chart3.getCategoryPlot();
+		plot3.setRangeGridlinePaint(Color.BLACK);
+		ChartPanel chartPanel3 = new ChartPanel(chart3);
+		chartPanel3.setPreferredSize(new Dimension(900, 400));
+		//set color
+	    plot3.getRenderer().setSeriesPaint(0, Color.BLUE);
+	    panelBieuDo.add(chartPanel3);
+	    
+	    //vẽ biểu đồ cột điểm khách hàng
+		DefaultCategoryDataset dataset4 = new DefaultCategoryDataset();
+		int j = 0;
+		for (KhachHang kh : dsKH) {
+			j++;
+			dataset4.addValue(kh.getDiem(), "Điểm", j + "");
+		}
+		JFreeChart chart4 = ChartFactory.createBarChart("Điểm khách hàng", "Tên khách hàng", "Điểm", dataset4, PlotOrientation.VERTICAL, false, true, false);
+		CategoryPlot plot4 = chart4.getCategoryPlot();
+		plot4.setRangeGridlinePaint(Color.BLACK);
+		ChartPanel chartPanel4 = new ChartPanel(chart4);
+		chartPanel4.setPreferredSize(new Dimension(900, 400));
+		// set color
+		plot4.getRenderer().setSeriesPaint(0, Color.RED);
+		panelBieuDo.add(chartPanel4);
+
+		
+        
+        
+        
+        
+        
+        
+        
+        
+		
+		
 		Frame.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -729,59 +928,4 @@ public class GUI_ThongKeKhachHang extends JFrame{
             yearComboBox.addItem(String.valueOf(i));
         }
     }
-	public  int findMaxAge(ArrayList<LocalDate> birthdays) {
-        int maxAge = 0;
-        LocalDate currentDate = LocalDate.now();
-
-        for (LocalDate birthday : birthdays) {
-            int age = currentDate.getYear() - birthday.getYear();
-            // Kiểm tra xem tuổi hiện tại có lớn hơn tuổi lớn nhất hiện tại không
-            if (age > maxAge) {
-                maxAge = age; // Cập nhật tuổi lớn nhất
-            }
-        }
-
-        return maxAge;
-    }
-
-	public int findMinAge(ArrayList<LocalDate> birthdays) {
-		int minAge = 100;
-		LocalDate currentDate = LocalDate.now();
-
-		for (LocalDate birthday : birthdays) {
-			int age = currentDate.getYear() - birthday.getYear();
-			// Kiểm tra xem tuổi hiện tại có nhỏ hơn tuổi nhỏ nhất hiện tại không
-			if (age < minAge) {
-				minAge = age; // Cập nhật tuổi nhỏ nhất
-			}
-		}
-
-		return minAge;
-	}
-
-	public int findAverageAge(ArrayList<LocalDate> birthdays) {
-		int sum = 0;
-		LocalDate currentDate = LocalDate.now();
-
-		for (LocalDate birthday : birthdays) {
-			int age = currentDate.getYear() - birthday.getYear();
-			sum += age;
-		}
-
-		return sum / birthdays.size();
-	}
-
-	//Hàm update thông tin nhân viên vào model
-	
-	public void updateNV(ArrayList<NhanVien> dsNV) {
-		model.setRowCount(0);
-		for (NhanVien nv : dsNV) {
-			model.addRow(new Object[] { 
-					nv.getMaNV(), 
-					nv.getHoTenNV(), 
-					nv.getHeSoLuong(), 
-					nv.getTongLuong() });
-		}
-	}
-	
 }
