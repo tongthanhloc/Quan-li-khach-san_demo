@@ -238,6 +238,130 @@ public class NhanVien_DAO {
         }
         return n > 0;
 	}
+	public ArrayList<NhanVien> getNhanVienNghiViec() {
+        ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "Select * from NhanVien where trangThai = N'Nghỉ Việc'";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+				String manv1 = rs.getString(1);
+				String tennv = rs.getString(2);
+				boolean gioitinh = rs.getBoolean(3);
+				String vitri = rs.getString(4);
+				String sdt = rs.getString(5);
+				String email = rs.getString(6);
+				String diachi = rs.getString(7);
+				String cancuoc = rs.getString(8);
+				LocalDate ngaysinh = rs.getDate(9).toLocalDate();
+				LocalDate ngayvaolam = rs.getDate(10).toLocalDate();
+				LocalDate ngaynghiviec = null;
+				Date dateNgayNghiViec = rs.getDate(11);
+				if (dateNgayNghiViec != null) {
+				    ngaynghiviec = dateNgayNghiViec.toLocalDate();
+				}
+
+				String trangthai = rs.getString(12);
+				String trinhdo = rs.getString(13);
+				Blob anhBlob = rs.getBlob(14);
+				byte[] anhBytes = null;
+				if (anhBlob != null) {
+				    anhBytes = anhBlob.getBytes(1, (int) anhBlob.length());
+				}
+				double hesoluong = rs.getDouble(15);
+				double luongcoban = rs.getDouble(16);
+				
+				NhanVien nv = new NhanVien(manv1, tennv, gioitinh, vitri, sdt, email, diachi, cancuoc, ngaysinh, ngayvaolam,
+						ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban);
+				dsnv.add(nv);
+
+			}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsnv;
+        }
+	// Đếm số nhân viên nghỉ việc
+	public int demSoNhanVienNghiViec() {
+        int n = 0;
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "Select count(*) from NhanVien where trangThai = N'Nghỉ Việc'";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                n = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return n;
+	}
+	// Đếm số nhân viên nữ
+	public int demSoNhanVienNu() {
+        int n = 0;
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "Select count(*) from NhanVien where gioiTinh = 0";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                n = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return n;
+	}
+	// Lấy danh sách nhân viên còn làm
+	public ArrayList<NhanVien> getNhanVienConLam() {
+        ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "Select * from NhanVien where trangThai = N'Còn Làm'";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                String manv1 = rs.getString(1);
+                String tennv = rs.getString(2);
+                boolean gioitinh = rs.getBoolean(3);
+                String vitri = rs.getString(4);
+                String sdt = rs.getString(5);
+                String email = rs.getString(6);
+                String diachi = rs.getString(7);
+                String cancuoc = rs.getString(8);
+                LocalDate ngaysinh = rs.getDate(9).toLocalDate();
+                LocalDate ngayvaolam = rs.getDate(10).toLocalDate();
+                LocalDate ngaynghiviec = null;
+                Date dateNgayNghiViec = rs.getDate(11);
+                if (dateNgayNghiViec != null) {
+                    ngaynghiviec = dateNgayNghiViec.toLocalDate();
+                }
+
+                String trangthai = rs.getString(12);
+                String trinhdo = rs.getString(13);
+                Blob anhBlob = rs.getBlob(14);
+                byte[] anhBytes = null;
+                if (anhBlob != null) {
+                    anhBytes = anhBlob.getBytes(1, (int) anhBlob.length());
+                }
+                double hesoluong = rs.getDouble(15);
+                double luongcoban = rs.getDouble(16);
+                
+                NhanVien nv = new NhanVien(manv1, tennv, gioitinh, vitri, sdt, email, diachi, cancuoc, ngaysinh, ngayvaolam,
+                        ngaynghiviec, trangthai, trinhdo, anhBytes, hesoluong, luongcoban);
+                dsnv.add(nv);
+    		}
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+    		return dsnv;
+    	}
 
 	
 	
