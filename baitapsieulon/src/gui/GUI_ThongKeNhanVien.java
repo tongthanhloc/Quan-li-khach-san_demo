@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -26,15 +28,18 @@ import org.jfree.chart.labels.IntervalCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.PlotState;
 import org.jfree.chart.plot.RingPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-
+import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -1050,6 +1055,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 		});
 		btnHienBieuDoTLNamNu.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -1094,25 +1100,28 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			// Tạo biểu đồ tỉ lệ nam/nữ
 			private JFreeChart createChartTiLeNamNu(PieDataset dataset) {
-				JFreeChart chart = ChartFactory.createRingChart("Tỉ lệ nam/nữ hiện tại", // chart title
-					dataset, // data
-					true, // include legend
-					true, false
-				);
-				RingPlot plot = (RingPlot) chart.getPlot();
-				plot.setSectionPaint("Nam", new Color(144, 238, 144));
-		        plot.setSectionPaint("Nữ", new Color(255, 144, 144));
-		        plot.setSimpleLabels(true);
-		        plot.setInsets(new RectangleInsets(0, 5, 5, 5));
-		        plot.setSectionDepth(0.50); 
-		        plot.setBackgroundPaint(Color.WHITE);
-		        plot.setShadowPaint(null);
-		        plot.setOutlineVisible(false);
-		        plot.setLabelGenerator(null);
-		        //Hiển thị phần trăm
-		        LegendTitle legend = chart.getLegend();
-		        legend.setPosition(RectangleEdge.BOTTOM);
-		        return chart;
+			    CustomRingPlot plot = new CustomRingPlot(dataset, String.valueOf(dsNVCL.size()));
+			    plot.setSectionPaint("Nam", new Color(144, 238, 144));
+			    plot.setSectionPaint("Nữ", new Color(255, 144, 144));
+			    plot.setSimpleLabels(true);
+			    plot.setInsets(new RectangleInsets(0, 5, 5, 5));
+			    plot.setSectionDepth(0.50); 
+			    plot.setBackgroundPaint(Color.WHITE);
+			    plot.setShadowPaint(null);
+			    plot.setOutlineVisible(false);
+			    plot.setLabelGenerator(null);
+
+			    JFreeChart chart = new JFreeChart(
+			            "Tỉ lệ nam/nữ hiện tại", JFreeChart.DEFAULT_TITLE_FONT, plot, true
+			    );
+
+			    // Hiển thị phần trăm
+			    LegendTitle legend = chart.getLegend();
+			    legend.setPosition(RectangleEdge.BOTTOM);
+
+			    chart.setBackgroundPaint(Color.WHITE);
+
+			    return chart;
 			}
 
 			private DefaultCategoryDataset createDataset2() {
@@ -1218,23 +1227,26 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			
 			private JFreeChart createChartNghiViec(PieDataset dataset) {
-				JFreeChart chart = ChartFactory.createRingChart("Tỉ lệ nhân viên nghỉ việc", // chart title
-						dataset, // data
-						true, // include legend
-						true, false);
-				RingPlot plot = (RingPlot) chart.getPlot();
+				CustomRingPlot plot = new CustomRingPlot(dataset, String.valueOf(dsNV.size()));
 				plot.setSectionPaint("Nghỉ", new Color(144, 238, 144));
-		        plot.setSectionPaint("Còn", new Color(255, 144, 144));
-		        plot.setSimpleLabels(true);
-		        plot.setInsets(new RectangleInsets(0, 5, 5, 5));
-		        plot.setSectionDepth(0.50); 
-		        plot.setBackgroundPaint(Color.WHITE);
-		        plot.setShadowPaint(null);
-		        plot.setOutlineVisible(false);
-		        plot.setLabelGenerator(null);
-		        //Hiển thị phần trăm
-		        LegendTitle legend = chart.getLegend();
-		        legend.setPosition(RectangleEdge.BOTTOM);
+				plot.setSectionPaint("Còn", new Color(255, 144, 144));
+				plot.setSimpleLabels(true);
+				plot.setInsets(new RectangleInsets(0, 5, 5, 5));
+				plot.setSectionDepth(0.50);
+				plot.setBackgroundPaint(Color.WHITE);
+				plot.setShadowPaint(null);
+				plot.setOutlineVisible(false);
+				plot.setLabelGenerator(null);
+
+				JFreeChart chart = new JFreeChart("Tỉ lệ nhân viên nghỉ việc", JFreeChart.DEFAULT_TITLE_FONT, plot,
+						true);
+
+				// Hiển thị phần trăm
+				LegendTitle legend = chart.getLegend();
+				legend.setPosition(RectangleEdge.BOTTOM);
+
+				chart.setBackgroundPaint(Color.WHITE);
+
 				return chart;
 			}
 			
@@ -1265,7 +1277,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			// Vẽ biểu đồ cột
 			private JFreeChart createChartNghiViec2(CategoryDataset dataset) {
-			    JFreeChart chart = ChartFactory.createBarChart("Tỉ lệ nhân viên nghỉ việc qua từng năm", // chart title
+			    JFreeChart chart = ChartFactory.createBarChart("Số nhân viên nghỉ việc qua từng năm", // chart title
 			            "Năm", // domain axis label
 			            "Số lượng", // range axis label
 			            dataset, // data
@@ -1339,11 +1351,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			// Vẽ biểu đồ tròn
 			private JFreeChart createChartTuoi(PieDataset dataset) {
-				JFreeChart chart = ChartFactory.createRingChart("Tỉ lệ nhân viên theo độ tuổi", // chart title
-						dataset, // data
-						true, // include legend
-						true, false);
-				RingPlot plot = (RingPlot) chart.getPlot();
+				CustomRingPlot plot = new CustomRingPlot(dataset, String.valueOf(dsNV.size()));
 				plot.setSectionPaint("25-35", new Color(144, 238, 144));
 				plot.setSectionPaint("35-45", new Color(255, 144, 144));
 				plot.setSectionPaint("45-55", new Color(68, 138, 255));
@@ -1354,9 +1362,16 @@ public class GUI_ThongKeNhanVien extends JFrame{
 				plot.setShadowPaint(null);
 				plot.setOutlineVisible(false);
 				plot.setLabelGenerator(null);
+
+				JFreeChart chart = new JFreeChart("Tỉ lệ nhân viên theo độ tuổi", JFreeChart.DEFAULT_TITLE_FONT, plot,
+						true);
+
 				// Hiển thị phần trăm
 				LegendTitle legend = chart.getLegend();
-				legend.setPosition(RectangleEdge.RIGHT);
+				legend.setPosition(RectangleEdge.BOTTOM);
+
+				chart.setBackgroundPaint(Color.WHITE);
+
 				return chart;
 			}
 			// set dữ liệu 3 độ tuổi theo từng năm
@@ -1398,7 +1413,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			// Vẽ biểu đồ đường
 			private JFreeChart createChartTuoi2(CategoryDataset dataset) {
-				JFreeChart chart = ChartFactory.createLineChart("Tỉ lệ nhân viên theo độ tuổi qua từng năm", // chart
+				JFreeChart chart = ChartFactory.createLineChart("Số nhân viên theo độ tuổi qua từng năm", // chart
 																												// title
 						"Năm", // domain axis label
 						"Số lượng", // range axis label
@@ -1479,11 +1494,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
             }
             // Vẽ biểu đồ tròn
 			private JFreeChart createChartVTr(PieDataset dataset) {
-				JFreeChart chart = ChartFactory.createRingChart("Tỉ lệ nhân viên theo vị trí", // chart title
-						dataset, // data
-						true, // include legend
-						true, false);
-				RingPlot plot = (RingPlot) chart.getPlot();
+				CustomRingPlot plot = new CustomRingPlot(dataset, String.valueOf(dsNVCL.size()));
 				plot.setSectionPaint("Nhân viên tiếp tân", new Color(144, 238, 144));
 				plot.setSectionPaint("Nhân viên phục vụ", new Color(255, 144, 144));
 				plot.setSectionPaint("Nhân viên bảo vệ", new Color(68, 138, 255));
@@ -1495,9 +1506,16 @@ public class GUI_ThongKeNhanVien extends JFrame{
 				plot.setShadowPaint(null);
 				plot.setOutlineVisible(false);
 				plot.setLabelGenerator(null);
+
+				JFreeChart chart = new JFreeChart("Tỉ lệ nhân viên theo vị trí", JFreeChart.DEFAULT_TITLE_FONT, plot,
+						true);
+
 				// Hiển thị phần trăm
 				LegendTitle legend = chart.getLegend();
-				legend.setPosition(RectangleEdge.RIGHT);
+				legend.setPosition(RectangleEdge.BOTTOM);
+
+				chart.setBackgroundPaint(Color.WHITE);
+
 				return chart;
 			}
 			// set dữ liệu 4 vị trí theo từng năm
@@ -1541,7 +1559,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			// Vẽ biểu đồ đường
 			private JFreeChart createChartVTr2(CategoryDataset dataset) {
-				JFreeChart chart = ChartFactory.createLineChart("Tỉ lệ nhân viên theo vị trí qua từng năm", // chart
+				JFreeChart chart = ChartFactory.createLineChart("Số nhân nhân viên theo vị trí qua từng năm", // chart
 						// title
 						"Năm", // domain axis label
 						"Số lượng", // range axis label
@@ -1665,11 +1683,24 @@ public class GUI_ThongKeNhanVien extends JFrame{
             }
             // Vẽ biểu đồ tròn
 			private JFreeChart createChartLuongTheoVT(PieDataset dataset) {
-				JFreeChart chart = ChartFactory.createRingChart("Tỉ lệ lương theo vị trí", // chart title
-						dataset, // data
-						true, // include legend
-						true, false);
-				RingPlot plot = (RingPlot) chart.getPlot();
+				// tính tổng lương tất cả nhân viên trong năm nay
+				float count = 0;
+				for (int i = 0; i < dsNVCL.size(); i++) {
+					if (dsNVCL.get(i).getNgayVaoLam().getYear() < LocalDate.now().getYear()) {
+						count += dsNVCL.get(i).getTongLuong() * 12;
+					} else {
+						// Đếm số tháng nhân viên đã làm trong năm hiện tại
+						int soThangLam = 12 - dsNVCL.get(i).getNgayVaoLam().getMonthValue();
+						count += dsNVCL.get(i).getTongLuong() * soThangLam;
+					}
+				}
+				// Làm tròn thành tỉ
+				count = Math.round(count / 1000000000);
+				
+				// Làm tròn tới số thập phân thứ 2
+				count = count / 10;
+				
+				CustomRingPlot plot = new CustomRingPlot(dataset, String.valueOf(count + "tỉ"));
 				plot.setSectionPaint("Nhân viên tiếp tân", new Color(144, 238, 144));
 				plot.setSectionPaint("Nhân viên phục vụ", new Color(255, 144, 144));
 				plot.setSectionPaint("Nhân viên bảo vệ", new Color(68, 138, 255));
@@ -1681,9 +1712,15 @@ public class GUI_ThongKeNhanVien extends JFrame{
 				plot.setShadowPaint(null);
 				plot.setOutlineVisible(false);
 				plot.setLabelGenerator(null);
+
+				JFreeChart chart = new JFreeChart("Tỉ lệ lương theo vị trí", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+
 				// Hiển thị phần trăm
 				LegendTitle legend = chart.getLegend();
-				legend.setPosition(RectangleEdge.RIGHT);
+				legend.setPosition(RectangleEdge.BOTTOM);
+
+				chart.setBackgroundPaint(Color.WHITE);
+
 				return chart;
 			}
 			//lấy dữ liệu lương theo vị trí theo từng năm
@@ -1764,7 +1801,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 			}
 			//Vẽ biểu đồ đường
 			private JFreeChart createChartLuongTheoVT2(CategoryDataset dataset) {
-				JFreeChart chart = ChartFactory.createLineChart("Tỉ lệ lương theo vị trí qua từng năm", // chart title
+				JFreeChart chart = ChartFactory.createLineChart("Lương theo vị trí qua từng năm", // chart title
 						"Năm", // domain axis label
 						"Lương", // range axis label
 						dataset, // data
@@ -2085,7 +2122,31 @@ public class GUI_ThongKeNhanVien extends JFrame{
 							decimalFormat.format(dsNVCL.get(i).getTongLuong()) });
 		}
 	}
+	static class CustomRingPlot extends RingPlot {
+	    private String centerText;
+
+	    public CustomRingPlot(PieDataset dataset, String centerText) {
+	        super(dataset);
+	        this.centerText = centerText;
+	    }
+
+	    @Override
+	    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+	                     PlotState parentState, PlotRenderingInfo info) {
+	        super.draw(g2, area, anchor, parentState, info);
+
+	        // Vẽ tổng số ở trung tâm biểu đồ
+	        Font font = new Font("SansSerif", Font.BOLD, 24);
+	        g2.setFont(font);
+	        g2.setPaint(Color.BLACK);
+	        FontMetrics fm = g2.getFontMetrics();
+	        int textWidth = fm.stringWidth(centerText);
+	        int textHeight = fm.getAscent();
+	        double centerX = area.getCenterX();
+	        double centerY = area.getCenterY();
+	        g2.drawString(centerText, (float) (centerX - textWidth / 2), (float) (centerY + textHeight / 4));
+	    }
+	}
 	
 }
 
- 
