@@ -602,6 +602,9 @@ public class GUI_QuanLiKhachHang extends JFrame {
 					} else {
 						kh.setGioiTinh(false);
 					}
+					kh.setDiem(0);
+					kh.setHang("Bronze");
+					kh.setNgayBatDau(LocalDate.now());
 					// Lấy danh sách trung voi khach hang tim kiem tu co so du lieu
 					dskh = new ArrayList<KhachHang>();
 					dskh = timKiemKhachHang(kh);
