@@ -43,6 +43,8 @@ public class dangnhap extends JFrame {
 	private String[] tk;
 	private String[] mk;
 	private TaiKhoan_DAO taiKhoan_DAO;
+	private NhanVien_DAO nhanVien_DAO;
+	static String tenDangNhap;
 
 	/**
 	 * Launch the application.
@@ -90,6 +92,9 @@ public class dangnhap extends JFrame {
 			tk[i] = dsTK.get(i).getNhanVien().getMaNV().toString();
 			mk[i] = dsTK.get(i).getMatKhau();
 		}
+		nhanVien_DAO = new NhanVien_DAO();
+		ArrayList<NhanVien> dsNV = nhanVien_DAO.getalltbNhanVien();
+		 
 		
 		
 		
@@ -159,25 +164,31 @@ public class dangnhap extends JFrame {
 			
 			
 			
+			
 			public void actionPerformed(ActionEvent e) {
 				for (NhanVien NV : ListNV) {
 	                if (NV.getMaNV().equals(txttendangnhap.getText())) {
 	                    nv = NV;
 	                }
 	            }
-				String tenDangNhap = txttendangnhap.getText();
+				tenDangNhap = txttendangnhap.getText();
 				String matKhau = txtmatkhau.getText();
-				if(kiemtraDN(tenDangNhap, matKhau) == 1) {
+				if(kiemtraDN(tenDangNhap, matKhau) == 1) {//QL
 					setVisible(false); // Đóng frame hiện tại
-					new GUI_MenuQL(nv).setVisible(true);
-                    new GUI_TrangChu().setVisible(true);
-                    new GUI_MenuTrangChu(nv).setVisible(true);
-                }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {
-                	
-                    	setVisible(false); // Đóng frame hiện tại
-    					new GUI_MenuNV(nv).setVisible(true);
-                        new GUI_TrangChu().setVisible(true);
-                        new GUI_MenuTrangChu(nv).setVisible(true);
+					for(NhanVien NV : ListNV) {
+                        if(NV.getMaNV().equals(txttendangnhap.getText())) {
+                            GUI_TrangChu ql = new GUI_TrangChu(NV);
+                        }
+                    }
+					
+                }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {//NV
+					for (NhanVien NV : ListNV) {
+						if (NV.getMaNV().equals(txttendangnhap.getText())) {
+							GUI_TrangChu ql = new GUI_TrangChu(NV);
+						}
+					}
+                    setVisible(false); // Đóng frame hiện tại
+    				
 				} else if(kiemtraDN(tenDangNhap, matKhau) == 3){
 					txtmatkhau.setText("");
 					txtmatkhau.requestFocus();

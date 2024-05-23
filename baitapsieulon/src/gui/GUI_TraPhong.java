@@ -8,6 +8,7 @@ import dao.KhachHang_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
+import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
@@ -78,7 +79,8 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_TraPhong frame = new GUI_TraPhong();
+					NhanVien nv = new NhanVien("NV0000001");
+					GUI_TraPhong frame = new GUI_TraPhong(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,7 +92,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	/**
 	 * Create the frame.
 	 */
-	public GUI_TraPhong() {
+	public GUI_TraPhong(NhanVien nv) {
 		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");

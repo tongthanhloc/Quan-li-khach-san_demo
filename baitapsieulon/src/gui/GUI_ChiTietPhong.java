@@ -19,6 +19,7 @@ import dao.KhachHang_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
+import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
@@ -89,6 +90,7 @@ public class GUI_ChiTietPhong extends JFrame {
 	 */
 	public GUI_ChiTietPhong(String maphongcustom) {
 		// kết nối dao
+		NhanVien nv = GUI_QuanLiDatPhong.nhanvien;
 		this.maphongcustom = maphongcustom;
 		try {
 			ConnectDB.getInstance().connect();
@@ -283,9 +285,9 @@ public class GUI_ChiTietPhong extends JFrame {
 					ph = new Phong_DAO().getPhongTheoMaPhong(maphongcustom);
 					new Phong_DAO().updateTrangThaiPhong(maphongcustom, "Trống");
 					// Đóng cửa sổ hiện tại
-					new GUI_QuanLiDatPhong().setVisible(false);
+					new GUI_QuanLiDatPhong(nv).setVisible(false);
 					// Mở GUI_QuanLiDatPhong mới
-					new GUI_QuanLiDatPhong().setVisible(true);
+					new GUI_QuanLiDatPhong(nv).setVisible(true);
 					// TÔI MUỐN LOADE LẠI GUI_CHITIETPHONG1
 					closeCurrentInstance();
 					new GUI_ChiTietPhong(maphongcustom).setVisible(true);
@@ -301,9 +303,9 @@ public class GUI_ChiTietPhong extends JFrame {
 					ph = new Phong_DAO().getPhongTheoMaPhong(maphongcustom);
 					new Phong_DAO().updateTrangThaiPhong(maphongcustom, "Bảo trì");
 					// Đóng cửa sổ hiện tại
-					new GUI_QuanLiDatPhong().setVisible(false);
+					new GUI_QuanLiDatPhong(nv).setVisible(false);
 					// Mở GUI_QuanLiDatPhong mới
-					new GUI_QuanLiDatPhong().setVisible(true);
+					new GUI_QuanLiDatPhong(nv).setVisible(true);
 					// TÔI MUỐN LOADE LẠI GUI_CHITIETPHONG1
 					closeCurrentInstance();
 					new GUI_ChiTietPhong(maphongcustom).setVisible(true);

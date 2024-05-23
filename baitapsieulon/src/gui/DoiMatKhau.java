@@ -38,7 +38,7 @@ public class DoiMatKhau extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txttendangnhap;
+	static JTextField txttendangnhap;
 	private JPasswordField txtmatkhau;
 	private String[] tk;
 	private String[] mk;
@@ -69,12 +69,12 @@ public class DoiMatKhau extends JFrame {
 		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(0,0,1080,720);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		

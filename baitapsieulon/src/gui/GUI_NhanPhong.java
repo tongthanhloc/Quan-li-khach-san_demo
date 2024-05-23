@@ -5,9 +5,11 @@ import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
 import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
+import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
@@ -15,6 +17,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -77,6 +80,43 @@ public class GUI_NhanPhong extends JFrame{
 	private static String[] checkOutDates;
 	static JDateChooser dateNhanP;
 	static JDateChooser dateTraP;
+	private JPanel panelTK;
+	private JButton btnTK;
+	private JButton btnTKDMK;
+	private JButton btnTKDX;
+	private JLabel btnTKHTNV;
+	private JLabel btnTKTNV;
+	private JLabel btnTKca;
+	private JLabel btnmaNV;
+	private JButton btnTrangChu;
+	private JButton btnQLP;
+	private JButton btnQLHD;
+	private JButton btnQLKH;
+	private JButton btnQLNV;
+	private JButton btnQLDV;
+	private JLabel lblNewLabel_2;
+	private JButton btnThongKe;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel lblNewLabel_6;
+	private JButton btnHT;
+	private NhanVien_DAO nv_dao;
+	private ArrayList<NhanVien> ListNV;
+	private GUI_QuanLiDatPhong qlp;
+	private GUI_QuanLiHoaDon qlhd;
+	private GUI_QuanLiKhachHang qlkh;
+	private GUI_QuanLiDichVu qldv;
+	private GUI_ThongKeNhanVien tknv;
+	private GUI_DatPhong dp;
+	private GUI_NhanPhong np;
+	private GUI_TraPhong tp;
+	private GUI_DoiPhong dop;
+	private GUI_GiaHanPhong ghp;
+	/**
+	 * Launch the application.
+	 */
+	static NhanVien nhanvien;
 	
 
 
@@ -88,7 +128,8 @@ public class GUI_NhanPhong extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_NhanPhong frame = new GUI_NhanPhong();
+					NhanVien nv = new NhanVien("NV0000001");
+					GUI_NhanPhong frame = new GUI_NhanPhong(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -100,14 +141,15 @@ public class GUI_NhanPhong extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public GUI_NhanPhong() {
+	public GUI_NhanPhong(NhanVien nv) {
+		nhanvien = nv;
 		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(258,181,1654, 859);
+		setBounds(0,0,1920,1080);
 		setResizable(false);
-		setUndecorated(true);
+		setLocationRelativeTo(null);
 		Frame = new JPanel();
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Frame);
@@ -138,12 +180,25 @@ public class GUI_NhanPhong extends JFrame{
 		}
 		
 		
+		panelTK = new JPanel();
 		
+		nhanvien = nv;
+		panel = new JPanel(null);
+		getContentPane().add(panelTK);
+		
+		nv_dao = new  NhanVien_DAO();
+		ListNV = nv_dao.getalltbNhanVien();
+		for (NhanVien nhanVien : ListNV) {
+			if (nhanVien.getMaNV().equals(nv.getMaNV())) {
+				nhanvien = nhanVien;
+				break;
+			}
+		}
 		
 		
 		panelKH = new JPanel();
 		panelKH.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelKH.setBounds(0, 0, 1654, 138);
+		panelKH.setBounds(250, 150, 1654, 138);
 		Frame.add(panelKH);
 		panelKH.setLayout(null);
 		
@@ -214,7 +269,7 @@ public class GUI_NhanPhong extends JFrame{
 		
 		panelP = new JPanel();
 		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelP.setBounds(0, 138, 1654, 260);
+		panelP.setBounds(250, 288, 1654, 260);
 		Frame.add(panelP);
 		panelP.setLayout(null);
 		
@@ -332,7 +387,7 @@ public class GUI_NhanPhong extends JFrame{
 		
 
 		outerPanel = new JPanel(null);
-		outerPanel.setBounds(37, 430, 1580, 423);
+		outerPanel.setBounds(287, 580, 1580, 423);
 		Frame.add(outerPanel);
 		
 		
@@ -360,14 +415,319 @@ public class GUI_NhanPhong extends JFrame{
         //tao su kien cho bien button
 	    
 	    
+	    
+	    
+	    
+	    
+	    panelTK.setBounds(1647, 53, 247, 218);
+		panelTK.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		
+		
+		panelTK.setLayout(null);
+		panelTK.setVisible(false);
+		
+		
+		
+		
+		Panel panel_top = new Panel();
+		panel_top.setLayout(null);
+		panel_top.setBackground(Color.LIGHT_GRAY);
+		panel_top.setBounds(0, 0, 1904, 150);
+		getContentPane().add(panel_top);
+		
+		JLabel logo = new JLabel("");
+		logo.setHorizontalAlignment(SwingConstants.CENTER);
+		logo.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
+		logo.setBounds(0, 0, 250, 150);
+		panel_top.add(logo);
+		
+		
+		
+		
+		btnTK = new JButton("<html><div style='text-align: center;'>Trần ngu</div></html>");
+		btnTK.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnTK.setForeground(new Color(244, 244, 244));
+		btnTK.setBackground(new Color(41, 139, 116));
+		btnTK.setBounds(1647, 11, 247, 40);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
+		btnTK.add(lblNewLabel);
+		panel_top.add(btnTK);
+		
+		
+		
+		
+		
+      
+		
+		btnTKDMK = new JButton("Đổi mật khẩu");
+		btnTKDMK.setBounds(0, 141, 247, 39);
+		panelTK.add(btnTKDMK);
+		btnTKDMK.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnTKDMK.setForeground(new Color(244, 244, 244));
+		btnTKDMK.setBackground(new Color(41, 139, 106));
+		
+		btnTKDX = new JButton("<html><div style='text-align: center;'>Đăng xuất</div></html>");
+		btnTKDX.setBounds(0, 179, 247, 39);
+		panelTK.add(btnTKDX);
+		btnTKDX.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnTKDX.setForeground(new Color(244, 244, 244));
+		btnTKDX.setBackground(new Color(41, 139, 106));
+		
+		btnTKHTNV = new JLabel("Họ tên nhân viên");
+		btnTKHTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnTKHTNV.setHorizontalAlignment(SwingConstants.CENTER);
+		btnTKHTNV.setBounds(0, 26, 247, 20);
+		panelTK.add(btnTKHTNV);
+		
+		btnTKTNV = new JLabel("Tuổi");
+		btnTKTNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnTKTNV.setHorizontalAlignment(SwingConstants.CENTER);
+		btnTKTNV.setBounds(0, 50, 247, 20);
+		panelTK.add(btnTKTNV);
+		
+		btnmaNV = new JLabel("Mã nhân viên");
+		btnmaNV.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnmaNV.setHorizontalAlignment(SwingConstants.CENTER);
+		btnmaNV.setBounds(0, 0, 247, 29);
+		panelTK.add(btnmaNV);
+		
+
+		
+		
+		Panel panel_menu = new Panel();
+		panel_menu.setLayout(null);
+		panel_menu.setBackground(Color.LIGHT_GRAY);
+		panel_menu.setBounds(0, 150, 250, 891);
+		getContentPane().add(panel_menu);
+		
+		
+		btnTrangChu = new JButton("Trang chủ");
+		btnTrangChu.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnTrangChu.setForeground(new Color(0, 0, 0));
+		btnTrangChu.setBackground(new Color(255, 255, 255));
+		btnTrangChu.setBounds(0, 0, 250, 70);
+		panel_menu.add(btnTrangChu);
+		
+		
+		btnQLP = new JButton("Quản lí phòng");
+		btnQLP.setForeground(new Color(244, 244, 244));
+		btnQLP.setBackground(new Color(41, 139, 106));
+		btnQLP.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnQLP.setBounds(0, 70, 250, 70);
+		panel_menu.add(btnQLP);
+		
+		
+		btnQLHD = new JButton("Quản lí hóa đơn");
+		btnQLHD.setBackground(new Color(255, 255, 255));
+		btnQLHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnQLHD.setBounds(0, 140, 250, 70);
+		panel_menu.add(btnQLHD);
+		
+		
+		btnQLKH = new JButton("Quản lí Khách hàng");
+		btnQLKH.setBackground(new Color(255, 255, 255));
+		btnQLKH.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		btnQLKH.setBounds(0, 210, 250, 70);
+		panel_menu.add(btnQLKH);
+		
+		
+		btnQLNV = new JButton("Quản lí nhân viên");
+		btnQLNV.setBackground(new Color(255, 255, 255));
+		btnQLNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnQLNV.setBounds(0, 350, 250, 70);
+		panel_menu.add(btnQLNV);
+		
+		
+		
+		
+		
+		btnQLDV = new JButton("Quản lí dịch vụ");
+		btnQLDV.setBackground(new Color(255, 255, 255));
+		btnQLDV.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnQLDV.setBounds(0, 280, 250, 70);
+		panel_menu.add(btnQLDV);
+		
+		btnThongKe = new JButton("Thống kê");
+		btnThongKe.setBackground(new Color(255, 255, 255));
+		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnThongKe.setBounds(0, 420, 250, 70);
+		panel_menu.add(btnThongKe);
+		
+		lblNewLabel_2 = new JLabel("__________________________________________");
+		lblNewLabel_2.setForeground(new Color(41, 111, 106));
+		lblNewLabel_2.setBounds(0, 706, 260, 19);
+		panel_menu.add(lblNewLabel_2);
+		
+		lblNewLabel_3 = new JLabel("Thông tin khách sạn");
+		lblNewLabel_3.setForeground(new Color(41, 111, 106));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(0, 731, 250, 30);
+		panel_menu.add(lblNewLabel_3);
+		
+		lblNewLabel_4 = new JLabel("Hotline: 0387272513");
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setForeground(new Color(41, 111, 106));
+		
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_4.setBounds(0, 772, 250, 30);
+		panel_menu.add(lblNewLabel_4);
+		
+		lblNewLabel_5 = new JLabel("Địa chỉ: 416/39 Dương Quảng Hàm");
+		lblNewLabel_5.setForeground(new Color(41, 111, 106));
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setBounds(0, 812, 250, 30);
+		panel_menu.add(lblNewLabel_5);
+		
+		lblNewLabel_6 = new JLabel("Phường 5, Gò Vấp, TP.HCM");
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6.setForeground(new Color(41, 111, 106));
+		
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_6.setBounds(0, 832, 250, 30);
+		panel_menu.add(lblNewLabel_6);
+		
+		btnHT = new JButton("Hỗ trợ");
+		btnHT.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnHT.setBackground(Color.WHITE);
+		btnHT.setBounds(0, 490, 250, 70);
+		panel_menu.add(btnHT);
+		
+
+		btnTK.setText("<html><div style='text-align: center;'>" + nhanvien.getHoTenNV() + "</div></html>");
+		
+		JButton btnDatPhong = new JButton("Đặt phòng");
+		btnDatPhong.setForeground(new Color(244, 244, 244));
+		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnDatPhong.setBackground(new Color(41, 139, 106));
+		btnDatPhong.setBounds(250, 25, 250, 99);
+		panel_top.add(btnDatPhong);
+		
+		JButton btnNhanP = new JButton("Nhận phòng");
+		btnNhanP.setForeground(new Color(244, 244, 244));
+		btnNhanP.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnNhanP.setBackground(new Color(41, 139, 106));
+		btnNhanP.setBounds(525, 25, 250, 99);
+		panel_top.add(btnNhanP);
+		
+		JButton btnTraP = new JButton("Trả Phòng");
+		btnTraP.setForeground(new Color(244, 244, 244));
+		btnTraP.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnTraP.setBackground(new Color(41, 139, 106));
+		btnTraP.setBounds(800, 25, 250, 99);
+		panel_top.add(btnTraP);
+		
+		JButton btnDoiP = new JButton("Đổi Phòng");
+		btnDoiP.setForeground(new Color(244, 244, 244));
+		btnDoiP.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnDoiP.setBackground(new Color(41, 139, 106));
+		btnDoiP.setBounds(1075, 25, 250, 99);
+		panel_top.add(btnDoiP);
+		
+		JButton btnGHP = new JButton("Gia hạn phòng");
+		btnGHP.setForeground(new Color(244, 244, 244));
+		btnGHP.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnGHP.setBackground(new Color(41, 139, 106));
+		btnGHP.setBounds(1350, 25, 250, 99);
+		panel_top.add(btnGHP);
+		btnmaNV.setText("<html><div style='text-align: center;'>" +"Mã Nhân viên: "+ nhanvien.getMaNV() + "</div></html>");
+		btnTKHTNV.setText("<html><div style='text-align: center;'>" + "Họ tên: "+nhanvien.getHoTenNV() + "</div></html>");
+		int tuoi = (int) ChronoUnit.YEARS.between(nhanvien.getNgaySinh(), java.time.LocalDate.now());
+		btnTKTNV.setText("<html><div style='text-align: center;'>" + "Tuổi: "+tuoi + "</div></html>");
+		
+		btnNhanP.setBackground(new Color(164, 194, 163));
+		btnNhanP.setForeground(new Color(0,0,0));
+		
+		
+		if(!nhanvien.getMaNV().contains("QL")) {
+			btnQLNV.setVisible(false);
+			btnThongKe.setVisible(false);
+			
+			btnHT.setBounds(0, 350, 250, 70);
+		}
+		
+		
 		
 		
 		
 		ActionListener actionListener = new ActionListener() {
-            
+		    private GUI_QuanLiNhanVien qlnv;
 
 			public void actionPerformed(ActionEvent e) {
-                JButton clickedButton = (JButton) e.getSource();
+		    	
+		    	
+		    	
+		        JButton clickedButton = (JButton) e.getSource();
+				
+				if(clickedButton == btnTrangChu) {
+					
+					GUI_TrangChu tc = new GUI_TrangChu(nhanvien);
+					tc.setVisible(true);
+					dispose();
+					
+					
+				}if(clickedButton == btnQLP) {
+					qlp = new GUI_QuanLiDatPhong(nhanvien);
+					qlp.setVisible(true);
+					dispose();
+				}if(clickedButton == btnQLHD) {
+					qlhd = new GUI_QuanLiHoaDon(nhanvien);
+					qlhd.setVisible(true);
+					dispose();
+				}if(clickedButton == btnQLKH) {
+					qlkh = new GUI_QuanLiKhachHang(nhanvien);
+					qlkh.setVisible(true);
+					dispose();
+				}if(clickedButton == btnQLNV) {
+					qlnv = new GUI_QuanLiNhanVien(nhanvien);
+					qlnv.setVisible(true);
+					dispose();
+				}
+				if(clickedButton == btnQLDV) {
+					qldv = new GUI_QuanLiDichVu(nhanvien);
+					qldv.setVisible(true);
+					dispose();
+				}if(clickedButton == btnThongKe) {
+					tknv = new GUI_ThongKeNhanVien(nhanvien);
+					dispose();
+				}if(clickedButton == btnTK) {
+					panelTK.setVisible(!panelTK.isVisible());
+				}if(clickedButton == btnTKDX) {
+					dangnhap dn = new dangnhap();
+					dn.setVisible(true);
+					dispose();
+				}if(clickedButton == btnHT) {
+					
+				}if(clickedButton == btnTKDMK) {
+					DoiMatKhau dmk = new DoiMatKhau();
+					dmk.txttendangnhap.setText(nhanvien.getMaNV());
+					dmk.txttendangnhap.setEditable(false);
+					dmk.setVisible(true);
+				}if(clickedButton == btnDatPhong) {
+					dp = new GUI_DatPhong(nhanvien);
+					dp.setVisible(true);
+					dispose();
+				}if(clickedButton == btnNhanP) {
+					np = new GUI_NhanPhong(nhanvien);
+					np.setVisible(true);
+					
+					dispose();
+				}if(clickedButton == btnTraP) {
+					tp = new GUI_TraPhong(nhanvien);
+					tp.setVisible(true);
+					dispose();
+				}if(clickedButton == btnDoiP) {
+					dop = new GUI_DoiPhong(nhanvien);
+					dop.setVisible(true);
+					dispose();
+				}if(clickedButton == btnGHP) {
+					ghp = new GUI_GiaHanPhong(nhanvien);
+					ghp.setVisible(true);
+					dispose();
+				}
                 // Xử lý sự kiện cho mỗi nút ở đây
                 if (clickedButton == bntNhanP) {
                     // Xử lý khi nhấn vào nút btnHT
@@ -383,7 +743,7 @@ public class GUI_NhanPhong extends JFrame{
 						}
 					}
                     
-                }else if (clickedButton == btnTim) {
+                }if (clickedButton == btnTim) {
                     // Xử lý khi nhấn vào nút btnHT
                 	KhachHang khs = new KhachHang(txtmaKH.getText());
               	   	if(dsKH.contains(khs)) {
@@ -422,7 +782,7 @@ public class GUI_NhanPhong extends JFrame{
               	   else {
               	   		JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
               	   	}
-                }else if (clickedButton == btnHy) {
+                }if (clickedButton == btnHy) {
                     // Xử lý khi nhấn vào nút btnHT
                 	txtmaKH.setText("");
                 	txtTen.setText("");
@@ -442,6 +802,25 @@ public class GUI_NhanPhong extends JFrame{
                     btnHy.addActionListener(actionListener);
                     bntNhanP.addActionListener(actionListener);
                     btnTim.addActionListener(actionListener);
+                    btnTrangChu.addActionListener(actionListener);
+                    btnQLP.addActionListener(actionListener);
+                    btnQLHD.addActionListener(actionListener);
+                    btnQLKH.addActionListener(actionListener);
+                    btnQLNV.addActionListener(actionListener);
+                    btnQLDV.addActionListener(actionListener);
+                    btnThongKe.addActionListener(actionListener);
+                    btnTK.addActionListener(actionListener);
+                    btnTKDX.addActionListener(actionListener);
+                    btnHT.addActionListener(actionListener);
+                    btnTKDMK.addActionListener(actionListener);
+                    btnDatPhong.addActionListener(actionListener);
+                    btnNhanP.addActionListener(actionListener);
+                    btnTraP.addActionListener(actionListener);
+                    btnDoiP.addActionListener(actionListener);
+                    btnGHP.addActionListener(actionListener);
+                    btnTKDX.addActionListener(actionListener);
+                    btnTKDMK.addActionListener(actionListener);
+                    
 					
 					
                     

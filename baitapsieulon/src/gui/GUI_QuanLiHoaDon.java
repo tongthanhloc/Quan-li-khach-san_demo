@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.toedter.calendar.JDateChooser;
 
+import entity.NhanVien;
+
 
 
 public class GUI_QuanLiHoaDon extends JFrame{
@@ -38,7 +40,8 @@ public class GUI_QuanLiHoaDon extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GUI_QuanLiHoaDon frame = new GUI_QuanLiHoaDon();
+                	NhanVien nv = new NhanVien("QL0000010");
+                    GUI_QuanLiHoaDon frame = new GUI_QuanLiHoaDon(nv);
                     frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Phóng to cửa sổ JFrame
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -52,7 +55,8 @@ public class GUI_QuanLiHoaDon extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public GUI_QuanLiHoaDon() {
+	public GUI_QuanLiHoaDon(NhanVien nv) {
+		
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -186,6 +190,9 @@ public class GUI_QuanLiHoaDon extends JFrame{
                 // Xử lý sự kiện cho mỗi nút ở đây
                 }};
 	}
+
+
+	
 
 	
 

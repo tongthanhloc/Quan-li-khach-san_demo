@@ -26,6 +26,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import entity.NhanVien;
+
 public class GUI_QuanLiDichVu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -61,7 +63,8 @@ public class GUI_QuanLiDichVu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_QuanLiDichVu frame = new GUI_QuanLiDichVu();
+					NhanVien nv = new NhanVien("QL0000010");
+					GUI_QuanLiDichVu frame = new GUI_QuanLiDichVu(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +76,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI_QuanLiDichVu() {
+	public GUI_QuanLiDichVu(NhanVien nv) {
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
