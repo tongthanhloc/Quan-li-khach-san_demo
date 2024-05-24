@@ -579,9 +579,9 @@ public class GUI_ChiTietPhong extends JFrame {
 		 // set trạng thái của phòng nếu đã thuê và đẵ đặt thì set txt
 			if (ph.getTrangThai().equals("Đã thuê") || ph.getTrangThai().equals("Đã đặt")) {
 				pdp = new PhieuDatPhong_DAO().getPhieuDatPhongTheoMaPhong(maphongcustom);
-				String ma = pdp.getKhachHang().getMaKH();
-		        kh = new KhachHang_DAO().getOneKhachHangByMaKhachHang(ma);
-				txtMaKhachHang.setText(kh.getMaKH());
+				String ma = pdp.getKhachHang().getmaKH();
+		        kh = new KhachHang_DAO().getKhachHangByMaKhachHang(ma);
+				txtMaKhachHang.setText(kh.getmaKH());
 				txtHoTen.setText(kh.getHoTen());
 				// tuổi = năm hiện tại - năm sinh
 				int tuoi = 2021 - kh.getNgaySinh().getYear();

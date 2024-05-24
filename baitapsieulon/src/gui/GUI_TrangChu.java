@@ -76,7 +76,7 @@ public class GUI_TrangChu extends JFrame {
 			public void run() {
 				
 				try {
-					nhanvien = new NhanVien("NV0000008");
+					nhanvien = new NhanVien("QL0000010");
 					GUI_TrangChu frame = new GUI_TrangChu(nhanvien);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -380,6 +380,7 @@ public class GUI_TrangChu extends JFrame {
 					dispose();
 				}if(clickedButton == btnThongKe) {
 					tknv = new GUI_ThongKeNhanVien(nhanvien);
+					tknv.setVisible(true);
 					dispose();
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());

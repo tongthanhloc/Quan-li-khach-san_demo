@@ -1,47 +1,32 @@
 package entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class HoaDon {
-	private String MaHD;
+	private String maHoaDon;
 	private LocalDate ngayLap;
 	private String trangThai;
-	private double tienThanhToan;
+	private double giaTrcThue;
 	private double thanhTien;
-	private double tienThoi;
+	
 	public HoaDon() {
 		
 	}
-	public HoaDon(String MaHD) {
-		this.MaHD = MaHD;
+	public HoaDon(String maHoaDon) {
+		this.maHoaDon = maHoaDon;
 	}
-	public double getTienThoi() {
-		return tienThoi;
+	public String getMaHoaDon() {
+		return maHoaDon;
 	}
-	public void tinhTienThoi(double tienThoi) {
-		this.tienThoi = tienThoi;
-	}
-	public HoaDon(String maHD,
-			LocalDate ngayLap, String trangThai, double tienThanhToan) {
-		super();
-		MaHD = maHD;
-		this.ngayLap = ngayLap;
-		this.trangThai = trangThai;
-		this.tienThanhToan = tienThanhToan;
-	}
-	public String getMaHD() {
-		return MaHD;
-	}
-	public void setMaHD(String maHD) {
-		MaHD = maHD;
+	public void setMaHoaDon(String maHoaDon) {
+		this.maHoaDon = maHoaDon;
 	}
 	public LocalDate getNgayLap() {
 		return ngayLap;
 	}
 	public void setNgayLap(LocalDate ngayLap) {
-		ngayLap = ngayLap;
+		this.ngayLap = ngayLap;
 	}
 	public String getTrangThai() {
 		return trangThai;
@@ -49,15 +34,21 @@ public class HoaDon {
 	public void setTrangThai(String trangThai) {
 		this.trangThai = trangThai;
 	}
-	public double getTienThanhToan() {
-		return tienThanhToan;
+	public double getGiaTrcThue() {
+		return giaTrcThue;
 	}
-	public void setTienThanhToan(double tienThanhToan) {
-		this.tienThanhToan = tienThanhToan;
+	public void setGiaTrcThue(double giaTrcThue) {
+		this.giaTrcThue = giaTrcThue;
+	}
+	public double getThanhTien() {
+		return thanhTien;
+	}
+	public void setThanhTien(double thanhTien) {
+		this.thanhTien = thanhTien;
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(MaHD);
+		return Objects.hash(maHoaDon);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -68,16 +59,19 @@ public class HoaDon {
 		if (getClass() != obj.getClass())
 			return false;
 		HoaDon other = (HoaDon) obj;
-		return Objects.equals(MaHD, other.MaHD);
+		return Objects.equals(maHoaDon, other.maHoaDon);
 	}
-
-	/*
-	 * public double tinhThanhTien() { thanhTien = 0; for (ChiTietHoaDonPhong cthd :
-	 * dsChiTietHoaDonPhong) { thanhTien += cthd.tinhThanhTien(); } for
-	 * (ChiTietDichVu ctdv : dsDichVu) { thanhTien += ctdv.tinhThanhTien(); }
-	 * 
-	 * return thanhTien; }
-	 */
+	public HoaDon(String maHoaDon, LocalDate ngayLap, String trangThai, double giaTrcThue, double thanhTien) {
+		super();
+		this.maHoaDon = maHoaDon;
+		this.ngayLap = ngayLap;
+		this.trangThai = trangThai;
+		this.giaTrcThue = giaTrcThue;
+		this.thanhTien = thanhTien;
+	}
+	
+	
+	
 	
 	
 }

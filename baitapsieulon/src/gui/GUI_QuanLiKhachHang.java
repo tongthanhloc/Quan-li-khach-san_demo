@@ -542,12 +542,19 @@ public class GUI_QuanLiKhachHang extends JFrame {
 					qlkh = new GUI_QuanLiKhachHang(nhanvien);
 					qlkh.setVisible(true);
 					dispose();
-				}if(clickedButton == btnQLDV) {
+				}
+				if (clickedButton == btnQLNV) {
+					GUI_QuanLiNhanVien qlnv = new GUI_QuanLiNhanVien(nhanvien);
+					qlnv.setVisible(true);
+					dispose();
+				}
+				if(clickedButton == btnQLDV) {
 					qldv = new GUI_QuanLiDichVu(nhanvien);
 					qldv.setVisible(true);
 					dispose();
 				}if(clickedButton == btnThongKe) {
 					tknv = new GUI_ThongKeNhanVien(nhanvien);
+					tknv.setVisible(true);
 					dispose();
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());
@@ -565,7 +572,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 				}if(clickedButton == btnTim) {
                     // Xử lý khi nhấn vào nút btnTim
                 		KhachHang kh = new KhachHang(null);
-                		kh.setMaKH(txtMa.getText());
+                		kh.setmaKH(txtMa.getText());
                 	    kh.setHoTen(txtTenKH.getText());
                 	    kh.setEmail(txtEmail.getText());
                 	    kh.setSoDT(txtSDT.getText());
@@ -609,7 +616,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
                 	modelHD.setRowCount(0);
                 } else if(clickedButton == btnThmKhchHng) {
 					KhachHang kh = new KhachHang(null);
-					kh.setMaKH(txtMa.getText());
+					kh.setmaKH(txtMa.getText());
 					kh.setHoTen(txtTenKH.getText());
 					kh.setEmail(txtEmail.getText());
 					kh.setSoDT(txtSDT.getText());
@@ -631,9 +638,9 @@ public class GUI_QuanLiKhachHang extends JFrame {
 					} else {
 						kh.setGioiTinh(false);
 					}
-					kh.setDiem(0);
+					kh.setDiem("0");
 					kh.setHang("Bronze");
-					kh.setNgayBatDau(LocalDate.now());
+					kh.setNgayDatDau(LocalDate.now().toString());
 					// Lấy danh sách trung voi khach hang tim kiem tu co so du lieu
 					dskh = new ArrayList<KhachHang>();
 					dskh = timKiemKhachHang(kh);
@@ -698,7 +705,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		for (KhachHang kh : dsKH) {
 		    // Tạo một mảng chứa dữ liệu của từng đối tượng NhanVien
 		    Object[] rowData = new Object[] { 
-		    		kh.getMaKH(),
+		    		kh.getmaKH(),
 		            kh.getHoTen(),
 		            kh.getGioiTinh() == true ? "Nam" : "Nữ",
 		            kh.getEmail(), kh.getSoDT(), 
@@ -718,7 +725,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
         ArrayList<KhachHang> dskhTimKiem = new ArrayList<KhachHang>();
         dskh = new KhachHang_DAO().getalltbKhachHang();
         for (KhachHang khachHang : dskh) {
-            if (kh.getMaKH() != null && !kh.getMaKH().isEmpty() && !kh.getMaKH().equals(khachHang.getMaKH())) {
+            if (kh.getmaKH() != null && !kh.getmaKH().isEmpty() && !kh.getmaKH().equals(khachHang.getmaKH())) {
                 continue;
             }
             if (kh.getHoTen() != null && !kh.getHoTen().isEmpty() && !kh.getHoTen().equals(khachHang.getHoTen())) {

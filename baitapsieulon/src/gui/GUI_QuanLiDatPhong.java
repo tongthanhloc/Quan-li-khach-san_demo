@@ -223,7 +223,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					if (dsP.get(i).getMaPhong().equals(dsPDP.get(j).getPhong().getMaPhong())
 							&& dsPDP.get(j).getTrangThai().contains("Đã đặt")) {
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
+							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								
 							}
@@ -237,7 +237,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
 						
 						for (int k = 0; k < dsKH.size(); k++) {
-							if (dsKH.get(k).getMaKH().equals(dsPDP.get(j).getKhachHang().getMaKH())) {
+							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
 								
 							}

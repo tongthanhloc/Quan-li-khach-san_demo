@@ -63,7 +63,7 @@ public class PhieuDatPhong_DAO {
                 statement.setDate(4, Date.valueOf(pdp.getThoiGianTra()));
                 statement.setDouble(5, pdp.getDonGiaPhieu());
                 statement.setString(6, pdp.getPhong().getMaPhong());
-                statement.setString(7, pdp.getKhachHang().getMaKH());
+                statement.setString(7, pdp.getKhachHang().getmaKH());
                 statement.setString(8, pdp.getNhanVien().getMaNV());
                 statement.setString(9, pdp.getTrangThai());
                 
@@ -151,6 +151,77 @@ public class PhieuDatPhong_DAO {
 				e.printStackTrace();
 			}
 			return pdp;
+		}
+		public ArrayList<PhieuDatPhong> timPhieuDatPhongTheoTrangThai() {
+	        ArrayList<PhieuDatPhong> dsPDP = new ArrayList<PhieuDatPhong>();
+	        try {
+	            ConnectDB.getInstance();
+	            Connection con = ConnectDB.getConnection();
+	            String sql = "SELECT * FROM PhieuDatPhong WHERE trangThai = N'Đã nhận' OR trangThai = N'Đã đặt'";
+	            PreparedStatement statement = con.prepareStatement(sql);
+	            ResultSet rs = statement.executeQuery();
+	            while (rs.next()) {
+	                String maPhieuDatPhong = rs.getString(1);
+	                LocalDate ngayDat = rs.getDate(2).toLocalDate();
+	                LocalDate ngayNhan = rs.getDate(3).toLocalDate();
+	                LocalDate ngayTra = rs.getDate(4).toLocalDate();
+	                double dongia = rs.getDouble(5);
+	                Phong p = new Phong(rs.getString("maPhong"));
+	                KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
+	                NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
+	                String tt = rs.getString("trangThai");
+	                String sN= rs.getString("soNguoi");
+	                PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN);
+	                dsPDP.add(pdp);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return dsPDP;
+		}
+		// Update maHoaDon cho PhieuDatPhong
+		public void updateMaHoaDonPhieuDatPhong(PhieuDatPhong pdp, String maHoaDon) {
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "UPDATE PhieuDatPhong SET maHoaDon = ? WHERE maPhieu = ?";
+				PreparedStatement statement = con.prepareStatement(sql);
+				statement.setString(1, maHoaDon);
+				statement.setString(2, pdp.getMaPhieu());
+				statement.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		//Láy phiếu đặt phòng theo năm là thời gian đặt
+		public ArrayList<PhieuDatPhong> getPhieuDatPhongTheoNam(int nam) {
+			ArrayList<PhieuDatPhong> dsPDP = new ArrayList<PhieuDatPhong>();
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "SELECT * FROM PhieuDatPhong WHERE YEAR(thoiGianDat) = ?";
+				PreparedStatement statement = con.prepareStatement(sql);
+				statement.setInt(1, nam);
+				ResultSet rs = statement.executeQuery();
+				while (rs.next()) {
+					String maPhieuDatPhong = rs.getString(1);
+					LocalDate ngayDat = rs.getDate(2).toLocalDate();
+					LocalDate ngayNhan = rs.getDate(3).toLocalDate();
+					LocalDate ngayTra = rs.getDate(4).toLocalDate();
+					double dongia = rs.getDouble(5);
+					Phong p = new Phong(rs.getString("maPhong"));
+					KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
+					NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
+					String tt = rs.getString("trangThai");
+					String sN = rs.getString("soNguoi");
+					PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv,
+							tt, sN);
+					dsPDP.add(pdp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return dsPDP;
 		}
 		
 	

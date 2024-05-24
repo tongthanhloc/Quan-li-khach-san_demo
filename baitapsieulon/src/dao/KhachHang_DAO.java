@@ -36,11 +36,13 @@ public class KhachHang_DAO {
 				String soDT = rs.getString(5);
 				String diaChi = rs.getString(6);
 				String email = rs.getString(7);
-				int diem = rs.getInt(8);
+				String diem = rs.getString(8);
 				String hang = rs.getString(9);
-				LocalDate ngayBatDau = rs.getDate(10).toLocalDate();
+				String ngayDatDau = rs.getString(10);
+				KhachHang kh = new KhachHang(maKhachHang, hoTen, gioiTinh, ngaySinh, soDT, diaChi, email, diem, hang,
+						ngayDatDau);
 				
-				KhachHang kh = new KhachHang(maKhachHang, hoTen, gioiTinh, ngaySinh, soDT, diaChi, email, diem, hang, ngayBatDau);
+			
 				dsKH.add(kh);
 			}
 		} catch (SQLException e) {
@@ -72,17 +74,16 @@ public class KhachHang_DAO {
 			Connection con = ConnectDB.getConnection();
 			String sql = "Insert into KhachHang values(?,?,?,?,?,?,?)";
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, kh.getMaKH());
+			statement.setString(1, kh.getmaKH());
 			statement.setString(2, kh.getHoTen());
 			statement.setBoolean(3, kh.getGioiTinh());
 			statement.setDate(4, java.sql.Date.valueOf(kh.getNgaySinh()));
 			statement.setString(5, kh.getSoDT());
 			statement.setString(6, kh.getDiaChi());
 			statement.setString(7, kh.getEmail());
-			statement.setInt(8, kh.getDiem());
+			statement.setString(8, kh.getDiem());
 			statement.setString(9, kh.getHang());
-			statement.setDate(10, java.sql.Date.valueOf(kh.getNgayBatDau()));
-			
+			statement.setDate(10, java.sql.Date.valueOf(kh.getNgayDatDau()));
 			
 			statement.executeUpdate();
 			return true;
@@ -91,9 +92,9 @@ public class KhachHang_DAO {
 		}
 		return false;
 	}
-
-
-	public KhachHang getOneKhachHangByMaKhachHang(String maKH) {
+	// Lấy dữ liệu khách hàng theo mã khách hàng
+	public KhachHang getKhachHangByMaKhachHang(String maKH){
+		KhachHang kh = null;
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
@@ -101,7 +102,7 @@ public class KhachHang_DAO {
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setString(1, maKH);
 			ResultSet rs = statement.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				String maKhachHang = rs.getString(1);
 				String hoTen = rs.getString(2);
 				Boolean gioiTinh = rs.getBoolean(3);
@@ -109,36 +110,26 @@ public class KhachHang_DAO {
 				String soDT = rs.getString(5);
 				String diaChi = rs.getString(6);
 				String email = rs.getString(7);
-				int diem = rs.getInt(8);
+				String diem = rs.getString(8);
 				String hang = rs.getString(9);
-				LocalDate ngayBatDau = rs.getDate(10).toLocalDate();
-
-				KhachHang kh = new KhachHang(maKhachHang, hoTen, gioiTinh, ngaySinh, soDT, diaChi, email, diem, hang,
-						ngayBatDau);
-				return kh;
+				String ngayDatDau = rs.getString(10);
+				kh = new KhachHang(maKhachHang, hoTen, gioiTinh, ngaySinh, soDT, diaChi, email, diem, hang, ngayDatDau);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return kh;
 	}
-	//sua khach hang
-	public boolean suaKhachHang(KhachHang kh) {
+	// Cập nhập điểm cho khách hàng
+	public boolean capNhapDiem(String maKH, int diem) {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "Update KhachHang set hoTen = ?, gioiTinh = ?, ngaySinh = ?, soDienThoai = ?, diaChi = ?, email = ?, diem = ?, hang = ?, ngayDatDau = ? where maKhachHang = ?";
+			// Điểm = Điểm + diem
+			String sql = "Update KhachHang set diem = diem + ? where maKhachHang = ?";
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, kh.getHoTen());
-			statement.setBoolean(2, kh.getGioiTinh());
-			statement.setDate(3, java.sql.Date.valueOf(kh.getNgaySinh()));
-			statement.setString(4, kh.getSoDT());
-			statement.setString(5, kh.getDiaChi());
-			statement.setString(6, kh.getEmail());
-			statement.setInt(7, kh.getDiem());
-			statement.setString(8, kh.getHang());
-			statement.setDate(9, java.sql.Date.valueOf(kh.getNgayBatDau()));
-			statement.setString(10, kh.getMaKH());
+			statement.setInt(1, diem);
+			statement.setString(2, maKH);
 			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -146,9 +137,66 @@ public class KhachHang_DAO {
 		}
 		return false;
 	}
-	
-	
-	
+	// Lấy điểm khách hàng
+	public int getDiemKhachHang(String maKH) {
+		int diem = 0;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Select diem from KhachHang where maKhachHang = ?";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, maKH);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				diem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return diem;
+	}
+	// Cập nhật hạng cho khách hàng
+	public boolean capNhapHang(String maKH, String hang) {
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Update KhachHang set hang = ? where maKhachHang = ?";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, hang);
+			statement.setString(2, maKH);
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	//sua khach hang
+	public boolean suaKhachHang(KhachHang kh) {
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "Update KhachHang set hoTen = ?, gioiTinh = ?, ngaySinh = ?, soDT = ?, diaChi = ?, email = ?, diem = ?, hang = ?, ngayDatDau = ? where maKhachHang = ?";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, kh.getHoTen());
+			statement.setBoolean(2, kh.getGioiTinh());
+			statement.setDate(3, java.sql.Date.valueOf(kh.getNgaySinh()));
+			statement.setString(4, kh.getSoDT());
+			statement.setString(5, kh.getDiaChi());
+			statement.setString(6, kh.getEmail());
+			statement.setString(7, kh.getDiem());
+			statement.setString(8, kh.getHang());
+			statement.setDate(9, java.sql.Date.valueOf(kh.getNgayDatDau()));
+			statement.setString(10, kh.getmaKH());
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
 	
 
 }

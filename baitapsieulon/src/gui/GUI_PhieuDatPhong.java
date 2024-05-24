@@ -375,8 +375,8 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			btnTK.setText("<html><div style='text-align: center;'>" + nhanvien.getHoTenNV() + "</div></html>");
 			
 			JButton btnDatPhong = new JButton("Đặt phòng");
-			btnDatPhong.setBackground(new Color(164, 194, 163));
-			btnDatPhong.setForeground(new Color(0,0,0));
+			btnDatPhong.setBackground(new Color(41, 139, 106));
+			btnDatPhong.setForeground(new Color(244, 244, 244));
 			btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
 			btnDatPhong.setBounds(250, 25, 200, 99);
 			panel_top.add(btnDatPhong);
@@ -409,12 +409,13 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			btnGHP.setBounds(1090, 25, 200, 99);
 			panel_top.add(btnGHP);
 			
-			JButton btnXemPhiut = new JButton("Xem phiếu đặt");
-			btnXemPhiut.setForeground(new Color(244, 244, 244));
-			btnXemPhiut.setFont(new Font("Tahoma", Font.PLAIN, 25));
-			btnXemPhiut.setBackground(new Color(41, 139, 106));
-			btnXemPhiut.setBounds(1300, 25, 200, 99);
-			panel_top.add(btnXemPhiut);
+			JButton btnXemPDP = new JButton("Xem phiếu đặt");
+			btnXemPDP.setBackground(new Color(164, 194, 163));
+			btnXemPDP.setForeground(new Color(0,0,0));
+			btnXemPDP.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			
+			btnXemPDP.setBounds(1300, 25, 200, 99);
+			panel_top.add(btnXemPDP);
 			btnmaNV.setText("<html><div style='text-align: center;'>" +"Mã Nhân viên: "+ nhanvien.getMaNV() + "</div></html>");
 			btnTKHTNV.setText("<html><div style='text-align: center;'>" + "Họ tên: "+nhanvien.getHoTenNV() + "</div></html>");
 			
@@ -510,6 +511,12 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			JDateChooser dateNgayT = new JDateChooser();
 			dateNgayT.setBounds(1100, 125, 350, 35);
 			panel_Center_Top.add(dateNgayT);
+			
+			JButton btnHuyPhiu = new JButton("Hủy Phiếu");
+			btnHuyPhiu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			btnHuyPhiu.setBackground(new Color(234, 232, 214));
+			btnHuyPhiu.setBounds(882, 176, 210, 35);
+			panel_Center_Top.add(btnHuyPhiu);
 
 			
 			String[] cols = new String[] {"Mã Phiếu", "Ngày Đặt", "Ngày Nhận", "Ngày Trả", "Đơn Giá", "Mã Phòng", "Mã Khách Hàng", "Mã Nhân Viên", "Số Người", "Trạng Thái"};
@@ -635,7 +642,13 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						ghp = new GUI_GiaHanPhong(nhanvien);
 						ghp.setVisible(true);
 						dispose();
-					}if(clickedButton == btnTim) {
+					}
+					if (clickedButton == btnXemPDP) {
+						GUI_PhieuDatPhong pdp = new GUI_PhieuDatPhong(nhanvien);
+						pdp.setVisible(true);
+						dispose();
+					}
+					if(clickedButton == btnTim) {
 						String maPhieu = txtmaPhieu.getText();
 						String maKH = txtmaKH.getText();
 						String maNV = txtmaNV.getText();
@@ -652,7 +665,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 								modelHD.addRow(new Object[] { phieuDatPhong.getMaPhieu(),
 										phieuDatPhong.getThoiGianDat(), phieuDatPhong.getThoiGianNhan(),
 										phieuDatPhong.getThoiGianTra(), phieuDatPhong.getDonGiaPhieu(),
-										phieuDatPhong.getPhong().getMaPhong(), phieuDatPhong.getKhachHang().getMaKH(),
+										phieuDatPhong.getPhong().getMaPhong(), phieuDatPhong.getKhachHang().getmaKH(),
 										phieuDatPhong.getNhanVien().getMaNV(), phieuDatPhong.getSoNguoi(),
 										phieuDatPhong.getTrangThai() });
 							}
@@ -665,11 +678,12 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 							JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu đặt phòng");
 							return;
 						}
+						
 						modelHD.setRowCount(0);
 						for (PhieuDatPhong phieuDatPhong : dsPDP) {
 							modelHD.addRow(new Object[] { phieuDatPhong.getMaPhieu(), phieuDatPhong.getThoiGianDat(),
 									phieuDatPhong.getThoiGianNhan(), phieuDatPhong.getThoiGianTra(), phieuDatPhong.getDonGiaPhieu(),
-									phieuDatPhong.getPhong().getMaPhong(), phieuDatPhong.getKhachHang().getMaKH(), phieuDatPhong.getNhanVien().getMaNV(),
+									phieuDatPhong.getPhong().getMaPhong(), phieuDatPhong.getKhachHang().getmaKH(), phieuDatPhong.getNhanVien().getMaNV(),
 									phieuDatPhong.getSoNguoi(), phieuDatPhong.getTrangThai() });
 						
 						}
@@ -682,6 +696,24 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						dateNgayT.setDate(null);
 						modelHD.setRowCount(0);
 						
+					}if(clickedButton == btnHuyPhiu) {
+						int row = tableNV.getSelectedRow();
+						if (row == -1) {
+							JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu đặt phòng cần hủy");
+							return;
+						}
+						String maPhieu = (String) tableNV.getValueAt(row, 0);
+						phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
+						JOptionPane.showMessageDialog(null, "Hủy phiếu đặt phòng thành công");
+						modelHD.setRowCount(0);
+						dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
+						for (PhieuDatPhong phieuDatPhong2 : dsPDP) {
+							modelHD.addRow(new Object[] { phieuDatPhong2.getMaPhieu(), phieuDatPhong2.getThoiGianDat(),
+									phieuDatPhong2.getThoiGianNhan(), phieuDatPhong2.getThoiGianTra(),
+									phieuDatPhong2.getDonGiaPhieu(), phieuDatPhong2.getPhong().getMaPhong(),
+									phieuDatPhong2.getKhachHang().getmaKH(), phieuDatPhong2.getNhanVien().getMaNV(),
+									phieuDatPhong2.getSoNguoi(), phieuDatPhong2.getTrangThai() });
+						}
 					}
 					
 
@@ -696,7 +728,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						if (!maPhieu.equals("") && !phieuDatPhong.getMaPhieu().contains(maPhieu)) {
 							continue;
 						}
-						if (!maKH.equals("") && !phieuDatPhong.getKhachHang().getMaKH().contains(maKH)) {
+						if (!maKH.equals("") && !phieuDatPhong.getKhachHang().getmaKH().contains(maKH)) {
 							continue;
 						}
 						if (!maNV.equals("") && !phieuDatPhong.getNhanVien().getMaNV().contains(maNV)) {
@@ -724,6 +756,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
         			btnQLDV.addActionListener(actionListener);
         			btnThongKe.addActionListener(actionListener);
         			btnQLNV.addActionListener(actionListener);
+        			btnXemPDP.addActionListener(actionListener);
         			
         			btnTK.addActionListener(actionListener);
         			btnTKDX.addActionListener(actionListener);
@@ -736,7 +769,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
         			btnGHP.addActionListener(actionListener);
         			btnTim.addActionListener(actionListener);
         			btbXoaTrang.addActionListener(actionListener);
-        			
+        			btnHuyPhiu.addActionListener(actionListener);
 					
         			Frame.addMouseListener(new MouseAdapter() {
         	            @Override
@@ -793,5 +826,4 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

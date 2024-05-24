@@ -600,39 +600,49 @@ public class GUI_NhanPhong extends JFrame{
 		btnTK.setText("<html><div style='text-align: center;'>" + nhanvien.getHoTenNV() + "</div></html>");
 		
 		JButton btnDatPhong = new JButton("Đặt phòng");
+		btnDatPhong.setBackground(new Color(41, 139, 106));
 		btnDatPhong.setForeground(new Color(244, 244, 244));
 		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnDatPhong.setBackground(new Color(41, 139, 106));
-		btnDatPhong.setBounds(250, 25, 250, 99);
+		btnDatPhong.setBounds(250, 25, 200, 99);
 		panel_top.add(btnDatPhong);
 		
 		JButton btnNhanP = new JButton("Nhận phòng");
-		btnNhanP.setForeground(new Color(244, 244, 244));
+		btnNhanP.setForeground(new Color(164, 194, 163));
+		btnNhanP.setForeground(new Color(0,0,0));
 		btnNhanP.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnNhanP.setBackground(new Color(41, 139, 106));
-		btnNhanP.setBounds(525, 25, 250, 99);
+		btnNhanP.setBounds(460, 25, 200, 99);
 		panel_top.add(btnNhanP);
 		
 		JButton btnTraP = new JButton("Trả Phòng");
 		btnTraP.setForeground(new Color(244, 244, 244));
 		btnTraP.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnTraP.setBackground(new Color(41, 139, 106));
-		btnTraP.setBounds(800, 25, 250, 99);
+		btnTraP.setBounds(670, 25, 200, 99);
 		panel_top.add(btnTraP);
 		
 		JButton btnDoiP = new JButton("Đổi Phòng");
 		btnDoiP.setForeground(new Color(244, 244, 244));
 		btnDoiP.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnDoiP.setBackground(new Color(41, 139, 106));
-		btnDoiP.setBounds(1075, 25, 250, 99);
+		btnDoiP.setBounds(880, 25, 200, 99);
 		panel_top.add(btnDoiP);
 		
 		JButton btnGHP = new JButton("Gia hạn phòng");
 		btnGHP.setForeground(new Color(244, 244, 244));
-		btnGHP.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnGHP.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnGHP.setBackground(new Color(41, 139, 106));
-		btnGHP.setBounds(1350, 25, 250, 99);
+		btnGHP.setBounds(1090, 25, 200, 99);
 		panel_top.add(btnGHP);
+		
+		JButton btnXemPhiut = new JButton("Xem phiếu đặt");
+		btnXemPhiut.setForeground(new Color(244, 244, 244));
+		btnXemPhiut.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnXemPhiut.setBackground(new Color(41, 139, 106));
+		btnXemPhiut.setBounds(1300, 25, 200, 99);
+		panel_top.add(btnXemPhiut);
+		
+		
 		btnmaNV.setText("<html><div style='text-align: center;'>" +"Mã Nhân viên: "+ nhanvien.getMaNV() + "</div></html>");
 		btnTKHTNV.setText("<html><div style='text-align: center;'>" + "Họ tên: "+nhanvien.getHoTenNV() + "</div></html>");
 		int tuoi = (int) ChronoUnit.YEARS.between(nhanvien.getNgaySinh(), java.time.LocalDate.now());
@@ -692,6 +702,7 @@ public class GUI_NhanPhong extends JFrame{
 					dispose();
 				}if(clickedButton == btnThongKe) {
 					tknv = new GUI_ThongKeNhanVien(nhanvien);
+					tknv.setVisible(true);
 					dispose();
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());
@@ -727,6 +738,11 @@ public class GUI_NhanPhong extends JFrame{
 					ghp = new GUI_GiaHanPhong(nhanvien);
 					ghp.setVisible(true);
 					dispose();
+				}if(clickedButton == btnXemPhiut) {
+					GUI_PhieuDatPhong xpd = new GUI_PhieuDatPhong(nhanvien);
+                    xpd.setVisible(true);
+                    dispose();
+                
 				}
                 // Xử lý sự kiện cho mỗi nút ở đây
                 if (clickedButton == bntNhanP) {
@@ -766,7 +782,7 @@ public class GUI_NhanPhong extends JFrame{
               		   dsPDPKH = new ArrayList<PhieuDatPhong>();
               		   for (int i = 0; i < dsPDP.size(); i++) {
               			   	
-							if (dsPDP.get(i).getKhachHang().getMaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==0) {
+							if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())==0) {
 								dsPDPKH.add(dsPDP.get(i));
 								
 							}
@@ -818,6 +834,7 @@ public class GUI_NhanPhong extends JFrame{
                     btnTraP.addActionListener(actionListener);
                     btnDoiP.addActionListener(actionListener);
                     btnGHP.addActionListener(actionListener);
+                    btnXemPhiut.addActionListener(actionListener);
                     btnTKDX.addActionListener(actionListener);
                     btnTKDMK.addActionListener(actionListener);
                     

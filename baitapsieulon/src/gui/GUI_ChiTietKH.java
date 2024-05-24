@@ -61,7 +61,7 @@ public class GUI_ChiTietKH extends JFrame {
 			e.printStackTrace();
 		}
 		KhachHang_DAO khachHang_DAO = new KhachHang_DAO();
-		KhachHang khachHang = khachHang_DAO.getOneKhachHangByMaKhachHang(maKH);
+		KhachHang khachHang = khachHang_DAO.getKhachHangByMaKhachHang(maKH);
 		
 
 		setContentPane(contentPane);
@@ -197,12 +197,12 @@ public class GUI_ChiTietKH extends JFrame {
 			String email = txtMail.getText();
 			String diaChi = txtDC.getText();
 			
-			KhachHang kh = new KhachHang(maKH1, hoTen, gioiTinh, ngaySinh.toLocalDate(), soDT, diaChi, email, khachHang.getDiem(), khachHang.getHang(), khachHang.getNgayBatDau());
+			KhachHang kh = new KhachHang(maKH1, hoTen, gioiTinh, ngaySinh.toLocalDate(), soDT, diaChi, email, khachHang.getDiem(), khachHang.getHang(), khachHang.getNgayDatDau());
 			khachHang_DAO.suaKhachHang(kh);
 			GUI_QuanLiKhachHang.dskh = khachHang_DAO.getalltbKhachHang();
 			GUI_QuanLiKhachHang.modelHD.setRowCount(0);
 			GUI_QuanLiKhachHang.dskh.forEach(kh1 -> {
-				GUI_QuanLiKhachHang.modelHD.addRow(new Object[] { kh1.getMaKH(), kh1.getHoTen(),
+				GUI_QuanLiKhachHang.modelHD.addRow(new Object[] { kh1.getmaKH(), kh1.getHoTen(),
 						kh1.getGioiTinh() ? "Nam" : "Nữ", kh1.getNgaySinh(), kh1.getSoDT(), kh1.getEmail(),
 						kh1.getDiaChi(), kh1.getDiem(), kh1.getHang() });
 			});
@@ -251,7 +251,7 @@ public class GUI_ChiTietKH extends JFrame {
 		contentPane.add(btnKhoiPhuc);
 		
 		btnKhoiPhuc.addActionListener(e -> {
-			txtmaKH.setText(khachHang.getMaKH());
+			txtmaKH.setText(khachHang.getmaKH());
 			txtTenKH.setText(khachHang.getHoTen());
 			if (khachHang.getGioiTinh()) {
 				rdNam.setSelected(true);
@@ -270,7 +270,7 @@ public class GUI_ChiTietKH extends JFrame {
 			txtTuoi.setText(String.valueOf(tuoi));
 		});
 		
-		txtmaKH.setText(khachHang.getMaKH());
+		txtmaKH.setText(khachHang.getmaKH());
 		txtTenKH.setText(khachHang.getHoTen());
 		if(khachHang.getGioiTinh()) {
             rdNam.setSelected(true);

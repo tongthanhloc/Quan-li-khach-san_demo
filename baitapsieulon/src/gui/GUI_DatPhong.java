@@ -72,6 +72,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private JCheckBox chckbxPdon;
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
+	
 	private JPanel panelKH;
 	private KhachHang_DAO khachHang_DAO;
 	private PhieuDatPhong_DAO phieuDatPhong_DAO;
@@ -121,6 +122,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private GUI_TraPhong tp;
 	private GUI_DoiPhong dop;
 	private GUI_GiaHanPhong ghp;
+	static String[] maphongs1;
 	/**
 	 * Launch the application.
 	 */
@@ -193,7 +195,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		panelTK = new JPanel();
 		nv_dao = new  NhanVien_DAO();
-		ListNV = nv_dao.getNhanVienTiepTan();
+		ListNV = nhanVien_DAO.getalltbNhanVien();
 		nhanvien = nv;
 		panel = new JPanel(null);
 		getContentPane().add(panelTK);
@@ -247,6 +249,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		txtmaKH.setBounds(313, 37, 350, 26);
 		panelKH.add(txtmaKH);
 		txtmaKH.setColumns(10);
+		txtmaKH.setEditable(false);
 		
 		JButton btnTim = new JButton("Tìm");
 		btnTim.setBackground(new Color(234, 232, 214));
@@ -722,6 +725,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 						dispose();
 					}if(clickedButton == btnThongKe) {
 						tknv = new GUI_ThongKeNhanVien(nhanvien);
+						tknv.setVisible(true);
 						dispose();
 					}if(clickedButton == btnTK) {
 						panelTK.setVisible(!panelTK.isVisible());
@@ -756,6 +760,11 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 					}if(clickedButton == btnGHP) {
 						ghp = new GUI_GiaHanPhong(nhanvien);
 						ghp.setVisible(true);
+						dispose();
+					}
+					if (clickedButton == btnXemPhiut) {
+						GUI_PhieuDatPhong xpd = new GUI_PhieuDatPhong(nhanvien);
+						xpd.setVisible(true);
 						dispose();
 					}
 					if (clickedButton == btnTim) {
@@ -800,7 +809,10 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		for (int i = 0; i < maPhongs.length; i++) {
 			ThemPhong(maPhongs[i]);
 		}
-    		JOptionPane.showMessageDialog(null,"Đặt phòng thành công");
+    	JOptionPane.showMessageDialog(null,"Đặt phòng thành công");
+    
+    	}else if(ktraChinhQuy(maPhongs)==-2) {
+    		JOptionPane.showMessageDialog(null,"Khách Hàng đã đặt quá 5 phòng");
     	}
     	
     	
@@ -826,7 +838,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
         			btnQLDV.addActionListener(actionListener);
         			btnThongKe.addActionListener(actionListener);
         			btnQLNV.addActionListener(actionListener);
-        			
+        			btnXemPhiut.addActionListener(actionListener);
         			btnTK.addActionListener(actionListener);
         			btnTKDX.addActionListener(actionListener);
         			btnHT.addActionListener(actionListener);
@@ -917,17 +929,33 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			trangTs[i] = Integer.parseInt(mangHaiChie[1][i]);
 		}
 		button = createButtons(panel, maphongs, trangTs);
+		
 		for (int i = 0; i < button.length; i++) {
+			//cap nhat lai mau cua phong
+			//lay ma phong tu button
+			String maPhong = button[i].getText().substring(64,69);
+			System.out.println(maPhong);
+			String ten = button[i].getText().substring(21);
+			//lay ma phong tu textfield co nhieu ma phong
+			maphongs1 = txtMaP.getText().split(" , ");
+			
+			//duyet qua danh sach phong da chon
+			for (int j = 0; j < maphongs1.length; j++) {
+//				System.out.println(maphongs1[j]);
+				if (maPhong.equals(maphongs1[j])) {
+					button[i].setBackground(new Color(164, 194, 163));
+				}
+			}
 			button[i].addActionListener(new ActionListener() {
 				
-
+				
 				public void actionPerformed(ActionEvent e) {
 					JButton clickedButton = (JButton) e.getSource();
 					String txtmaPhong = txtMaP.getText();
 					
 					for (int j = 0; j < button.length; j++) {
 						if (clickedButton == button[j]) {
-							System.out.println(dem);
+							//kiem tra xem phong da duoc chon hay chua
 							if(txtmaPhong.equals("")) {
                                 txtMaP.setText(maphongs[j]);
                                 button[j].setBackground(new Color(164, 194, 163));
@@ -947,7 +975,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
                             	dem--;
                             	txtMaP.setText(txtmaPhong.replace(maphongs[j], ""));
                             	button[j].setBackground(new Color(5, 207, 251));
-                            }else if(dem <5){
+                            }else if(txtmaPhong.trim().split(" , ").length < 5){
                             	dem++;
                             	txtMaP.setText(txtmaPhong + " , "+ maphongs[j] );
                             	button[j].setBackground(new Color(164, 194, 163));
@@ -1152,9 +1180,28 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
            		count++;
            	}
        	}
+		if (ktraPhongDat(txtmaKH.getText()) >= 5) {
+			
+			return -2;
+		}
 		if (count > 0) {
 			return -1;
 		}
+		
 		return 1;
+	}
+	//kiem tra khach hang đa dat bao nhieu phong
+	public int ktraPhongDat(String maKH) {
+		int count = 0;
+		for (int i = 0; i < dsPDP.size(); i++) {
+			
+			if (dsPDP.get(i).getKhachHang().getmaKH().equals(maKH)&&(dsPDP.get(i).getTrangThai().equals("Đã đặt")||dsPDP.get(i).getTrangThai().equals("Đã nhận"))) {
+				count++;
+			}
+			System.out.println(count);
+		}
+		int count1 = txtMaP.getText().split(" , ").length;
+		
+		return count+count1;
 	}
 }

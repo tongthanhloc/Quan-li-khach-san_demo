@@ -597,6 +597,7 @@ if(clickedButton == btnTrangChu) {
 					dispose();
 				}if(clickedButton == btnThongKe) {
 					tknv = new GUI_ThongKeNhanVien(nhanvien);
+					tknv.setVisible(true);
 					dispose();
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());

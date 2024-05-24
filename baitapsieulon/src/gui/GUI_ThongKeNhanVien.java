@@ -105,6 +105,8 @@ public class GUI_ThongKeNhanVien extends JFrame{
 	private JPanel pbdd;
 	private JButton btnLuongTheoNam;
 	private JButton btnLngTheoNam;
+	
+	
 	private GUI_QuanLiDichVu qldv;
 	private GUI_ThongKeNhanVien tknv;
 	private JButton btnTrangChu;
@@ -1969,7 +1971,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
                 JButton clickedButton = (JButton) e.getSource();
                 // Xử lý sự kiện cho mỗi nút ở đây
                 boolean isVisible = panelTK.isVisible();
-if(clickedButton == btnTrangChu) {
+                if(clickedButton == btnTrangChu) {
 					
 					GUI_TrangChu tc = new GUI_TrangChu(nhanvien);
 					tc.setVisible(true);
@@ -2012,7 +2014,12 @@ if(clickedButton == btnTrangChu) {
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
 					dmk.txttendangnhap.setEditable(false);
 					dmk.setVisible(true);
-				}
+				}if(clickedButton == btnKhchHng) {
+                    GUI_ThongKeKhachHang tkkh = new GUI_ThongKeKhachHang(nhanvien);
+                    tkkh.setVisible(true);
+                    dispose();
+                }
+            
 				}};
 				
 				btnTrangChu.addActionListener(actionListener);
@@ -2027,6 +2034,7 @@ if(clickedButton == btnTrangChu) {
         		btnTKDX.addActionListener(actionListener);
                 btnHT.addActionListener(actionListener);
                 btnTKDMK.addActionListener(actionListener);
+                btnKhchHng.addActionListener(actionListener);
 	}
 
 	

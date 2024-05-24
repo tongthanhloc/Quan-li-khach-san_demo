@@ -5,11 +5,14 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.toedter.calendar.JDateChooser;
 
+import dao.NhanVien_DAO;
 import entity.NhanVien;
 
 
@@ -33,6 +36,38 @@ public class GUI_QuanLiHoaDon extends JFrame{
     private JTable table;
 	private DefaultTableModel modelHD;
 	private JTable tableHD;
+	
+
+	static NhanVien nhanvien;
+	
+	private ArrayList<NhanVien> ListNV;
+	private NhanVien_DAO nv_dao;
+	private JButton btnTrangChu;
+	private JButton btnQLP;
+	private JButton btnQLHD;
+	private JButton btnQLKH;
+	private JButton btnQLNV;
+	private JButton btnQLDV;
+	private JButton btnThongKe;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JLabel  lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel  lblNewLabel_6;
+	private GUI_QuanLiDatPhong qlp;
+	private GUI_QuanLiHoaDon qlhd;
+	private GUI_QuanLiKhachHang qlkh;
+	private GUI_QuanLiNhanVien qlnv;
+	private GUI_QuanLiDichVu qldv;
+	private GUI_ThongKeNhanVien tknv;
+	private JButton btnHT;
+	private JButton btnTK;
+	private JPanel panelTK;
+	private JButton btnTKDMK;
+	private JButton btnTKDX;
+	private JLabel btnTKHTNV;
+	private JLabel btnTKTNV;
+	private JLabel btnmaNV;
 	/**
 	 * Launch the application.
 	 */
@@ -42,7 +77,6 @@ public class GUI_QuanLiHoaDon extends JFrame{
                 try {
                 	NhanVien nv = new NhanVien("QL0000010");
                     GUI_QuanLiHoaDon frame = new GUI_QuanLiHoaDon(nv);
-                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Phóng to cửa sổ JFrame
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -60,9 +94,9 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(258,181,1654, 859);
+		setBounds(0, 0, 1920, 1080);
 		setResizable(false);
-		setUndecorated(true);
+		
 		Frame = new JPanel();
 		Frame.setBackground(new Color(255, 255, 255));
 		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,7 +106,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		panel_Center_Top = new JPanel();
 		panel_Center_Top.setBackground(new Color(255, 255, 255));
 		panel_Center_Top.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_Center_Top.setBounds(0, 0, 1653, 223);
+		panel_Center_Top.setBounds(251, 150, 1653, 223);
 		Frame.add(panel_Center_Top);
 		panel_Center_Top.setLayout(null);
 		
@@ -160,7 +194,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
 		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));
-		panel_Center_Bot.setBounds(5, 225, 1648, 576);
+		panel_Center_Bot.setBounds(256, 375, 1648, 576);
 
 		
 		String[] cols = new String[] {"Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Mã Khuyến mãi ", "Ngày lập hóa đơn", "Tổng tiền thanh toán" ,"Tiền khách đưa" , "Tiền thối", "Trang thái"};
