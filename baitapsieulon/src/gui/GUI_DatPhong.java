@@ -249,7 +249,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		txtmaKH.setBounds(313, 37, 350, 26);
 		panelKH.add(txtmaKH);
 		txtmaKH.setColumns(10);
-		txtmaKH.setEditable(false);
+		
 		
 		JButton btnTim = new JButton("Tìm");
 		btnTim.setBackground(new Color(234, 232, 214));

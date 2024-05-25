@@ -120,15 +120,7 @@ public class GUI_TrangChu extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		
-		nv_dao = new  NhanVien_DAO();
-		ListNV = nv_dao.getalltbNhanVien();
 		
-		for (NhanVien nhanVien : ListNV) {
-			if (nhanVien.getMaNV().equals(nv.getMaNV())) {
-				nv = nhanVien;
-				break;
-			}
-		}
 		panelTK = new JPanel();
 		contentPane.add(panelTK);
 		
