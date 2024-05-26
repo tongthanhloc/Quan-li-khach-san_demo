@@ -872,7 +872,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
              					}else {
              						DonGia = 3000000.0*soNgay;
              					}
-             					PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, LocalDate.now(), LocalDate.now(), dsPDP.get(i).getThoiGianTra(), DonGia,new Phong(txtPhong.getText()), dsPDP.get(i).getKhachHang(), dsPDP.get(i).getNhanVien(), "Đã nhận", dsPDP.get(i).getSoNguoi());
+             					PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, LocalDate.now(), LocalDate.now(), dsPDP.get(i).getThoiGianTra(), DonGia,new Phong(txtPhong.getText()), dsPDP.get(i).getKhachHang(), dsPDP.get(i).getNhanVien(), "Đã nhận", dsPDP.get(i).getSoNguoi(),null);
              					ArrayList<PhieuDatPhong> ds = new ArrayList<PhieuDatPhong>();
              					ds.add(pdp);
              					phieuDatPhong_DAO.insertPhieuDatPhong(ds);

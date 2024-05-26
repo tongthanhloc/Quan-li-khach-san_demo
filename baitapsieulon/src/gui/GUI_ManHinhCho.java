@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
@@ -41,21 +42,21 @@ public class GUI_ManHinhCho {
 		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		// kiểm tra trạng thái phòng
 		for (int i = 0; i < dsPDP.size(); i++) {
-			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
+			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&& ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now()) > 0) {
 				String maPhieu = dsPDP.get(i).getMaPhieu();
 				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
 			}
-			if (dsPDP.get(i).getTrangThai().contains("Đã nhận")
-					&& dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()) ==-1) {
-				String maPhieu = dsPDP.get(i).getMaPhieu();
-				JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã quá hạn"+(dsPDP.get(i).getThoiGianTra().compareTo(LocalDate.now()))+"ngày");
-			}
+			
+			
 		}
 		LocalDate tghientai = LocalDate.now();
 		for (int i = 0; i < dsP.size(); i++) {
-			
+			if (!dsP.get(i).getTrangThai().contains("Bảo trì")) {
+				Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Trống");
+			}
 			for(int j = 0; j < dsPDP.size(); j++) {
-			
+				
+				
 				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
 						&& dsPDP.get(j).getTrangThai().contains("Đã đặt")
 						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 0)
@@ -63,12 +64,13 @@ public class GUI_ManHinhCho {
 					Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã đặt");
 				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
                         && dsPDP.get(j).getTrangThai().contains("Đã nhận")
-                        && (dsPDP.get(j).getThoiGianTra().compareTo(tghientai) == 0)
                         ) {
+					System.out.println(dsP.get(i).getMaPhong());
                     Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
 				}
 			}
 		}
+		
         // Tạo một JFrame
         JFrame frame = new JFrame();
         frame.setSize(564, 781);

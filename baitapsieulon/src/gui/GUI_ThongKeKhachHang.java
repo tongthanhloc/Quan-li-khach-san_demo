@@ -931,6 +931,20 @@ public class GUI_ThongKeKhachHang extends JFrame{
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
 					dmk.txttendangnhap.setEditable(false);
 					dmk.setVisible(true);
+				}if(clickedButton == btnKhchHng) {
+                    GUI_ThongKeKhachHang tkkh = new GUI_ThongKeKhachHang(nhanvien);
+                    tkkh.setVisible(true);
+                    dispose();
+				}
+				if (clickedButton == btnDoanhThu) {
+					GUI_ThongKeDoanhThu tkdt = new GUI_ThongKeDoanhThu(nhanvien);
+					tkdt.setVisible(true);
+					dispose();
+				}
+				if(clickedButton == btnThngKNhn) {
+                    GUI_ThongKeNhanVien tknv = new GUI_ThongKeNhanVien(nhanvien);
+                    tknv.setVisible(true);
+                    dispose();
 				}
 				}};
 				
@@ -946,6 +960,9 @@ public class GUI_ThongKeKhachHang extends JFrame{
         		btnTKDX.addActionListener(actionListener);
                 btnHT.addActionListener(actionListener);
                 btnTKDMK.addActionListener(actionListener);
+                btnThngKNhn.addActionListener(actionListener);
+                btnKhchHng.addActionListener(actionListener);
+                btnDoanhThu.addActionListener(actionListener);
         
         
 		

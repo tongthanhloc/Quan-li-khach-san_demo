@@ -15,6 +15,7 @@ public class PhieuDatPhong {
 	private NhanVien nhanVien;
 	private String trangThai;
 	private String soNguoi;
+	private HoaDon hoaDon;
 	public String getMaPhieu() {
 		return maPhieu;
 	}
@@ -75,27 +76,11 @@ public class PhieuDatPhong {
 	public void setSoNguoi(String soNguoi) {
 		this.soNguoi = soNguoi;
 	}
-	
-	
-	public PhieuDatPhong(String maPhieu, LocalDate thoiGianDat, LocalDate thoiGianNhan, LocalDate thoiGianTra,
-			double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai, String soNguoi
-			) {
-		super();
-		this.maPhieu = maPhieu;
-		this.thoiGianDat = thoiGianDat;
-		this.thoiGianNhan = thoiGianNhan;
-		this.thoiGianTra = thoiGianTra;
-		this.donGiaPhieu = donGiaPhieu;
-		this.phong = phong;
-		this.khachHang = khachHang;
-		this.nhanVien = nhanVien;
-		this.trangThai = trangThai;
-		this.soNguoi = soNguoi;
-		
+	public HoaDon getHoaDon() {
+		return hoaDon;
 	}
-	public PhieuDatPhong(String maPhieu) {
-		super();
-		this.maPhieu = maPhieu;
+	public void setHoaDon(HoaDon hoaDon) {
+		this.hoaDon = hoaDon;
 	}
 	@Override
 	public int hashCode() {
@@ -112,6 +97,28 @@ public class PhieuDatPhong {
 		PhieuDatPhong other = (PhieuDatPhong) obj;
 		return Objects.equals(maPhieu, other.maPhieu);
 	}
+	public PhieuDatPhong(String maPhieu, LocalDate thoiGianDat, LocalDate thoiGianNhan, LocalDate thoiGianTra,
+			double donGiaPhieu, Phong phong, KhachHang khachHang, NhanVien nhanVien, String trangThai, String soNguoi,
+			HoaDon hoaDon) {
+		super();
+		this.maPhieu = maPhieu;
+		this.thoiGianDat = thoiGianDat;
+		this.thoiGianNhan = thoiGianNhan;
+		this.thoiGianTra = thoiGianTra;
+		this.donGiaPhieu = donGiaPhieu;
+		this.phong = phong;
+		this.khachHang = khachHang;
+		this.nhanVien = nhanVien;
+		this.trangThai = trangThai;
+		this.soNguoi = soNguoi;
+		this.hoaDon = hoaDon;
+	}
+	public PhieuDatPhong(String maPhieu) {
+		super();
+		this.maPhieu = maPhieu;
+	}
+	
+	
 	
 	
 

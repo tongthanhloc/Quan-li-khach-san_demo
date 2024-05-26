@@ -41,6 +41,7 @@ import java.awt.Component;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhachHang;
+import entity.NhanVien;
 import entity.PhieuDatDichVu;
 import entity.PhieuDatPhong;
 
@@ -107,7 +108,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
         // muốn chương trinh khi chạy nằm ở giữa màn hình
         setLocationRelativeTo(null);
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 		setBounds(500, 0, 1021, 1034);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(192, 192, 192));
@@ -407,14 +408,11 @@ public class GUI_ChiTietHoaDon extends JFrame {
         tableDichVu.getColumnModel().getColumn(2).setCellRenderer(centerRenderer1);
         tableDichVu.getColumnModel().getColumn(3).setCellRenderer(centerRenderer1);
         
-        setDuLieu();
+        
        
         
 	}
-	public void setDuLieu() {
-		for (int i = 0; i < dsPDV.size(); i++) {
-			System.out.println(dsPDV.get(i).getDonGia());
-		}
+	public void setDuLieu(NhanVien nv) {
 		lblTen.setText(dsPDP.get(0).getKhachHang().getHoTen());
 		lblDC.setText(dsPDP.get(0).getKhachHang().getDiaChi());
 		lblSDT.setText(dsPDP.get(0).getKhachHang().getSoDT());
@@ -437,7 +435,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		// Tính số đêm bằng cách sử dụng ChronoUnit.DAYS.between
 		long soDem = ChronoUnit.DAYS.between(ngayDen, ngayDi);
 		lblSoDem.setText(String.valueOf(soDem));
-		lblThuNgan.setText(dsPDP.get(0).getNhanVien().getHoTenNV());
+		lblThuNgan.setText(nv.getHoTenNV());
 		double thanhtoanPhong = 0;
 		double thanhtoanDichVu = 0;
 		double thueVATp = 0;
@@ -483,15 +481,14 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		
 		for (int i = 0; i < dsPDV.size(); i++) {
 			double donGia = dsPDV.get(i).getGiaTrcThue();
-			System.out.println("Don gia trc thue: " + donGia);
+			
 			thanhtoanDichVu += donGia;
 		}
 		// Tính khuyến mãi dịch vụ
 		tienKMDV = thanhtoanDichVu * (phanTramKM / 100);
 		thanhtoanDichVu = thanhtoanDichVu - tienKMDV;
 		
-		System.out.println("Tien KMDV: " + tienKMDV);
-		System.out.println("Tien thanh toan DV: " + thanhtoanDichVu);
+		
 		
 		// Set Thuế VAT
 		if (dsPDV.size() != 0) {
@@ -532,7 +529,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		} else {
 			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Gold");
 		}
-		
+		 
 		//Set Hoa Don
 		LocalDate thoiGianLap = LocalDate.now();
     	String formatter = thoiGianLap.format(DateTimeFormatter.ofPattern("yyMMdd"));
@@ -561,10 +558,13 @@ public class GUI_ChiTietHoaDon extends JFrame {
     		
     	}
   
+    	
     	// Tạo hóa đơn
     	String trangThaiHD = "Đã thanh toán";
     	double giaTrcThue = thanhtoanPhong + thanhtoanDichVu;
-    	HoaDon hd = new HoaDon(maHD, thoiGianLap, trangThaiHD, giaTrcThue, tongTien);
+        
+    	HoaDon hd = new HoaDon(maHD, thoiGianLap, trangThaiHD, giaTrcThue, tongTien, nv, kh);
+    	
     	new DAO_HoaDon().insertHoaDon(hd);
     	
     	//Cập nhật mã hóa đơn cho dsPDP và dsPDV
@@ -583,6 +583,179 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		lblkhuyenMai.setText(String.valueOf(tienKMP + tienKMDV));
 		lblTong.setText(String.valueOf(tongTien + " VND"));
 	}
+	// Set dữ liệu cho chi tiết hóa đơn
+	public void setmoiDuLieu(HoaDon hd) {
+		lblTen.setText(dsPDP.get(0).getKhachHang().getHoTen());
+		lblDC.setText(dsPDP.get(0).getKhachHang().getDiaChi());
+		lblSDT.setText(dsPDP.get(0).getKhachHang().getSoDT());
+		StringBuilder phongBuilder = new StringBuilder();
+		for (int i = 0; i < dsPDP.size(); i++) {
+		    phongBuilder.append(dsPDP.get(i).getPhong().getMaPhong());
+		    if (i < dsPDP.size() - 1) {
+		        phongBuilder.append(", "); // Thêm dấu phẩy giữa các mã phòng
+		    }
+		}
+		lblPhong.setText(phongBuilder.toString());
+		
+		// Set số đêm bằng số ngày đi - số ngày đến
+		LocalDate ngayDen = dsPDP.get(0).getThoiGianNhan();
+		LocalDate ngayDi = dsPDP.get(0).getThoiGianTra();
+		    
+		lblNgayDen.setText(ngayDen.toString());
+		lblNgayDi.setText(ngayDi.toString());
+		    
+		// Tính số đêm bằng cách sử dụng ChronoUnit.DAYS.between
+		long soDem = ChronoUnit.DAYS.between(ngayDen, ngayDi);
+		lblSoDem.setText(String.valueOf(soDem));
+		lblThuNgan.setText(hd.getNhanVien().getHoTenNV());
+		double thanhtoanPhong = 0;
+		double thanhtoanDichVu = 0;
+		double thueVATp = 0;
+		double thueVATdV = 0;
+		double thueVAT = 0;
+		double tongTien = 0;
+		double tienKMP = 0;
+		double tienKMDV = 0;
+		// Set Khuyến Mãi
+		//Lấy dữ liệu khách hàng
+				
+				
+		KhachHang kh = new KhachHang_DAO().getKhachHangByMaKhachHang(dsPDP.get(0).getKhachHang().getmaKH());
+		String hang = kh.getHang();
+		double phanTramKM = 0;
+		if (hang.equals("Bronze")) {
+			 phanTramKM = 0;
+		} else if (hang.equals("Silver")) {
+			phanTramKM = 5;
+		} else if (hang.equals("Gold")) {
+			phanTramKM = 10;
+		}
+		
+		for (int i = 0; i < dsPDP.size(); i++) {
+			double donGia = dsPDP.get(i).getDonGiaPhieu();
+			thanhtoanPhong += donGia;
+		}
+		// Tính khuyến mãi phòng
+		tienKMP = thanhtoanPhong * (phanTramKM / 100);
+		thanhtoanPhong = thanhtoanPhong - tienKMP;
+		
+		lblThanhToan.setText(String.valueOf(thanhtoanPhong));
+		for (int i = 0; i < dsPDP.size(); i++) {
+			setModelTablePhong(dsPDP.get(i));
+		}
+		if (dsPDV.size() != 0) {
+			for (int i = 0; i < dsPDV.size(); i++) {
+				DichVu dv = new DAO_DichVu().getDichVuByMa(dsPDV.get(i).getDichVu().getMaDichVu());
+				dsPDV.get(i).setDichVu(dv);
+				setModelTableDichVu(dsPDV.get(i));
+			}
+		}
+		
+		for (int i = 0; i < dsPDV.size(); i++) {
+			double donGia = dsPDV.get(i).getGiaTrcThue();
+			
+			thanhtoanDichVu += donGia;
+		}
+		// Tính khuyến mãi dịch vụ
+		tienKMDV = thanhtoanDichVu * (phanTramKM / 100);
+		thanhtoanDichVu = thanhtoanDichVu - tienKMDV;
+		
+		
+		
+		// Set Thuế VAT
+		if (dsPDV.size() != 0) {
+			// Tính thuế VAT cho dịch vụ
+			thueVATdV = tinhThueVATDichVu();
+		}
+		System.out.println("Thue VAT DV: " + thueVATdV);
+		// Tính thuế VAT
+		
+		thueVATp = thanhtoanPhong * 0.08;	
+		thueVAT = thueVATdV + thueVATp;
+
+		
+		
+	    // Tính tổng tiền
+		
+		tongTien = thanhtoanPhong + thanhtoanDichVu;
+		tongTien = tongTien + thueVAT;
+		
+
+		
+		
+		
+		
+		
+		// Set Lại điểm cho Khách hàng
+		double diem = tongTien / 100000;
+		// ép kiểu int cho diem
+		int diemInt = (int) diem;
+		//Cập nhật điểm trong sql
+//		new KhachHang_DAO().capNhapDiem(kh.getmaKH(), diemInt);
+//		// Cập nhật lại hạng cho khách hàng
+//		int diemKh = new KhachHang_DAO().getDiemKhachHang(kh.getmaKH());
+//		if (diemKh < 500) {
+//			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Bronze");
+//		} else if (diemKh >= 500 && diemKh < 1000) {
+//			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Silver");
+//		} else {
+//			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Gold");
+//		}
+		 
+		//Set Hoa Don
+		LocalDate thoiGianLap = LocalDate.now();
+    	String formatter = thoiGianLap.format(DateTimeFormatter.ofPattern("yyMMdd"));
+		// Tạo mã phiếu dịch vụ ngẫu nhiên
+    	String maHD;
+    	ArrayList<HoaDon> dsHD = new ArrayList<HoaDon>();
+    	dsHD = new DAO_HoaDon().getalltbHoaDon();
+    	if (dsHD.size() == 0) {
+    		maHD = "HD" + formatter + "0001";
+    	} else {
+    		int count = 1;
+    		for (int a = 0; a < dsHD.size(); a++) {
+    			if (dsHD.get(a).getMaHoaDon().contains("HD"+formatter)) {
+    				count++;
+    			}
+    		}
+    		if (count < 10) {
+    			maHD="HD"+formatter + "000" + count;
+    		} else if (count < 100) {
+    			maHD = "HD" + formatter + "00" + count;
+    		} else if (count < 1000) {
+    			maHD = "HD" + formatter + "0" + count;
+    		} else {
+    			maHD = "HD" + formatter + count;
+    		}
+    		
+    	}
+  
+    	
+    	// Tạo hóa đơn
+    	String trangThaiHD = "Đã thanh toán";
+    	double giaTrcThue = thanhtoanPhong + thanhtoanDichVu;
+        
+//    	HoaDon hd = new HoaDon(maHD, thoiGianLap, trangThaiHD, giaTrcThue, tongTien, nv, kh);
+    	
+//    	new DAO_HoaDon().insertHoaDon(hd);
+    	
+    	//Cập nhật mã hóa đơn cho dsPDP và dsPDV
+//		for (int i = 0; i < dsPDP.size(); i++) {
+//			
+//			new PhieuDatPhong_DAO().updateMaHoaDonPhieuDatPhong(dsPDP.get(i), maHD);
+//		}
+//		if (dsPDV.size() != 0) {
+//			for (int i = 0; i < dsPDV.size(); i++) {
+//				new DAO_PhieuDatDichVu().updateMaHoaDonPhieuDatDichVu(dsPDV.get(i), maHD);
+//			}
+//		}
+		lblMaHoaDon.setText(maHD);
+		lblTongTien.setText(String.valueOf(thanhtoanPhong + thanhtoanDichVu));
+		lblThueVAT.setText(String.valueOf(thueVAT));
+		lblkhuyenMai.setText(String.valueOf(tienKMP + tienKMDV));
+		lblTong.setText(String.valueOf(tongTien + " VND"));
+	}
+	
 
 	
 	public void setModelTablePhong(PhieuDatPhong pdp) {

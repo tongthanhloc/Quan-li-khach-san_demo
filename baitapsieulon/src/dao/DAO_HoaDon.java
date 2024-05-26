@@ -11,6 +11,8 @@ import java.time.LocalDate;
 
 
 import entity.HoaDon;
+import entity.KhachHang;
+import entity.NhanVien;
 import connectDB.ConnectDB;
 
 public class DAO_HoaDon {
@@ -32,7 +34,9 @@ public class DAO_HoaDon {
 				String trangThai = rs.getString(3);
 				double giaTrcThue = rs.getDouble(4);
 				double thanhTien = rs.getDouble(5);
-				HoaDon hd = new HoaDon(maHoaDon, ngayLapHoaDon, trangThai, giaTrcThue, thanhTien);
+				NhanVien nv = new NhanVien(rs.getString(6));
+				KhachHang kh = new KhachHang(rs.getString(7));
+				HoaDon hd = new HoaDon(maHoaDon, ngayLapHoaDon, trangThai, giaTrcThue, thanhTien, nv, kh);
 				dsHD.add(hd);
 			}
 		} catch (SQLException e) {
@@ -47,13 +51,15 @@ public class DAO_HoaDon {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			String sql = "insert into HoaDon (maHoaDon, ngayLap, trangThai, giaTrcThue, thanhTien) values (?,?,?,?,?)";
+			String sql = "insert into HoaDon (maHoaDon, ngayLap, trangThai, giaTrcThue, thanhTien,maNhanVien,maKhachHang) values (?,?,?,?,?,?,?)";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, hd.getMaHoaDon());
 			stmt.setDate(2, Date.valueOf(hd.getNgayLap()));
 			stmt.setString(3, hd.getTrangThai());
 			stmt.setDouble(4, hd.getGiaTrcThue());
 			stmt.setDouble(5, hd.getThanhTien());
+			stmt.setString(6, hd.getNhanVien().getMaNV());
+			stmt.setString(7, hd.getKhachHang().getmaKH());
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,21 +81,26 @@ public class DAO_HoaDon {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
-			PreparedStatement stmt = null;
 			String sql = "select * from HoaDon where maHoaDon = ?";
-			stmt = con.prepareStatement(sql);
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, maDH);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
-				String maHoaDon = rs.getString(1);
-				LocalDate ngayLapHoaDon = rs.getDate(2).toLocalDate();
-				String trangThai = rs.getString(3);
-				double giaTrcThue = rs.getDouble(4);
-				double thanhTien = rs.getDouble(5);
-				hd = new HoaDon(maHoaDon, ngayLapHoaDon, trangThai, giaTrcThue, thanhTien);
+                String maHoaDon = rs.getString(1);
+                LocalDate ngayLapHoaDon = rs.getDate(2).toLocalDate();
+                String trangThai = rs.getString(3);
+                double giaTrcThue = rs.getDouble(4);
+                double thanhTien = rs.getDouble(5);
+                NhanVien nv = new NhanVien(rs.getString(6));
+                KhachHang kh = new KhachHang(rs.getString(7));
+                hd = new HoaDon(maHoaDon, ngayLapHoaDon, trangThai, giaTrcThue, thanhTien, nv, kh);
+            }
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return hd;
 	}
+
+	
+	
 } 

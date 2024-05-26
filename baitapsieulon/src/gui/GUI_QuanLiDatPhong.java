@@ -169,20 +169,24 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				break;
 			}
 		}
+		
 		// kiểm tra trạng thái phòng
 		for (int i = 0; i < dsPDP.size(); i++) {
 			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&& ChronoUnit.DAYS.between(dsPDP.get(i).getThoiGianNhan(), LocalDate.now()) > 0) {
-					
-					
 				String maPhieu = dsPDP.get(i).getMaPhieu();
 				phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã Hủy");
 			}
 			
+			
 		}
 		LocalDate tghientai = LocalDate.now();
 		for (int i = 0; i < dsP.size(); i++) {
+			if (!dsP.get(i).getTrangThai().contains("Bảo trì")) {
+				Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Trống");
+			}
 			for(int j = 0; j < dsPDP.size(); j++) {
-			
+				
+				
 				if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
 						&& dsPDP.get(j).getTrangThai().contains("Đã đặt")
 						&& (dsPDP.get(j).getThoiGianNhan().compareTo(tghientai) == 0)
@@ -191,6 +195,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				}else if (dsPDP.get(j).getPhong().getMaPhong().equals(dsP.get(i).getMaPhong())
                         && dsPDP.get(j).getTrangThai().contains("Đã nhận")
                         ) {
+					System.out.println(dsP.get(i).getMaPhong());
                     Phong_dao.updateTrangThaiPhong(dsP.get(i).getMaPhong(), "Đã thuê");
 				}
 			}
@@ -225,33 +230,37 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 						for (int k = 0; k < dsKH.size(); k++) {
 							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
-								
 							}
 						}
 					}
 				}
+				
+				System.out.println("1"+tenKhachHang[i]);
+				
 			} else if (dsP.get(i).getTrangThai().contains("Đã thuê")) {
 				trangThai[i] = 2;
 				for (int j = 0; j < dsPDP.size(); j++) {
 					if (dsP.get(i).getMaPhong().contains(dsPDP.get(j).getPhong().getMaPhong())
 							&& dsPDP.get(j).getTrangThai().contains("Đã nhận")) {
-						
 						for (int k = 0; k < dsKH.size(); k++) {
 							if (dsKH.get(k).getmaKH().equals(dsPDP.get(j).getKhachHang().getmaKH())) {
 								tenKhachHang[i] = dsKH.get(k).getHoTen();
-								
-							}
+							} 
+							
 						}
+						
 					}
 				}
+				
+				System.out.println("2"+tenKhachHang[i]);
 			} else if (dsP.get(i).getTrangThai().contains("Trống")) {
 				trangThai[i] = 3;
 				tenKhachHang[i] = "";
-				
+				System.out.println("3"+tenKhachHang[i]);
 			}else {
 				trangThai[i] = 4;
 				tenKhachHang[i] = "";
-				
+				System.out.println("4"+tenKhachHang[i]);
 			}
 			
 		}
@@ -425,8 +434,9 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
             mangHaiChieu[1][i] = tenKhachHang[i];
             mangHaiChieu[2][i] = String.valueOf(trangThai[i]);
         }
-//        
+        
         mangHaiChieu = sapXep(mangHaiChieu);
+        
         soPhong = mangHaiChieu[0];
         tenKhachHang = mangHaiChieu[1];
         trangThai = new int[soPhong.length];
@@ -456,6 +466,9 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				}
 			});
 		}
+       for (int i = 0; i < soPhong.length; i++) {
+    	   System.out.println(tenKhachHang[i]);
+       }
         
         
         
@@ -1227,7 +1240,26 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 				trangTs[i] = Integer.parseInt(mangHaiChie[2][i]);
 			}
 			button = createButtons(panel, maphongs, tens, trangTs);
-			
+			for (int i = 0; i < button.length; i++) {
+				button[i].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						JButton clickedButton = (JButton) e.getSource();
+						//lay ma phong khong lay the html
+						//skip text la ma phong
+						String maPhong = clickedButton.getText();
+						String maphongcustom = extractTextFromHTML(maPhong);
+						// Mở GUI_ChiTietPhong và truyền maphongcustom
+				          // Đóng cửa sổ hiện tại nếu có
+			            GUI_ChiTietPhong.closeCurrentInstance();
+
+			            // Mở GUI_ChiTietPhong1 mới và truyền maphongcustom
+			            new GUI_ChiTietPhong(maphongcustom).setVisible(true);
+						// khi tắt GUI_ChiTietPhong1 thì load lại GUI_QuanLiDatPhong
+						
+					}
+				});
+			}
 			
 	}
 //		mangHaiChieu=new String[3][maphong.length];

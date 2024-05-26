@@ -5,7 +5,10 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
@@ -15,8 +18,17 @@ import javax.swing.table.JTableHeader;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
+import dao.DAO_HoaDon;
+import dao.DAO_PhieuDatDichVu;
+import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
+import dao.PhieuDatPhong_DAO;
+import entity.DichVu;
+import entity.HoaDon;
+import entity.KhachHang;
 import entity.NhanVien;
+import entity.PhieuDatDichVu;
+import entity.PhieuDatPhong;
 
 
 
@@ -26,16 +38,9 @@ public class GUI_QuanLiHoaDon extends JFrame{
 	private JPanel Frame;
     private JPanel panel_Center_Top;
     private JLabel lblMahoaDon;
-    private JLabel lblMaNhanVien;
-    private JLabel lblNgNhanPhong;
     private JTextField txtMahoaDon;
-    private JTextField txtMaNhanVien;
-    private JTextField txtNgNhanPhong;
-    private JLabel lblKhachHang;
     private JLabel lblNgDatPhong;
-    private JLabel lblNgTraPhong;
-    private JTextField txtMaKhachHang;
-    private JButton btbXoaTrang;
+    private JButton btnXoaTrang;
     private JTable table;
 	private DefaultTableModel modelHD;
 	private JTable tableHD;
@@ -71,6 +76,17 @@ static NhanVien nhanvien;
 	private JLabel btnTKHTNV;
 	private JLabel btnTKTNV;
 	private JLabel btnmaNV;
+	private JTextField txtmaKH;
+	private JTextField txtmaNhanVien;
+	private JDateChooser dateNgaylap;
+	private DAO_HoaDon hd_dao;
+	private ArrayList<HoaDon> listtHD;
+	private PhieuDatPhong_DAO pdp_dao;
+	private ArrayList<PhieuDatPhong> listpdp;
+	private DAO_PhieuDatDichVu pddv_dao;
+	private ArrayList<PhieuDatDichVu> listpddv;
+	private KhachHang_DAO kh_dao;
+	private ArrayList<KhachHang> listKH;
 	/**
 	 * Launch the application.
 	 */
@@ -107,6 +123,15 @@ static NhanVien nhanvien;
 		}
 		nv_dao = new  NhanVien_DAO();
 		ListNV = nv_dao.getalltbNhanVien();
+		hd_dao = new DAO_HoaDon();
+		listtHD = hd_dao.getalltbHoaDon();
+		pdp_dao = new PhieuDatPhong_DAO();
+		listpdp = pdp_dao.getAllTbPhieuDatPhong();
+		pddv_dao = new DAO_PhieuDatDichVu();
+		listpddv = pddv_dao.getDSPhieuDatDichVu();
+		kh_dao = new KhachHang_DAO();
+		listKH = kh_dao.getalltbKhachHang();
+		
 		
 		for (NhanVien nhanVien : ListNV) {
 			if (nhanVien.getMaNV().equals(nv.getMaNV())) {
@@ -224,8 +249,7 @@ static NhanVien nhanvien;
 		
 		btnTrangChu = new JButton("Trang chủ");
 		btnTrangChu.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnTrangChu.setForeground(new Color(244, 244, 244));
-		btnTrangChu.setBackground(new Color(41, 139, 106));
+		btnTrangChu.setBackground(new Color(255, 255, 255));
 		btnTrangChu.setBounds(0, 0, 250, 70);
 		panel_menu.add(btnTrangChu);
 		
@@ -238,7 +262,8 @@ static NhanVien nhanvien;
 		
 		
 		btnQLHD = new JButton("Quản lí hóa đơn");
-		btnQLHD.setBackground(new Color(255, 255, 255));
+		btnQLHD.setBackground(new Color(41, 139, 106));
+		btnQLHD.setForeground(new Color(255, 255, 255));
 		btnQLHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnQLHD.setBounds(0, 140, 250, 70);
 		panel_menu.add(btnQLHD);
@@ -408,7 +433,7 @@ static NhanVien nhanvien;
 		panel_Center_Top = new JPanel();
 		panel_Center_Top.setBackground(new Color(255, 255, 255));
 		panel_Center_Top.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_Center_Top.setBounds(250, 150, 1653, 223);
+		panel_Center_Top.setBounds(250, 150, 1653, 218);
 		Frame.add(panel_Center_Top);
 		panel_Center_Top.setLayout(null);
 		
@@ -417,16 +442,6 @@ static NhanVien nhanvien;
 		lblMahoaDon.setBounds(140, 25, 126, 35);
 		panel_Center_Top.add(lblMahoaDon);
 		
-		lblMaNhanVien = new JLabel("Mã nhân viên");
-		lblMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaNhanVien.setBounds(140, 75, 126, 35);
-		panel_Center_Top.add(lblMaNhanVien);
-		
-		lblNgNhanPhong = new JLabel("Ngày nhận phòng");
-		lblNgNhanPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNgNhanPhong.setBounds(140, 125, 186, 35);
-		panel_Center_Top.add(lblNgNhanPhong);
-		
 		txtMahoaDon = new JTextField();
 		txtMahoaDon.setBackground(new Color(41, 139, 116));
 		txtMahoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -434,45 +449,14 @@ static NhanVien nhanvien;
 		panel_Center_Top.add(txtMahoaDon);
 		txtMahoaDon.setColumns(10);
 		
-		txtMaNhanVien = new JTextField();
-		txtMaNhanVien.setBackground(new Color(41, 139, 116));
-		txtMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMaNhanVien.setColumns(10);
-		txtMaNhanVien.setBounds(350, 73, 350, 40);
-		panel_Center_Top.add(txtMaNhanVien);
-		
-		txtNgNhanPhong = new JTextField();
-		txtNgNhanPhong.setBackground(new Color(41, 139, 116));
-		txtNgNhanPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgNhanPhong.setColumns(10);
-		txtNgNhanPhong.setBounds(350, 125, 350, 40);
-		panel_Center_Top.add(txtNgNhanPhong);
-		
-		lblKhachHang = new JLabel("Mã khách hàng");
-		lblKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblKhachHang.setBounds(900, 25, 210, 35);
-		panel_Center_Top.add(lblKhachHang);
-		
-		lblNgDatPhong = new JLabel("Ngày đặt phòng");
+		lblNgDatPhong = new JLabel("Ngày lập hóa đơn");
 		lblNgDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNgDatPhong.setBounds(900, 75, 175, 35);
+		lblNgDatPhong.setBounds(888, 25, 175, 35);
 		panel_Center_Top.add(lblNgDatPhong);
-		
-		lblNgTraPhong = new JLabel("Ngày trả phòng");
-		lblNgTraPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNgTraPhong.setBounds(900, 125, 198, 35);
-		panel_Center_Top.add(lblNgTraPhong);
-		
-		txtMaKhachHang = new JTextField();
-		txtMaKhachHang.setBackground(new Color(41, 139, 116));
-		txtMaKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMaKhachHang.setColumns(10);
-		txtMaKhachHang.setBounds(1100, 25, 350, 40);
-		panel_Center_Top.add(txtMaKhachHang);
 		
 		JButton btnTim = new JButton("Tìm");
 		btnTim.setBackground(new Color(234, 232, 214));
-		btnTim.setBounds(1160, 176, 175, 35);
+		btnTim.setBounds(1159, 156, 175, 35);
 		panel_Center_Top.add(btnTim);
 		btnTim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -480,53 +464,195 @@ static NhanVien nhanvien;
 		});
 		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		btbXoaTrang = new JButton("Xóa trắng");
-		btbXoaTrang.setBackground(new Color(234, 232, 214));
-		btbXoaTrang.setBounds(1389, 176, 175, 35);
-		panel_Center_Top.add(btbXoaTrang);
-		btbXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnXoaTrang = new JButton("Xóa trắng");
+		btnXoaTrang.setBackground(new Color(234, 232, 214));
+		btnXoaTrang.setBounds(1388, 156, 175, 35);
+		panel_Center_Top.add(btnXoaTrang);
+		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(1100, 75, 350, 35);
-		panel_Center_Top.add(dateChooser);
+		dateNgaylap = new JDateChooser();
+		dateNgaylap.getCalendarButton().setBackground(new Color(41, 139, 116));
+		dateNgaylap.setDateFormatString("dd-MM-yyyy");
+		dateNgaylap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(1100, 125, 350, 35);
-		panel_Center_Top.add(dateChooser_1);
+		
+		
+		dateNgaylap.setBounds(1104, 25, 350, 35);
+		panel_Center_Top.add(dateNgaylap);
+		
+		JButton btnXemChiTit = new JButton("Xem chi tiết");
+		btnXemChiTit.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnXemChiTit.setBackground(new Color(234, 232, 214));
+		btnXemChiTit.setBounds(925, 156, 175, 35);
+		panel_Center_Top.add(btnXemChiTit);
+		
+		JLabel lblMHan = new JLabel("Mã Khách Hàng");
+		lblMHan.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMHan.setBounds(140, 88, 200, 35);
+		panel_Center_Top.add(lblMHan);
+		
+		txtmaKH = new JTextField();
+		txtmaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtmaKH.setColumns(10);
+		txtmaKH.setBackground(new Color(41, 139, 116));
+		txtmaKH.setBounds(350, 88, 350, 40);
+		panel_Center_Top.add(txtmaKH);
+		
+		JLabel lblNgyLpHa = new JLabel("Mã nhân viên");
+		lblNgyLpHa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNgyLpHa.setBounds(888, 88, 175, 35);
+		panel_Center_Top.add(lblNgyLpHa);
+		
+		txtmaNhanVien = new JTextField();
+		txtmaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtmaNhanVien.setColumns(10);
+		txtmaNhanVien.setBackground(new Color(41, 139, 116));
+		txtmaNhanVien.setBounds(1104, 83, 350, 40);
+		panel_Center_Top.add(txtmaNhanVien);
 		
 		JPanel panel_Center_Bot = new JPanel();
 		panel_Center_Bot.setBackground(new Color(255, 255, 255));
-		panel_Center_Bot.setBounds(256, 375, 1648, 576);
+		panel_Center_Bot.setBounds(256, 400, 1648, 615);
 
 		
-		String[] cols = new String[] {"Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Mã Khuyến mãi ", "Ngày lập hóa đơn", "Tổng tiền thanh toán" ,"Tiền khách đưa" , "Tiền thối", "Trang thái"};
+		String[] cols = new String[] {"Mã hóa đơn", "Ngày lập", "Mã nhân viên", "Mã khách hàng", "Tổng tiền"};
 		modelHD = new DefaultTableModel(cols,0);
 		panel_Center_Bot.setLayout(null);
 		tableHD = new JTable(modelHD);
-		tableHD.setBackground(new Color(128, 255, 0));
+		tableHD.setBackground(new Color(234, 232, 214));
+		tableHD.setRowHeight(30);
 		JScrollPane paneNV = new JScrollPane(tableHD);
-		paneNV.setBounds(10, 27, 1610, 538);
+		paneNV.setBounds(10, 27, 1610, 632);
 		paneNV.setPreferredSize(new Dimension(1000,1000));
 		panel_Center_Bot.add(paneNV);;
 		JTableHeader headers = tableHD.getTableHeader();
-        Font headerFont = new Font("Tahoma", Font.PLAIN, 15);
+        Font headerFont = new Font("Tahoma", Font.PLAIN, 25);
         headers.setFont(headerFont);
+        tableHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		Frame.add(panel_Center_Bot);
 		
+		btnTim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tim();
+			}
+		});
+		btnXoaTrang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtMahoaDon.setText("");
+				txtmaKH.setText("");
+				txtmaNhanVien.setText("");
+				dateNgaylap.setDate(null);
+			}
+		});
+		btnXemChiTit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = tableHD.getSelectedRow();
+				if (row == -1) {
+					JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xem");
+				} else {
+					String maHD = (String) tableHD.getValueAt(row, 0);
+					HoaDon hd = hd_dao.timHoaDonTheoMa(maHD);
+					for (NhanVien nv : ListNV) {
+						if (hd.getNhanVien().getMaNV().equals(nv.getMaNV())) {
+							hd.setNhanVien(nv);
+						}
+					}
+					ArrayList<PhieuDatPhong> listPDP = new ArrayList<PhieuDatPhong>();
+					ArrayList<PhieuDatDichVu> listPDDV = new ArrayList<PhieuDatDichVu>();
+					
+					for (PhieuDatPhong pdp : listpdp) {
+						if (pdp.getHoaDon().getMaHoaDon()== null) {
+							continue;
+						}
+						if (pdp.getHoaDon().getMaHoaDon().equals(maHD)) {
+							for (KhachHang kh : listKH) {
+								if (pdp.getKhachHang().getmaKH().equals(kh.getmaKH())) {
+									pdp.setKhachHang(kh);
+								}
+							}
+							
+							listPDP.add(pdp);
+							
+						}
+					}
+					for (PhieuDatDichVu pddv : listpddv) {
+						if (pddv.getHoaDon().getMaHoaDon().equals(maHD)) {
+							listPDDV.add(pddv);
+						}
+					}
+					
+					GUI_ChiTietHoaDon ctHD = new GUI_ChiTietHoaDon(listPDP, listPDDV);
+					ctHD.setmoiDuLieu(hd);
+					ctHD.setVisible(true);
+					
+				}
+			}
+		});
 		
 		
+		
+	}
+		//tim kiem hoa don
+		public void tim() {
+			String maHD = txtMahoaDon.getText();
+			String maKH = txtmaKH.getText();
+			String maNV = txtmaNhanVien.getText();
+			LocalDate ngayLap = null;
+//			LocalDate ngayLap = dateNgaylap.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			//kiem tra dateChoser co null khong
+			if (dateNgaylap.getDate() != null) {
+				ngayLap = dateNgaylap.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			}
+			
+			
+			modelHD.setRowCount(0);
+			
+			ArrayList<HoaDon> dshd = new ArrayList<HoaDon>();
+			dshd=timKiemHoaDon(new HoaDon(maHD, ngayLap, "", 0, 0, new NhanVien(maNV), new KhachHang(maKH)));
+			if (dshd.size() == 0) {
+				for (HoaDon hd : listtHD) {
+					System.out.println(hd.getKhachHang().getmaKH().trim());
+					String[] row = { hd.getMaHoaDon(), hd.getNgayLap().toString(), hd.getNhanVien().getMaNV().trim(),
+							hd.getKhachHang().getmaKH().trim(), String.valueOf(hd.getThanhTien()) };
+					modelHD.addRow(row);
+				}
+			} else {
+				for (HoaDon hd : dshd) {
+					String[] row = { hd.getMaHoaDon(), hd.getNgayLap().toString(), hd.getNhanVien().getMaNV(),
+							hd.getKhachHang().getmaKH(), String.valueOf(hd.getThanhTien()) };
+					modelHD.addRow(row);
+				}
+			}
+		}
+		
+		//tim kiem hoa don
+		public ArrayList<HoaDon> timKiemHoaDon(HoaDon hd) {
+            ArrayList<HoaDon> dshd = new ArrayList<HoaDon>();
+            ArrayList<HoaDon> dshdTimKiem = new ArrayList<HoaDon>();
+            dshd = new DAO_HoaDon().getalltbHoaDon();
+            for (HoaDon hoaDon : dshd) {
+            	if (hd.getMaHoaDon() != null && !hd.getMaHoaDon().isEmpty() && !hd.getMaHoaDon().equals(hoaDon.getMaHoaDon())) {
+            		continue;
+            	}
+            	if (hd.getNgayLap() != null && !hd.getNgayLap().equals(hoaDon.getNgayLap())) {
+            		continue;
+            	}
+            	if (hd.getNhanVien() != null && !hd.getNhanVien().getMaNV().isEmpty() && !hd.getNhanVien().getMaNV().equals(hoaDon.getNhanVien().getMaNV())) {
+            		continue;
+            	}
+            	if (hd.getKhachHang() != null && !hd.getKhachHang().getmaKH().isEmpty() && !hd.getKhachHang().getmaKH().equals(hoaDon.getKhachHang().getmaKH())) {
+            		continue;
+            	}
+            	
+            	dshdTimKiem.add(hoaDon);
+            }
+            return dshdTimKiem;
+		}
 		
         
 		
 		
 		
 		
-	}
-
-
-	
-
-	
-
 	
 }

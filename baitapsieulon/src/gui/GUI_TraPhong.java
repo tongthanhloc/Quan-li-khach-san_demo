@@ -764,6 +764,9 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 							xpd.setVisible(true);
 							dispose();
 						}
+						if(clickedButton == btnHy) {
+							xoaTrang();
+						}
                         
                         
                         
@@ -786,6 +789,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
         			btnTraP.addActionListener(actionListener);
         			btnDoiP.addActionListener(actionListener);
         			btnGHP.addActionListener(actionListener);
+        			btnHy.addActionListener(actionListener);
 				
 				
 				
@@ -889,6 +893,8 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 			public void actionPerformed(ActionEvent e) {			
 			chitiethoadon = new GUI_ChiTietHoaDon(dsPDPTr, dsPDVTr);
 			chitiethoadon.setVisible(true);
+			chitiethoadon.setDuLieu(nhanvien);
+            
 			// set trạng thái phiếu đạt phòng thành đã hủy, phòng thành bảo trì
 			for (int i = 0; i < dsPDPTr.size(); i++) {
 				new PhieuDatPhong_DAO().updateTrangThaiPhieuDatPhong(dsPDPTr.get(i).getMaPhieu(), "Đã trả");
@@ -898,9 +904,30 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 			for (int i = 0; i < dsPDVTr.size(); i++) {
 				new DAO_PhieuDatDichVu().updateTrangThaiPhieuDatDichVu(dsPDVTr.get(i).getMaPhieu());
 			}
+			// Xóa thông tin khách hàng
+			xoaTrang();
+            
+			
 		}
 		});
+		
 
+	}
+	public void xoaTrang() {
+		txtCCKH.setText("");
+		txtSDTKH.setText("");
+		txtTenKH.setText("");
+		txtTuoiKH.setText("");
+		txtGT.setText("");
+		txtNgayN.setText("");
+		txtNgayT.setText("");
+		txtDiem.setText("");
+		txtHang.setText("");
+		txtPhongs.setText("");
+		txtSoNguoi.setText("");
+		panel.removeAll();
+		panel.repaint();
+		panel.revalidate();
 	}
 	public void itemStateChanged(ItemEvent e) {
 		maphongs = new String[0];

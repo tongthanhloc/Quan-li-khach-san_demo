@@ -9,13 +9,10 @@ public class HoaDon {
 	private String trangThai;
 	private double giaTrcThue;
 	private double thanhTien;
+	private NhanVien NhanVien;
+	private KhachHang KhachHang;
 	
-	public HoaDon() {
-		
-	}
-	public HoaDon(String maHoaDon) {
-		this.maHoaDon = maHoaDon;
-	}
+	
 	public String getMaHoaDon() {
 		return maHoaDon;
 	}
@@ -46,6 +43,38 @@ public class HoaDon {
 	public void setThanhTien(double thanhTien) {
 		this.thanhTien = thanhTien;
 	}
+	public NhanVien getNhanVien() {
+		return NhanVien;
+	}
+	public void setNhanVien(NhanVien nhanVien) {
+		NhanVien = nhanVien;
+	}
+	public KhachHang getKhachHang() {
+		return KhachHang;
+	}
+	public void setKhachHang(KhachHang khachHang) {
+		KhachHang = khachHang;
+	}
+	public HoaDon(String maHoaDon, LocalDate ngayLap, String trangThai, double giaTrcThue, double thanhTien,
+			entity.NhanVien nhanVien, entity.KhachHang khachHang) {
+		super();
+		this.maHoaDon = maHoaDon;
+		this.ngayLap = ngayLap;
+		this.trangThai = trangThai;
+		this.giaTrcThue = giaTrcThue;
+		this.thanhTien = thanhTien;
+		NhanVien = nhanVien;
+		KhachHang = khachHang;
+	}
+	public HoaDon(String maHoaDon) {
+		super();
+		this.maHoaDon = maHoaDon;
+	}
+	@Override
+	public String toString() {
+		return "HoaDon [maHoaDon=" + maHoaDon + ", ngayLap=" + ngayLap + ", trangThai=" + trangThai + ", giaTrcThue="
+				+ giaTrcThue + ", thanhTien=" + thanhTien + ", NhanVien=" + NhanVien + ", KhachHang=" + KhachHang + "]";
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(maHoaDon);
@@ -61,14 +90,8 @@ public class HoaDon {
 		HoaDon other = (HoaDon) obj;
 		return Objects.equals(maHoaDon, other.maHoaDon);
 	}
-	public HoaDon(String maHoaDon, LocalDate ngayLap, String trangThai, double giaTrcThue, double thanhTien) {
-		super();
-		this.maHoaDon = maHoaDon;
-		this.ngayLap = ngayLap;
-		this.trangThai = trangThai;
-		this.giaTrcThue = giaTrcThue;
-		this.thanhTien = thanhTien;
-	}
+	
+	
 	
 	
 	

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.DichVuTienIch;
+import entity.HoaDon;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
@@ -34,12 +35,14 @@ public class PhieuDatPhong_DAO {
 				LocalDate ngayNhan = rs.getDate(3).toLocalDate();
 				LocalDate ngayTra = rs.getDate(4).toLocalDate();
 				double dongia = rs.getDouble(5);
-				Phong p = new Phong(rs.getString("maPhong"));
-				KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
-				NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
-				String tt = rs.getString("trangThai");
-				String sN= rs.getString("soNguoi");
-			    PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN);
+				Phong p = new Phong(rs.getString(6));
+				KhachHang kh = new KhachHang(rs.getString(7));
+				NhanVien nv = new NhanVien(rs.getString(8));
+				String tt = rs.getString(9);
+				String sN= rs.getString(10);
+				HoaDon hd = new HoaDon(rs.getString(11));
+				
+			    PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN,hd);
 				dsPDP.add(pdp);
 			}
 		} catch (SQLException e) {
@@ -145,7 +148,8 @@ public class PhieuDatPhong_DAO {
 					NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
 					String tt = rs.getString("trangThai");
 					String sN = rs.getString("soNguoi");
-					pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN);
+					HoaDon hd = new HoaDon(rs.getString("maHoaDon"));
+					pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN,hd);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -166,12 +170,13 @@ public class PhieuDatPhong_DAO {
 	                LocalDate ngayNhan = rs.getDate(3).toLocalDate();
 	                LocalDate ngayTra = rs.getDate(4).toLocalDate();
 	                double dongia = rs.getDouble(5);
-	                Phong p = new Phong(rs.getString("maPhong"));
-	                KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
-	                NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
-	                String tt = rs.getString("trangThai");
-	                String sN= rs.getString("soNguoi");
-	                PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN);
+	                Phong p = new Phong(rs.getString(6));
+					KhachHang kh = new KhachHang(rs.getString(7));
+					NhanVien nv = new NhanVien(rs.getString(8));
+					String tt = rs.getString(9);
+					String sN= rs.getString(10);
+					HoaDon hd = new HoaDon(rs.getString(11));
+	                PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN,hd);
 	                dsPDP.add(pdp);
 	            }
 	        } catch (SQLException e) {
@@ -209,13 +214,14 @@ public class PhieuDatPhong_DAO {
 					LocalDate ngayNhan = rs.getDate(3).toLocalDate();
 					LocalDate ngayTra = rs.getDate(4).toLocalDate();
 					double dongia = rs.getDouble(5);
-					Phong p = new Phong(rs.getString("maPhong"));
-					KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
-					NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
-					String tt = rs.getString("trangThai");
-					String sN = rs.getString("soNguoi");
+					Phong p = new Phong(rs.getString(6));
+					KhachHang kh = new KhachHang(rs.getString(7));
+					NhanVien nv = new NhanVien(rs.getString(8));
+					String tt = rs.getString(9);
+					String sN= rs.getString(10);
+					HoaDon hd = new HoaDon(rs.getString(11));
 					PhieuDatPhong pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv,
-							tt, sN);
+							tt, sN,hd);
 					dsPDP.add(pdp);
 				}
 			} catch (SQLException e) {

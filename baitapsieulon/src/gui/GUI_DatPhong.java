@@ -1136,7 +1136,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		String soPhong = txtSoN.getText();
 		
 		
-		PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, DonGia, maPhong, maKH,maNhanVien,trangThai,soPhong);
+		PhieuDatPhong pdp = new PhieuDatPhong(maPhieu, thoiGianDat, thoiGianNhan, thoiGianTra, DonGia, maPhong, maKH,maNhanVien,trangThai,soPhong,null);
 		ArrayList<PhieuDatPhong> danhSachPhieuDatPhong = new ArrayList<>();
 		danhSachPhieuDatPhong.add(pdp);
 		phieuDatPhong_DAO.insertPhieuDatPhong(danhSachPhieuDatPhong);
