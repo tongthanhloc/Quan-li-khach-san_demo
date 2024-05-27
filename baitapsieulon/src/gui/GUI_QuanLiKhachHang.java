@@ -484,13 +484,29 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		paneNV.setPreferredSize(new Dimension(1000,1000));
 		panel_Center_Bot.add(paneNV);;
 		JTableHeader headers = tableNV.getTableHeader();
-        Font headerFont = new Font("Tahoma", Font.PLAIN, 15);
+        Font headerFont = new Font("Tahoma", Font.PLAIN, 25);
         headers.setFont(headerFont);
         headers.setPreferredSize(new Dimension(paneNV.getWidth(), 30));
         headers.setBackground(new Color(164, 194, 163));
         headers.setForeground(Color.BLACK);
         headers.setReorderingAllowed(false);
         headers.setResizingAllowed(false);
+        //set height table va header
+        tableNV.setRowHeight(30);
+        tableNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        tableNV.setDefaultEditor(Object.class, null);
+        tableNV.getTableHeader().setPreferredSize(new Dimension(paneNV.getWidth(), 30));
+        tableNV.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 20));
+        tableNV.getTableHeader().setReorderingAllowed(false);
+        tableNV.getTableHeader().setResizingAllowed(false);
+        tableNV.getColumnModel().getColumn(0).setPreferredWidth(200);
+        tableNV.getColumnModel().getColumn(1).setPreferredWidth(300);
+        tableNV.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tableNV.getColumnModel().getColumn(3).setPreferredWidth(300);
+        tableNV.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tableNV.getColumnModel().getColumn(5).setPreferredWidth(300);
+        tableNV.getColumnModel().getColumn(6).setPreferredWidth(200);
+        
                 Frame.add(panel_Center_Bot);
                         Frame.setVisible(true);
         

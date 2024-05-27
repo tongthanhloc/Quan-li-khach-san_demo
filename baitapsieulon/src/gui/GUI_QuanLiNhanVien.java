@@ -520,6 +520,8 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		JScrollPane paneNV = new JScrollPane(tableHD);
 		paneNV.setBounds(30, 30, 1590, 530);
 		panel_Center_Bot.add(paneNV);
+		tableHD.setRowHeight(30);
+		tableHD.setBackground(new Color(232,234,214));
 	
 		JTableHeader headers = tableHD.getTableHeader();
 		Font headerFont = new Font("Tahoma", Font.PLAIN, 20);

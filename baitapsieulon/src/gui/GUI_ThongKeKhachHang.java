@@ -600,7 +600,7 @@ public class GUI_ThongKeKhachHang extends JFrame{
 				panel_2.add(lblNewLabel_7_1_1_1_1_1);
 				
 				panel_3 = new JPanel();
-				panel_3.setBorder(new TitledBorder(new CompoundBorder(null, new LineBorder(new Color(99, 130, 191))), "Th\u1ED1ng k\u00EA L\u01B0\u01A1ng", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				panel_3.setBorder(new TitledBorder(new CompoundBorder(null, new LineBorder(new Color(99, 130, 191))), "Thống kê khách hàng", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 				panel_3.setBounds(12, 402, 663, 471);
 				panel_Center_Left.add(panel_3);
 				panel_3.setLayout(null);

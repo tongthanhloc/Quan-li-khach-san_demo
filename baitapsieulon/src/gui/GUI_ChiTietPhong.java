@@ -582,8 +582,10 @@ public class GUI_ChiTietPhong extends JFrame {
     }
 	 public void setThongtin() {
 		 // set trạng thái của phòng nếu đã thuê và đẵ đặt thì set txt
-			if (ph.getTrangThai().equals("Đã thuê") || ph.getTrangThai().equals("Đã đặt")) {
-				pdp = new PhieuDatPhong_DAO().getPhieuDatPhongTheoMaPhong(maphongcustom);
+		 if (ph.getTrangThai().equals("Đã thuê")) {
+				pdp = new PhieuDatPhong_DAO().getPhieuDatPhongTheoMaPhongVaTrangThai(maphongcustom,"Đã nhận");
+				System.out.println(pdp.getKhachHang().getmaKH());
+				System.out.println(maphongcustom);
 				String ma = pdp.getKhachHang().getmaKH();
 		        kh = new KhachHang_DAO().getKhachHangByMaKhachHang(ma);
 				txtMaKhachHang.setText(kh.getmaKH());
@@ -601,6 +603,27 @@ public class GUI_ChiTietPhong extends JFrame {
 					cbDichVu.addItem(dv.getDichVu().getMaDichVu());
 				}
 				
+			}
+			if (ph.getTrangThai().equals("Đã đặt")) {
+				pdp = new PhieuDatPhong_DAO().getPhieuDatPhongTheoMaPhongVaTrangThai(maphongcustom, "Đã đặt");
+				System.out.println(pdp.getKhachHang().getmaKH());
+				System.out.println(maphongcustom);
+				String ma = pdp.getKhachHang().getmaKH();
+				kh = new KhachHang_DAO().getKhachHangByMaKhachHang(ma);
+				txtMaKhachHang.setText(kh.getmaKH());
+				txtHoTen.setText(kh.getHoTen());
+				// tuổi = năm hiện tại - năm sinh
+				int tuoi = 2021 - kh.getNgaySinh().getYear();
+				txtTuoi.setText(String.valueOf(tuoi));
+				txtSdt.setText(kh.getSoDT());
+				txtGioiTInh.setText(kh.getGioiTinh() == true ? "Nam" : "Nữ");
+				txtNgayNhanPhong.setText(pdp.getThoiGianNhan().toString());
+				txtNgayTraPhong.setText(pdp.getThoiGianTra().toString());
+				txtSoNguoiO.setText(pdp.getSoNguoi());
+				List<PhieuDatDichVu> dsDichVu = pddv.getDSPhieuDatChuaThanhToan(kh.getmaKH());
+				for (PhieuDatDichVu dv : dsDichVu) {
+					cbDichVu.addItem(dv.getDichVu().getMaDichVu());
+				}
 			}
 	 }
 	

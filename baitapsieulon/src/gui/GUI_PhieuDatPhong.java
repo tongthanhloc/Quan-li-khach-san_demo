@@ -445,6 +445,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			panel_Center_Top.add(lblTnKhchHng);
 			
 			txtmaPhieu = new JTextField();
+			txtmaPhieu.setForeground(new Color(255, 255, 255));
 			txtmaPhieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtmaPhieu.setColumns(10);
 			txtmaPhieu.setBackground(new Color(164, 194, 163));
@@ -452,6 +453,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			panel_Center_Top.add(txtmaPhieu);
 			
 			txtmaKH = new JTextField();
+			txtmaKH.setForeground(new Color(255, 255, 255));
 			txtmaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtmaKH.setColumns(10);
 			txtmaKH.setBackground(new Color(164, 194, 163));
@@ -474,6 +476,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			panel_Center_Top.add(lblDC);
 			
 			txtmaNV = new JTextField();
+			txtmaNV.setForeground(new Color(255, 255, 255));
 			txtmaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtmaNV.setColumns(10);
 			txtmaNV.setBackground(new Color(164, 194, 163));
@@ -498,6 +501,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			panel_Center_Top.add(lblPhong);
 			
 			txtmaPhong = new JTextField();
+			txtmaPhong.setForeground(new Color(255, 255, 255));
 			txtmaPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtmaPhong.setColumns(10);
 			txtmaPhong.setBackground(new Color(164, 194, 163));
@@ -505,11 +509,15 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			panel_Center_Top.add(txtmaPhong);
 			
 			JDateChooser dateNgayD = new JDateChooser();
+			dateNgayD.setForeground(new Color(255, 255, 255));
+			dateNgayD.setBackground(new Color(164, 194, 163));
 			dateNgayD.setDateFormatString("dd/MM/yyyy");
 			dateNgayD.setBounds(1100, 75, 350, 35);
 			panel_Center_Top.add(dateNgayD);
 			
 			JDateChooser dateNgayT = new JDateChooser();
+			dateNgayT.setForeground(new Color(255, 255, 255));
+			dateNgayT.setBackground(new Color(164, 194, 163));
 			dateNgayT.setDateFormatString("dd/MM/yyyy");
 			dateNgayT.setBounds(1100, 125, 350, 35);
 			panel_Center_Top.add(dateNgayT);

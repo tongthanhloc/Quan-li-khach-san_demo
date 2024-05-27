@@ -351,6 +351,20 @@ public class GUI_QuanLiDichVu extends JFrame {
 		btntDchV.setBackground(new Color(41, 139, 106));
 		btntDchV.setBounds(260, 26, 200, 99);
 		panel_top.add(btntDchV);
+		
+		
+		
+		btntDchV.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUI_DatDichVu dv = new GUI_DatDichVu(nhanvien);
+				dv.setVisible(true);
+				dispose();
+			}
+		});
+		
+		
+		
+		
 		btnmaNV.setText("<html><div style='text-align: center;'>" +"Mã Nhân viên: "+ nhanvien.getMaNV() + "</div></html>");
 		btnTKHTNV.setText("<html><div style='text-align: center;'>" + "Họ tên: "+nhanvien.getHoTenNV() + "</div></html>");
 		int tuoi = (int) ChronoUnit.YEARS.between(nhanvien.getNgaySinh(), java.time.LocalDate.now());
@@ -384,14 +398,14 @@ public class GUI_QuanLiDichVu extends JFrame {
 		panel_Center_Top.add(lblThueVat);
 		
 		txtMaDV = new JTextField();
-		txtMaDV.setBackground(new Color(41, 139, 116));
+		txtMaDV.setBackground(new Color(164, 194, 163));
 		txtMaDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaDV.setColumns(10);
 		txtMaDV.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMaDV);
 		
 		txtThueVat = new JTextField();
-		txtThueVat.setBackground(new Color(41, 139, 116));
+		txtThueVat.setBackground(new Color(164, 194, 163));
 		txtThueVat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtThueVat.setColumns(10);
 		txtThueVat.setBounds(350, 75, 350, 40);
@@ -408,14 +422,14 @@ public class GUI_QuanLiDichVu extends JFrame {
 		panel_Center_Top.add(lblGiaNhap);
 		
 		txtTenDV = new JTextField();
-		txtTenDV.setBackground(new Color(41, 139, 116));
+		txtTenDV.setBackground(new Color(164, 194, 163));
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenDV.setColumns(10);
 		txtTenDV.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenDV);
 		
 		txtNhaCCDV = new JTextField();
-		txtNhaCCDV.setBackground(new Color(41, 139, 116));
+		txtNhaCCDV.setBackground(new Color(164, 194, 163));
 		txtNhaCCDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNhaCCDV.setColumns(10);
 		txtNhaCCDV.setBounds(1100, 75, 350, 40);
@@ -454,7 +468,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		txtSoLuong = new JTextField();
 		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoLuong.setColumns(10);
-		txtSoLuong.setBackground(new Color(41, 139, 116));
+		txtSoLuong.setBackground(new Color(164, 194, 163));
 		txtSoLuong.setBounds(350, 125, 350, 40);
 		panel_Center_Top.add(txtSoLuong);
 		
@@ -463,7 +477,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		lblTrangThai.setBounds(140, 175, 186, 35);
 		panel_Center_Top.add(lblTrangThai);
 		cbTrangThai = new JComboBox();
-		cbTrangThai.setBackground(new Color(41, 139, 116));
+		cbTrangThai.setBackground(new Color(164, 194, 163));
 		cbTrangThai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cbTrangThai.setBounds(350, 175, 350, 40);
 		panel_Center_Top.add(cbTrangThai);
@@ -480,7 +494,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		txtGiaVe = new JTextField();
 		txtGiaVe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaVe.setColumns(10);
-		txtGiaVe.setBackground(new Color(41, 139, 116));
+		txtGiaVe.setBackground(new Color(164, 194, 163));
 		txtGiaVe.setBounds(1100, 125, 350, 40);
 		panel_Center_Top.add(txtGiaVe);
 		
@@ -491,11 +505,23 @@ public class GUI_QuanLiDichVu extends JFrame {
 		// panel_Center_Bot xét thành absolute layout
 		panel_Center_Bot.setLayout(null);
 		String[] cols = { "Mã dịch vụ", "Tên dịch vụ", "Nhà CCDV", "Thuế vặt", "Số lượng", "Đơn giá" , "Trạng thái"};
-
+		
         modelHD = new DefaultTableModel(cols, 0);
 
         paneDV.setLayout(null);
         tableHD = new JTable(modelHD);
+        tableHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        tableHD.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        //set màu header
+        JTableHeader header = tableHD.getTableHeader();
+        header.setBackground(new Color(164, 194, 163));
+        header.setForeground(Color.white);
+        header.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        tableHD.setRowHeight(30);
+        
+        
+        
+        
         JScrollPane paneNV = new JScrollPane(tableHD);
  	    paneNV.setBounds(0, 0, 1630, 500);
 
@@ -504,15 +530,19 @@ public class GUI_QuanLiDichVu extends JFrame {
         JTableHeader headers = tableHD.getTableHeader();
         Font headerFont = new Font("Tahoma", Font.PLAIN, 20);
         headers.setFont(headerFont);
+        //set màu table và height
+        tableHD.setBackground(new Color(234, 232, 214));
+        
+        
 
-        tableHD.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        tableHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tableHD.setDefaultRenderer(Object.class, centerRenderer);
         tableHD.setRowHeight(30);
    
-ActionListener actionListener = new ActionListener() {
+        ActionListener actionListener = new ActionListener() {
 		    
 
 			public void actionPerformed(ActionEvent e) {
@@ -598,7 +628,7 @@ ActionListener actionListener = new ActionListener() {
 		txtTimMa = new JTextField();
 		txtTimMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTimMa.setColumns(10);
-		txtTimMa.setBackground(new Color(55, 149, 128));
+		txtTimMa.setBackground(new Color(164, 194, 163));
 		txtTimMa.setBounds(205, 45, 350, 40);
 		panel.add(txtTimMa);
 		
@@ -610,11 +640,12 @@ ActionListener actionListener = new ActionListener() {
 		txtTenDichVu_Tim = new JTextField();
 		txtTenDichVu_Tim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenDichVu_Tim.setColumns(10);
-		txtTenDichVu_Tim.setBackground(new Color(55, 149, 128));
+		txtTenDichVu_Tim.setBackground(new Color(164, 194, 163));
 		txtTenDichVu_Tim.setBounds(900, 41, 350, 40);
 		panel.add(txtTenDichVu_Tim);
 		
 		btn_Tim = new JButton("Tìm");
+		btn_Tim.setBackground(new Color(234, 232, 214));
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Tim.setBounds(1367, 45, 175, 35);
 		panel.add(btn_Tim);

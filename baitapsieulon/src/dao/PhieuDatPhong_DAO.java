@@ -127,29 +127,30 @@ public class PhieuDatPhong_DAO {
             e.printStackTrace();
         }}
 	
-	// Lấy phiếu đặt phòng theo mã phòng
-		public PhieuDatPhong getPhieuDatPhongTheoMaPhong(String maPh) {
+	// Lấy phiếu đặt phòng theo mã phòng và trạng thái
+		public PhieuDatPhong getPhieuDatPhongTheoMaPhongVaTrangThai(String maPhong, String trangThai) {
 			PhieuDatPhong pdp = null;
 			try {
 				ConnectDB.getInstance();
 				Connection con = ConnectDB.getConnection();
-				String sql = "Select * from PhieuDatPhong where maPhong = ?";
+				String sql = "SELECT * FROM PhieuDatPhong WHERE maPhong = ? AND trangThai = ?";
 				PreparedStatement statement = con.prepareStatement(sql);
-				statement.setString(1, maPh);
+				statement.setString(1, maPhong);
+				statement.setString(2, trangThai);
 				ResultSet rs = statement.executeQuery();
-				while (rs.next()) {
+				if (rs.next()) {
 					String maPhieuDatPhong = rs.getString(1);
 					LocalDate ngayDat = rs.getDate(2).toLocalDate();
 					LocalDate ngayNhan = rs.getDate(3).toLocalDate();
 					LocalDate ngayTra = rs.getDate(4).toLocalDate();
 					double dongia = rs.getDouble(5);
-					Phong p = new Phong(rs.getString("maPhong"));
-					KhachHang kh = new KhachHang(rs.getString("maKhachHang"));
-					NhanVien nv = new NhanVien(rs.getString("maNhanVien"));
-					String tt = rs.getString("trangThai");
-					String sN = rs.getString("soNguoi");
-					HoaDon hd = new HoaDon(rs.getString("maHoaDon"));
-					pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN,hd);
+					Phong p = new Phong(rs.getString(6));
+					KhachHang kh = new KhachHang(rs.getString(7));
+					NhanVien nv = new NhanVien(rs.getString(8));
+					String tt = rs.getString(9);
+					String sN = rs.getString(10);
+					HoaDon hd = new HoaDon(rs.getString(11));
+					pdp = new PhieuDatPhong(maPhieuDatPhong, ngayDat, ngayNhan, ngayTra, dongia, p, kh, nv, tt, sN, hd);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

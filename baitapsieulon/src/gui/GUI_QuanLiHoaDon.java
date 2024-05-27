@@ -445,7 +445,7 @@ static NhanVien nhanvien;
 		panel_Center_Top.add(lblMahoaDon);
 		
 		txtMahoaDon = new JTextField();
-		txtMahoaDon.setBackground(new Color(41, 139, 116));
+		txtMahoaDon.setBackground(new Color(164, 194, 163));
 		txtMahoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMahoaDon.setBounds(350, 25, 350, 40);
 		panel_Center_Top.add(txtMahoaDon);
@@ -496,7 +496,7 @@ static NhanVien nhanvien;
 		txtmaKH = new JTextField();
 		txtmaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtmaKH.setColumns(10);
-		txtmaKH.setBackground(new Color(41, 139, 116));
+		txtmaKH.setBackground(new Color(164, 194, 163));
 		txtmaKH.setBounds(350, 88, 350, 40);
 		panel_Center_Top.add(txtmaKH);
 		
@@ -508,7 +508,7 @@ static NhanVien nhanvien;
 		txtmaNhanVien = new JTextField();
 		txtmaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtmaNhanVien.setColumns(10);
-		txtmaNhanVien.setBackground(new Color(41, 139, 116));
+		txtmaNhanVien.setBackground(new Color(164, 194, 163));
 		txtmaNhanVien.setBounds(1104, 83, 350, 40);
 		panel_Center_Top.add(txtmaNhanVien);
 		
@@ -529,8 +529,12 @@ static NhanVien nhanvien;
 		panel_Center_Bot.add(paneNV);;
 		JTableHeader headers = tableHD.getTableHeader();
         Font headerFont = new Font("Tahoma", Font.PLAIN, 25);
+       
         headers.setFont(headerFont);
         tableHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        tableHD.setRowHeight(30);
+        //set màu header
+        headers.setBackground(new Color(164, 194, 163));
 		Frame.add(panel_Center_Bot);
 		
 		btnTim.addActionListener(new ActionListener() {

@@ -215,6 +215,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		pCenter.add(lblTen);
 		
 		lblDC = new JTextArea("");
+		lblDC.setEditable(false);
 	    lblDC.setWrapStyleWord(true);
 	    lblDC.setLineWrap(true);
 	    

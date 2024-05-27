@@ -452,11 +452,13 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 			panelKH_1.add(cbxPhong);
 			
 			JButton btnHuy = new JButton("Xóa trắng");
+			btnHuy.setBackground(new Color(234, 232, 214));
 			btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			btnHuy.setBounds(1333, 143, 220, 32);
 			panelKH_1.add(btnHuy);
 			
 			JButton btnDoiPhong = new JButton("Đổi Phòng");
+			btnDoiPhong.setBackground(new Color(234, 232, 214));
 			btnDoiPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			btnDoiPhong.setBounds(1082, 143, 220, 32);
 			panelKH_1.add(btnDoiPhong);
