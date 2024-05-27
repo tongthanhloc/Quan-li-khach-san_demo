@@ -3,9 +3,9 @@ package gui;
 import javax.swing.*;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.KhachHang;
 import entity.PhieuDatPhong;
 import entity.Phong;
@@ -21,10 +21,10 @@ import java.awt.Font;
 import java.awt.Image;
 
 public class GUI_ManHinhCho {
-    private static Phong_DAO Phong_dao;
+    private static DAO_Phong Phong_dao;
 	private static String[] soPhong;
-	private static KhachHang_DAO khachHang_DAO;
-	private static PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private static DAO_KhachHang khachHang_DAO;
+	private static DAO_PhieuDatPhong phieuDatPhong_DAO;
 
 	public static void main(String[] args) {
     	
@@ -33,12 +33,12 @@ public class GUI_ManHinhCho {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		Phong_dao  = new Phong_DAO();
+		Phong_dao  = new DAO_Phong();
 		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
 		
 		
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		// kiểm tra trạng thái phòng
 		for (int i = 0; i < dsPDP.size(); i++) {

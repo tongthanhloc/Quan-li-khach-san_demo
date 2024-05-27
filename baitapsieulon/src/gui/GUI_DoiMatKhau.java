@@ -11,9 +11,9 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.TaiKhoan_DAO;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_TaiKhoan;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.TaiKhoan;
@@ -42,7 +42,7 @@ public class GUI_DoiMatKhau extends JFrame {
 	private JPasswordField txtmatkhau;
 	private String[] tk;
 	private String[] mk;
-	private TaiKhoan_DAO taiKhoan_DAO;
+	private DAO_TaiKhoan taiKhoan_DAO;
 	private JPasswordField passwordField;
 
 	/**
@@ -83,7 +83,7 @@ public class GUI_DoiMatKhau extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		taiKhoan_DAO = new TaiKhoan_DAO();
+		taiKhoan_DAO = new DAO_TaiKhoan();
 		ArrayList<TaiKhoan> dsTK = taiKhoan_DAO.getTaiKhoan();
 		tk = new String[dsTK.size()];
 		mk = new String[dsTK.size()];
@@ -154,7 +154,7 @@ public class GUI_DoiMatKhau extends JFrame {
 		JButton btnNewButton = new JButton("Đổi mật khẩu");
 		btnNewButton.addActionListener(new ActionListener() {
 			private NhanVien nv = new NhanVien(txttendangnhap.getText());
-			NhanVien_DAO nv_dao = new NhanVien_DAO();
+			DAO_NhanVien nv_dao = new DAO_NhanVien();
 			ArrayList<NhanVien> ListNV = nv_dao.getalltbNhanVien();
 			public void actionPerformed(ActionEvent e) {
 				if (kiemtraDMK(txttendangnhap.getText(), txtmatkhau.getText().toString()) == -1) {

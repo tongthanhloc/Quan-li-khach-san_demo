@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.Phong;
 
-public class Phong_DAO {
+public class DAO_Phong {
 	private Phong p;
-	public Phong_DAO() {
+	public DAO_Phong() {
 		
 	}
 	

@@ -8,10 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
 import entity.PhieuDatDichVu;
-import dao.PhieuDatPhong_DAO;
+import dao.DAO_PhieuDatPhong;
 import dao.DAO_DichVu;
 import dao.DAO_PhieuDatDichVu;
 import entity.KhachHang;
@@ -44,7 +44,7 @@ public class GUI_DatDichVu extends JFrame {
     private JTable tableHD;
     private DefaultTableModel modelHD;
     private JPanel outerPanel;
-    private KhachHang_DAO khachHang_DAO;
+    private DAO_KhachHang khachHang_DAO;
     private ArrayList<KhachHang> dsKH;
     private ArrayList<DichVu> dsDV;
     private JTextField txtSoLuong;
@@ -56,7 +56,7 @@ public class GUI_DatDichVu extends JFrame {
 	static NhanVien nhanvien;
 	
 	private ArrayList<NhanVien> ListNV;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private JButton btnTrangChu;
 	private JButton btnQLP;
 	private JButton btnQLHD;
@@ -104,7 +104,7 @@ public class GUI_DatDichVu extends JFrame {
             e.printStackTrace();
         }
        this.nv = nv;
-       	nv_dao = new  NhanVien_DAO();
+       	nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
        for (NhanVien nhanVien : ListNV) {
 			if (nhanVien.getMaNV().equals(nv.getMaNV())) {
@@ -113,7 +113,7 @@ public class GUI_DatDichVu extends JFrame {
 			}
 		}
         // Lấy danh sách phiếu đặt phòng từ CSDL
-        pdp = new PhieuDatPhong_DAO().timPhieuDatPhongTheoTrangThai();
+        pdp = new DAO_PhieuDatPhong().timPhieuDatPhongTheoTrangThai();
         System.out.println(pdp.get(0).getMaPhieu());
         setTitle("Quản lý khách sạn");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -519,7 +519,7 @@ public class GUI_DatDichVu extends JFrame {
                 	if(p.getKhachHang().getmaKH().equals(txtmaKH.getText())) {
                 		JOptionPane.showMessageDialog(null, "Tìm thấy khách hàng");
                 		createButtons(panel);
-    					kh = new KhachHang_DAO().getKhachHangByMaKhachHang(txtmaKH.getText());
+    					kh = new DAO_KhachHang().getKhachHangByMaKhachHang(txtmaKH.getText());
     					txtTen.setText(kh.getHoTen());
     					Calendar cal = Calendar.getInstance();
     					txtTuoi.setText(String.valueOf(cal.get(Calendar.YEAR) - kh.getNgaySinh().getYear()));

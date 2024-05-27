@@ -13,8 +13,8 @@ import connectDB.ConnectDB;
 import entity.KhachHang;
 
 
-public class KhachHang_DAO {
-	public KhachHang_DAO() {
+public class DAO_KhachHang {
+	public DAO_KhachHang() {
 		
 	}
 	

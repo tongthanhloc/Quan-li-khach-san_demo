@@ -49,7 +49,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
+import dao.DAO_NhanVien;
 import entity.NhanVien;
 
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -135,7 +135,7 @@ public class GUI_ThongKeNhanVien extends JFrame{
 	private JLabel btnTKTNV;
 	private JLabel btnmaNV;
 	private NhanVien nhanvien;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	/**
 	 * Launch the application.
@@ -167,12 +167,12 @@ public class GUI_ThongKeNhanVien extends JFrame{
 				e.printStackTrace();
 		}
 		dsNV = new  ArrayList<NhanVien>();
-		dsNV = new NhanVien_DAO().getalltbNhanVien();
+		dsNV = new DAO_NhanVien().getalltbNhanVien();
 		dsNVCL = new ArrayList<NhanVien>();
-		dsNVCL = new NhanVien_DAO().getNhanVienConLam();
+		dsNVCL = new DAO_NhanVien().getNhanVienConLam();
 		
 		nhanvien = nv;
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
@@ -2148,8 +2148,8 @@ public class GUI_ThongKeNhanVien extends JFrame{
 		
 		// Cập nhật thông tin nhân viên
 		// Lấy số nhân viên nghỉ việc
-		int cnvnv = new NhanVien_DAO().demSoNhanVienNghiViec();
-		int cnvn = new NhanVien_DAO().demSoNhanVienNu();
+		int cnvnv = new DAO_NhanVien().demSoNhanVienNghiViec();
+		int cnvn = new DAO_NhanVien().demSoNhanVienNu();
 		txtNu.setText(String.valueOf(cnvn));
 		txtNam.setText(String.valueOf(dsNV.size() - cnvn));
 		txtTNV.setText(String.valueOf(dsNV.size() -  cnvnv));

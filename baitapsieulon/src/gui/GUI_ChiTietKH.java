@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
+import dao.DAO_KhachHang;
 import entity.KhachHang;
 
 import javax.swing.JTextField;
@@ -60,7 +60,7 @@ public class GUI_ChiTietKH extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		KhachHang_DAO khachHang_DAO = new KhachHang_DAO();
+		DAO_KhachHang khachHang_DAO = new DAO_KhachHang();
 		KhachHang khachHang = khachHang_DAO.getKhachHangByMaKhachHang(maKH);
 		
 

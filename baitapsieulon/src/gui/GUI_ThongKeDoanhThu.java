@@ -53,9 +53,9 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import dao.DAO_DichVu;
 import dao.DAO_HoaDon;
 import dao.DAO_PhieuDatDichVu;
@@ -151,7 +151,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 	private JButton btnTK;
 	
 	private NhanVien nhanvien;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	/**
 	 * Launch the application.
@@ -183,7 +183,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 				e.printStackTrace();
 		}
 		dsNV = new  ArrayList<NhanVien>();
-		dsNV = new NhanVien_DAO().getalltbNhanVien();
+		dsNV = new DAO_NhanVien().getalltbNhanVien();
 		dsT = new ArrayList<LocalDate>();
 		dsHD = new ArrayList<HoaDon>();
 		dsHD = new DAO_HoaDon().getalltbHoaDon();
@@ -191,7 +191,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 			dsT.add(nv1.getNgaySinh());
 		}
 		nhanvien = nv;
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
@@ -987,7 +987,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 							int nam1 = Integer.parseInt(nam);
 							String thang = cbPD.getSelectedItem().toString().substring(6);
 							// Lấy Phiếu đặt phòng
-							ArrayList<PhieuDatPhong> dsPDP = new PhieuDatPhong_DAO().getPhieuDatPhongTheoNam(nam1);
+							ArrayList<PhieuDatPhong> dsPDP = new DAO_PhieuDatPhong().getPhieuDatPhongTheoNam(nam1);
 							// Lấy số phiếu đặt phòng theo tháng
 							int soPDP = 0;
 							double tongTienPDPThang = 0;
@@ -1036,7 +1036,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
                             int nam1 = Integer.parseInt(nam);
                             String thang = cbPH.getSelectedItem().toString().substring(6);
                             // Lấy Phiếu đặt phòng
-                            ArrayList<PhieuDatPhong> dsPDP = new PhieuDatPhong_DAO().getPhieuDatPhongTheoNam(nam1);
+                            ArrayList<PhieuDatPhong> dsPDP = new DAO_PhieuDatPhong().getPhieuDatPhongTheoNam(nam1);
                             // Lấy số phiếu đặt phòng theo tháng
                             int soPDPH = 0;
                             double tongTienPDPHThang = 0;
@@ -1139,8 +1139,8 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							// TODO Auto-generated method stub
-							dsPDP  = new PhieuDatPhong_DAO().getAllTbPhieuDatPhong();
-							dsPhong = new Phong_DAO().getalltbPhong();
+							dsPDP  = new DAO_PhieuDatPhong().getAllTbPhieuDatPhong();
+							dsPhong = new DAO_Phong().getalltbPhong();
 							//add phòng vào phiếu đặt phòng
 							for (PhieuDatPhong pdp : dsPDP) {
 								for (Phong p : dsPhong) {
@@ -1699,7 +1699,7 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 						public void actionPerformed(ActionEvent e) {
 							// TODO Auto-generated method stub
 							dsHD = new DAO_HoaDon().getalltbHoaDon();
-							dsPDP  = new PhieuDatPhong_DAO().getAllTbPhieuDatPhong();
+							dsPDP  = new DAO_PhieuDatPhong().getAllTbPhieuDatPhong();
 							dsPDV = new DAO_PhieuDatDichVu().getDSPhieuDatDichVu();
 							// Tạo StackBar
 							DefaultCategoryDataset datasetStackBar = createDatasetStackBar();

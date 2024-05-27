@@ -36,7 +36,7 @@ import javax.swing.table.JTableHeader;
 
 import connectDB.ConnectDB;
 import dao.DAO_DichVu;
-import dao.NhanVien_DAO;
+import dao.DAO_NhanVien;
 import entity.DichVu;
 import entity.NhanVien;
 
@@ -75,7 +75,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 	static NhanVien nhanvien;
 	
 	private ArrayList<NhanVien> ListNV;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private JButton btnTrangChu;
 	private JButton btnQLP;
 	private JButton btnQLHD;
@@ -138,7 +138,7 @@ public class GUI_QuanLiDichVu extends JFrame {
             e.printStackTrace();
         }
         
-        nv_dao = new  NhanVien_DAO();
+        nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {

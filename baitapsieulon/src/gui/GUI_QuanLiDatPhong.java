@@ -24,10 +24,10 @@ import java.util.Arrays;
 
 import javax.swing.border.LineBorder;
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
@@ -69,10 +69,10 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
+	private DAO_Phong Phong_dao;
 	private JComboBox<String> cbPhongBan;
-	private KhachHang_DAO khachHang_DAO;
-	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private DAO_KhachHang khachHang_DAO;
+	private DAO_PhieuDatPhong phieuDatPhong_DAO;
 	private int count;
 	private JPanel panelTK;
 	private JButton btnTK;
@@ -95,7 +95,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -149,19 +149,19 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		Phong_dao  = new Phong_DAO();
+		Phong_dao  = new DAO_Phong();
 		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
 		soPhong = new String[dsP.size()];
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
 		}
-		khachHang_DAO = new KhachHang_DAO();
+		khachHang_DAO = new DAO_KhachHang();
 		ArrayList<KhachHang> dsKH = khachHang_DAO.getalltbKhachHang();
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		ArrayList<PhieuDatPhong> dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
@@ -531,7 +531,7 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {

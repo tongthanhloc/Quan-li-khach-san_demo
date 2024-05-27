@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
@@ -63,13 +63,13 @@ public class GUI_GiaHanPhong extends JFrame {
 	
 	
 	
-	private Phong_DAO Phong_dao;
+	private DAO_Phong Phong_dao;
 	private JPanel panel;
 	private JPanel panelKH;
 	private JTextField txtPTrong;
 	private JTextField txtGioi;
-	private KhachHang_DAO khachHang_DAO;
-	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private DAO_KhachHang khachHang_DAO;
+	private DAO_PhieuDatPhong phieuDatPhong_DAO;
 	private ArrayList<PhieuDatPhong> dsPDP;
 	private JPanel panelTK;
 	private JButton btnTK;
@@ -92,7 +92,7 @@ public class GUI_GiaHanPhong extends JFrame {
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -154,16 +154,16 @@ public class GUI_GiaHanPhong extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		Phong_dao  = new Phong_DAO();
+		Phong_dao  = new DAO_Phong();
 		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
 		soPhong = new String[dsP.size()];
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
 		}
-		khachHang_DAO = new KhachHang_DAO();
+		khachHang_DAO = new DAO_KhachHang();
 		ArrayList<KhachHang> dsKH = khachHang_DAO.getalltbKhachHang();
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		// kiểm tra trạng thái phòng
 		for (int i = 0; i < dsPDP.size(); i++) {
@@ -196,7 +196,7 @@ public class GUI_GiaHanPhong extends JFrame {
 		
 		
 		panelTK = new JPanel();
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		nhanvien = nv;
 		panel = new JPanel(null);

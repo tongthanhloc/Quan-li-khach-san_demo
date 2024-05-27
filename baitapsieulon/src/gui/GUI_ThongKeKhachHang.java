@@ -30,8 +30,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
 import entity.KhachHang;
 import entity.NhanVien;
 
@@ -100,7 +100,7 @@ public class GUI_ThongKeKhachHang extends JFrame{
 	private JLabel btnTKTNV;
 	private JLabel btnmaNV;
 	private NhanVien nhanvien;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	
 	/**
@@ -132,9 +132,9 @@ public class GUI_ThongKeKhachHang extends JFrame{
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
-		dsKH = new KhachHang_DAO().getalltbKhachHang();
+		dsKH = new DAO_KhachHang().getalltbKhachHang();
 		nhanvien = nv;
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {

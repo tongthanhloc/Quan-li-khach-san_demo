@@ -21,7 +21,7 @@ import java.awt.Image;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
+import dao.DAO_NhanVien;
 import entity.NhanVien;
 
 import javax.swing.JComboBox;
@@ -105,7 +105,7 @@ public class GUI_ChiTietNhanVien extends JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
-		nv = new NhanVien_DAO().getNhanVienTheoMaNV(maNV);
+		nv = new DAO_NhanVien().getNhanVienTheoMaNV(maNV);
 		System.out.println(nv);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -439,13 +439,13 @@ public class GUI_ChiTietNhanVien extends JFrame {
 					} else {
 						if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật nhân viên này không?","Xác nhận",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 							try {
-								new NhanVien_DAO().capNhatNhanVien(nv1);
+								new DAO_NhanVien().capNhatNhanVien(nv1);
 								GUI_QuanLiNhanVien.model.setRowCount(0);
 								JOptionPane.showMessageDialog(null, "Cập nhật thành công");
 								//giai phong bo nho
 								GUI_QuanLiNhanVien.ListNV.clear();
 								//lay lai danh sach nhan vien
-								GUI_QuanLiNhanVien.ListNV = new NhanVien_DAO().getNhanVienTiepTan();
+								GUI_QuanLiNhanVien.ListNV = new DAO_NhanVien().getNhanVienTiepTan();
 								GUI_QuanLiNhanVien.dsnv = timKiemNhanVien(GUI_QuanLiNhanVien.dsnv);
 								//cap nhat lai bang
 								GUI_QuanLiNhanVien.updateModel(GUI_QuanLiNhanVien.dsnv);
@@ -720,7 +720,7 @@ public class GUI_ChiTietNhanVien extends JFrame {
 	}
 	public ArrayList<NhanVien> timKiemNhanVien(ArrayList<NhanVien> dsnv) {
 	    // Create a new list to store the search results
-		ArrayList<NhanVien> ListNV = new NhanVien_DAO().getNhanVienTiepTan();
+		ArrayList<NhanVien> ListNV = new DAO_NhanVien().getNhanVienTiepTan();
 		ArrayList<NhanVien> searchResults = new ArrayList<>();
 		// Get the search term from the search text field
 		

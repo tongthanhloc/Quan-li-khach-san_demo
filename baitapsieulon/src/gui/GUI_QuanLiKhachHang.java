@@ -34,8 +34,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
 import entity.KhachHang;
 import entity.NhanVien;
 
@@ -64,7 +64,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 	private String maKH;
 	private JButton btnThmKhchHng;
 	private JButton btnXemChiTit;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private NhanVien nhanvien;
 	static ArrayList<KhachHang> dskh;
@@ -131,7 +131,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 			e.printStackTrace();
 		}
 		
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
@@ -679,10 +679,10 @@ public class GUI_QuanLiKhachHang extends JFrame {
 					// Cập nhật lại model
 					
 					if(dskh.size() == 0) {
-						new KhachHang_DAO().themKhachHang(kh);
+						new DAO_KhachHang().themKhachHang(kh);
 						JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công.");
 						modelHD.setRowCount(0);
-						updateModel(new KhachHang_DAO().getalltbKhachHang());
+						updateModel(new DAO_KhachHang().getalltbKhachHang());
 					}else {
 						System.out.println("Thêm khách hàng thất bại.");
 					}
@@ -755,7 +755,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 	public ArrayList<KhachHang> timKiemKhachHang(KhachHang kh) {
 	            ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
         ArrayList<KhachHang> dskhTimKiem = new ArrayList<KhachHang>();
-        dskh = new KhachHang_DAO().getalltbKhachHang();
+        dskh = new DAO_KhachHang().getalltbKhachHang();
         for (KhachHang khachHang : dskh) {
             if (kh.getmaKH() != null && !kh.getmaKH().isEmpty() && !kh.getmaKH().equals(khachHang.getmaKH())) {
                 continue;

@@ -19,8 +19,8 @@ import javax.swing.table.JTableHeader;
 import dao.DAO_DichVu;
 import dao.DAO_HoaDon;
 import dao.DAO_PhieuDatDichVu;
-import dao.KhachHang_DAO;
-import dao.PhieuDatPhong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_PhieuDatPhong;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -452,7 +452,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		//Lấy dữ liệu khách hàng
 				
 				
-		KhachHang kh = new KhachHang_DAO().getKhachHangByMaKhachHang(dsPDP.get(0).getKhachHang().getmaKH());
+		KhachHang kh = new DAO_KhachHang().getKhachHangByMaKhachHang(dsPDP.get(0).getKhachHang().getmaKH());
 		String hang = kh.getHang();
 		double phanTramKM = 0;
 		if (hang.equals("Bronze")) {
@@ -523,15 +523,15 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		// ép kiểu int cho diem
 		int diemInt = (int) diem;
 		//Cập nhật điểm trong sql
-		new KhachHang_DAO().capNhapDiem(kh.getmaKH(), diemInt);
+		new DAO_KhachHang().capNhapDiem(kh.getmaKH(), diemInt);
 		// Cập nhật lại hạng cho khách hàng
-		int diemKh = new KhachHang_DAO().getDiemKhachHang(kh.getmaKH());
+		int diemKh = new DAO_KhachHang().getDiemKhachHang(kh.getmaKH());
 		if (diemKh < 500) {
-			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Bronze");
+			new DAO_KhachHang().capNhapHang(kh.getmaKH(), "Bronze");
 		} else if (diemKh >= 500 && diemKh < 1000) {
-			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Silver");
+			new DAO_KhachHang().capNhapHang(kh.getmaKH(), "Silver");
 		} else {
-			new KhachHang_DAO().capNhapHang(kh.getmaKH(), "Gold");
+			new DAO_KhachHang().capNhapHang(kh.getmaKH(), "Gold");
 		}
 		 
 		//Set Hoa Don
@@ -574,7 +574,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
     	//Cập nhật mã hóa đơn cho dsPDP và dsPDV
 		for (int i = 0; i < dsPDP.size(); i++) {
 			
-			new PhieuDatPhong_DAO().updateMaHoaDonPhieuDatPhong(dsPDP.get(i), maHD);
+			new DAO_PhieuDatPhong().updateMaHoaDonPhieuDatPhong(dsPDP.get(i), maHD);
 		}
 		if (dsPDV.size() != 0) {
 			for (int i = 0; i < dsPDV.size(); i++) {
@@ -624,7 +624,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		//Lấy dữ liệu khách hàng
 				
 				
-		KhachHang kh = new KhachHang_DAO().getKhachHangByMaKhachHang(dsPDP.get(0).getKhachHang().getmaKH());
+		KhachHang kh = new DAO_KhachHang().getKhachHangByMaKhachHang(dsPDP.get(0).getKhachHang().getmaKH());
 		String hang = kh.getHang();
 		double phanTramKM = 0;
 		if (hang.equals("Bronze")) {

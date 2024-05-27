@@ -11,9 +11,9 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.TaiKhoan_DAO;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_TaiKhoan;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.TaiKhoan;
@@ -42,8 +42,8 @@ public class GUI_DangNhap extends JFrame {
 	private JPasswordField txtmatkhau;
 	private String[] tk;
 	private String[] mk;
-	private TaiKhoan_DAO taiKhoan_DAO;
-	private NhanVien_DAO nhanVien_DAO;
+	private DAO_TaiKhoan taiKhoan_DAO;
+	private DAO_NhanVien nhanVien_DAO;
 	static String tenDangNhap;
 
 	/**
@@ -84,7 +84,7 @@ public class GUI_DangNhap extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		taiKhoan_DAO = new TaiKhoan_DAO();
+		taiKhoan_DAO = new DAO_TaiKhoan();
 		ArrayList<TaiKhoan> dsTK = taiKhoan_DAO.getTaiKhoan();
 		tk = new String[dsTK.size()];
 		mk = new String[dsTK.size()];
@@ -92,7 +92,7 @@ public class GUI_DangNhap extends JFrame {
 			tk[i] = dsTK.get(i).getNhanVien().getMaNV().toString();
 			mk[i] = dsTK.get(i).getMatKhau();
 		}
-		nhanVien_DAO = new NhanVien_DAO();
+		nhanVien_DAO = new DAO_NhanVien();
 		ArrayList<NhanVien> dsNV = nhanVien_DAO.getalltbNhanVien();
 		 
 		
@@ -158,7 +158,7 @@ public class GUI_DangNhap extends JFrame {
 		JButton btnNewButton = new JButton("Đăng nhập");
 		btnNewButton.addActionListener(new ActionListener() {
 			private NhanVien nv = new NhanVien(txttendangnhap.getText());
-			NhanVien_DAO nv_dao = new NhanVien_DAO();
+			DAO_NhanVien nv_dao = new DAO_NhanVien();
 			ArrayList<NhanVien> ListNV = nv_dao.getalltbNhanVien();
 			
 			

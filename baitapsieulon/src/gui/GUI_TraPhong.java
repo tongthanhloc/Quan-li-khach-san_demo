@@ -5,10 +5,10 @@ import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
 import dao.DAO_PhieuDatDichVu;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatDichVu;
@@ -54,8 +54,8 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
-	private PhieuDatPhong_DAO pdp;
+	private DAO_Phong Phong_dao;
+	private DAO_PhieuDatPhong pdp;
 	private GUI_ChiTietHoaDon chitiethoadon;
 
 	private JCheckBox chckbxPdon;
@@ -72,7 +72,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	static JTextField txtGT;
 	static JTextField txtNgayT;
 	static ArrayList<PhieuDatPhong> dsPDP;
-	private KhachHang_DAO kh;
+	private DAO_KhachHang kh;
 	private JButton btnTim;
 	static ArrayList<Phong> dsP;
 	static ArrayList<KhachHang> dsKH;
@@ -81,11 +81,11 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private JTextField txtHang;
 	private ArrayList<PhieuDatPhong> dsPDPTr;
 	private ArrayList<PhieuDatDichVu> dsPDVTr;
-	private NhanVien_DAO nv;
-	private KhachHang_DAO Khachhang_dao;
+	private DAO_NhanVien nv;
+	private DAO_KhachHang Khachhang_dao;
 	
 	
-	private NhanVien_DAO nhanVien_DAO;
+	private DAO_NhanVien nhanVien_DAO;
 	private JPanel panelTK;
 	private JButton btnTK;
 	private JButton btnTKDMK;
@@ -107,7 +107,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -168,15 +168,15 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 		}
 		
 		
-		Phong_dao  = new Phong_DAO();
-		Khachhang_dao = new KhachHang_DAO();
-		pdp = new PhieuDatPhong_DAO();
+		Phong_dao  = new DAO_Phong();
+		Khachhang_dao = new DAO_KhachHang();
+		pdp = new DAO_PhieuDatPhong();
 		dsP = Phong_dao.getalltbPhong();
 		dsKH = Khachhang_dao.getalltbKhachHang();
 		dsPDP = pdp.getAllTbPhieuDatPhong();
 		
 		panelTK = new JPanel();
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		nhanvien = nv1;
 		panel = new JPanel(null);
@@ -810,7 +810,7 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 				
 			
 		btnTim.addActionListener(new ActionListener() {
-			private Phong_DAO ph;
+			private DAO_Phong ph;
 			
 
 			public void actionPerformed(ActionEvent e) {
@@ -835,9 +835,9 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
 				// Thêm thông tin vào các textfield
 				if (!dsPDPTr.isEmpty()) { // Kiểm tra danh sách không rỗng trước khi thêm
 					for(int i = 0; i < dsPDPTr.size(); i++) {		
-						kh = new KhachHang_DAO();
-						nv = new NhanVien_DAO();
-						ph = new Phong_DAO();
+						kh = new DAO_KhachHang();
+						nv = new DAO_NhanVien();
+						ph = new DAO_Phong();
 						dsPDPTr.get(i).setKhachHang(kh.getKhachHangByMaKhachHang(dsPDPTr.get(i).getKhachHang().getmaKH()));
 						dsPDPTr.get(i).setNhanVien(nv.getNhanVienTheoMaNV(dsPDPTr.get(i).getNhanVien().getMaNV()));
 						dsPDPTr.get(i).setPhong(ph.getPhongTheoMaPhong(dsPDPTr.get(i).getPhong().getMaPhong()));
@@ -911,8 +911,8 @@ public class GUI_TraPhong extends JFrame implements ItemListener{
             
 			// set trạng thái phiếu đạt phòng thành đã hủy, phòng thành bảo trì
 			for (int i = 0; i < dsPDPTr.size(); i++) {
-				new PhieuDatPhong_DAO().updateTrangThaiPhieuDatPhong(dsPDPTr.get(i).getMaPhieu(), "Đã trả");
-				new Phong_DAO().updateTrangThaiPhong(dsPDPTr.get(i).getPhong().getMaPhong(), "Bảo trì");	
+				new DAO_PhieuDatPhong().updateTrangThaiPhieuDatPhong(dsPDPTr.get(i).getMaPhieu(), "Đã trả");
+				new DAO_Phong().updateTrangThaiPhong(dsPDPTr.get(i).getPhong().getMaPhong(), "Bảo trì");	
 			}
 			// Set trạng thái phiếu dịch vụ
 			for (int i = 0; i < dsPDVTr.size(); i++) {

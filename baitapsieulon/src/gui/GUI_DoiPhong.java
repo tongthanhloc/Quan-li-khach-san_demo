@@ -7,10 +7,10 @@ import javax.swing.border.LineBorder;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.DichVuTienIch;
 import entity.KhachHang;
 import entity.NhanVien;
@@ -53,7 +53,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
+	private DAO_Phong Phong_dao;
 
 	private JCheckBox chckbxPdon;
 	private JCheckBox chckbxPdoi;
@@ -65,8 +65,8 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 	static JTextField txtNgayN;
 	static JTextField txtNgayT;
 	static JTextField txtGioi;
-	static KhachHang_DAO khachHang_DAO;
-	static PhieuDatPhong_DAO phieuDatPhong_DAO;
+	static DAO_KhachHang khachHang_DAO;
+	static DAO_PhieuDatPhong phieuDatPhong_DAO;
 	static ArrayList<Phong> dsP;
 	static ArrayList<KhachHang> dsKH;
 	static ArrayList<PhieuDatPhong> dsPDP;
@@ -91,7 +91,7 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -151,16 +151,16 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		Phong_dao  = new Phong_DAO();
+		Phong_dao  = new DAO_Phong();
 		dsP = Phong_dao.getalltbPhong();
 		
-		khachHang_DAO = new KhachHang_DAO();
+		khachHang_DAO = new DAO_KhachHang();
 		dsKH = khachHang_DAO.getalltbKhachHang();
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		
-		nv_dao = new NhanVien_DAO();
+		nv_dao = new DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		panelTK = new JPanel();
 		
@@ -1258,16 +1258,16 @@ public class GUI_DoiPhong extends JFrame implements ItemListener{
 	
 	//update lại dữ liệu
 	public void updateData() {
-		Phong_dao  = new Phong_DAO();
+		Phong_dao  = new DAO_Phong();
 		dsP = Phong_dao.getalltbPhong();
 		soPhong = new String[dsP.size()];
 		for (int i = 0; i < dsP.size(); i++) {
 			soPhong[i] = dsP.get(i).getMaPhong();
 		}
-		khachHang_DAO = new KhachHang_DAO();
+		khachHang_DAO = new DAO_KhachHang();
 		dsKH = khachHang_DAO.getalltbKhachHang();
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		
 		

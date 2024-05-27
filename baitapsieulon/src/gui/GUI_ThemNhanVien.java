@@ -21,7 +21,7 @@ import java.awt.Image;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
+import dao.DAO_NhanVien;
 import entity.NhanVien;
 
 import javax.swing.JComboBox;
@@ -106,7 +106,7 @@ public class GUI_ThemNhanVien extends JFrame {
 				e.printStackTrace();
 		}
 		dsNV = new ArrayList<NhanVien>();
-		dsNV = new NhanVien_DAO().getNhanVienTiepTan();
+		dsNV = new DAO_NhanVien().getNhanVienTiepTan();
 		
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -390,7 +390,7 @@ public class GUI_ThemNhanVien extends JFrame {
 					if (dsNV.contains(nv1)) {
 						JOptionPane.showMessageDialog(null, "Nhân viên đã tồn tại");
 					} else {
-						new NhanVien_DAO().themNhanVien(nv1);
+						new DAO_NhanVien().themNhanVien(nv1);
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công");
 						dispose();
 					}
@@ -661,7 +661,7 @@ public class GUI_ThemNhanVien extends JFrame {
 	}
 	public ArrayList<NhanVien> timKiemNhanVien(ArrayList<NhanVien> dsnv) {
 	    // Create a new list to store the search results
-		ArrayList<NhanVien> ListNV = new NhanVien_DAO().getNhanVienTiepTan();
+		ArrayList<NhanVien> ListNV = new DAO_NhanVien().getNhanVienTiepTan();
 		ArrayList<NhanVien> searchResults = new ArrayList<>();
 		// Get the search term from the search text field
 		

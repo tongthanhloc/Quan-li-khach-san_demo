@@ -36,7 +36,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
+import dao.DAO_NhanVien;
 import entity.KhachHang;
 import entity.NhanVien;
 
@@ -65,7 +65,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	private JTable tableNV;
 	private JTextField txtTuoi;
 	private JComboBox comboBox;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private Object rowData;
 	static DefaultTableModel model;
 	private LocalDate decimalFormat;
@@ -137,7 +137,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getNhanVienTiepTan();
 		setIconImage(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
@@ -158,7 +158,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 			e.printStackTrace();
 		}
 		
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {
@@ -688,7 +688,7 @@ if(clickedButton == btnTrangChu) {
       		        chiTietNhanVien.setAlwaysOnTop(true);
       		        }
                 }else if(clickedButton == btnThem) {
-                	NhanVien_DAO NhanVienfull= new NhanVien_DAO();
+                	DAO_NhanVien NhanVienfull= new DAO_NhanVien();
                 	ArrayList<NhanVien> ListNVfull = NhanVienfull.getNhanVienTiepTan();
                 	int count = ListNVfull.size()+2;
                 	//tao ma nhan vien co dang NV0000001

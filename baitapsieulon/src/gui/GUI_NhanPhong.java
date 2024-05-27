@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatPhong;
@@ -61,15 +61,15 @@ public class GUI_NhanPhong extends JFrame{
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
+	private DAO_Phong Phong_dao;
 	
 	private JPanel panelKH;
 	private JTextField txtGT;
 	private JButton btnTim;
 	private ArrayList<Phong> dsP;
-	private KhachHang_DAO khachHang_DAO;
+	private DAO_KhachHang khachHang_DAO;
 	private ArrayList<KhachHang> dsKH;
-	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private DAO_PhieuDatPhong phieuDatPhong_DAO;
 	private ArrayList<PhieuDatPhong> dsPDP;
 	private JPanel outerPanel;
 	private JPanel panel;
@@ -99,7 +99,7 @@ public class GUI_NhanPhong extends JFrame{
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -162,13 +162,13 @@ public class GUI_NhanPhong extends JFrame{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		Phong_DAO Phong_dao  = new Phong_DAO();
+		DAO_Phong Phong_dao  = new DAO_Phong();
 		ArrayList<Phong> dsP = Phong_dao.getalltbPhong();
 		
-		khachHang_DAO = new KhachHang_DAO();
+		khachHang_DAO = new DAO_KhachHang();
 		dsKH = khachHang_DAO.getalltbKhachHang();
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		for (int i = 0; i < dsPDP.size(); i++) {
 			if (dsPDP.get(i).getTrangThai().contains("Đã đặt")&&dsPDP.get(i).getThoiGianNhan().compareTo(LocalDate.now())<0) {
@@ -184,7 +184,7 @@ public class GUI_NhanPhong extends JFrame{
 		panel = new JPanel(null);
 		getContentPane().add(panelTK);
 		
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		for (NhanVien nhanVien : ListNV) {
 			if (nhanVien.getMaNV().equals(nv.getMaNV())) {

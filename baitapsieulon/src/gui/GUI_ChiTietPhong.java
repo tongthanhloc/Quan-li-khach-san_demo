@@ -16,9 +16,9 @@ import javax.swing.border.TitledBorder;
 
 import connectDB.ConnectDB;
 import dao.DAO_PhieuDatDichVu;
-import dao.KhachHang_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatDichVu;
@@ -64,7 +64,7 @@ public class GUI_ChiTietPhong extends JFrame {
 	private JTextField txtNgayTraPhong;
 	private JTextField txtSoNguoiO;
 	private String maphongcustom;
-	private Phong_DAO phong;
+	private DAO_Phong phong;
 	private Phong ph;
 	private PhieuDatPhong pdp;
 	private KhachHang kh;
@@ -102,7 +102,7 @@ public class GUI_ChiTietPhong extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		phong = new Phong_DAO();
+		phong = new DAO_Phong();
 	    ph  = phong.getPhongTheoMaPhong(maphongcustom);
 	    pddv = new DAO_PhieuDatDichVu();
 	    
@@ -289,8 +289,8 @@ public class GUI_ChiTietPhong extends JFrame {
 				// nếu là trạng thái phòng là bảo trì thì set lại trạng thái phòng trống
 				if (ph.getTrangThai().equals("Bảo trì")) {
 					pTop.setBackground(new Color(5, 207, 251));
-					ph = new Phong_DAO().getPhongTheoMaPhong(maphongcustom);
-					new Phong_DAO().updateTrangThaiPhong(maphongcustom, "Trống");
+					ph = new DAO_Phong().getPhongTheoMaPhong(maphongcustom);
+					new DAO_Phong().updateTrangThaiPhong(maphongcustom, "Trống");
 					// Đóng cửa sổ hiện tại
 					new GUI_QuanLiDatPhong(nv).setVisible(false);
 					// Mở GUI_QuanLiDatPhong mới
@@ -307,8 +307,8 @@ public class GUI_ChiTietPhong extends JFrame {
 				// nếu là trạng thái phòng là trống thì set lại trạng thái phòng bảo trì
 				if (ph.getTrangThai().equals("Trống")) {
 					pTop.setBackground(new Color(251, 193, 146));
-					ph = new Phong_DAO().getPhongTheoMaPhong(maphongcustom);
-					new Phong_DAO().updateTrangThaiPhong(maphongcustom, "Bảo trì");
+					ph = new DAO_Phong().getPhongTheoMaPhong(maphongcustom);
+					new DAO_Phong().updateTrangThaiPhong(maphongcustom, "Bảo trì");
 					// Đóng cửa sổ hiện tại
 					new GUI_QuanLiDatPhong(nv).setVisible(false);
 					// Mở GUI_QuanLiDatPhong mới
@@ -490,8 +490,8 @@ public class GUI_ChiTietPhong extends JFrame {
         
         
         
-        Phong_DAO phong_DAO = new Phong_DAO();
-        KhachHang_DAO khachHang_DAO = new KhachHang_DAO();
+        DAO_Phong phong_DAO = new DAO_Phong();
+        DAO_KhachHang khachHang_DAO = new DAO_KhachHang();
         
        
       
@@ -583,11 +583,11 @@ public class GUI_ChiTietPhong extends JFrame {
 	 public void setThongtin() {
 		 // set trạng thái của phòng nếu đã thuê và đẵ đặt thì set txt
 		 if (ph.getTrangThai().equals("Đã thuê")) {
-				pdp = new PhieuDatPhong_DAO().getPhieuDatPhongTheoMaPhongVaTrangThai(maphongcustom,"Đã nhận");
+				pdp = new DAO_PhieuDatPhong().getPhieuDatPhongTheoMaPhongVaTrangThai(maphongcustom,"Đã nhận");
 				System.out.println(pdp.getKhachHang().getmaKH());
 				System.out.println(maphongcustom);
 				String ma = pdp.getKhachHang().getmaKH();
-		        kh = new KhachHang_DAO().getKhachHangByMaKhachHang(ma);
+		        kh = new DAO_KhachHang().getKhachHangByMaKhachHang(ma);
 				txtMaKhachHang.setText(kh.getmaKH());
 				txtHoTen.setText(kh.getHoTen());
 				// tuổi = năm hiện tại - năm sinh
@@ -605,11 +605,11 @@ public class GUI_ChiTietPhong extends JFrame {
 				
 			}
 			if (ph.getTrangThai().equals("Đã đặt")) {
-				pdp = new PhieuDatPhong_DAO().getPhieuDatPhongTheoMaPhongVaTrangThai(maphongcustom, "Đã đặt");
+				pdp = new DAO_PhieuDatPhong().getPhieuDatPhongTheoMaPhongVaTrangThai(maphongcustom, "Đã đặt");
 				System.out.println(pdp.getKhachHang().getmaKH());
 				System.out.println(maphongcustom);
 				String ma = pdp.getKhachHang().getmaKH();
-				kh = new KhachHang_DAO().getKhachHangByMaKhachHang(ma);
+				kh = new DAO_KhachHang().getKhachHangByMaKhachHang(ma);
 				txtMaKhachHang.setText(kh.getmaKH());
 				txtHoTen.setText(kh.getHoTen());
 				// tuổi = năm hiện tại - năm sinh

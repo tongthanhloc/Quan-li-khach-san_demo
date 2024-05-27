@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
+import dao.DAO_NhanVien;
 import entity.NhanVien;
 
 import java.awt.Panel;
@@ -40,7 +40,7 @@ public class GUI_TrangChu extends JFrame {
 	static NhanVien nhanvien;
 	
 	private ArrayList<NhanVien> ListNV;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private JButton btnTrangChu;
 	private JButton btnQLP;
 	private JButton btnQLHD;
@@ -103,7 +103,7 @@ public class GUI_TrangChu extends JFrame {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		
 		for (NhanVien nhanVien : ListNV) {

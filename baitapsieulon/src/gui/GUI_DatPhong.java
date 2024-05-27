@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.DichVuTienIch;
 import entity.KhachHang;
 import entity.NhanVien;
@@ -67,15 +67,15 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
+	private DAO_Phong Phong_dao;
 	private JComboBox<String> cbPhongBan;
 	private JCheckBox chckbxPdon;
 	private JCheckBox chckbxPdoi;
 	private JCheckBox chckbxPVip;
 	
 	private JPanel panelKH;
-	private KhachHang_DAO khachHang_DAO;
-	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private DAO_KhachHang khachHang_DAO;
+	private DAO_PhieuDatPhong phieuDatPhong_DAO;
 	private JDateChooser dateNhanP;
 	private JDateChooser dateTraP;
 	private String maNV;
@@ -84,7 +84,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private ArrayList<KhachHang> dsKH;
 	private ArrayList<Phong> dsP;
 	
-	private NhanVien_DAO nhanVien_DAO;
+	private DAO_NhanVien nhanVien_DAO;
 	private Object dsNV;
 	
 	
@@ -110,7 +110,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -176,16 +176,16 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}
 		
 		
-		Phong_dao  = new Phong_DAO();
+		Phong_dao  = new DAO_Phong();
 		dsP = Phong_dao.getalltbPhong();
 		
-		khachHang_DAO = new KhachHang_DAO();
+		khachHang_DAO = new DAO_KhachHang();
 		dsKH = khachHang_DAO.getalltbKhachHang();
 		
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		
-		nhanVien_DAO = new NhanVien_DAO();
+		nhanVien_DAO = new DAO_NhanVien();
 		dsNV = nhanVien_DAO.getalltbNhanVien();
 		
 		ListNV = nhanVien_DAO.getalltbNhanVien();
@@ -196,7 +196,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}
 		
 		panelTK = new JPanel();
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nhanVien_DAO.getalltbNhanVien();
 		nhanvien = nv;
 		panel = new JPanel(null);
@@ -882,7 +882,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			String ngaybd1 = sdf.format(ngaybd);
 			String ngaykt1 = sdf.format(ngaykt);
 			ArrayList<String> dsPhong = new ArrayList<String>();
-			dsPhong = PhieuDatPhong_DAO.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
+			dsPhong = DAO_PhieuDatPhong.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
 			
 		 // chạy hết dsPhong da lay ra
 			for (int i = 0; i < dsPhong.size(); i++) {
@@ -906,7 +906,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			String ngaybd1 = sdf.format(ngaybd);
 			String ngaykt1 = sdf.format(ngaykt);
 			ArrayList<String> dsPhong = new ArrayList<String>();
-			dsPhong = PhieuDatPhong_DAO.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
+			dsPhong = DAO_PhieuDatPhong.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
 			
 		 // chạy hết dsPhong da lay ra
 			for (int i = 0; i < dsPhong.size(); i++) {
@@ -929,7 +929,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 			String ngaybd1 = sdf.format(ngaybd);
 			String ngaykt1 = sdf.format(ngaykt);
 			ArrayList<String> dsPhong = new ArrayList<String>();
-			dsPhong = PhieuDatPhong_DAO.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
+			dsPhong = DAO_PhieuDatPhong.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
 			
 			            // chạy hết dsPhong da lay ra
 			for (int i = 0; i < dsPhong.size(); i++) {
@@ -1129,7 +1129,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	
 	
 	public void ThemPhong(String maphongktra) {
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		LocalDate thoiGianNhan = dateNhanP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate thoiGianTra = dateTraP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

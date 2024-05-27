@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.DichVuTienIch;
 import entity.KhachHang;
 import entity.NhanVien;
@@ -53,17 +53,17 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 	private String maphongs[]=null;
 	private int trangTs[]=null;
 	private String tens[]=null;
-	private Phong_DAO Phong_dao;
+	private DAO_Phong Phong_dao;
 	private JComboBox<String> cbPhongBan;
-	private KhachHang_DAO khachHang_DAO;
-	private PhieuDatPhong_DAO phieuDatPhong_DAO;
+	private DAO_KhachHang khachHang_DAO;
+	private DAO_PhieuDatPhong phieuDatPhong_DAO;
 	private String maNV;
 	private String tenNV;
 	private ArrayList<PhieuDatPhong> dsPDP;
 	private ArrayList<KhachHang> dsKH;
 	private ArrayList<Phong> dsP;
 	
-	private NhanVien_DAO nhanVien_DAO;
+	private DAO_NhanVien nhanVien_DAO;
 	private Object dsNV;
 	
 	
@@ -89,7 +89,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JButton btnHT;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private ArrayList<NhanVien> ListNV;
 	private GUI_QuanLiDatPhong qlp;
 	private GUI_QuanLiHoaDon qlhd;
@@ -158,12 +158,12 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		phieuDatPhong_DAO = new PhieuDatPhong_DAO();
+		phieuDatPhong_DAO = new DAO_PhieuDatPhong();
 		dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
 		
 		
 		panelTK = new JPanel();
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		
 		ListNV = nv_dao.getalltbNhanVien();
 		nhanvien = nv;

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.NhanVien;
 
-public class NhanVien_DAO {
-	public NhanVien_DAO() {
+public class DAO_NhanVien {
+	public DAO_NhanVien() {
 		
 	}
 

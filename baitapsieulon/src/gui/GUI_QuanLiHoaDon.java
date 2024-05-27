@@ -21,10 +21,10 @@ import com.toedter.calendar.JDateChooser;
 import connectDB.ConnectDB;
 import dao.DAO_HoaDon;
 import dao.DAO_PhieuDatDichVu;
-import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
-import dao.PhieuDatPhong_DAO;
-import dao.Phong_DAO;
+import dao.DAO_KhachHang;
+import dao.DAO_NhanVien;
+import dao.DAO_PhieuDatPhong;
+import dao.DAO_Phong;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhachHang;
@@ -52,7 +52,7 @@ public class GUI_QuanLiHoaDon extends JFrame{
 static NhanVien nhanvien;
 	
 	private ArrayList<NhanVien> ListNV;
-	private NhanVien_DAO nv_dao;
+	private DAO_NhanVien nv_dao;
 	private JButton btnTrangChu;
 	private JButton btnQLP;
 	private JButton btnQLHD;
@@ -84,11 +84,11 @@ static NhanVien nhanvien;
 	private JDateChooser dateNgaylap;
 	private DAO_HoaDon hd_dao;
 	private ArrayList<HoaDon> listtHD;
-	private PhieuDatPhong_DAO pdp_dao;
+	private DAO_PhieuDatPhong pdp_dao;
 	private ArrayList<PhieuDatPhong> listpdp;
 	private DAO_PhieuDatDichVu pddv_dao;
 	private ArrayList<PhieuDatDichVu> listpddv;
-	private KhachHang_DAO kh_dao;
+	private DAO_KhachHang kh_dao;
 	private ArrayList<KhachHang> listKH;
 	private String tien;
 	/**
@@ -125,15 +125,15 @@ static NhanVien nhanvien;
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		nv_dao = new  NhanVien_DAO();
+		nv_dao = new  DAO_NhanVien();
 		ListNV = nv_dao.getalltbNhanVien();
 		hd_dao = new DAO_HoaDon();
 		listtHD = hd_dao.getalltbHoaDon();
-		pdp_dao = new PhieuDatPhong_DAO();
+		pdp_dao = new DAO_PhieuDatPhong();
 		listpdp = pdp_dao.getAllTbPhieuDatPhong();
 		pddv_dao = new DAO_PhieuDatDichVu();
 		listpddv = pddv_dao.getDSPhieuDatDichVu();
-		kh_dao = new KhachHang_DAO();
+		kh_dao = new DAO_KhachHang();
 		listKH = kh_dao.getalltbKhachHang();
 		
 		
@@ -580,7 +580,7 @@ static NhanVien nhanvien;
 					}
 					ArrayList<PhieuDatPhong> listPDP = new ArrayList<PhieuDatPhong>();
 					ArrayList<PhieuDatDichVu> listPDDV = new ArrayList<PhieuDatDichVu>();
-				    Phong_DAO dao_p = new Phong_DAO();
+				    DAO_Phong dao_p = new DAO_Phong();
 					ArrayList<Phong> listp = dao_p.getalltbPhong();
 					for (PhieuDatPhong pdp : listpdp) {
 						if (pdp.getHoaDon().getMaHoaDon()== null) {

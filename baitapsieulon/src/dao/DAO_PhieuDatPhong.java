@@ -17,9 +17,9 @@ import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
-public class PhieuDatPhong_DAO {
+public class DAO_PhieuDatPhong {
 	
-	public PhieuDatPhong_DAO() {
+	public DAO_PhieuDatPhong() {
 
 	}
 	public ArrayList<PhieuDatPhong> getAllTbPhieuDatPhong(){

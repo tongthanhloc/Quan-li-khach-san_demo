@@ -12,8 +12,8 @@ import entity.KhachHang;
 import entity.NhanVien;
 import entity.TaiKhoan;
 
-public class TaiKhoan_DAO {
-	public TaiKhoan_DAO() {
+public class DAO_TaiKhoan {
+	public DAO_TaiKhoan() {
 	}
 
 	public ArrayList<TaiKhoan> getTaiKhoan(){
