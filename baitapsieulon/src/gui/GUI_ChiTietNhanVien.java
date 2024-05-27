@@ -47,8 +47,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 
-public class Frm_ThemNhanVien extends JFrame {
-
+public class GUI_ChiTietNhanVien extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -72,12 +71,13 @@ public class Frm_ThemNhanVien extends JFrame {
 	private JButton btnChonAnh;
 	private JPanel imagePanel;
 	private JLabel lblAnh;
+	private JButton btnKhoiPhuc;
+	private JButton btnXaTrng;
 	private JTextField txtCCCD;
 	private JDateChooser dateNgayVaoLam;
 	private JDateChooser dateNgayNghiLam;
-	private JButton btnThemNV;
-	private JButton btnXaTrng;
-	private ArrayList<NhanVien> dsNV;
+	private JButton btnCpNht;
+	static ArrayList list;
 
 	/**
 	 * Launch the application.
@@ -86,7 +86,7 @@ public class Frm_ThemNhanVien extends JFrame {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
-//					Frm_ThemNhanVien frame = new Frm_ThemNhanVien();
+//					Frm_ChiTietNhanVien frame = new Frm_ChiTietNhanVien();
 //					frame.setVisible(true);
 //				} catch (Exception e) {
 //					e.printStackTrace();
@@ -99,22 +99,21 @@ public class Frm_ThemNhanVien extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public Frm_ThemNhanVien(String maNV) {
+	public GUI_ChiTietNhanVien(String maNV) {
 		try {
 			ConnectDB.getInstance().connect();
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
-		dsNV = new ArrayList<NhanVien>();
-		dsNV = new NhanVien_DAO().getNhanVienTiepTan();
-		
+		nv = new NhanVien_DAO().getNhanVienTheoMaNV(maNV);
+		System.out.println(nv);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setBounds(100, 100, 591, 709);
 		setLocationRelativeTo(null);
 		setTitle("Chi tiết nhân viên");
 		setResizable(false);
-		getContentPane().setLayout(null);
+		setLayout(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -158,8 +157,6 @@ public class Frm_ThemNhanVien extends JFrame {
 		
 		txtmaNV = new JTextField();
 		txtmaNV.setBounds(119, 21, 230, 22);
-		txtmaNV.setEditable(false);
-		txtmaNV.setText(maNV);
 		panel.add(txtmaNV);
 		txtmaNV.setColumns(10);
 		
@@ -205,8 +202,6 @@ public class Frm_ThemNhanVien extends JFrame {
 		
 		pnAnh = new JPanel();
 		pnAnh.setBounds(371, 21, 127, 161);
-		lblAnh = new JLabel();
-		pnAnh.add(lblAnh);
 		panel.add(pnAnh);
 		
 		btnChonAnh = new JButton("Chọn Ảnh");
@@ -326,12 +321,17 @@ public class Frm_ThemNhanVien extends JFrame {
 		lblNewLabel_3.setBounds(12, 87, 79, 16);
 		panel_3.add(lblNewLabel_3);
 		
-		btnThemNV = new JButton("Thêm nhân viên");
-		btnThemNV.setFont(new Font("Dialog", Font.BOLD, 13));
-		btnThemNV.setForeground(new Color(255, 255, 255));
-		btnThemNV.setBackground(new Color(55, 149, 128));
-		btnThemNV.setBounds(29, 618, 258, 45);
-		contentPane.add(btnThemNV);
+		btnCpNht = new JButton("Cập Nhật");
+		btnCpNht.setForeground(new Color(255, 255, 255));
+		btnCpNht.setBackground(new Color(55, 149, 128));
+		btnCpNht.setBounds(29, 618, 162, 45);
+		contentPane.add(btnCpNht);
+		
+		btnXaTrng = new JButton("Xóa trắng");
+		btnXaTrng.setForeground(new Color(255, 255, 255));
+		btnXaTrng.setBackground(new Color(55, 149, 128));
+		btnXaTrng.setBounds(209, 618, 162, 45);
+		contentPane.add(btnXaTrng);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(164, 194, 163));
@@ -347,15 +347,41 @@ public class Frm_ThemNhanVien extends JFrame {
 		panel_5.add(lblNewLabel_4);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		
-		btnXaTrng = new JButton("Xóa trắng");
-		btnXaTrng.setFont(new Font("Dialog", Font.BOLD, 13));
-		btnXaTrng.setForeground(Color.WHITE);
-		btnXaTrng.setBackground(new Color(55, 149, 128));
-		btnXaTrng.setBounds(292, 618, 258, 45);
-		contentPane.add(btnXaTrng);
+		btnKhoiPhuc = new JButton("Khôi Phục");
+		btnKhoiPhuc.setForeground(Color.WHITE);
+		btnKhoiPhuc.setBackground(new Color(55, 149, 128));
+		btnKhoiPhuc.setBounds(388, 618, 162, 45);
+		contentPane.add(btnKhoiPhuc);
+		if (nv != null) {
+			hienThiDuLieu(nv);
+		} else {
+			txtmaNV.setText(maNV);
+		}
+		
+		btnXaTrng.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtmaNV.setText("");
+				txthoTen.setText("");
+				txtCCCD.setText("");
+				txtviTri.setText("");
+				txtTuoi.setText("");
+				txtHeSoLuong.setText("");
+				txtLuongCoBan.setText("");
+				txtTongLuong.setText("");
+				txtSDT.setText("");
+				txtEmail.setText("");
+				txtDiaChi.setText("");
+				txtTrinhDo.setText("");
+                dateNgaySinh.setDate(null);
+                dateNgayVaoLam.setDate(null);
+                dateNgayNghiLam.setDate(null);
+				lblAnh.setIcon(null);
+			}
+		});
 		btnChonAnh.addActionListener(new ActionListener() {
 			
 			private String duongDan;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -366,7 +392,7 @@ public class Frm_ThemNhanVien extends JFrame {
 	                FileNameExtensionFilter filter = new FileNameExtensionFilter("Hình ảnh", "jpg", "jpeg", "png", "gif");
 	                fileChooser.setFileFilter(filter);
 
-	                int result = fileChooser.showOpenDialog(Frm_ThemNhanVien.this);
+	                int result = fileChooser.showOpenDialog(GUI_ChiTietNhanVien.this);
 
 	                // Kiểm tra xem người dùng đã chọn một tệp hay không
 	                if (result == JFileChooser.APPROVE_OPTION) {
@@ -379,7 +405,27 @@ public class Frm_ThemNhanVien extends JFrame {
 				
 			}
 		});
-		btnThemNV.addActionListener(new ActionListener() {
+		btnKhoiPhuc.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        hienThiDuLieu(nv);
+		        byte[] imageData = nv.getAnhDaiDien();
+		        ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+		        Image image = null;
+		        try {
+		            image = ImageIO.read(bis);
+		        } catch (IOException ee) {
+		            ee.printStackTrace();
+		        }
+		        Image scaledImage = image.getScaledInstance(127, 161, Image.SCALE_SMOOTH);
+		        lblAnh.setIcon(new ImageIcon(scaledImage));
+		        pnAnh.removeAll(); // Xóa tất cả các thành phần hiện có trên JPanel
+		        pnAnh.add(lblAnh); // Thêm JLabel vào JPanel
+		        pnAnh.revalidate(); // Cập nhật giao diện của JPanel
+		        pnAnh.repaint(); // Vẽ lại JPanel
+		    }
+		});
+		btnCpNht.addActionListener(new ActionListener() {
 
 			
 
@@ -387,47 +433,47 @@ public class Frm_ThemNhanVien extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (vailData() == true) {
 					NhanVien nv1 = getData();
-					if (dsNV.contains(nv1)) {
-						JOptionPane.showMessageDialog(null, "Nhân viên đã tồn tại");
+					if (!(nv1.getMaNV().equals(nv.getMaNV()))) {
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng mã nhân viên ban đầu");
+						return;
 					} else {
-						new NhanVien_DAO().themNhanVien(nv1);
-						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công");
-						dispose();
+						if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật nhân viên này không?","Xác nhận",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							try {
+								new NhanVien_DAO().capNhatNhanVien(nv1);
+								GUI_QuanLiNhanVien.model.setRowCount(0);
+								JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+								//giai phong bo nho
+								GUI_QuanLiNhanVien.ListNV.clear();
+								//lay lai danh sach nhan vien
+								GUI_QuanLiNhanVien.ListNV = new NhanVien_DAO().getNhanVienTiepTan();
+								GUI_QuanLiNhanVien.dsnv = timKiemNhanVien(GUI_QuanLiNhanVien.dsnv);
+								//cap nhat lai bang
+								GUI_QuanLiNhanVien.updateModel(GUI_QuanLiNhanVien.dsnv);
+								for (NhanVien NVV : GUI_QuanLiNhanVien.ListNV) {
+									if (NVV.getMaNV().equals(nv1.getMaNV())) {
+										nv = NVV;
+										break;
+									}
+								}
+								GUI_QuanLiNhanVien.chiTietNhanVien.setVisible(false);
+								GUI_QuanLiNhanVien.chiTietNhanVien=new GUI_ChiTietNhanVien(nv.getMaNV());
+								
+								GUI_QuanLiNhanVien.chiTietNhanVien.setVisible(true);
+							} catch (Exception e2) {
+								e2.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+							}
+						} else {
+							return;
+						}
 					}
-					
-
 				} else {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên không thành công");
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng thông tin");
 				}
-			}
-		});
-		btnXaTrng.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				txtmaNV.setText("");
-				txthoTen.setText("");
-				txtviTri.setText("");
-				txtTuoi.setText("");
-				txtTrinhDo.setText("");
-				txtSDT.setText("");
-				txtEmail.setText("");
-				txtDiaChi.setText("");
-				txtHeSoLuong.setText("");
-				txtLuongCoBan.setText("");
-				txtTongLuong.setText("");
-				dateNgaySinh.setDate(null);
-				dateNgayVaoLam.setDate(null);
-				dateNgayNghiLam.setDate(null);
-				comboBoxTT.setSelectedIndex(0);
-				rdNam.setSelected(true);
-				lblAnh.setIcon(null);
 			}
 		});
 	}
-	
-	
 	
 	private void hienThiHinhAnh(String duongDan) {
 	    try {
@@ -514,10 +560,23 @@ public class Frm_ThemNhanVien extends JFrame {
 		String email = txtEmail.getText();
 		String diaChi = txtDiaChi.getText();
 		String trinhDo = txtTrinhDo.getText();
-		String ngayVaoLam = dateNgayVaoLam.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate().toString();
+		String ngayVaoLam = null;
+		if(dateNgayVaoLam.getDate()!= null) {
+			ngayVaoLam = dateNgayVaoLam.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate().toString();
+		} else {
+			return false;
+		}
+		
 		String heSoLuong = txtHeSoLuong.getText();
 		String luongCoBan = txtLuongCoBan.getText();
-		LocalDate ngaySinh = dateNgaySinh.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
+		
+		LocalDate ngaySinh = null;
+		if(dateNgaySinh.getDate()!= null
+		) {
+			ngaySinh = dateNgaySinh.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
+		}else {
+			return false;
+		}
 		if (!(maNV.length() > 0 && maNV.matches("^NV\\d{7}$"))){
 			JOptionPane.showMessageDialog(null, "Mã nhân viên không hợp lệ");
             txtmaNV.requestFocus();

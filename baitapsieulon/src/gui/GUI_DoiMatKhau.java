@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.Panel;
 
-public class DoiMatKhau extends JFrame {
+public class GUI_DoiMatKhau extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -52,7 +52,7 @@ public class DoiMatKhau extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DoiMatKhau frame = new DoiMatKhau();
+					GUI_DoiMatKhau frame = new GUI_DoiMatKhau();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,9 +65,9 @@ public class DoiMatKhau extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DoiMatKhau() {
+	public GUI_DoiMatKhau() {
 		
-		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
+		setIconImage(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		
 		setBounds(0,0,1080,720);
@@ -112,7 +112,7 @@ public class DoiMatKhau extends JFrame {
 		JLabel logo = new JLabel("");
 		logo.setBounds(29,128, 397, 400);
 		contentPane.add(logo);
-		ImageIcon originalIcon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(dangnhap.class.getResource("/img/logo.png")));
+		ImageIcon originalIcon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(GUI_DangNhap.class.getResource("/img/logo.png")));
 		Image scaledImage = originalIcon.getImage().getScaledInstance(397, 400, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 		logo.setIcon(scaledIcon);

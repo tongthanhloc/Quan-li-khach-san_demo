@@ -72,8 +72,8 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	private java.lang.String maNVChon;
 	static ArrayList<NhanVien> ListNV;
 	static ArrayList<NhanVien> dsnv;
-	static Frm_ChiTietNhanVien chiTietNhanVien;
-	static Frm_ThemNhanVien themNhanVien;
+	static GUI_ChiTietNhanVien chiTietNhanVien;
+	static GUI_hemNhanVien themNhanVien;
 	
 	
 	
@@ -137,7 +137,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		}
 		nv_dao = new  NhanVien_DAO();
 		ListNV = nv_dao.getNhanVienTiepTan();
-		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
+		setIconImage(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1920,1080);
@@ -201,7 +201,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		
 		JLabel logo = new JLabel("");
 		logo.setHorizontalAlignment(SwingConstants.CENTER);
-		logo.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
+		logo.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
 		logo.setBounds(0, 0, 250, 150);
 		panel_top.add(logo);
 		
@@ -214,7 +214,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		btnTK.setBackground(new Color(41, 139, 116));
 		btnTK.setBounds(1647, 11, 247, 40);
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
@@ -524,11 +524,11 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		tableHD.setBackground(new Color(232,234,214));
 	
 		JTableHeader headers = tableHD.getTableHeader();
-		Font headerFont = new Font("Tahoma", Font.PLAIN, 20);
+		Font headerFont = new Font("Tahoma", Font.PLAIN, 25);
 		headers.setFont(headerFont);
 		headers.setBackground(new Color(164, 194, 163));
 	
-		tableHD.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tableHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 	
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -603,13 +603,13 @@ if(clickedButton == btnTrangChu) {
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());
 				}if(clickedButton == btnTKDX) {
-					dangnhap dn = new dangnhap();
+					GUI_DangNhap dn = new GUI_DangNhap();
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
 					
 				}if(clickedButton == btnTKDMK) {
-					DoiMatKhau dmk = new DoiMatKhau();
+					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
 					dmk.txttendangnhap.setEditable(false);
 					dmk.setVisible(true);
@@ -668,7 +668,7 @@ if(clickedButton == btnTrangChu) {
                 		JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xem");
                 	} else {
                 	
-      		        chiTietNhanVien= new Frm_ChiTietNhanVien(maNVChon);
+      		        chiTietNhanVien= new GUI_ChiTietNhanVien(maNVChon);
       		        chiTietNhanVien.setVisible(true);
       		        chiTietNhanVien.setAlwaysOnTop(true);
       		        }
@@ -693,7 +693,7 @@ if(clickedButton == btnTrangChu) {
 					} else {
 						maNV += count;
 					}
-                	themNhanVien = new Frm_ThemNhanVien(maNV);
+                	themNhanVien = new GUI_hemNhanVien(maNV);
                 	
                 	themNhanVien.setVisible(true);
                 	themNhanVien.setAlwaysOnTop(true);

@@ -126,12 +126,12 @@ public class GUI_ManHinhCho {
         
         
         JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logoiuh.png")).getImage().getScaledInstance(76, 76, java.awt.Image.SCALE_SMOOTH)));
+        lblNewLabel_2.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/logoiuh.png")).getImage().getScaledInstance(76, 76, java.awt.Image.SCALE_SMOOTH)));
         lblNewLabel_2.setBounds(0, 0, 76, 76);
         panel.add(lblNewLabel_2);
         
         JLabel lblNewLabel_2_1 = new JLabel("");
-        lblNewLabel_2_1.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(76, 60, java.awt.Image.SCALE_SMOOTH)));
+        lblNewLabel_2_1.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(76, 60, java.awt.Image.SCALE_SMOOTH)));
         lblNewLabel_2_1.setBounds(488, 0, 76, 76);
         panel.add(lblNewLabel_2_1);
         
@@ -148,7 +148,7 @@ public class GUI_ManHinhCho {
             public void actionPerformed(ActionEvent e) {
                 // Hiển thị cửa sổ khi thời gian đã đến
                 frame.dispose();
-                new dangnhap().setVisible(true);
+                new GUI_DangNhap().setVisible(true);
             }
         });
         timer.setRepeats(false); // Không lặp lại

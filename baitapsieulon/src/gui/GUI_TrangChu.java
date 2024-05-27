@@ -113,7 +113,7 @@ public class GUI_TrangChu extends JFrame {
 			}
 		}
 		
-		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
+		setIconImage(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1920,1080);
 		setLocationRelativeTo(null);
@@ -130,7 +130,7 @@ public class GUI_TrangChu extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBackground(new Color(255, 255, 255));
-		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/hinhnentrangchu.png")).getImage().getScaledInstance(1654, 891, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/hinhnentrangchu.png")).getImage().getScaledInstance(1654, 891, java.awt.Image.SCALE_SMOOTH)));
 		lblNewLabel_1.setBounds(250, 150, 1654, 891);
 		contentPane.add(lblNewLabel_1);
 		
@@ -160,7 +160,7 @@ public class GUI_TrangChu extends JFrame {
 		
 		JLabel logo = new JLabel("");
 		logo.setHorizontalAlignment(SwingConstants.CENTER);
-		logo.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
+		logo.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
 		logo.setBounds(0, 0, 250, 150);
 		panel_top.add(logo);
 		
@@ -173,7 +173,7 @@ public class GUI_TrangChu extends JFrame {
 		btnTK.setBackground(new Color(41, 139, 116));
 		btnTK.setBounds(1647, 11, 247, 40);
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
@@ -380,7 +380,7 @@ public class GUI_TrangChu extends JFrame {
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());
 				}if(clickedButton == btnTKDX) {
-					dangnhap dn = new dangnhap();
+					GUI_DangNhap dn = new GUI_DangNhap();
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
@@ -400,7 +400,7 @@ public class GUI_TrangChu extends JFrame {
 		                    System.out.println("Desktop is not supported");
 		                }
 				}if(clickedButton == btnTKDMK) {
-					DoiMatKhau dmk = new DoiMatKhau();
+					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
 					dmk.txttendangnhap.setEditable(false);
 					dmk.setVisible(true);

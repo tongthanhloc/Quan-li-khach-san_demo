@@ -116,7 +116,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI_QuanLiKhachHang(NhanVien nv) {
-		setIconImage(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
+		setIconImage(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(100,100, java.awt.Image.SCALE_SMOOTH));
 		setTitle("Quản lý khách sạn");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1920,1080);
@@ -174,7 +174,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		
 		JLabel logo = new JLabel("");
 		logo.setHorizontalAlignment(SwingConstants.CENTER);
-		logo.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
+		logo.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/logo.png")).getImage().getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH)));
 		logo.setBounds(0, 0, 250, 150);
 		panel_top.add(logo);
 		
@@ -187,7 +187,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		btnTK.setBackground(new Color(41, 139, 116));
 		btnTK.setBounds(1647, 11, 247, 40);
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(dangnhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(GUI_DangNhap.class.getResource("/img/account-icon.png")).getImage().getScaledInstance(35,35, java.awt.Image.SCALE_SMOOTH)));
 		btnTK.add(lblNewLabel);
 		panel_top.add(btnTK);
 		
@@ -455,6 +455,7 @@ public class GUI_QuanLiKhachHang extends JFrame {
 		cbxGioi.setBounds(485, 126, 215, 35);
 		cbxGioi.addItem("Nam");
 		cbxGioi.addItem("Nữ");
+		cbxGioi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_Center_Top.add(cbxGioi);
 		
 		btnThmKhchHng = new JButton("Thêm Khách Hàng");
@@ -575,13 +576,13 @@ public class GUI_QuanLiKhachHang extends JFrame {
 				}if(clickedButton == btnTK) {
 					panelTK.setVisible(!panelTK.isVisible());
 				}if(clickedButton == btnTKDX) {
-					dangnhap dn = new dangnhap();
+					GUI_DangNhap dn = new GUI_DangNhap();
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
 					
 				}if(clickedButton == btnTKDMK) {
-					DoiMatKhau dmk = new DoiMatKhau();
+					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
 					dmk.txttendangnhap.setEditable(false);
 					dmk.setVisible(true);
