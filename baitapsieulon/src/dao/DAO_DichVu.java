@@ -222,4 +222,23 @@ public class DAO_DichVu {
         }
         return n > 0;
 	}
+	//giam so luong dich vu
+	public boolean giamSoLuongDichVu(DichVu dv) {
+        int n = 0;
+        PreparedStatement statement = null;
+        try {
+            ConnectDB.getInstance();
+            Connection con = ConnectDB.getConnection();
+            String sql = "update DichVu set soLuong = ? where maDichVu = ?";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, dv.getSoLuong());
+            statement.setString(2, dv.getMaDichVu());
+            n = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return n > 0;
+     }
+
+	
 }

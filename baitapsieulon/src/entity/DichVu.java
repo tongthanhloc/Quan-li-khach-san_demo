@@ -130,6 +130,8 @@ public class DichVu {
 		DichVu other = (DichVu) obj;
 		return Objects.equals(maDichVu, other.maDichVu);
 	}
+
+	
 	
 	
 }

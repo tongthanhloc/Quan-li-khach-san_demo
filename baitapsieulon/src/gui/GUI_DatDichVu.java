@@ -693,6 +693,12 @@ public class GUI_DatDichVu extends JFrame {
 		// Thêm phiếu đặt dịch vụ vào CSDL
 		new DAO_PhieuDatDichVu().insertPhieuDichVu(pd);
 		
+		
+		
+		// Giảm số lượng dịch vụ trong CSDL
+		int soLuongConLai = dv.getSoLuong() - soLuong;
+		new DAO_DichVu().giamSoLuongDichVu(dv);
+		
     }
 
 //    public void createButtons(JPanel panel) {

@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Desktop;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -381,13 +384,29 @@ public class GUI_TrangChu extends JFrame {
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
-					
+					//bấm hiện link
+					 String url = "https://chatgpt.com/c/5d428d1e-d36b-468f-97f2-937aa6aa92af";
+		                
+		                // Check if Desktop is supported
+		                if (Desktop.isDesktopSupported()) {
+		                    Desktop desktop = Desktop.getDesktop();
+		                    try {
+		                        // Open the web page
+		                        desktop.browse(new URI(url));
+		                    } catch (Exception ex) {
+		                    	ex.printStackTrace();
+		                    }
+		                } else {
+		                    System.out.println("Desktop is not supported");
+		                }
 				}if(clickedButton == btnTKDMK) {
 					DoiMatKhau dmk = new DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
 					dmk.txttendangnhap.setEditable(false);
 					dmk.setVisible(true);
 				}
+			
+				
 		    }
 		};
 		btnTrangChu.addActionListener(actionListener);
@@ -402,6 +421,7 @@ public class GUI_TrangChu extends JFrame {
 		btnTKDX.addActionListener(actionListener);
         btnHT.addActionListener(actionListener);
         btnTKDMK.addActionListener(actionListener);
+        btnHT.addActionListener(actionListener);
         
 	}
 }

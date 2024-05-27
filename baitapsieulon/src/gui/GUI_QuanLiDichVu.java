@@ -52,7 +52,7 @@ public class GUI_QuanLiDichVu extends JFrame {
     private JLabel lblGiaBan;
     private JTextField txtMaDV;
     private JTextField txtThueVat;
-    private JTextField txtTenDV;
+    private JComboBox txtTenDV;
     private JTextField txtNhaCCDV;
     private JTextField txtSoLuong;
     private JTextField txtGiaVe;
@@ -421,12 +421,16 @@ public class GUI_QuanLiDichVu extends JFrame {
 		lblGiaNhap.setBounds(900, 75, 175, 35);
 		panel_Center_Top.add(lblGiaNhap);
 		
-		txtTenDV = new JTextField();
+		txtTenDV = new JComboBox();
 		txtTenDV.setBackground(new Color(164, 194, 163));
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTenDV.setColumns(10);
 		txtTenDV.setBounds(1100, 25, 350, 40);
 		panel_Center_Top.add(txtTenDV);
+		txtTenDV.addItem("Dịch vụ ăn uống");
+		txtTenDV.addItem("Dịch vụ giặt ủi");
+		txtTenDV.addItem("Dịch vụ bơi");
+		txtTenDV.addItem("Dịch vụ chăm sóc sắc đẹp");
+		txtTenDV.addItem("Dịch vụ thú cưng");
 		
 		txtNhaCCDV = new JTextField();
 		txtNhaCCDV.setBackground(new Color(164, 194, 163));
@@ -681,7 +685,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int i = tableHD.getSelectedRow();
 				txtMaDV.setText(modelHD.getValueAt(i, 0).toString());
-				txtTenDV.setText(modelHD.getValueAt(i, 1).toString());
+				txtTenDV.setSelectedItem(modelHD.getValueAt(i, 1).toString());
 				txtNhaCCDV.setText(modelHD.getValueAt(i, 2).toString());
 				// thuế vặt không cần dấu %
 				
@@ -694,7 +698,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		btbXoaTrang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtMaDV.setText("");
-				txtTenDV.setText("");
+				txtTenDV.setSelectedItem("");
 				txtNhaCCDV.setText("");
 				txtThueVat.setText("");
 				txtSoLuong.setText("");
@@ -708,7 +712,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DAO_DichVu dv = new DAO_DichVu();
-				DichVu dv1 = new DichVu(txtMaDV.getText(), txtTenDV.getText(),
+				DichVu dv1 = new DichVu(txtMaDV.getText(), txtTenDV.getSelectedItem().toString(),
 						Integer.parseInt(txtThueVat.getText().replace("%", "")), txtNhaCCDV.getText(),
 						Double.parseDouble(txtGiaVe.getText()), Integer.parseInt(txtSoLuong.getText()),
 						cbTrangThai.getSelectedItem().toString());
@@ -728,7 +732,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (vailData()) {
 				DAO_DichVu dv = new DAO_DichVu();
-				DichVu dv1 = new DichVu(txtMaDV.getText(), txtTenDV.getText(),
+				DichVu dv1 = new DichVu(txtMaDV.getText(), txtTenDV.getSelectedItem().toString(),
 						Integer.parseInt(txtThueVat.getText().replace("%", "")), txtNhaCCDV.getText(),
 						Double.parseDouble(txtGiaVe.getText()), Integer.parseInt(txtSoLuong.getText()),
 						cbTrangThai.getSelectedItem().toString());
@@ -771,7 +775,7 @@ public class GUI_QuanLiDichVu extends JFrame {
 	
 	public boolean vailData() {
 		String maDV = txtMaDV.getText();
-		String tenDV = txtTenDV.getText();
+		String tenDV = txtTenDV.getSelectedItem().toString();
 		String nhaCCDV = txtNhaCCDV.getText();
 		String thueVat = txtThueVat.getText();
 		String soLuong = txtSoLuong.getText();
@@ -782,12 +786,12 @@ public class GUI_QuanLiDichVu extends JFrame {
 			return false;
 		}
 		// tên dịch vụ có thể chứa số
-		if (!tenDV.matches("[A-Z][a-zA-Z0-9]+")) {
+		if (!tenDV.matches("^[\\p{Lu}\\p{Lt}][\\p{Ll}\\p{M}'\\s]*(\\s+[\\p{Lu}\\p{Lt}][\\p{Ll}\\p{M}'\\s]*)*$")) {
 			JOptionPane.showMessageDialog(null, "Tên dịch vụ không đúng định dạng");
 			return false;
 		}
 	
-		if (!nhaCCDV.matches("[A-Z][a-zA-Z0-9]+")) {
+		if (!nhaCCDV.matches("^[\\p{Lu}\\p{Lt}][\\p{Ll}\\p{M}'\\s]*(\\s+[\\p{Lu}\\p{Lt}][\\p{Ll}\\p{M}'\\s]*)*$")) {
 			JOptionPane.showMessageDialog(null, "Nhà cung cấp dịch vụ không đúng định dạng");
 			return false;
 		}
