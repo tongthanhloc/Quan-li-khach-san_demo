@@ -18,6 +18,7 @@ import entity.PhieuDatPhong;
 import entity.Phong;
 
 public class PhieuDatPhong_DAO {
+	
 	public PhieuDatPhong_DAO() {
 
 	}
@@ -230,6 +231,26 @@ public class PhieuDatPhong_DAO {
 			}
 			return dsPDP;
 		}
-		
+		// lấy phiếu đặt phòng có trạng thái đã nhận, đã đặt, đã đổi
+		public static  ArrayList<String> getPhieuDatPhongTheoTrangThai(String ngayBD, String ngayKT) {
+			ArrayList<String> dsPDP = new ArrayList<String>();
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "SELECT Phong.maPhong FROM Phong LEFT JOIN PhieuDatPhong ON Phong.maPhong = PhieuDatPhong.maPhong AND ((PhieuDatPhong.thoiGianNhan <= ? AND PhieuDatPhong.thoiGianTra >= ? AND  PhieuDatPhong.trangThai != N'Đã hủy' AND  PhieuDatPhong.trangThai != N'Đã trả')) WHERE PhieuDatPhong.maPhong IS NULL";
+                ArrayList<String> dsPhong = new ArrayList<String>();
+				PreparedStatement statement = con.prepareStatement(sql);
+				statement.setString(1, ngayBD);
+				statement.setString(2, ngayKT);
+				ResultSet rs = statement.executeQuery();
+				while (rs.next()) {
+					String maPhieuDatPhong = rs.getString(1);
+					dsPDP.add(maPhieuDatPhong);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return dsPDP;
+		}
 	
 }

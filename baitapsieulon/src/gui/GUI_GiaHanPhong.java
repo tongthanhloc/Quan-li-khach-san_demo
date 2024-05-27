@@ -15,6 +15,7 @@ import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -397,7 +398,62 @@ public class GUI_GiaHanPhong extends JFrame {
 		cbxPhong.setBounds(313, 27, 350, 26);
 		panelP.add(cbxPhong);
 	     
-        
+		btnGHP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+          
+                	
+                	if (cbxPhong.getSelectedItem() == null) {
+                		JOptionPane.showMessageDialog(null, "Chưa chọn phòng");
+                		System.out.println("1");
+                		return;
+                	} else if (dateTraP.getDate() == null) {
+						JOptionPane.showMessageDialog(null, "Chưa chọn ngày trả phòng");
+						System.out.println("2");
+						return;
+                	} else if (txtmaKH.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Chưa nhập mã khách hàng");
+						System.out.println("2");
+						return;
+					}  //kiem tra ngay tra phong
+                	else if(!txtPTrong.getText().equals("Không có đặt trước")) {
+                		if (ChronoUnit.DAYS.between(LocalDate.now(), dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()) < 0) {
+                    		JOptionPane.showMessageDialog(null, "Ngày trả phòng không hợp lệ");
+                    		System.out.println("3");
+                    		return;
+                		} else if (ChronoUnit.DAYS.between(LocalDate.now(), dateTraP.getDate().toInstant()
+								.atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()) 
+								> ngay) {
+							JOptionPane.showMessageDialog(null, "Ngày trả phòng không hợp lệ");
+							System.out.println("3");
+							return;
+                		}else {
+                			String maPhieu = maPhieuDatPhong[cbxPhong.getSelectedIndex()];
+                        	LocalDate ngayTra = dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
+                        	phieuDatPhong_DAO.updateNgayTraPhieuDatPhong(maPhieu, ngayTra);
+                        	JOptionPane.showMessageDialog(null, "Gia hạn thành công");
+    						dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
+    						System.out.println("4");
+    						return;
+                		}
+                		
+                	}
+                	//update ngay tra
+                	String maPhieu = maPhieuDatPhong[cbxPhong.getSelectedIndex()];
+                	LocalDate ngayTra = dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
+                	phieuDatPhong_DAO.updateNgayTraPhieuDatPhong(maPhieu, ngayTra);
+                	JOptionPane.showMessageDialog(null, "Gia hạn thành công");
+					dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
+					System.out.println("5");
+                	
+                		
+                	
+                
+                
+                
+                
+            }});
 		
 		
 		
@@ -693,7 +749,20 @@ public class GUI_GiaHanPhong extends JFrame {
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
-					
+					String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+	                
+	                // Check if Desktop is supported
+	                if (Desktop.isDesktopSupported()) {
+	                    Desktop desktop = Desktop.getDesktop();
+	                    try {
+	                        // Open the web page
+	                        desktop.browse(new URI(url));
+	                    } catch (Exception ex) {
+	                    	ex.printStackTrace();
+	                    }
+	                } else {
+	                    System.out.println("Desktop is not supported");
+	                }
 				}if(clickedButton == btnTKDMK) {
 					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
@@ -819,46 +888,6 @@ public class GUI_GiaHanPhong extends JFrame {
 	             	   		JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
 	             	   	
 	             	 }
-	                }if(clickedButton==btnGHP) {
-                    	
-                    	if (cbxPhong.getSelectedItem() == null) {
-                    		JOptionPane.showMessageDialog(null, "Chưa chọn phòng");
-                    		return;
-                    	} else if (dateTraP.getDate() == null) {
-							JOptionPane.showMessageDialog(null, "Chưa chọn ngày trả phòng");
-							return;
-                    	} else if (txtmaKH.getText().equals("")) {
-							JOptionPane.showMessageDialog(null, "Chưa nhập mã khách hàng");
-							return;
-						}  //kiem tra ngay tra phong
-                    	else if(!txtPTrong.getText().equals("Không có đặt trước")) {
-                    		if (ChronoUnit.DAYS.between(LocalDate.now(), dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()) < 0) {
-                        		JOptionPane.showMessageDialog(null, "Ngày trả phòng không hợp lệ");
-                        		return;
-                    		} else if (ChronoUnit.DAYS.between(LocalDate.now(), dateTraP.getDate().toInstant()
-    								.atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()) 
-    								> ngay) {
-    							JOptionPane.showMessageDialog(null, "Ngày trả phòng không hợp lệ");
-    							return;
-                    		}
-                    	}
-                    	//update ngay tra
-                    	String maPhieu = maPhieuDatPhong[cbxPhong.getSelectedIndex()];
-                    	LocalDate ngayTra = dateTraP.getDate().toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
-                    	phieuDatPhong_DAO.updateNgayTraPhieuDatPhong(maPhieu, ngayTra);
-                    	JOptionPane.showMessageDialog(null, "Gia hạn thành công");
-						dsPDP = phieuDatPhong_DAO.getAllTbPhieuDatPhong();
-//                    	for (int i = 0; i < dsPDP.size(); i++) {
-//							if (dsPDP.get(i).getMaPhieu().equals(maPhieu)) {
-//								JOptionPane.showMessageDialog(null, "Phòng " + dsPDP.get(i).getPhong().getMaPhong() + " đã được gia hạn tới ngày " + ngayTra);
-//							}
-//						}
-                    	
-                    		
-                    	
-	                
-	                
-	                
 	                }if(clickedButton==btnHuy) {
                     	txtmaKH.setText("");
                     	txtSDT.setText("");
@@ -894,7 +923,7 @@ public class GUI_GiaHanPhong extends JFrame {
         			btnNhanP.addActionListener(actionListener);
         			btnTraP.addActionListener(actionListener);
         			btnDoiP.addActionListener(actionListener);
-        			btnGHP.addActionListener(actionListener);
+        			
         			btnXemPhiut.addActionListener(actionListener);
 	                
 	                          

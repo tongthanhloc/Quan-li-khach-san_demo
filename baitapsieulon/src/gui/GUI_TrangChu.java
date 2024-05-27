@@ -385,7 +385,7 @@ public class GUI_TrangChu extends JFrame {
 					dispose();
 				}if(clickedButton == btnHT) {
 					//bấm hiện link
-					 String url = "https://chatgpt.com/c/5d428d1e-d36b-468f-97f2-937aa6aa92af";
+					 String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
 		                
 		                // Check if Desktop is supported
 		                if (Desktop.isDesktopSupported()) {

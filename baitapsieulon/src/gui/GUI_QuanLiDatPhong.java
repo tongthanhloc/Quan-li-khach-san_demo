@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
@@ -823,7 +824,20 @@ public class GUI_QuanLiDatPhong extends JFrame implements ItemListener{
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
-					
+					String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+	                
+	                // Check if Desktop is supported
+	                if (Desktop.isDesktopSupported()) {
+	                    Desktop desktop = Desktop.getDesktop();
+	                    try {
+	                        // Open the web page
+	                        desktop.browse(new URI(url));
+	                    } catch (Exception ex) {
+	                    	ex.printStackTrace();
+	                    }
+	                } else {
+	                    System.out.println("Desktop is not supported");
+	                }
 				}if(clickedButton == btnTKDMK) {
 					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());

@@ -16,6 +16,7 @@ import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -123,7 +124,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NhanVien nv = new NhanVien("QL0000010");
+					NhanVien nv = new NhanVien("NV0000001");
 					GUI_PhieuDatPhong frame = new GUI_PhieuDatPhong(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -625,7 +626,20 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						dn.setVisible(true);
 						dispose();
 					}if(clickedButton == btnHT) {
-						
+						String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+		                
+		                // Check if Desktop is supported
+		                if (Desktop.isDesktopSupported()) {
+		                    Desktop desktop = Desktop.getDesktop();
+		                    try {
+		                        // Open the web page
+		                        desktop.browse(new URI(url));
+		                    } catch (Exception ex) {
+		                    	ex.printStackTrace();
+		                    }
+		                } else {
+		                    System.out.println("Desktop is not supported");
+		                }
 					}if(clickedButton == btnTKDMK) {
 						GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 						dmk.txttendangnhap.setText(nhanvien.getMaNV());

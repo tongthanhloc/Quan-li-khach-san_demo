@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -593,7 +595,20 @@ public class GUI_QuanLiDichVu extends JFrame {
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
-					
+					String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+	                
+	                // Check if Desktop is supported
+	                if (Desktop.isDesktopSupported()) {
+	                    Desktop desktop = Desktop.getDesktop();
+	                    try {
+	                        // Open the web page
+	                        desktop.browse(new URI(url));
+	                    } catch (Exception ex) {
+	                    	ex.printStackTrace();
+	                    }
+	                } else {
+	                    System.out.println("Desktop is not supported");
+	                }
 				}if(clickedButton == btnTKDMK) {
 					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());

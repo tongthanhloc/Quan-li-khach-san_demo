@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -73,7 +75,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	static ArrayList<NhanVien> ListNV;
 	static ArrayList<NhanVien> dsnv;
 	static GUI_ChiTietNhanVien chiTietNhanVien;
-	static GUI_hemNhanVien themNhanVien;
+	static GUI_ThemNhanVien themNhanVien;
 	
 	
 	
@@ -607,7 +609,20 @@ if(clickedButton == btnTrangChu) {
 					dn.setVisible(true);
 					dispose();
 				}if(clickedButton == btnHT) {
-					
+					String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+	                
+	                // Check if Desktop is supported
+	                if (Desktop.isDesktopSupported()) {
+	                    Desktop desktop = Desktop.getDesktop();
+	                    try {
+	                        // Open the web page
+	                        desktop.browse(new URI(url));
+	                    } catch (Exception ex) {
+	                    	ex.printStackTrace();
+	                    }
+	                } else {
+	                    System.out.println("Desktop is not supported");
+	                }
 				}if(clickedButton == btnTKDMK) {
 					GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 					dmk.txttendangnhap.setText(nhanvien.getMaNV());
@@ -693,7 +708,7 @@ if(clickedButton == btnTrangChu) {
 					} else {
 						maNV += count;
 					}
-                	themNhanVien = new GUI_hemNhanVien(maNV);
+                	themNhanVien = new GUI_ThemNhanVien(maNV);
                 	
                 	themNhanVien.setVisible(true);
                 	themNhanVien.setAlwaysOnTop(true);

@@ -11,6 +11,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -2099,7 +2100,20 @@ public class GUI_ThongKeDoanhThu extends JFrame{
 								dn.setVisible(true);
 								dispose();
 							}if(clickedButton == btnHT) {
-								
+								String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+				                
+				                // Check if Desktop is supported
+				                if (Desktop.isDesktopSupported()) {
+				                    Desktop desktop = Desktop.getDesktop();
+				                    try {
+				                        // Open the web page
+				                        desktop.browse(new URI(url));
+				                    } catch (Exception ex) {
+				                    	ex.printStackTrace();
+				                    }
+				                } else {
+				                    System.out.println("Desktop is not supported");
+				                }
 							}if(clickedButton == btnTKDMK) {
 								GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 								dmk.txttendangnhap.setText(nhanvien.getMaNV());

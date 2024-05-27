@@ -16,8 +16,10 @@ import entity.Phong;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -120,6 +122,8 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 	private GUI_TraPhong tp;
 	private GUI_DoiPhong dop;
 	private GUI_GiaHanPhong ghp;
+	private java.util.Date ngaybd;
+	private java.util.Date ngaykt;
 	static String[] maphongs1;
 	/**
 	 * Launch the application.
@@ -713,7 +717,20 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 						dn.setVisible(true);
 						dispose();
 					}if(clickedButton == btnHT) {
-						
+						String url = "https://docs.google.com/document/d/1TgBigF9snicPf6nJ6vfsfwC6LhhG7rnjhzX6ui6ovkM/edit?usp=sharing";
+		                
+		                // Check if Desktop is supported
+		                if (Desktop.isDesktopSupported()) {
+		                    Desktop desktop = Desktop.getDesktop();
+		                    try {
+		                        // Open the web page
+		                        desktop.browse(new URI(url));
+		                    } catch (Exception ex) {
+		                    	ex.printStackTrace();
+		                    }
+		                } else {
+		                    System.out.println("Desktop is not supported");
+		                }
 					}if(clickedButton == btnTKDMK) {
 						GUI_DoiMatKhau dmk = new GUI_DoiMatKhau();
 						dmk.txttendangnhap.setText(nhanvien.getMaNV());
@@ -792,6 +809,9 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
     
     	}else if(ktraChinhQuy(maPhongs)==-2) {
     		JOptionPane.showMessageDialog(null,"Khách Hàng đã đặt quá 5 phòng");
+    		for (int i = 0; i < maPhongs.length; i++) {
+    			ThemPhong(maPhongs[i]);
+    		}
     	}else if(ktraChinhQuy(maPhongs)==-10) {
     		JOptionPane.showMessageDialog(null,"Phòng đặt không quá 1 tháng");
     	}else if(ktraChinhQuy(maPhongs)==-3) {
@@ -855,37 +875,70 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		
 		if (chckbxPdon.isSelected()) {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (soPhong[i].contains("A")&& trangThai[i]==3) {
+			ngaybd = dateNhanP.getDate();
+			ngaykt = dateTraP.getDate();
+		    // ép kiểu thành string ngaybd, ngaykt
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String ngaybd1 = sdf.format(ngaybd);
+			String ngaykt1 = sdf.format(ngaykt);
+			ArrayList<String> dsPhong = new ArrayList<String>();
+			dsPhong = PhieuDatPhong_DAO.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
+			
+		 // chạy hết dsPhong da lay ra
+			for (int i = 0; i < dsPhong.size(); i++) {
+				String maPhong = dsPhong.get(i);
+				if (maPhong.contains("A") && trangThai[Arrays.asList(soPhong).indexOf(maPhong)] == 3) {
 					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-					maphongs[maphongs.length - 1] = soPhong[i];
+					maphongs[maphongs.length - 1] = maPhong;
 					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-					trangTs[trangTs.length - 1] = trangThai[i];
+					trangTs[trangTs.length - 1] = trangThai[Arrays.asList(soPhong).indexOf(maPhong)];
 				}
-		}}
+			}
+			
+		}
 		
 		
 		if (chckbxPdoi.isSelected()) {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (soPhong[i].contains("B")&& trangThai[i]==3) {
+			ngaybd = dateNhanP.getDate();
+			ngaykt = dateTraP.getDate();
+		    // ép kiểu thành string ngaybd, ngaykt
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String ngaybd1 = sdf.format(ngaybd);
+			String ngaykt1 = sdf.format(ngaykt);
+			ArrayList<String> dsPhong = new ArrayList<String>();
+			dsPhong = PhieuDatPhong_DAO.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
+			
+		 // chạy hết dsPhong da lay ra
+			for (int i = 0; i < dsPhong.size(); i++) {
+				String maPhong = dsPhong.get(i);
+				if (maPhong.contains("B") && trangThai[Arrays.asList(soPhong).indexOf(maPhong)] == 3) {
 					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-					maphongs[maphongs.length - 1] = soPhong[i];
+					maphongs[maphongs.length - 1] = maPhong;
 					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-					trangTs[trangTs.length - 1] = trangThai[i];
-					
+					trangTs[trangTs.length - 1] = trangThai[Arrays.asList(soPhong).indexOf(maPhong)];
 				}
-				
 			}
 			
 		}
 		
 		if (chckbxPVip.isSelected()) {
-			for (int i = 0; i < soPhong.length; i++) {
-				if (soPhong[i].contains("C") && trangThai[i]==3) {
+			ngaybd = dateNhanP.getDate();
+			ngaykt = dateTraP.getDate();
+		    // ép kiểu thành string ngaybd, ngaykt
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String ngaybd1 = sdf.format(ngaybd);
+			String ngaykt1 = sdf.format(ngaykt);
+			ArrayList<String> dsPhong = new ArrayList<String>();
+			dsPhong = PhieuDatPhong_DAO.getPhieuDatPhongTheoTrangThai(ngaybd1, ngaykt1);
+			
+			            // chạy hết dsPhong da lay ra
+			for (int i = 0; i < dsPhong.size(); i++) {
+				String maPhong = dsPhong.get(i);
+				if (maPhong.contains("C") && trangThai[Arrays.asList(soPhong).indexOf(maPhong)] == 3) {
 					maphongs = Arrays.copyOf(maphongs, maphongs.length + 1);
-					maphongs[maphongs.length - 1] = soPhong[i];
+					maphongs[maphongs.length - 1] = maPhong;
 					trangTs = Arrays.copyOf(trangTs, trangTs.length + 1);
-					trangTs[trangTs.length - 1] = trangThai[i];
+					trangTs[trangTs.length - 1] = trangThai[Arrays.asList(soPhong).indexOf(maPhong)];
 				}
 			}
 		}
