@@ -505,10 +505,12 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 			panel_Center_Top.add(txtmaPhong);
 			
 			JDateChooser dateNgayD = new JDateChooser();
+			dateNgayD.setDateFormatString("dd/MM/yyyy");
 			dateNgayD.setBounds(1100, 75, 350, 35);
 			panel_Center_Top.add(dateNgayD);
 			
 			JDateChooser dateNgayT = new JDateChooser();
+			dateNgayT.setDateFormatString("dd/MM/yyyy");
 			dateNgayT.setBounds(1100, 125, 350, 35);
 			panel_Center_Top.add(dateNgayT);
 			
@@ -653,8 +655,10 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						String maKH = txtmaKH.getText();
 						String maNV = txtmaNV.getText();
 						String maPhong = txtmaPhong.getText();
-						if (!(dateNgayD.getDate() == null || dateNgayT.getDate() == null)) {
+						if (dateNgayD.getDate() != null) {
 							ngayD = new Date(dateNgayD.getDate().getTime());
+						}
+						if (dateNgayT.getDate() != null) {
 							ngayT = new Date(dateNgayT.getDate().getTime());
 						}
 						
@@ -676,6 +680,7 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						
 						if (dsPDP.size() == 0) {
 							JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu đặt phòng");
+							
 							return;
 						}
 						
@@ -694,7 +699,10 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						txtmaPhong.setText("");
 						dateNgayD.setDate(null);
 						dateNgayT.setDate(null);
+						ngayD = null;
+						ngayT = null;
 						modelHD.setRowCount(0);
+						
 						
 					}if(clickedButton == btnHuyPhiu) {
 						int row = tableNV.getSelectedRow();
@@ -737,10 +745,10 @@ public class GUI_PhieuDatPhong extends JFrame implements ItemListener,MouseListe
 						if (!maPhong.equals("") && !phieuDatPhong.getPhong().getMaPhong().contains(maPhong)) {
 							continue;
 						}
-						if (ngayD2 != null && !phieuDatPhong.getThoiGianDat().equals(ngayD2)) {
+						if (ngayD2 != null && ChronoUnit.DAYS.between(phieuDatPhong.getThoiGianDat(), ngayD2.toLocalDate()) != 0) {
 							continue;
 						}
-						if (ngayT2 != null && !phieuDatPhong.getThoiGianTra().equals(ngayT2)) {
+						if (ngayT2 != null && ChronoUnit.DAYS.between(phieuDatPhong.getThoiGianTra(), ngayT2.toLocalDate()) != 0) {
 							continue;
 						}
 						ds.add(phieuDatPhong);

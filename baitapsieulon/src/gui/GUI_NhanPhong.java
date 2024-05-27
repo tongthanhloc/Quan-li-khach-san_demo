@@ -45,7 +45,6 @@ public class GUI_NhanPhong extends JFrame{
     static JTextField txtmaP;
     private JLabel lblNewLabel_8;
     static JTextField txtNguoi;
-    private JLabel lblNewLabel_9;
     private JLabel lblNewLabel_10;
     private JLabel lblNewLabel_11;
     private JTextField textField_8;
@@ -71,8 +70,6 @@ public class GUI_NhanPhong extends JFrame{
 	private ArrayList<KhachHang> dsKH;
 	private PhieuDatPhong_DAO phieuDatPhong_DAO;
 	private ArrayList<PhieuDatPhong> dsPDP;
-	static JTextField txtDV;
-	private JButton btnThemDV;
 	private JPanel outerPanel;
 	private JPanel panel;
 	private static ArrayList<PhieuDatPhong> dsPDPKH;
@@ -269,7 +266,7 @@ public class GUI_NhanPhong extends JFrame{
 		
 		panelP = new JPanel();
 		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelP.setBounds(250, 288, 1654, 260);
+		panelP.setBounds(250, 288, 1654, 244);
 		Frame.add(panelP);
 		panelP.setLayout(null);
 		
@@ -294,11 +291,6 @@ public class GUI_NhanPhong extends JFrame{
 		txtNguoi.setColumns(10);
 		txtNguoi.setBounds(313, 75, 350, 26);
 		panelP.add(txtNguoi);
-		
-		lblNewLabel_9 = new JLabel("Dịch vụ:");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_9.setBounds(100, 120, 185, 26);
-		panelP.add(lblNewLabel_9);
 		
 		lblNewLabel_10 = new JLabel("Ngày trả Phòng:");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -331,58 +323,44 @@ public class GUI_NhanPhong extends JFrame{
 		bntNhanP = new JButton("Nhận Phòng");
 		bntNhanP.setBackground(new Color(234, 232, 214));
 		bntNhanP.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		bntNhanP.setBounds(1205, 223, 153, 26);
+		bntNhanP.setBounds(1205, 173, 153, 26);
 		panelP.add(bntNhanP);
 		
 		btnHy = new JButton("Hủy");
 		btnHy.setBackground(new Color(234, 232, 214));
 		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnHy.setBounds(1380, 223, 153, 26);
+		btnHy.setBounds(1380, 173, 153, 26);
 		panelP.add(btnHy);
 		
 		JLabel lblNewLabel_12 = new JLabel("Phòng đơn:");
 		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_12.setBounds(100, 166, 101, 24);
+		lblNewLabel_12.setBounds(100, 118, 101, 24);
 		panelP.add(lblNewLabel_12);
 		
 		JLabel lblNewLabel_12_1 = new JLabel("Phòng đơn:");
 		lblNewLabel_12_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_12_1.setBounds(254, 167, 101, 24);
+		lblNewLabel_12_1.setBounds(254, 119, 101, 24);
 		panelP.add(lblNewLabel_12_1);
 		
 		JLabel lblNewLabel_12_2 = new JLabel("Phòng đơn:");
 		lblNewLabel_12_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_12_2.setBounds(413, 167, 101, 24);
+		lblNewLabel_12_2.setBounds(413, 119, 101, 24);
 		panelP.add(lblNewLabel_12_2);
 		
 		JLabel lblsoPhongDon = new JLabel("10");
 		lblsoPhongDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblsoPhongDon.setBounds(211, 166, 33, 24);
+		lblsoPhongDon.setBounds(211, 118, 33, 24);
 		panelP.add(lblsoPhongDon);
 		
 		JLabel lblsoPhongDoi = new JLabel("10");
 		lblsoPhongDoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblsoPhongDoi.setBounds(365, 167, 59, 24);
+		lblsoPhongDoi.setBounds(365, 119, 59, 24);
 		panelP.add(lblsoPhongDoi);
 		
 		JLabel lblsoPhongVip = new JLabel("10");
 		lblsoPhongVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblsoPhongVip.setBounds(524, 167, 59, 24);
+		lblsoPhongVip.setBounds(524, 119, 59, 24);
 		panelP.add(lblsoPhongVip);
-		
-		txtDV = new JTextField();
-		txtDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtDV.setBackground(new Color(255, 255, 255));
-		txtDV.setColumns(10);
-		txtDV.setBounds(313, 120, 350, 26);
-		txtDV.setEditable(false);
-		panelP.add(txtDV);
-		
-		btnThemDV = new JButton("Thêm dịch vụ");
-		btnThemDV.setBackground(new Color(234, 232, 214));
-		btnThemDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnThemDV.setBounds(699, 120, 168, 26);
-		panelP.add(btnThemDV);
 		
 		
 
@@ -754,7 +732,26 @@ public class GUI_NhanPhong extends JFrame{
 						for (int j = 0; j < dsPDPKH.size(); j++) {
 							if (dsPDPKH.get(j).getPhong().getMaPhong().equals(maPhongs[i])) {
 								String maPhieu = dsPDPKH.get(j).getMaPhieu();
-								phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã thuê");
+								phieuDatPhong_DAO.updateTrangThaiPhieuDatPhong(maPhieu, "Đã nhận");
+								//cap nhat lai trang thai phong
+						        Phong phong = new Phong(maPhongs[i]);
+						        Phong_dao.updateTrangThaiPhong(maPhieu, "Đã thuê");
+						        //thông báo
+						        JOptionPane.showMessageDialog(null,"Nhận phòng thành công");
+						        //xoa panel
+						        panel.removeAll();
+						        panel.repaint();
+						        panel.revalidate();
+								txtmaKH.setText("");
+								txtTen.setText("");
+								txtTuoi.setText("");
+								txtSDT.setText("");
+								txtGT.setText("");
+								txtmaP.setText("");
+								txtNguoi.setText("");
+
+								dateNhanP.setDate(new java.util.Date());
+								dateTraP.setDate(cal.getTime());
 							}
 						}
 					}
@@ -807,7 +804,7 @@ public class GUI_NhanPhong extends JFrame{
                 	txtGT.setText("");
                 	txtmaP.setText("");
                 	txtNguoi.setText("");
-                	txtDV.setText("");
+                	
                 	dateNhanP.setDate(new java.util.Date());
                 	dateTraP.setDate(cal.getTime());
                 	panel.removeAll();

@@ -15,11 +15,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import connectDB.ConnectDB;
+import dao.DAO_PhieuDatDichVu;
 import dao.KhachHang_DAO;
 import dao.PhieuDatPhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
 import entity.NhanVien;
+import entity.PhieuDatDichVu;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
@@ -39,6 +41,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 public class GUI_ChiTietPhong extends JFrame {
@@ -66,6 +69,8 @@ public class GUI_ChiTietPhong extends JFrame {
 	private PhieuDatPhong pdp;
 	private KhachHang kh;
 	private JLabel lblAnh;
+	private DAO_PhieuDatDichVu pddv;
+	private JComboBox cbDichVu;
 	private static GUI_ChiTietPhong currentInstance;
 
 	/**
@@ -99,6 +104,8 @@ public class GUI_ChiTietPhong extends JFrame {
 		}
 		phong = new Phong_DAO();
 	    ph  = phong.getPhongTheoMaPhong(maphongcustom);
+	    pddv = new DAO_PhieuDatDichVu();
+	    
 
 
 		
@@ -438,14 +445,12 @@ public class GUI_ChiTietPhong extends JFrame {
         lblMKhchHng_1_1_1_1.setBounds(519, 157, 121, 33);
         pBot.add(lblMKhchHng_1_1_1_1);
         
-        JComboBox cbDichVu = new JComboBox();
+        cbDichVu = new JComboBox();
         cbDichVu.setBounds(662, 156, 303, 34);
         pBot.add(cbDichVu);
         cbDichVu.setFont(new Font("Tahoma", Font.PLAIN, 16));
         
-        cbDichVu.addItem("Dịch vụ 1");
-        cbDichVu.addItem("Dịch vụ 2");
-        cbDichVu.addItem("Dịch vụ 3");
+        
         // set tấc cả txt về màu xám
         txtMaKhachHang.setBackground(new Color(217, 217, 217));
         txtTuoi.setBackground(new Color(217, 217, 217));
@@ -591,6 +596,11 @@ public class GUI_ChiTietPhong extends JFrame {
 				txtNgayNhanPhong.setText(pdp.getThoiGianNhan().toString());
 				txtNgayTraPhong.setText(pdp.getThoiGianTra().toString());
 				txtSoNguoiO.setText(pdp.getSoNguoi());
+				List<PhieuDatDichVu> dsDichVu = pddv.getDSPhieuDatChuaThanhToan(kh.getmaKH());
+				for (PhieuDatDichVu dv : dsDichVu) {
+					cbDichVu.addItem(dv.getDichVu().getMaDichVu());
+				}
+				
 			}
 	 }
 	

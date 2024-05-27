@@ -73,7 +73,7 @@ public class GUI_QuanLiNhanVien extends JFrame {
 	static ArrayList<NhanVien> ListNV;
 	static ArrayList<NhanVien> dsnv;
 	static Frm_ChiTietNhanVien chiTietNhanVien;
-	static Frm_ChiTietNhanVien themNhanVien;
+	static Frm_ThemNhanVien themNhanVien;
 	
 	
 	
@@ -142,7 +142,6 @@ public class GUI_QuanLiNhanVien extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0,1920,1080);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setAlwaysOnTop(true);
 		setLocationRelativeTo(null);
 		Frame = new JPanel();
 		Frame.setBackground(new Color(255, 255, 255));
@@ -669,11 +668,12 @@ if(clickedButton == btnTrangChu) {
                 	
       		        chiTietNhanVien= new Frm_ChiTietNhanVien(maNVChon);
       		        chiTietNhanVien.setVisible(true);
+      		        chiTietNhanVien.setAlwaysOnTop(true);
       		        }
                 }else if(clickedButton == btnThem) {
                 	NhanVien_DAO NhanVienfull= new NhanVien_DAO();
                 	ArrayList<NhanVien> ListNVfull = NhanVienfull.getNhanVienTiepTan();
-                	int count = ListNVfull.size()+1;
+                	int count = ListNVfull.size()+2;
                 	//tao ma nhan vien co dang NV0000001
                 	String maNV = "NV";
 					if (count < 10) {
@@ -691,9 +691,10 @@ if(clickedButton == btnTrangChu) {
 					} else {
 						maNV += count;
 					}
-                	themNhanVien = new Frm_ChiTietNhanVien(maNV);
-                	themNhanVien.setVisible(true);
+                	themNhanVien = new Frm_ThemNhanVien(maNV);
                 	
+                	themNhanVien.setVisible(true);
+                	themNhanVien.setAlwaysOnTop(true);
                 	}
                 }};
                     btnTim.addActionListener(actionListener);

@@ -51,8 +51,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
     private JTextField txtMaP;
     private JLabel lblNewLabel_8;
     private JTextField txtSoN;
-    private JLabel lblNewLabel_9;
-    private JTextField txtDV;
     private JLabel lblNewLabel_10;
     private JLabel lblNewLabel_11;
     private JButton btndatPhng;
@@ -138,7 +136,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NhanVien nv = new NhanVien("QL0000010");
+					NhanVien nv = new NhanVien("NV0000001");
 					GUI_DatPhong frame = new GUI_DatPhong(nv);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -307,7 +305,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		panelP = new JPanel();
 		panelP.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelP.setBounds(250, 288, 1654, 208);
+		panelP.setBounds(250, 288, 1654, 182);
 		Frame.add(panelP);
 		panelP.setLayout(null);
 		
@@ -333,19 +331,6 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		txtSoN.setBounds(313, 75, 350, 26);
 		panelP.add(txtSoN);
 		
-		lblNewLabel_9 = new JLabel("Dịch vụ:");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_9.setBounds(100, 120, 185, 26);
-		panelP.add(lblNewLabel_9);
-		
-		txtDV = new JTextField();
-		txtDV.setBackground(new Color(255, 255, 255));
-		txtDV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtDV.setColumns(10);
-		txtDV.setBounds(313, 120, 350, 26);
-		txtDV.setEditable(false);
-		panelP.add(txtDV);
-		
 		lblNewLabel_10 = new JLabel("Ngày trả Phòng:");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_10.setBounds(992, 75, 185, 26);
@@ -359,14 +344,14 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		btndatPhng = new JButton("Đặt phòng");
 		btndatPhng.setBackground(new Color(234, 232, 214));
 		btndatPhng.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btndatPhng.setBounds(1205, 166, 153, 26);
+		btndatPhng.setBounds(1205, 140, 153, 26);
 		
 		panelP.add(btndatPhng);
 		
 		btnHy = new JButton("Hủy");
 		btnHy.setBackground(new Color(234, 232, 214));
 		btnHy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnHy.setBounds(1378, 166, 153, 26);
+		btnHy.setBounds(1379, 140, 153, 26);
 		panelP.add(btnHy);
 		
 		dateNhanP = new JDateChooser();
@@ -387,18 +372,12 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		cal.add(Calendar.DATE, 1);
 		dateTraP.setDate(cal.getTime());
 		panelP.add(dateTraP);
-		
-		JButton btnDatDichVu = new JButton("Thêm dịch vụ");
-		btnDatDichVu.setBackground(new Color(234, 232, 214));
-		btnDatDichVu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnDatDichVu.setBounds(674, 120, 175, 26);
-		panelP.add(btnDatDichVu);
 		//in ngày đã chọn của dateTraP
 		
 		
 		chckbxPdon = new JCheckBox("Phòng đơn (A)");
 		chckbxPdon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		chckbxPdon.setBounds(287, 500, 178, 43);
+		chckbxPdon.setBounds(287, 480, 178, 43);
 		Frame.add(chckbxPdon);
 		
 		
@@ -406,7 +385,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		chckbxPdoi = new JCheckBox("Phòng đôi (B)");
 		chckbxPdoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		chckbxPdoi.setBounds(577, 503, 178, 43);
+		chckbxPdoi.setBounds(577, 483, 178, 43);
 		Frame.add(chckbxPdoi);
 		
 		
@@ -414,7 +393,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		
 		chckbxPVip = new JCheckBox("Phòng VIP (C)");
 		chckbxPVip.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		chckbxPVip.setBounds(863, 503, 178, 43);
+		chckbxPVip.setBounds(863, 483, 178, 43);
 		Frame.add(chckbxPVip);
 		
 		
@@ -800,7 +779,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
      	txtSDT.setText("");
      	txtMaP.setText("");
      	txtSoN.setText("");
-     	txtDV.setText("");
+     	
      	dateNhanP.setDate(new java.util.Date());
      	dateTraP.setDate(cal.getTime());
     }else if (clickedButton == btndatPhng) {
@@ -813,6 +792,10 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
     
     	}else if(ktraChinhQuy(maPhongs)==-2) {
     		JOptionPane.showMessageDialog(null,"Khách Hàng đã đặt quá 5 phòng");
+    	}else if(ktraChinhQuy(maPhongs)==-10) {
+    		JOptionPane.showMessageDialog(null,"Phòng đặt không quá 1 tháng");
+    	}else if(ktraChinhQuy(maPhongs)==-3) {
+    		JOptionPane.showMessageDialog(null,"Số lượng người không hợp lệ");
     	}
     	
     	
@@ -1174,6 +1157,7 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		int count = 0;
 		for (int i = 0; i < maPhongs.length; i++) {
     		if(kiemtraTrong(maPhongs[i])==-1) {
+    			     
     			return -1;
            	}else if(kiemtraTrong(maPhongs[i])==-2){
            		JOptionPane.showMessageDialog(null, "Phòng "+maPhongs[i]+" đã có người đặt");
@@ -1186,6 +1170,29 @@ public class GUI_DatPhong extends JFrame implements ItemListener{
 		}
 		if (count > 0) {
 			return -1;
+		}
+		int songay = (int) ChronoUnit.DAYS.between(dateNhanP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), dateTraP.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		if (songay > 31) {
+			return -10;
+		}
+		int demsonguoi=0;
+		for (int i = 0; i < maPhongs.length; i++) {
+			
+			 if(maPhongs[i].contains("A")) {
+				 demsonguoi+=2;
+                 
+			 }
+			if (maPhongs[i].contains("B")) {
+					demsonguoi += 5;
+
+			}
+			if (maPhongs[i].contains("C")) {
+					demsonguoi += 10;
+			}
+		}
+		if (Integer.parseInt(txtSoN.getText())> demsonguoi) {
+			
+			return -3;
 		}
 		
 		return 1;

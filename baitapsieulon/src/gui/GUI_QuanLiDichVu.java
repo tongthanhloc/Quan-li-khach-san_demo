@@ -344,6 +344,13 @@ public class GUI_QuanLiDichVu extends JFrame {
 		
 
 		btnTK.setText("<html><div style='text-align: center;'>" + nhanvien.getHoTenNV() + "</div></html>");
+		
+		JButton btntDchV = new JButton("Đặt dịch vụ");
+		btntDchV.setForeground(new Color(244, 244, 244));
+		btntDchV.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btntDchV.setBackground(new Color(41, 139, 106));
+		btntDchV.setBounds(260, 26, 200, 99);
+		panel_top.add(btntDchV);
 		btnmaNV.setText("<html><div style='text-align: center;'>" +"Mã Nhân viên: "+ nhanvien.getMaNV() + "</div></html>");
 		btnTKHTNV.setText("<html><div style='text-align: center;'>" + "Họ tên: "+nhanvien.getHoTenNV() + "</div></html>");
 		int tuoi = (int) ChronoUnit.YEARS.between(nhanvien.getNgaySinh(), java.time.LocalDate.now());

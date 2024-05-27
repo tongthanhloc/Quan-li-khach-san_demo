@@ -56,7 +56,7 @@ public class GUI_ChiTietHoaDon extends JFrame {
 	private MatteBorder borderBottom;
 	private String[] cols1;
 	private JLabel lblTen;
-	private JLabel lblDC;
+	private JTextArea lblDC;
 	private JLabel lblSDT;
 	private JLabel lblPhong;
 	private JLabel lblNgayDen;
@@ -214,9 +214,12 @@ public class GUI_ChiTietHoaDon extends JFrame {
 		lblTen.setBounds(179, 5, 405, 22);
 		pCenter.add(lblTen);
 		
-		lblDC = new JLabel("");
+		lblDC = new JTextArea("");
+	    lblDC.setWrapStyleWord(true);
+	    lblDC.setLineWrap(true);
+	    
 		lblDC.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDC.setBounds(179, 35, 462, 48);
+		lblDC.setBounds(179, 35, 462, 58);
 		pCenter.add(lblDC);
 		
 		lblSDT = new JLabel("");

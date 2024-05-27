@@ -23,12 +23,14 @@ import dao.DAO_PhieuDatDichVu;
 import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
 import dao.PhieuDatPhong_DAO;
+import dao.Phong_DAO;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatDichVu;
 import entity.PhieuDatPhong;
+import entity.Phong;
 
 
 
@@ -559,7 +561,8 @@ static NhanVien nhanvien;
 					}
 					ArrayList<PhieuDatPhong> listPDP = new ArrayList<PhieuDatPhong>();
 					ArrayList<PhieuDatDichVu> listPDDV = new ArrayList<PhieuDatDichVu>();
-					
+				    Phong_DAO dao_p = new Phong_DAO();
+					ArrayList<Phong> listp = dao_p.getalltbPhong();
 					for (PhieuDatPhong pdp : listpdp) {
 						if (pdp.getHoaDon().getMaHoaDon()== null) {
 							continue;
@@ -574,10 +577,19 @@ static NhanVien nhanvien;
 							listPDP.add(pdp);
 							
 						}
+						
 					}
 					for (PhieuDatDichVu pddv : listpddv) {
 						if (pddv.getHoaDon().getMaHoaDon().equals(maHD)) {
 							listPDDV.add(pddv);
+						}
+					}
+					//add phong
+					for (PhieuDatPhong pdp : listPDP) {
+						for (Phong p : listp) {
+							if (pdp.getPhong().getMaPhong().equals(p.getMaPhong())) {
+								pdp.setPhong(p);
+							}
 						}
 					}
 					

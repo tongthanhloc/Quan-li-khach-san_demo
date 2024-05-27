@@ -13,6 +13,7 @@ import entity.HoaDon;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuDatDichVu;
+import entity.PhieuDatPhong;
 public class DAO_PhieuDatDichVu {
 	public DAO_PhieuDatDichVu() {
 	
@@ -155,4 +156,5 @@ public class DAO_PhieuDatDichVu {
 		}
 		return dsPhieuDatDichVu;
 	}
+	
 }

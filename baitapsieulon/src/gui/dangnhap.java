@@ -178,16 +178,12 @@ public class dangnhap extends JFrame {
 					for(NhanVien NV : ListNV) {
                         if(NV.getMaNV().equals(txttendangnhap.getText())) {
                             GUI_TrangChu ql = new GUI_TrangChu(NV);
+                            ql.setVisible(true);
+                            dispose();
                         }
                     }
 					
-                }else if(kiemtraDN(tenDangNhap, matKhau) == 2) {//NV
-					for (NhanVien NV : ListNV) {
-						if (NV.getMaNV().equals(txttendangnhap.getText())) {
-							GUI_TrangChu ql = new GUI_TrangChu(NV);
-						}
-					}
-                    setVisible(false); // Đóng frame hiện tại
+                
     				
 				} else if(kiemtraDN(tenDangNhap, matKhau) == 3){
 					txtmatkhau.setText("");
@@ -232,11 +228,7 @@ public class dangnhap extends JFrame {
 	public int kiemtraDN(String tenDN, String matKhau) {
 		for (int i = 0; i < tk.length; i++) {
 			if (tk[i].equals(tenDN) && mk[i].equals(matKhau)) {
-				if (tenDN.contains("QL")) {
-					return 1;
-				} else {
-					return 2;
-				}
+				return 1;
 			}
 		}
 		for (int i = 0; i < tk.length; i++) {

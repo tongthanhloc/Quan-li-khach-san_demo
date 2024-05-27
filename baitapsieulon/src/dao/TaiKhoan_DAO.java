@@ -48,5 +48,31 @@ public class TaiKhoan_DAO {
 			e.printStackTrace();
 		}
 	}
+	// thêm tài khoản từ 1 nhân viên
+		public void insertTaiKhoan(NhanVien nv) {
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				//Tạo mật khẩu mặc định là password@ + 2 số cuối mã nhân viên
+				String matKhau = "password@" + nv.getMaNV().substring(2);
+				String sql = "INSERT INTO TaiKhoan (maNhanVien, matKhau, trangThai) VALUES ('" + nv.getMaNV() + "', '" + matKhau + "', 'Còn làm')";
+				Statement statement = con.createStatement();
+				statement.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		// Cập nhật trạng thái tài khoản khi truyền vào 1 nhân viên
+		public void updateTrangThaiTaiKhoan(NhanVien nv) {
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "UPDATE TaiKhoan SET trangThai = 'Nghỉ việc' WHERE maNhanVien = '" + nv.getMaNV() + "'";
+				Statement statement = con.createStatement();
+				statement.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	
 }
